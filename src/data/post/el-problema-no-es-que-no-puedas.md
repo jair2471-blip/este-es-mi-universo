@@ -1,8 +1,10 @@
 ---
-publishDate: 2026-01-08
 title: "El problema no es que no puedas"
-excerpt: "Usted no necesita más motivación. Usted necesita más honestidad brutal frente al espejo."
-image: "http://googleusercontent.com/image_collection/image_retrieval/17915467326544996063_0"
+description: "Usted no necesita más motivación. Usted necesita más honestidad brutal frente al espejo."
+pubDate: 2026-01-08
+author: "El Universo de la Mente"
+slug: "el-problema-no-es-que-no-puedas"
+image: "/images/blog/autoengano-cadenas.jpg"
 category: "Psicología"
 ---
 
