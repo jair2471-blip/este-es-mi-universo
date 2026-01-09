@@ -14,8 +14,8 @@ export const headerData = {
       text: 'Antonov',
       href: getPermalink('/antonov'),
     },
-    {
-      text: 'Elmanifiesto',
+   {
+      text: 'El manifiesto',
       href: getPermalink('/about'),
     },
   ],
