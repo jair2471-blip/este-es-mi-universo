@@ -1,9 +1,7 @@
 ---
-title: "El problema no es que no puedas, es que te haces el loco profesionalmente"
-description: "Un texto directo y cantinflesco sobre el autoengaño, el miedo al cambio y la responsabilidad personal. No es motivación barata. Es una verdad incómoda que despierta."
-pubDate: "2026-01-08"
-author: "El Universo de la Mente"
-slug: "el-problema-no-es-que-no-puedas"
+publishDate: 2026-01-08
+title: "El problema no es que no puedas"
+excerpt: "Usted no necesita más motivación. Usted necesita más honestidad brutal frente al espejo."
 image: "http://googleusercontent.com/image_collection/image_retrieval/17915467326544996063_0"
 category: "Psicología"
 ---
