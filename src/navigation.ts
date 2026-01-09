@@ -12,12 +12,7 @@ export const headerData = {
     },
     {
       text: 'Antonov',
-      links: [
-        {
-          text: 'Herramientas de Mente',
-          href: getPermalink('/antonov'), // Asegúrese que src/pages/antonov.astro existe
-        },
-      ],
+      href: getPermalink('/antonov'),
     },
     {
       text: 'Sobre el Universo',
