@@ -385,8 +385,8 @@ const metadata = {
           ctx.font = `900 ${fontSize}px monospace`;
 
           const words = text.split(' ');
-          let lines = [],
-            currentLine = words[0];
+          const lines = []; // <--- CAMBIADO A CONST Y CON PUNTO Y COMA
+          let currentLine = words[0]; // <--- ESTE SÍ DEBE SER LET
           for (let i = 1; i < words.length; i++) {
             if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
               currentLine += ' ' + words[i];
