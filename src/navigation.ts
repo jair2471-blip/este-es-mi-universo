@@ -10,10 +10,10 @@ export const headerData = {
       text: 'Bitácora',
       href: getBlogPermalink(),
     },
-    {
+   {
       text: 'Antonov',
-      links: [
-        {
+      href: getPermalink('/antonov'), // Sin la propiedad 'links' para que sea un botón directo
+    },
           text: 'Herramientas de Mente',
           href: getPermalink('/antonov'),
         },
