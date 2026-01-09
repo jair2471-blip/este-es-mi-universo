@@ -10,36 +10,32 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <Hero
-    tagline="Nuestra declaración de guerra"
+    tagline="Nuestra Ley"
     title="EL MANIFIESTO"
-    subtitle="Si esperabas palmaditas en la espalda, estás en el hangar equivocado."
+    subtitle="Aquí no hay verdades a medias. Entras bajo tu propio riesgo."
   />
 
   <Content
     isReversed
-    title="La Ley del Boomerang"
+    title="La Verdad es un Boomerang"
     items={[
       {
-        title: 'Causa y Efecto',
-        description: 'No es mala suerte, es la cosecha de lo que sembraste ayer. Aquí aprendemos a sembrar con intención.',
+        title: 'Responsabilidad Total',
+        description: 'Si tu vida es un desastre, deja de culpar al gobierno o a tus padres. Tú eres el piloto del Antonov.',
       },
       {
-        title: 'Honestidad de Acero',
-        description: 'El espejo no miente, el que miente es el que se mira. Rompemos el cristal para ver la realidad.',
-      },
-      {
-        title: 'Carga Pesada',
-        description: 'Como un Antonov, estamos diseñados para llevar la carga que otros no pueden. Responsabilidad total.',
+        title: 'Cosecha Obligatoria',
+        description: 'Todo lo que lanzas al mundo vuelve a ti. Si lanzas mentiras, no esperes recibir confianza.',
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1494173853114-8a5146813805?q=80&w=1200&auto=format&fit=crop',
-      alt: 'Determinación mental',
+      src: 'https://images.unsplash.com/photo-1550684376-efcbd6e3f031?q=80&w=1200&auto=format&fit=crop',
+      alt: 'Impacto y fuerza',
     }}
   >
     <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">¿Por qué estamos aquí?</h3>
-      Este no es un blog de psicología de salón. Es un espacio para los que entienden que el universo mental es vasto, peligroso y fascinante. Aquí el piloto eres tú.
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">¿De qué trata este Universo?</h3>
+      No somos una página de frases motivacionales. Somos un laboratorio de realidad. Aquí desmantelamos la mente para entender por qué recibimos lo que recibimos.
     </Fragment>
   </Content>
 </Layout>
