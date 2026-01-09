@@ -10,14 +10,13 @@ export const headerData = {
       text: 'Bitácora',
       href: getBlogPermalink(),
     },
-   {
+    {
       text: 'Antonov',
-      href: getPermalink('/antonov'), // Sin la propiedad 'links' para que sea un botón directo
-    },
+      links: [
+        {
           text: 'Herramientas de Mente',
-          href: getPermalink('/antonov'),
+          href: getPermalink('/antonov'), // Asegúrese que src/pages/antonov.astro existe
         },
-        // Aquí puedes añadir más herramientas luego
       ],
     },
     {
@@ -29,7 +28,7 @@ export const headerData = {
 };
 
 export const footerData = {
-  links: [], // Limpiamos los links aburridos del footer
+  links: [],
   secondaryLinks: [
     { text: 'Términos', href: getPermalink('/terms') },
     { text: 'Privacidad', href: getPermalink('/privacy') },
@@ -37,7 +36,7 @@ export const footerData = {
   socialLinks: [
     { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/tu-usuario' },
+    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/arthelokyo' },
   ],
   footNote: `
     © 2026 El Universo de la Mente · Todos los derechos reservados.
