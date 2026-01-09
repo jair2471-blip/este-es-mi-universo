@@ -1,0 +1,42 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/Headline.astro';
+import Content from '~/components/widgets/Content.astro';
+
+const metadata = {
+  title: 'El Manifiesto | El Universo de la Mente',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="El Manifiesto"
+    title="Nuestros Principios"
+    subtitle="La honestidad brutal es el único camino hacia la verdadera libertad mental."
+  />
+
+  <Content
+    isReversed
+    items={[
+      {
+        title: 'Sin Azúcar Añadida',
+        description: 'Aquí no venimos a decirte que todo estará bien. Venimos a entender por qué te saboteas y cómo dejar de hacerlo.',
+        icon: 'tabler:shield-check',
+      },
+      {
+        title: 'Disciplina sobre Motivación',
+        description: 'La motivación es un sentimiento pasajero; la disciplina es la estructura que sostiene tu realidad.',
+        icon: 'tabler:barbell',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070',
+      alt: 'Manifiesto imagen',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">La Regla de Oro</h3>
+      Usted no necesita más información, necesita más ejecución. Deje de hacerse el loco con lo que ya sabe que tiene que hacer.
+    </Fragment>
+  </Content>
+</Layout>
