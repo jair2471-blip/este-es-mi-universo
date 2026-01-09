@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/Headline.astro';
+import Headline from '~/components/widgets/Headline.astro'; // <--- Cambiado
 import Content from '~/components/widgets/Content.astro';
 
 const metadata = {
@@ -9,7 +9,7 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <HeroText
+  <Headline
     tagline="El Manifiesto"
     title="Nuestros Principios"
     subtitle="La honestidad brutal es el único camino hacia la verdadera libertad mental."
@@ -20,13 +20,8 @@ const metadata = {
     items={[
       {
         title: 'Sin Azúcar Añadida',
-        description: 'Aquí no venimos a decirte que todo estará bien. Venimos a entender por qué te saboteas y cómo dejar de hacerlo.',
+        description: 'Aquí no venimos a decirte que todo estará bien.',
         icon: 'tabler:shield-check',
-      },
-      {
-        title: 'Disciplina sobre Motivación',
-        description: 'La motivación es un sentimiento pasajero; la disciplina es la estructura que sostiene tu realidad.',
-        icon: 'tabler:barbell',
       },
     ]}
     image={{
@@ -36,7 +31,7 @@ const metadata = {
   >
     <Fragment slot="content">
       <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">La Regla de Oro</h3>
-      Usted no necesita más información, necesita más ejecución. Deje de hacerse el loco con lo que ya sabe que tiene que hacer.
+      Usted necesita más ejecución.
     </Fragment>
   </Content>
 </Layout>
