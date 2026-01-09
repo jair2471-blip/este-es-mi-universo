@@ -3,6 +3,7 @@ title: "El problema no es que no puedas, es que te haces el loco profesionalment
 description: "Un texto directo y cantinflesco sobre el autoengaño, el miedo al cambio y la responsabilidad personal. No es motivación barata. Es una verdad incómoda que despierta."
 pubDate: "2026-01-08"
 author: "El Universo de la Mente"
+image: https://images.unsplash.com/photo-1643232878326-5aea4b622935?q=80&w=1200&auto=format&fit=crop
 slug: "el-problema-no-es-que-no-puedas"
 ---
 
