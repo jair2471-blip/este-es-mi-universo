@@ -1,7 +1,6 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Headline from '~/components/widgets/Headline.astro'; // <--- Cambiado
-import Content from '~/components/widgets/Content.astro';
+import Hero from '~/components/widgets/Hero.astro';
 
 const metadata = {
   title: 'El Manifiesto | El Universo de la Mente',
@@ -9,29 +8,21 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <Headline
+  <Hero
     tagline="El Manifiesto"
     title="Nuestros Principios"
     subtitle="La honestidad brutal es el único camino hacia la verdadera libertad mental."
+    image={{ src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070', alt: 'Manifiesto' }}
   />
 
-  <Content
-    isReversed
-    items={[
-      {
-        title: 'Sin Azúcar Añadida',
-        description: 'Aquí no venimos a decirte que todo estará bien.',
-        icon: 'tabler:shield-check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070',
-      alt: 'Manifiesto imagen',
-    }}
-  >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">La Regla de Oro</h3>
-      Usted necesita más ejecución.
-    </Fragment>
-  </Content>
+  <section class="px-4 py-16 mx-auto max-w-4xl font-sans text-lg">
+    <h2 class="text-3xl font-bold mb-6">La Regla de Oro</h2>
+    <p class="mb-4">
+      Usted no necesita más información, necesita más ejecución. Deje de hacerse el loco con lo que ya sabe que tiene que hacer.
+    </p>
+    <ul class="list-disc pl-6 space-y-4">
+      <li><strong>Sin Azúcar Añadida:</strong> Aquí no venimos a decirte que todo estará bien.</li>
+      <li><strong>Disciplina sobre Motivación:</strong> La motivación es pasajera; la disciplina es eterna.</li>
+    </ul>
+  </section>
 </Layout>
