@@ -4,6 +4,8 @@ description: "Un texto directo y cantinflesco sobre el autoengaño, el miedo al 
 pubDate: "2026-01-08"
 author: "El Universo de la Mente"
 slug: "el-problema-no-es-que-no-puedas"
+image: "http://googleusercontent.com/image_collection/image_retrieval/17915467326544996063_0"
+category: "Psicología"
 ---
 
 Mire usted, compadre lector, porque aquí vamos a aclarar una cosa que parece confusa, pero no lo es, aunque lo parezca, y si no lo parece es porque ya se acostumbró.
