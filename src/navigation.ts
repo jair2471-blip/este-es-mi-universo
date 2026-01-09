@@ -1,4 +1,4 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
+import { getPermalink, getBlogPermalink } from './utils/permalinks';
 
 export const headerData = {
   links: [
@@ -7,10 +7,9 @@ export const headerData = {
     { text: 'Antonov', href: getPermalink('/antonov') },
     { text: 'El manifiesto', href: getPermalink('/elmanifiesto') },
   ],
-  actions: [], // Lo dejamos vacío para evitar el error de TypeScript que vimos antes
+  actions: [],
 };
 
-// ESTO ES LO QUE FALTA O ESTÁ MAL:
 export const footerData = {
   links: [],
   secondaryLinks: [],
