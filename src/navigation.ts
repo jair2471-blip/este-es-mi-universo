@@ -14,9 +14,9 @@ export const headerData = {
       text: 'Antonov',
       href: getPermalink('/antonov'),
     },
-   {
+  {
       text: 'El manifiesto',
-      href: getPermalink('/about'),
+      href: getPermalink('/elmanifiesto'), // <--- Cambia esto para que coincida
     },
   ],
   actions: [{ text: 'Suscribirse', href: '#', variant: 'primary' }],
