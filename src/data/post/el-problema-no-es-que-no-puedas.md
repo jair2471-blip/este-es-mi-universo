@@ -6,8 +6,6 @@ author: "El Universo de la Mente"
 slug: "el-problema-no-es-que-no-puedas"
 ---
 
-# El problema no es que no puedas, es que te haces el loco profesionalmente
-
 Mire usted, compadre lector, porque aquí vamos a aclarar una cosa que parece confusa, pero no lo es, aunque lo parezca, y si no lo parece es porque ya se acostumbró.
 
 El problema no es que la vida sea difícil.  
