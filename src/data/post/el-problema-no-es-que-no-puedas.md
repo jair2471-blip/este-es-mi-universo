@@ -1,12 +1,11 @@
 ---
-title: "El problema no es que no puedas"
-description: "Usted no necesita más motivación. Usted necesita más honestidad brutal frente al espejo."
-pubDate: 2026-01-08
+title: "El problema no es que no puedas, es que te haces el loco profesionalmente"
+description: "Un texto directo y cantinflesco sobre el autoengaño, el miedo al cambio y la responsabilidad personal. No es motivación barata. Es una verdad incómoda que despierta."
+pubDate: "2026-01-08"
 author: "El Universo de la Mente"
 slug: "el-problema-no-es-que-no-puedas"
-image: "/images/blog/autoengano-cadenas.jpg"
-category: "Psicología"
 ---
+
 
 Mire usted, compadre lector, porque aquí vamos a aclarar una cosa que parece confusa, pero no lo es, aunque lo parezca, y si no lo parece es porque ya se acostumbró.
 
