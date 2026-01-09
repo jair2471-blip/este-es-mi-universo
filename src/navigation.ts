@@ -1,5 +1,3 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
-
 export const headerData = {
   links: [
     {
@@ -14,26 +12,10 @@ export const headerData = {
       text: 'Antonov',
       href: getPermalink('/antonov'),
     },
-  {
+    {
       text: 'El manifiesto',
-      href: getPermalink('/elmanifiesto'), // <--- Cambia esto para que coincida
+      href: getPermalink('/elmanifiesto'),
     },
   ],
-  actions: [{ text: 'Suscribirse', href: '#', variant: 'primary' }],
-};
-
-export const footerData = {
-  links: [],
-  secondaryLinks: [
-    { text: 'Términos', href: getPermalink('/terms') },
-    { text: 'Privacidad', href: getPermalink('/privacy') },
-  ],
-  socialLinks: [
-    { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/arthelokyo' },
-  ],
-  footNote: `
-    © 2026 El Universo de la Mente · Todos los derechos reservados.
-  `,
+  actions: [], // <--- Déjalo vacío un momento para que el build pase
 };
