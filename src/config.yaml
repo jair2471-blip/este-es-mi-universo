@@ -1,6 +1,6 @@
 site:
-  name: AstroWind
-  site: 'https://astrowind.vercel.app'
+  name: El Universo de la Mente
+  site: 'https://eluniversodelamente.com'
   base: '/'
   trailingSlash: false
 
@@ -28,7 +28,7 @@ metadata:
     cardType: summary_large_image
 
 i18n:
-  language: en
+  language: es
   textDirection: ltr
 
 apps:
