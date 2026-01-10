@@ -1,28 +1,56 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-
-const metadata = {
-  title: 'El Manifiesto | El Universo de la Mente',
-};
 ---
 
-<Layout metadata={metadata}>
-  <Hero
-    tagline="El Manifiesto"
-    title="Nuestros Principios"
-    subtitle="La honestidad brutal es el único camino hacia la verdadera libertad mental."
-    image={{ src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070', alt: 'Manifiesto' }}
-  />
+<Layout metadata={{ title: 'El Manifiesto | E.U.L.M' }}>
+  <section class="bg-black text-white min-h-screen flex flex-col items-center px-4 py-20">
+    <div class="max-w-3xl w-full">
+      
+      <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-12">
+        EL <span class="text-red-700">MANIFIESTO</span>
+      </h1>
 
-  <section class="px-4 py-16 mx-auto max-w-4xl font-sans text-lg">
-    <h2 class="text-3xl font-bold mb-6">La Regla de Oro</h2>
-    <p class="mb-4">
-      Usted no necesita más información, necesita más ejecución. Deje de hacerse el loco con lo que ya sabe que tiene que hacer.
-    </p>
-    <ul class="list-disc pl-6 space-y-4">
-      <li><strong>Sin Azúcar Añadida:</strong> Aquí no venimos a decirte que todo estará bien.</li>
-      <li><strong>Disciplina sobre Motivación:</strong> La motivación es pasajera; la disciplina es eterna.</li>
-    </ul>
+      <div class="space-y-12 text-xl md:text-2xl font-light leading-relaxed">
+        
+        <p class="border-l-4 border-red-700 pl-6 italic">
+          "No buscamos seguidores, buscamos mentes que se atrevan a mirar el vacío sin parpadear."
+        </p>
+
+        <p>
+          En un mundo saturado de ruido, filtros y positividad barata, el **Universo de la Mente** nace como un acto de rebelión. Aquí no hay espacio para la fragilidad.
+        </p>
+
+        <div class="bg-zinc-900 p-8 border border-zinc-800">
+          <h2 class="text-3xl font-bold uppercase mb-4 text-red-700">I. Honestidad Radical</h2>
+          <p>Decimos lo que nadie quiere decir. La verdad duele, pero es lo único que construye sobre roca sólida.</p>
+        </div>
+
+        <div class="bg-zinc-900 p-8 border border-zinc-800">
+          <h2 class="text-3xl font-bold uppercase mb-4 text-red-700">II. Estética del Vacío</h2>
+          <p>Lo que ves es lo que hay. Sin adornos. Sin distracciones. El negro es el color de la claridad absoluta.</p>
+        </div>
+
+        <div class="bg-zinc-900 p-8 border border-zinc-800">
+          <h2 class="text-3xl font-bold uppercase mb-4 text-red-700">III. El Vuelo del Antonov</h2>
+          <p>Cargamos con ideas pesadas. Elevamos el pensamiento por encima de la masa. Quien sube a este avión sabe que no hay vuelta atrás.</p>
+        </div>
+
+        <p class="text-4xl font-black uppercase text-center pt-10 tracking-widest">
+          BIENVENIDOS AL <span class="text-red-700">VACÍO</span>.
+        </p>
+
+      </div>
+    </div>
   </section>
 </Layout>
+
+<style>
+  /* Estilo específico para que esta página sea única */
+  h1 {
+    letter-spacing: -0.08em !important;
+  }
+  
+  p {
+    text-wrap: balance;
+  }
+</style>
