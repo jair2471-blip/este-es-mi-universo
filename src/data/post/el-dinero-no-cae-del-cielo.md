@@ -10,7 +10,7 @@ tags:
   - trabajo duro
   - realidad
   - mentalidad
-image: https://images.unsplash.com/photo15219996937424717d76f97ccq=80&w=1470&auto=format&fi=crop
+image: https://images.unsplash.com/photo-1521999693742-4717d76f97cc?q=80&w=1470&auto=format&fit=crop
 ---
 
 Vamos a decirlo claro, compadre, sin vueltas, sin frases bonitas y sin espiritualidad mal entendida:
