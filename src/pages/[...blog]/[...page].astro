@@ -20,7 +20,8 @@ const { page } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
 const metadata = {
-  title: `Bitácora | E.U.L.M ${currentPage > 1 ? ` — Página ${currentPage}` : ''}`,
+  title: 'Bitácora | E.U.L.M', 
+  ignoreTitleTemplate: true,
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
