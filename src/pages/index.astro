@@ -3,11 +3,9 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 ---
 
-<Layout metadata={{ title: 'El Universo de la Mente' }}>
+<Layout metadata={{ title: 'E.U.L.M | El Universo de la Mente' }}>
   <Hero
     tagline="Bienvenidos al vacío"
-    title="EL UNIVERSO DE LA <span class='text-red-700'>MENTE</span>"
-    subtitle="Donde la honestidad brutal se encuentra con el caos controlado. No es apto para mentes frágiles."
     actions={[
       {
         variant: 'primary',
@@ -16,21 +14,51 @@ import Hero from '~/components/widgets/Hero.astro';
         class: 'bg-red-700 hover:bg-red-800 border-none text-white font-bold'
       },
     ]}
-    image={{ 
-      src: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
-      alt: 'Fondo oscuro abstracto' 
-    }}
-  />
+  >
+    <Fragment slot="title">
+      <span class="text-white">EL UNIVERSO DE LA</span> <span class="text-red-700">MENTE</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="text-slate-200 block mt-4">
+        Donde la honestidad brutal se encuentra con el caos controlado. <br class="hidden md:block" />
+        No es apto para mentes frágiles.
+      </span>
+    </Fragment>
+  </Hero>
 </Layout>
 
 <style is:global>
-  /* Este es el truco para que el fondo sea negro total y las letras resalten */
-  body {
+  /* 1. BLOQUEO DE COLOR (Para que no se pierda el texto en móvil) */
+  html, body {
     background-color: #000000 !important;
+    color: #ffffff !important;
   }
+
+  /* Forzamos que todo sea blanco o rojo, ignorando el modo claro */
+  h1, p, span, a, .text-muted {
+    color: #ffffff !important;
+  }
+
+  .text-red-700 {
+    color: #b91c1c !important;
+  }
+
+  /* 2. DISEÑO E.U.L.M (Letras pegadas y pesadas) */
   h1 {
-    letter-spacing: -0.05em;
-    line-height: 0.9 !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.06em !important; /* El toque que te gustó */
+    line-height: 0.85 !important;
     text-transform: uppercase;
+  }
+
+  /* Ocultamos el botón de sol/luna para que nadie dañe el vacío */
+  [data-aw-toggle-color-scheme] {
+    display: none !important;
+  }
+
+  /* Aseguramos que el encabezado también sea blanco */
+  header a, header span {
+    color: #ffffff !important;
   }
 </style>
