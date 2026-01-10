@@ -29,36 +29,61 @@ import Hero from '~/components/widgets/Hero.astro';
 </Layout>
 
 <style is:global>
-  /* 1. BLOQUEO DE COLOR (Para que no se pierda el texto en móvil) */
-  html, body {
+  /* 1. FUNDACIÓN DEL VACÍO (Negro Absoluto) */
+  html, body, main {
     background-color: #000000 !important;
     color: #ffffff !important;
   }
 
-  /* Forzamos que todo sea blanco o rojo, ignorando el modo claro */
-  h1, p, span, a, .text-muted {
-    color: #ffffff !important;
-  }
-
-  .text-red-700 {
-    color: #b91c1c !important;
-  }
-
-  /* 2. DISEÑO E.U.L.M (Letras pegadas y pesadas) */
+  /* 2. TIPOGRAFÍA E.U.L.M (Brutalismo) */
   h1 {
     font-weight: 900 !important;
-    letter-spacing: -0.06em !important; /* El toque que te gustó */
+    letter-spacing: -0.06em !important; 
     line-height: 0.85 !important;
     text-transform: uppercase;
   }
 
-  /* Ocultamos el botón de sol/luna para que nadie dañe el vacío */
-  [data-aw-toggle-color-scheme] {
-    display: none !important;
+  /* 3. COLORES BLINDADOS */
+  h1, p, span, a, .text-muted, li {
+    color: #ffffff !important;
   }
 
-  /* Aseguramos que el encabezado también sea blanco */
-  header a, header span {
+  .text-red-700, .text-primary {
+    color: #b91c1c !important;
+  }
+
+  /* 4. ESTILO PARA LA BITÁCORA (Blog List) */
+  /* Esto hace que cada post en la lista se vea como un bloque sólido */
+  article {
+    background-color: #000000 !important;
+    border-bottom: 2px solid #1a1a1a !important;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  article h2 a {
     color: #ffffff !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+  }
+
+  article h2 a:hover {
+    color: #b91c1c !important;
+  }
+
+  /* 5. LIMPIEZA DE INTERFAZ */
+  [data-aw-toggle-color-scheme] {
+    display: none !important; /* Fuera botón de modo claro */
+  }
+
+  header, footer {
+    background-color: #000000 !important;
+    border-color: #1a1a1a !important;
+  }
+
+  /* Aseguramos que los links del menú no se pierdan */
+  header a:hover {
+    color: #b91c1c !important;
   }
 </style>
