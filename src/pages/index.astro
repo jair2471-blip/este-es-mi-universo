@@ -1,3 +1,33 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+---
+
+<Layout metadata={{ title: 'El Universo de la Mente' }}>
+  <Hero
+    tagline="Bienvenidos al vacío"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Leer el Manifiesto',
+        href: '/elmanifiesto',
+        class: 'bg-red-700 hover:bg-red-800 border-none text-white font-bold'
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      <span class="text-white">EL UNIVERSO DE LA</span> <span class="text-red-700">MENTE</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="text-slate-200 block mt-4">
+        Donde la honestidad brutal se encuentra con el caos controlado. <br class="hidden md:block" />
+        No es apto para mentes frágiles.
+      </span>
+    </Fragment>
+  </Hero>
+</Layout>
+
 <style is:global>
   /* El alma del diseño: Letras grandes y pesadas */
   h1 {
