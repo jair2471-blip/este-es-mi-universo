@@ -1,53 +1,36 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-
-const metadata = {
-  title: 'El Universo de la Mente | Honestidad Brutal',
-};
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={{ title: 'El Universo de la Mente' }}>
   <Hero
+    tagline="Bienvenidos al vacío"
+    title="EL UNIVERSO DE LA <span class='text-red-700'>MENTE</span>"
+    subtitle="Donde la honestidad brutal se encuentra con el caos controlado. No es apto para mentes frágiles."
     actions={[
-      { variant: 'primary', text: 'Empezar a leer', href: '/blog', icon: 'tabler:arrow-right' },
-    ]}
-    image={{ src: 'https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=80&w=2070', alt: 'Universo' }}
-  >
-    <Fragment slot="title">
-      Despierta del <span class="text-accent dark:text-white highlight">SUEÑO</span>: <br /> 
-      Rediseña tu Realidad
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <span class="font-semibold text-xl italic">
-        "Usted no necesita motivación, usted necesita disciplina y dejar de hacerse el loco."
-      </span>
-    </Fragment>
-  </Hero>
-
-  <Features
-    id="features"
-    tagline="Principios"
-    title="Lo que vas a encontrar aquí"
-    items={[
       {
-        title: 'Psicología Sin Filtros',
-        description: 'Análisis reales sobre por qué hacemos lo que hacemos, sin azúcar añadida.',
-        icon: 'tabler:brain',
-      },
-      {
-        title: 'Filosofía Práctica',
-        description: 'Herramientas de los antiguos para los problemas de hoy.',
-        icon: 'tabler:sword',
+        variant: 'primary',
+        text: 'Leer el Manifiesto',
+        href: '/elmanifiesto',
+        class: 'bg-red-700 hover:bg-red-800 border-none text-white font-bold'
       },
     ]}
-  />
-
-  <BlogLatestPosts
-    title="Últimas Reflexiones del Abismo"
-    information="Cada post es una herramienta para tu transformación."
+    image={{ 
+      src: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
+      alt: 'Fondo oscuro abstracto' 
+    }}
   />
 </Layout>
+
+<style is:global>
+  /* Este es el truco para que el fondo sea negro total y las letras resalten */
+  body {
+    background-color: #000000 !important;
+  }
+  h1 {
+    letter-spacing: -0.05em;
+    line-height: 0.9 !important;
+    text-transform: uppercase;
+  }
+</style>
