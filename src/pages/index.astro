@@ -3,7 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 ---
 
-<Layout metadata={{ title: 'El Universo de la Mente' }}>
+<Layout metadata={{ title: 'E.U.L.M | El Universo de la Mente' }}>
   <Hero
     tagline="Bienvenidos al vacío"
     actions={[
@@ -29,27 +29,36 @@ import Hero from '~/components/widgets/Hero.astro';
 </Layout>
 
 <style is:global>
-  /* El alma del diseño: Letras grandes y pesadas */
-  h1 {
-    font-weight: 900;           /* Máximo grosor */
-    letter-spacing: -0.06em;    /* Letras bien pegaditas */
-    line-height: 0.85 !important; /* Interlineado casi nulo */
-    text-transform: uppercase;   /* Siempre en mayúsculas */
-    filter: drop-shadow(0 0 10px rgba(185, 28, 28, 0.2)); /* Un aura roja sutil */
+  /* 1. BLOQUEO DE COLOR (Para que no se pierda el texto en móvil) */
+  html, body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
   }
 
-  /* Para el nombre corto E.U.L.M */
-  .logo-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.1em;
-    color: #ffffff;
+  /* Forzamos que todo sea blanco o rojo, ignorando el modo claro */
+  h1, p, span, a, .text-muted {
+    color: #ffffff !important;
   }
 
-  /* El efecto de "Corte" en el color */
   .text-red-700 {
     color: #b91c1c !important;
-    position: relative;
-    display: inline-block;
+  }
+
+  /* 2. DISEÑO E.U.L.M (Letras pegadas y pesadas) */
+  h1 {
+    font-weight: 900 !important;
+    letter-spacing: -0.06em !important; /* El toque que te gustó */
+    line-height: 0.85 !important;
+    text-transform: uppercase;
+  }
+
+  /* Ocultamos el botón de sol/luna para que nadie dañe el vacío */
+  [data-aw-toggle-color-scheme] {
+    display: none !important;
+  }
+
+  /* Aseguramos que el encabezado también sea blanco */
+  header a, header span {
+    color: #ffffff !important;
   }
 </style>
