@@ -1,53 +1,25 @@
----
-import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
----
-
-<Layout metadata={{ title: 'El Universo de la Mente' }}>
-  <Hero
-    tagline="Bienvenidos al vacío"
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Leer el Manifiesto',
-        href: '/elmanifiesto',
-        class: 'bg-red-700 hover:bg-red-800 border-none text-white font-bold'
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      <span class="text-white">EL UNIVERSO DE LA</span> <span class="text-red-700">MENTE</span>
-    </Fragment>
-
-    <Fragment slot="subtitle">
-      <span class="text-slate-200 block mt-4">
-        Donde la honestidad brutal se encuentra con el caos controlado. <br class="hidden md:block" />
-        No es apto para mentes frágiles.
-      </span>
-    </Fragment>
-  </Hero>
-</Layout>
-
 <style is:global>
-  /* Fondo negro total y resalte de textos */
-  body {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-  }
-  
-  /* Ajuste para que el Header y Menú también se vean blancos en móvil */
-  header a, header button {
-    color: #ffffff !important;
+  /* El alma del diseño: Letras grandes y pesadas */
+  h1 {
+    font-weight: 900;           /* Máximo grosor */
+    letter-spacing: -0.06em;    /* Letras bien pegaditas */
+    line-height: 0.85 !important; /* Interlineado casi nulo */
+    text-transform: uppercase;   /* Siempre en mayúsculas */
+    filter: drop-shadow(0 0 10px rgba(185, 28, 28, 0.2)); /* Un aura roja sutil */
   }
 
-  h1 {
-    letter-spacing: -0.05em;
-    line-height: 0.9 !important;
-    text-transform: uppercase;
+  /* Para el nombre corto E.U.L.M */
+  .logo-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.1em;
+    color: #ffffff;
   }
-  
-  /* Esto asegura que el tagline (Bienvenidos al vacío) sea visible */
-  .text-muted, .text-slate-400 {
-    color: #e2e8f0 !important; /* Un gris muy claro casi blanco */
+
+  /* El efecto de "Corte" en el color */
+  .text-red-700 {
+    color: #b91c1c !important;
+    position: relative;
+    display: inline-block;
   }
 </style>
