@@ -12,7 +12,6 @@ tags:
   - ley de atracción
   - energía positiva
   - crecimiento personal
-image: "/images/blog/boomerang-cosmico.jpg"
 ---
 
 Mire parce, yo aquí filosofeando sin filósofo, pero con una verdad más clara que el agua: **la vida es un boomerang** de esos que usaban los australianos, pero versión deluxe, recargada, con triple retorno garantizado.
