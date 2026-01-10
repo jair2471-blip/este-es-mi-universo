@@ -6,8 +6,6 @@ import Hero from '~/components/widgets/Hero.astro';
 <Layout metadata={{ title: 'El Universo de la Mente' }}>
   <Hero
     tagline="Bienvenidos al vacío"
-    title="EL UNIVERSO DE LA <span class='text-red-700'>MENTE</span>"
-    subtitle="Donde la honestidad brutal se encuentra con el caos controlado. No es apto para mentes frágiles."
     actions={[
       {
         variant: 'primary',
@@ -16,21 +14,40 @@ import Hero from '~/components/widgets/Hero.astro';
         class: 'bg-red-700 hover:bg-red-800 border-none text-white font-bold'
       },
     ]}
-    image={{ 
-      src: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80', 
-      alt: 'Fondo oscuro abstracto' 
-    }}
-  />
+  >
+    <Fragment slot="title">
+      <span class="text-white">EL UNIVERSO DE LA</span> <span class="text-red-700">MENTE</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="text-slate-200 block mt-4">
+        Donde la honestidad brutal se encuentra con el caos controlado. <br class="hidden md:block" />
+        No es apto para mentes frágiles.
+      </span>
+    </Fragment>
+  </Hero>
 </Layout>
 
 <style is:global>
-  /* Este es el truco para que el fondo sea negro total y las letras resalten */
+  /* Fondo negro total y resalte de textos */
   body {
     background-color: #000000 !important;
+    color: #ffffff !important;
   }
+  
+  /* Ajuste para que el Header y Menú también se vean blancos en móvil */
+  header a, header button {
+    color: #ffffff !important;
+  }
+
   h1 {
     letter-spacing: -0.05em;
     line-height: 0.9 !important;
     text-transform: uppercase;
+  }
+  
+  /* Esto asegura que el tagline (Bienvenidos al vacío) sea visible */
+  .text-muted, .text-slate-400 {
+    color: #e2e8f0 !important; /* Un gris muy claro casi blanco */
   }
 </style>
