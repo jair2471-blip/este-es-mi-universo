@@ -7,14 +7,12 @@ export const headerData = {
     { text: 'Antonov', href: getPermalink('/antonov') },
     { text: 'El manifiesto', href: getPermalink('/elmanifiesto') },
   ],
-  actions: [],
+  actions: [], // Aquí ya eliminamos botones de "Download" o "Get Started"
 };
 
 export const footerData = {
   links: [],
   secondaryLinks: [],
-  socialLinks: [
-    { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/arthelokyo' },
-  ],
-  footNote: `© 2026 El Universo de la Mente · Todos los derechos reservados.`,
+  socialLinks: [], // <-- Simplemente deja esto vacío
+  footNote: `© 2026 E.U.L.M · El Universo de la Mente`,
 };
