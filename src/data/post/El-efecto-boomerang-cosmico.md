@@ -4,6 +4,7 @@ description: "Descubre cómo funciona el efecto boomerang en la vida real. Todo 
 author: "El Universo de la Mente"
 pubDate: 2026-01-09
 slug: "efecto-boomerang-cosmico"
+image: https://images.unsplash.com/photo-1599055307851-bfd37b3805bb?q=80&w=1470&auto=format&fit=crop
 tags:
   - desarrollo personal
   - espiritualidad
