@@ -1,3 +1,4 @@
+import { getPermalink, getBlogPermalink, getAsset } from './utils/permalink
 export const headerData = {
   links: [
     { text: 'Inicio', href: getPermalink('/') },
