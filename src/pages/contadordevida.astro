@@ -1,512 +1,137 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Vida Se Está Descargando</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: #0a0a0a;
-            color: #f4f4f4;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        /* Efecto de ruido de fondo */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.03;
-            z-index: -1;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
-        }
-        
-        /* Partículas de fondo */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #FF6B35;
-            opacity: 0.2;
-            animation: fall linear infinite;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            padding-top: 40px;
-        }
-        
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 700;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .glitch {
-            position: relative;
-            color: #f4f4f4;
-            animation: glitch-main 3s infinite;
-        }
-        
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .glitch::before {
-            left: 2px;
-            text-shadow: -2px 0 #FF6B35;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-        }
-        
-        .glitch::after {
-            left: -2px;
-            text-shadow: -2px 0 #00fff9;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 3s infinite linear alternate-reverse;
-        }
-        
-        @keyframes glitch-anim {
-            0% { clip: rect(61px, 9999px, 88px, 0); }
-            20% { clip: rect(29px, 9999px, 3px, 0); }
-            40% { clip: rect(47px, 9999px, 76px, 0); }
-            60% { clip: rect(72px, 9999px, 15px, 0); }
-            80% { clip: rect(18px, 9999px, 98px, 0); }
-            100% { clip: rect(55px, 9999px, 42px, 0); }
-        }
-        
-        .subtitle {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 1.1rem;
-            color: #FF6B35;
-            letter-spacing: 2px;
-            opacity: 0;
-            animation: fadeIn 1s 0.5s forwards;
-        }
-        
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        
-        #age-input-section {
-            text-align: center;
-            margin: 60px 0;
-            padding: 40px;
-            background: rgba(45, 49, 66, 0.3);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        #age-input-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #FF6B35;
-        }
-        
-        .input-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        input[type="number"] {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            padding: 15px 30px;
-            background: #2D3142;
-            border: 2px solid #FF6B35;
-            border-radius: 10px;
-            color: #f4f4f4;
-            width: 150px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        input[type="number"]:focus {
-            outline: none;
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
-            transform: scale(1.05);
-        }
-        
-        button {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #FF6B35 0%, #ff8c61 100%);
-            border: none;
-            border-radius: 10px;
-            color: #0a0a0a;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
-        }
-        
-        #counters {
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
-        }
-        
-        .counter-card {
-            background: linear-gradient(145deg, #1a1a1a, #2D3142);
-            border: 1px solid rgba(255, 107, 53, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .counter-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
-            transition: left 0.5s;
-        }
-        
-        .counter-card:hover::before {
-            left: 100%;
-        }
-        
-        .counter-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.2);
-            border-color: #FF6B35;
-        }
-        
-        .counter-label {
-            font-size: 1.1rem;
-            color: #FF6B35;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-        
-        .counter-value {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 3rem;
-            font-weight: 700;
-            color: #f4f4f4;
-            text-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .counter-subtitle {
-            font-size: 0.9rem;
-            color: #8a8a8a;
-            margin-top: 10px;
-            font-style: italic;
-        }
-        
-        #brutal-phrases {
-            margin: 80px 0;
-            text-align: center;
-        }
-        
-        .phrase {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 500;
-            line-height: 1.4;
-            margin: 40px 0;
-            padding: 30px;
-            background: rgba(255, 107, 53, 0.05);
-            border-left: 4px solid #FF6B35;
-            border-radius: 10px;
-            opacity: 0;
-            animation: typewriter 2s steps(40) forwards, fadeIn 0.5s forwards;
-        }
-        
-        @keyframes typewriter {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        #cta-section {
-            text-align: center;
-            margin: 80px 0;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(45, 49, 66, 0.3) 100%);
-            border: 2px solid #FF6B35;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        #cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
-            animation: rotate 10s linear infinite;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        
-        #cta-section h2 {
-            position: relative;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            z-index: 1;
-        }
-        
-        #cta-section p {
-            position: relative;
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            color: #c4c4c4;
-            z-index: 1;
-        }
-        
-        .big-cta {
-            font-size: 1.5rem !important;
-            padding: 20px 60px !important;
-            position: relative;
-            z-index: 1;
-        }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .counter-value { font-size: 2rem; }
-            .phrase { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-    <div id="particles"></div>
-    
-    <div class="container">
-        <header>
-            <h1 class="glitch" data-text="TU VIDA SE ESTÁ DESCARGANDO">TU VIDA SE ESTÁ DESCARGANDO</h1>
-            <p class="subtitle">>>> CADA SEGUNDO CUENTA. ¿O NO? <<<</p>
-        </header>
-        
-        <section id="age-input-section">
-            <h2>¿Cuántos años tienes?</h2>
-            <p>No te preocupes, solo necesito esto para mostrarte la verdad...</p>
-            <div class="input-group">
-                <input type="number" id="age-input" min="1" max="100" placeholder="25" />
-                <button onclick="calculateLife()">MOSTRARME LA REALIDAD</button>
-            </div>
-        </section>
-        
-        <div id="counters"></div>
-        
-        <div id="brutal-phrases"></div>
-        
-        <section id="cta-section" style="display: none;">
-            <h2>¿VAS A SEGUIR DESPERDICIANDO TIEMPO?</h2>
-            <p>O vas a hacer algo al respecto. Ahora.</p>
-            <button class="big-cta" onclick="goToCommitment()">COMPROMETERME YA</button>
-        </section>
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Contador de Vida | El Universo de la Mente',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-[#0a0a0a] text-[#f4f4f4] min-h-screen font-['Rajdhani'] relative overflow-hidden py-20">
+    <div id="particles-js" class="absolute inset-0 z-0 pointer-events-none opacity-20"></div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <header class="text-center mb-16">
+        <h1 class="glitch text-5xl md:text-7xl font-bold mb-4 tracking-tighter text-white" data-text="TU VIDA SE ESTÁ DESCARGANDO">
+          TU VIDA SE ESTÁ DESCARGANDO
+        </h1>
+        <p class="subtitle font-mono text-orange-500 tracking-widest uppercase">>>> CADA SEGUNDO CUENTA. ¿O NO? <<<</p>
+      </header>
+
+      <section id="age-input-section" class="max-w-2xl mx-auto text-center p-10 bg-[#1a1a1a] border border-orange-500/20 rounded-2xl backdrop-blur-md shadow-2xl">
+        <h2 class="text-3xl font-bold mb-6 text-orange-500">¿CUÁNTOS AÑOS TIENES?</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+          <input 
+            type="number" 
+            id="age-input" 
+            min="1" 
+            max="100" 
+            placeholder="25" 
+            class="text-4xl font-bold p-4 bg-[#2D3142] border-2 border-orange-500 rounded-xl text-center w-32 focus:outline-none focus:ring-4 focus:ring-orange-500/50 transition-all"
+          />
+          <button 
+            id="btn-calculate"
+            class="bg-gradient-to-r from-orange-600 to-orange-400 text-black font-bold py-5 px-10 rounded-xl text-xl hover:scale-105 transition-transform shadow-lg uppercase"
+          >
+            Mostrarme la Realidad
+          </button>
+        </div>
+      </section>
+
+      <div id="counters" class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 hidden">
+        </div>
+
+      <div id="brutal-phrases" class="max-w-4xl mx-auto mt-20 text-center">
+        </div>
     </div>
+  </section>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap');
     
-    <script>
-        // Crear partículas de fondo
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                particle.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(particle);
-            }
-        }
-        
-        createParticles();
-        
-        const brutalPhrases = [
-            "Mientras lees esto, 3 segundos se fueron para siempre.",
-            "¿Cuántos de tus días realmente recuerdas?",
-            "El tiempo no se detiene. Ni siquiera para que decidas qué hacer.",
-            "Mañana es el día favorito de los que nunca hacen nada.",
-            "Estás más cerca de tu muerte que de tu nacimiento.",
-            "¿Qué has hecho con los últimos 365 días?",
-            "Tu vida no es un ensayo. Esta es la función principal."
-        ];
-        
-        function calculateLife() {
-            const age = parseInt(document.getElementById('age-input').value);
-            
-            if (!age || age < 1 || age > 100) {
-                alert('Por favor ingresa una edad válida');
-                return;
-            }
-            
-            const lifeExpectancy = 80;
-            const yearsLeft = lifeExpectancy - age;
-            const daysLeft = yearsLeft * 365;
-            const weekendsLeft = yearsLeft * 52;
-            const summersLeft = yearsLeft;
-            const mondaysLeft = yearsLeft * 52;
-            const daysLived = age * 365;
-            
-            const countersData = [
-                { label: 'Días que te quedan', value: daysLeft.toLocaleString(), subtitle: 'Si llegas a 80 años' },
-                { label: 'Fines de semana restantes', value: weekendsLeft.toLocaleString(), subtitle: 'Para hacer lo que nunca haces' },
-                { label: 'Veranos que faltan', value: summersLeft, subtitle: 'Menos de los que crees' },
-                { label: 'Lunes por sufrir', value: mondaysLeft.toLocaleString(), subtitle: 'O cambias, o los sufres todos' },
-                { label: 'Días que ya viviste', value: daysLived.toLocaleString(), subtitle: '¿Cuántos recuerdas?' },
-                { label: 'Tu progreso vital', value: ((age/lifeExpectancy)*100).toFixed(1) + '%', subtitle: 'Cargando... pero al revés' }
-            ];
-            
-            const countersContainer = document.getElementById('counters');
-            countersContainer.style.display = 'grid';
-            countersContainer.innerHTML = '';
-            
-            countersData.forEach((data, index) => {
-                setTimeout(() => {
-                    const card = document.createElement('div');
-                    card.className = 'counter-card';
-                    card.innerHTML = `
-                        <div class="counter-label">${data.label}</div>
-                        <div class="counter-value">${data.value}</div>
-                        <div class="counter-subtitle">${data.subtitle}</div>
-                    `;
-                    countersContainer.appendChild(card);
-                }, index * 200);
-            });
-            
-            // Mostrar frases brutales
-            setTimeout(() => {
-                showBrutalPhrases();
-            }, countersData.length * 200 + 500);
-            
-            // Mostrar CTA
-            setTimeout(() => {
-                document.getElementById('cta-section').style.display = 'block';
-                document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, countersData.length * 200 + 3000);
-        }
-        
-        function showBrutalPhrases() {
-            const phrasesContainer = document.getElementById('brutal-phrases');
-            const selectedPhrases = brutalPhrases.sort(() => 0.5 - Math.random()).slice(0, 3);
-            
-            selectedPhrases.forEach((phrase, index) => {
-                setTimeout(() => {
-                    const p = document.createElement('div');
-                    p.className = 'phrase';
-                    p.textContent = phrase;
-                    phrasesContainer.appendChild(p);
-                }, index * 1500);
-            });
-        }
-        
-        function goToCommitment() {
-            alert('¡Próximamente: Generador de Compromisos Públicos!\n\nAquí podrás crear tu compromiso y compartirlo con el mundo.');
-            // Aquí integrarás tu generador de compromisos
-        }
-        
-        // Auto-focus en el input
-        document.getElementById('age-input').focus();
-        
-        // Enter para calcular
-        document.getElementById('age-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculateLife();
-            }
-        });
-    </script>
-</body>
-</html>
+    .glitch {
+      position: relative;
+      animation: glitch-anim 3s infinite;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .glitch::before { left: 2px; text-shadow: -2px 0 #ff6b35; clip: rect(44px, 450px, 56px, 0); animation: glitch-1 2s infinite linear alternate-reverse; }
+    .glitch::after { left: -2px; text-shadow: 2px 0 #00fff9; clip: rect(100px, 450px, 120px, 0); animation: glitch-2 3s infinite linear alternate-reverse; }
+
+    @keyframes glitch-1 { 0% { clip: rect(10px, 999px, 40px, 0); } 100% { clip: rect(80px, 999px, 100px, 0); } }
+    @keyframes glitch-2 { 0% { clip: rect(50px, 999px, 70px, 0); } 100% { clip: rect(10px, 999px, 30px, 0); } }
+
+    .counter-card {
+      background: linear-gradient(145deg, #1a1a1a, #2D3142);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      padding: 2rem;
+      border-radius: 1.25rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .counter-card:hover { border-color: #ff6b35; transform: translateY(-5px); }
+    
+    .phrase-box {
+      font-size: 1.8rem;
+      border-left: 4px solid #ff6b35;
+      padding: 1.5rem;
+      background: rgba(255,107,53, 0.05);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+  </style>
+
+  <script is:inline>
+    const btn = document.getElementById('btn-calculate');
+    const input = document.getElementById('age-input');
+    const countersContainer = document.getElementById('counters');
+    const phrasesContainer = document.getElementById('brutal-phrases');
+
+    const brutalPhrases = [
+      "Mientras leías esto, perdiste tiempo que no volverá jamás.",
+      "Mañana es la mentira favorita de los mediocres.",
+      "Estás más cerca del final que del principio. ¿Qué vas a hacer?",
+      "Tu vida no es un ensayo. Estás en plena función.",
+      "¿Cuántos de tus días realmente valen la pena recordar?"
+    ];
+
+    btn.addEventListener('click', () => {
+      const age = parseInt(input.value);
+      if (!age || age < 1 || age > 100) return alert('Pon una edad real, compa.');
+
+      const lifeExp = 80;
+      const left = lifeExp - age;
+      
+      const data = [
+        { label: 'Días restantes', val: (left * 365).toLocaleString() },
+        { label: 'Fines de semana', val: (left * 52).toLocaleString() },
+        { label: 'Tu progreso vital', val: ((age/lifeExp)*100).toFixed(1) + '%' }
+      ];
+
+      countersContainer.classList.remove('hidden');
+      countersContainer.innerHTML = '';
+      phrasesContainer.innerHTML = '';
+
+      data.forEach((d, i) => {
+        setTimeout(() => {
+          const card = document.createElement('div');
+          card.className = 'counter-card';
+          card.innerHTML = `<div class="text-orange-500 uppercase tracking-widest text-sm mb-2">${d.label}</div>
+                            <div class="text-4xl font-mono font-bold">${d.val}</div>`;
+          countersContainer.appendChild(card);
+        }, i * 200);
+      });
+
+      setTimeout(() => {
+        const p = document.createElement('div');
+        p.className = 'phrase-box';
+        p.textContent = brutalPhrases[Math.floor(Math.random() * brutalPhrases.length)];
+        phrasesContainer.appendChild(p);
+      }, 1000);
+    });
+  </script>
+</Layout>
