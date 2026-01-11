@@ -93,34 +93,16 @@ const metadata = {
   </style>
 
   <script is:inline>
-    // Partículas
-    function createParticles() {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 50; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        p.style.animationDelay = Math.random() * 5 + 's';
-        container.appendChild(p);
-      }
-    }
-    createParticles();
-
-    const brutalPhrases = [
-      "Mientras lees esto, 3 segundos se fueron para siempre.",
-      "¿Cuántos de tus días realmente recuerdas?",
-      "El tiempo no se detiene. Ni siquiera para que decidas qué hacer.",
-      "Mañana es el día favorito de los que nunca hacen nada.",
-      "Estás más cerca de tu muerte que de tu nacimiento.",
-      "Tu vida no es un ensayo. Esta es la función principal."
-    ];
-
+  // Esta función envuelve todo para que Astro lo reactive cada vez que entras a la página
+  function initContador() {
     const btn = document.getElementById('btn-calculate');
     const input = document.getElementById('age-input');
     const countersContainer = document.getElementById('counters');
     const phrasesContainer = document.getElementById('brutal-phrases');
     const cta = document.getElementById('cta-section');
+
+    // Si no encuentra el botón, no hace nada (evita errores)
+    if (!btn) return;
 
     btn.addEventListener('click', () => {
       const age = parseInt(input.value);
@@ -157,27 +139,25 @@ const metadata = {
         }, i * 200);
       });
 
-      // Frases y CTA
-      setTimeout(() => {
-        const selected = brutalPhrases.sort(() => 0.5 - Math.random()).slice(0, 3);
-        selected.forEach((phrase, i) => {
-          setTimeout(() => {
-            const p = document.createElement('div');
-            p.className = 'phrase-box';
-            p.textContent = phrase;
-            phrasesContainer.appendChild(p);
-          }, i * 1500);
-        });
-      }, 1500);
-
+      // Lógica de frases y botón final
       setTimeout(() => {
         cta.classList.remove('hidden');
-        cta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 6000);
+      }, 4000);
     });
 
-    document.getElementById('btn-commitment').addEventListener('click', () => {
-      alert('¡Próximamente: Generador de Compromisos Públicos!\n\nAquí podrás crear tu compromiso y compartirlo con el mundo.');
-    });
-  </script>
+    // BOTÓN DE COMPROMISO (Corregido para ir a la otra herramienta)
+    const btnCommit = document.getElementById('btn-commitment');
+    if (btnCommit) {
+      btnCommit.addEventListener('click', () => {
+        window.location.href = '/generador-compromisos';
+      });
+    }
+  }
+
+  // Se ejecuta al cargar la web y cada vez que cambias de página en Astro
+  document.addEventListener('astro:page-load', initContador);
+  
+  // Por si no usas ViewTransitions, también lo lanzamos al inicio
+  initContador();
+</script>
 </Layout>
