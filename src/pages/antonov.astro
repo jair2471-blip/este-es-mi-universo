@@ -254,6 +254,24 @@ const metadata = {
     select.antonov-input {
       margin-bottom: 0.5rem;
     }
+    /* Efecto de destello para el canvas */
+    .canvas-container.glitch-active {
+      animation: pulse-border 0.4s ease-out;
+    }
+
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
+      50% { box-shadow: 0 0 50px rgba(234, 88, 12, 0.8); border-color: #ea580c; }
+      100% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
+    }
+
+    /* Mejora del canvas para que el destello se vea interno también */
+    canvas {
+      transition: filter 0.3s ease;
+    }
+    .processing canvas {
+      filter: brightness(1.5) contrast(1.2);
+    }
   </style>
 
   <div class="antonov-wrapper">
@@ -482,27 +500,41 @@ const metadata = {
       };
 
       const callGemini = async () => {
-        const per = personalidades[selectedVoice];
-        el.btnGemini.disabled = true;
-        el.btnText.textContent = '⏳ GENERANDO...';
-        try {
-          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: per.prompt }),
-          });
-          const data = await response.json();
-          if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
-          el.quote.value = data.text.toUpperCase();
-          render();
-        } catch (error) {
-          console.error('Error:', error);
-          alert(`❌ Error: ${error.message}`);
-        } finally {
-          el.btnGemini.disabled = false;
-          el.btnText.textContent = '🤖 GENERAR CON GEMINI';
-        }
-      };
+          const per = personalidades[selectedVoice];
+          const container = document.querySelector('.canvas-container');
+          
+          // ACTIVAR EFECTOS VISUALES
+          el.btnGemini.disabled = true;
+          el.btnText.textContent = '⏳ PROCESANDO NÚCLEO...';
+          container.classList.add('glitch-active', 'processing');
+          
+          try {
+            const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: per.prompt }),
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
+            
+            el.quote.value = data.text.toUpperCase();
+            
+            // Renderizado con un pequeño delay para que se sienta la potencia
+            setTimeout(() => {
+              render();
+              container.classList.remove('processing');
+            }, 200);
+
+          } catch (error) {
+            console.error('Error:', error);
+            alert(`❌ ERROR DE NÚCLEO: ${error.message}`);
+          } finally {
+            el.btnGemini.disabled = false;
+            el.btnText.textContent = '🤖 GENERAR CON GEMINI';
+            // Quitamos la animación después de un momento
+            setTimeout(() => container.classList.remove('glitch-active'), 500);
+          }
+        };
 
       el.voiceButtons.forEach((btn) => {
         btn.onclick = (e) => {
