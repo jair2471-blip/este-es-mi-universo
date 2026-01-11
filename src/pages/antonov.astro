@@ -15,14 +15,15 @@ const metadata = {
       background-color: #050505;
       color: white;
       font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      padding: 2rem 1rem;
+      min-height: calc(100vh - 200px);
+      padding: 2rem 0;
     }
 
     .container {
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
       width: 100%;
+      padding: 0 1rem;
     }
 
     .header-section {
@@ -56,12 +57,13 @@ const metadata = {
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 1.5rem;
     }
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 380px 1fr;
+        grid-template-columns: 350px 1fr;
+        gap: 2rem;
       }
     }
 
@@ -307,31 +309,22 @@ const metadata = {
           voiceName: document.getElementById('current-voice-name'),
         };
 
-        // AQUÍ ESTABA EL ERROR: RECONSTRUI LAS PERSONALIDADES QUE FALTABAN
-        const personalidades = {
-          sapo: {
-            nombre: 'SAPO HONESTO',
-            color: '#22c55e',
-            prompt: 'Eres un sapo filósofo de barrio. Tu estilo es crudo, directo y callejero. Usas jerga colombiana/latina. Das consejos de vida brutales. Genera UNA frase corta, impactante, MAYÚSCULAS.',
-            frases: ['LA VIDA ES DURA PERO MÁS DURO ES EL CEMENTO', 'SI NO SUMA QUE NO ESTORBE', 'O CORRES O TE ENCARAMAS', 'PAPAYA PUESTA PAPAYA PARTIDA']
-          },
-          coach: {
-            nombre: 'COACH SIN AZÚCAR',
-            color: '#ef4444',
-            prompt: 'Eres un entrenador militar agresivo. Odias las excusas. Gritas verdades incómodas. Genera UNA frase corta, agresiva, MAYÚSCULAS.',
-            frases: ['EL DOLOR ES TU AMIGO', 'TU PEREZA ME DA ASCO', 'LEVÁNTATE Y SUFRE', 'LAS EXCUSAS NO QUEMAN CALORÍAS']
-          },
-          zen: {
-            nombre: 'ZEN CALLEJERO',
-            color: '#a855f7',
-            prompt: 'Eres un monje budista urbano. Mezclas espiritualidad con realidad de la calle. Genera UNA frase profunda, mística pero barrial en MAYÚSCULAS.',
-            frases: ['RESPIRA Y NO MATES A NADIE', 'EL KARMA TIENE GPS', 'ESTO TAMBIÉN PASA', 'LA CALMA ES PODER']
+ PASA',
+              'LA CALMA ES PODER',
+            ],
           },
           bufon: {
             nombre: 'BUFÓN FILOSÓFICO',
             color: '#eab308',
             prompt:
-              'Eres un crítico social sarcástico latino que usa humor negro para exponer hipocresías. Tu estilo es mordaz, irónico. Genera UNA frase irónica de máximo 6 palabras sobre consumismo o falsedad social. Solo la frase en MAYÚSCULAS.',
+              'Eres un crítico social sarcástico latino que usa humor negro para exponer hipocresías. Tu estilo es mordaz, irónico, como un comediante stand-up oscuro. Ejemplos: "ESCLAVO CON IPHONE NUEVO", "LIBERTAD FINANCIADA A 36 MESES", "EXITOSO SEGÚN INSTAGRAM". Genera UNA frase irónica de máximo 6 palabras sobre consumismo, apariencias o falsedad social. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
+            frases: [
+              'EL ESCLAVO MEJOR VESTIDO',
+              'PAYASO CON IPHONE',
+              'REÍR ES MÁS BARATO QUE TERAPIA',
+              'TODOS SOMOS CIRCO PERO SIN CARPA',
+              'FELIZ CON LIKES VACÍO POR DENTRO',
+            ],
             frases: [
               'EL ESCLAVO MEJOR VESTIDO',
               'PAYASO CON IPHONE',
@@ -344,7 +337,16 @@ const metadata = {
             nombre: 'ABUELA SABIA',
             color: '#3b82f6',
             prompt:
-              'Eres una abuela latina con décadas de experiencia. Das consejos simples pero poderosos. Genera UN consejo de máximo 6 palabras. Solo la frase en MAYÚSCULAS.',
+              'Eres una abuela latina con décadas de experiencia. Das consejos simples pero poderosos, como refranes de barrio con sabiduría real. Ejemplos: "DESPACITO Y BUENA LETRA", "LO BARATO SALE CARO", "DIME CON QUIÉN ANDAS". Genera UN consejo de máximo 6 palabras, tradicional pero profundo, sobre paciencia, valores o vida. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
+            frases: [
+              'POCO A POCO SE ANDA LEJOS',
+              'LA PLATA ES PAPEL',
+              'LO QUE FÁCIL LLEGA FÁCIL SE VA',
+              'LA PACIENCIA TODO LO ALCANZA',
+              'MÁS VALE TARDE QUE NUNCA',
+            ],
+          },
+        };
             frases: [
               'POCO A POCO SE ANDA LEJOS',
               'LA PLATA ES PAPEL',
@@ -385,8 +387,8 @@ const metadata = {
           ctx.font = `900 ${fontSize}px monospace`;
 
           const words = text.split(' ');
-          const lines = []; // <--- CAMBIADO A CONST Y CON PUNTO Y COMA
-          let currentLine = words[0]; // <--- ESTE SÍ DEBE SER LET
+          let lines = [],
+            currentLine = words[0];
           for (let i = 1; i < words.length; i++) {
             if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
               currentLine += ' ' + words[i];
