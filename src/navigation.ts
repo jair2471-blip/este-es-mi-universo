@@ -1,11 +1,16 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
-
 export const headerData = {
   links: [
     { text: 'Inicio', href: getPermalink('/') },
     { text: 'Bitácora', href: getBlogPermalink() },
     { text: 'Antonov', href: getPermalink('/antonov') },
-    { text: 'Contador de Vida', href: getPermalink('/contadordevida') },
+    // Agrupamos las herramientas aquí:
+    {
+      text: 'Herramientas',
+      links: [
+        { text: '⏳ Contador de Vida', href: getPermalink('/contadordevida') },
+        { text: '🔥 Compromisos', href: getPermalink('/generador-compromisos') },
+      ],
+    },
     { text: 'El manifiesto', href: getPermalink('/elmanifiesto') },
   ],
   actions: [], 
