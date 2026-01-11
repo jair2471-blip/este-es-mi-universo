@@ -2,7 +2,7 @@
 publishDate: 2026-01-10T18:00:00Z
 title: "El Último Brindis de un Aventurero"
 excerpt: "De la plaza de mercado a los estadios más grandes: Yeison Jiménez demostró que el éxito no es suerte, es hambre convertida en disciplina brutal. Su historia es el manual definitivo para quien viene desde abajo."
-image: "~/assets/images/yeison-homenaje.png"
+image: "~/assets/images/homenaje-yeison.jpg"
 category: "Análisis"
 tags:
   - mentalidad
