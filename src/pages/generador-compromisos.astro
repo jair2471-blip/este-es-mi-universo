@@ -1,0 +1,254 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Generador de Compromisos | El Universo de la Mente',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-[#0a0a0a] text-[#f4f4f4] min-h-screen font-['Rajdhani'] relative overflow-hidden py-10">
+    <div class="scanline"></div>
+    
+    <div class="container mx-auto max-w-4xl px-4 relative z-10">
+      <header class="text-center mb-12 pt-10">
+        <h1 class="bebas-font text-5xl md:text-8xl mb-4 tracking-wider text-orange-500 uppercase">
+          GENERADOR DE COMPROMISOS
+        </h1>
+        <p class="font-mono text-orange-400 tracking-[0.3em] uppercase opacity-80">>>> NO HAY MARCHA ATRÁS <<<</p>
+      </header>
+
+      <div class="warning-banner border-2 border-orange-600 bg-orange-600/10 p-6 rounded-xl mb-10 text-center animate-pulse">
+        <h3 class="text-xl font-bold text-orange-500 mb-2 uppercase">⚠️ ADVERTENCIA SERIA</h3>
+        <p class="text-gray-300">Una vez que crees tu compromiso, el mundo lo verá. No hay excusas.</p>
+      </div>
+
+      <div class="form-section bg-[#1a1a1a] border border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl mb-12">
+        <div class="space-y-8">
+          <div class="form-group">
+            <label class="block text-orange-500 text-sm font-bold uppercase tracking-widest mb-3">Tu Nombre</label>
+            <input type="text" id="name" placeholder="¿Quién eres?" maxlength="30" 
+              class="w-full bg-black border-2 border-[#2D3142] p-4 rounded-lg text-xl focus:border-orange-500 outline-none transition-all"/>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-orange-500 text-sm font-bold uppercase tracking-widest mb-3">Tu Compromiso</label>
+            <textarea id="commitment" placeholder="Escribe aquí lo que VAS A HACER, no lo que 'intentarás'..." maxlength="150"
+              class="w-full bg-black border-2 border-[#2D3142] p-4 rounded-lg text-2xl font-bold min-h-[120px] focus:border-orange-500 outline-none transition-all"></textarea>
+            <div class="text-right text-xs text-gray-500 mt-2"><span id="char-count">0</span>/150 caracteres</div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-orange-500 text-sm font-bold uppercase tracking-widest mb-3">Fecha Límite</label>
+            <input type="date" id="deadline" 
+              class="w-full bg-black border-2 border-[#2D3142] p-4 rounded-lg text-xl focus:border-orange-500 outline-none transition-all"/>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-orange-500 text-sm font-bold uppercase tracking-widest mb-3">Estilo de Tarjeta</label>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <button class="style-option selected p-4 border-2 border-[#2D3142] rounded-lg hover:border-orange-500 transition-all text-left" data-style="aggressive">
+                <div class="font-bold">🔥 AGRESIVO</div>
+                <div class="text-xs text-gray-500 uppercase">Fuerte y directo</div>
+              </button>
+              <button class="style-option p-4 border-2 border-[#2D3142] rounded-lg hover:border-orange-500 transition-all text-left" data-style="minimal">
+                <div class="font-bold">⚡ MINIMAL</div>
+                <div class="text-xs text-gray-500 uppercase">Limpio y elegante</div>
+              </button>
+              <button class="style-option p-4 border-2 border-[#2D3142] rounded-lg hover:border-orange-500 transition-all text-left" data-style="neon">
+                <div class="font-bold">💫 NEÓN</div>
+                <div class="text-xs text-gray-500 uppercase">Cyberpunk vibes</div>
+              </button>
+            </div>
+          </div>
+
+          <button id="btn-generate" class="w-full bg-orange-600 hover:bg-orange-500 text-black font-black py-6 rounded-xl text-2xl uppercase tracking-tighter transition-all transform active:scale-95 shadow-[0_0_30px_rgba(234,88,12,0.3)]">
+            CREAR MI COMPROMISO
+          </button>
+        </div>
+      </div>
+
+      <div id="result-section" class="hidden text-center space-y-8 pb-20">
+        <div class="success-message border-2 border-green-500 bg-green-500/10 p-6 rounded-xl inline-block">
+          <h2 class="text-2xl font-bold text-green-500 uppercase tracking-widest">✓ COMPROMISO SELLADO</h2>
+        </div>
+        
+        <canvas id="commitment-canvas" class="w-full border-4 border-orange-500 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] mx-auto"></canvas>
+        
+        <div class="flex flex-wrap justify-center gap-4">
+          <button id="btn-download" class="bg-white text-black font-bold px-8 py-4 rounded-lg hover:bg-orange-500 transition-all uppercase">Descargar Imagen</button>
+          <button id="btn-share" class="border-2 border-white text-white font-bold px-8 py-4 rounded-lg hover:bg-white hover:text-black transition-all uppercase">Compartir</button>
+          <button id="btn-again" class="text-gray-500 underline hover:text-white transition-all uppercase px-8 py-4">Crear otro</button>
+        </div>
+
+        <div class="bg-white/5 p-8 rounded-2xl inline-block w-full">
+          <h3 class="text-orange-500 font-bold mb-4 uppercase">Tiempo restante para cumplir:</h3>
+          <div id="countdown" class="text-4xl md:text-6xl font-mono font-bold tracking-tighter text-white">00d 00h 00m 00s</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@500;700&display=swap');
+    
+    .bebas-font { font-family: 'Bebas Neue', cursive; }
+    
+    .scanline {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(transparent 50%, rgba(255, 107, 53, 0.02) 50%);
+      background-size: 100% 4px; pointer-events: none; z-index: 50;
+    }
+
+    .style-option.selected {
+      border-color: #ea580c;
+      background: rgba(234, 88, 12, 0.1);
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.2);
+    }
+  </style>
+
+  <script is:inline>
+    let selectedStyle = 'aggressive';
+    let commitmentData = null;
+    let countdownInterval = null;
+
+    const brutalQuotes = [
+      "El fracaso no es una opción. Es un recordatorio.",
+      "Las excusas son para los que ya se rindieron.",
+      "Hazlo o no lo hagas. No hay 'intentar'.",
+      "Tu futuro yo te está mirando. No lo decepciones.",
+      "El dolor es temporal. El arrepentimiento es para siempre."
+    ];
+
+    // Lógica de UI
+    document.getElementById('commitment').addEventListener('input', (e) => {
+      document.getElementById('char-count').textContent = e.target.value.length;
+    });
+
+    document.querySelectorAll('.style-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.style-option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        selectedStyle = opt.dataset.style;
+      });
+    });
+
+    // Generación
+    document.getElementById('btn-generate').addEventListener('click', () => {
+      const name = document.getElementById('name').value.trim();
+      const commitment = document.getElementById('commitment').value.trim();
+      const deadline = document.getElementById('deadline').value;
+
+      if (!name || !commitment || !deadline) return alert('Compadre, llene todo. Sin excusas.');
+      
+      commitmentData = { name, commitment, deadline };
+      drawCard();
+      
+      document.getElementById('result-section').classList.remove('hidden');
+      document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+      
+      if (countdownInterval) clearInterval(countdownInterval);
+      updateTimer();
+      countdownInterval = setInterval(updateTimer, 1000);
+    });
+
+    function drawCard() {
+      const canvas = document.getElementById('commitment-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 1200;
+      canvas.height = 675;
+      const quote = brutalQuotes[Math.floor(Math.random() * brutalQuotes.length)];
+
+      if (selectedStyle === 'aggressive') {
+        ctx.fillStyle = '#1a0000';
+        ctx.fillRect(0, 0, 1200, 675);
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 20;
+        ctx.strokeRect(40, 40, 1120, 595);
+        ctx.fillStyle = '#ea580c';
+        ctx.font = 'bold 90px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('COMPROMISO PACTADO', 600, 150);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 60px Arial';
+        ctx.fillText(commitmentData.name.toUpperCase(), 600, 260);
+      } else if (selectedStyle === 'minimal') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 1200, 675);
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(40, 40, 1120, 595);
+        ctx.fillStyle = '#000000';
+        ctx.font = '70px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('EL PACTO', 600, 150);
+        ctx.font = 'bold 50px Arial';
+        ctx.fillText(commitmentData.name, 600, 260);
+      } else {
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, 1200, 675);
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#00fff9';
+        ctx.strokeStyle = '#00fff9';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(40, 40, 1120, 595);
+        ctx.fillStyle = '#00fff9';
+        ctx.font = 'bold 80px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('[ COMPROMISO ]', 600, 150);
+        ctx.fillStyle = '#ff00ff';
+        ctx.shadowColor = '#ff00ff';
+        ctx.fillText(commitmentData.name.toUpperCase(), 600, 260);
+      }
+
+      // Texto del compromiso (Wrap text simplificado)
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = selectedStyle === 'minimal' ? '#333' : '#fff';
+      ctx.font = 'italic 45px Arial';
+      const words = commitmentData.commitment.split(' ');
+      let line = '';
+      let y = 380;
+      for(let n = 0; n < words.length; n++) {
+        let testLine = line + words[n] + ' ';
+        if (ctx.measureText(testLine).width > 900) {
+          ctx.fillText(line, 600, y);
+          line = words[n] + ' ';
+          y += 60;
+        } else { line = testLine; }
+      }
+      ctx.fillText(line, 600, y);
+
+      // Fecha y Frase
+      ctx.fillStyle = '#ea580c';
+      ctx.font = 'bold 35px Arial';
+      ctx.fillText(`LÍMITE: ${commitmentData.deadline}`, 600, 550);
+      ctx.fillStyle = '#888';
+      ctx.font = '25px Arial';
+      ctx.fillText(quote, 600, 610);
+    }
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const end = new Date(commitmentData.deadline + 'T23:59:59').getTime();
+      const diff = end - now;
+      if (diff < 0) {
+        document.getElementById('countdown').textContent = "TIEMPO AGOTADO";
+        return;
+      }
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('countdown').textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    document.getElementById('btn-download').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'mi-compromiso.png';
+      link.href = document.getElementById('commitment-canvas').toDataURL();
+      link.click();
+    });
+
+    document.getElementById('btn-again').addEventListener('click', () => location.reload());
+  </script>
+</Layout>
