@@ -11,36 +11,38 @@ const metadata = {
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@400;700&display=swap');
 
-    .antonov-body {
-      background-color: transparent;
-      color: white;
-      font-family: 'Inter', sans-serif;
-      padding: 3rem 1rem;
+    .antonov-wrapper {
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 1rem;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 2rem;
+    .antonov-container {
       background: #050505;
-      border: 2px solid #1a1a1a;
+      border: 2px solid #222;
       border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .antonov-body {
+      color: white;
+      font-family: 'Inter', sans-serif;
     }
 
     .header-section {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     .header-title {
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900;
       color: #22c55e;
       font-style: italic;
       text-transform: uppercase;
       line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
     }
 
     .header-subtitle {
@@ -59,27 +61,24 @@ const metadata = {
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 2rem;
     }
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 320px 1fr;
-        gap: 1.5rem;
+        grid-template-columns: 340px 1fr;
       }
     }
 
     .antonov-panel {
       background: #000;
       border: 2px solid #222;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      padding: 1.5rem;
+      border-radius: 4px;
     }
 
     .control-group {
-      margin-bottom: 10px;
+      margin-bottom: 1.25rem;
     }
 
     .label-control {
@@ -87,7 +86,7 @@ const metadata = {
       font-weight: bold;
       font-size: 0.7rem;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 0.5rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -101,79 +100,99 @@ const metadata = {
       background: #111;
       border: 1px solid #333;
       color: white;
-      padding: 12px;
+      padding: 0.75rem;
       font-family: 'Space Mono', monospace;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       outline: none;
+      border-radius: 4px;
     }
 
     .antonov-input:focus {
       border-color: #ea580c;
     }
 
+    textarea.antonov-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
     .voice-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+      gap: 0.5rem;
     }
 
     .v-btn {
       background: #111;
       border: 2px solid #222;
-      padding: 10px;
+      padding: 0.75rem;
       cursor: pointer;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       filter: grayscale(1);
-      transition: 0.3s;
+      transition: all 0.3s;
       display: flex;
       align-items: center;
       justify-content: center;
       aspect-ratio: 1;
+      border-radius: 4px;
+    }
+
+    .v-btn:hover {
+      border-color: #444;
+      transform: scale(1.05);
     }
 
     .v-btn.active {
       border-color: #ea580c;
       background: #1a1a1a;
       filter: grayscale(0);
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(234, 88, 12, 0.2);
+      transform: scale(1.08);
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.3);
     }
 
     .antonov-btn {
       width: 100%;
-      padding: 16px;
+      padding: 0.9rem;
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
       border: none;
-      transition: 0.2s;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
+      transition: all 0.2s;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
     }
 
     .btn-gemini {
       background: #27272a;
       color: #ea580c;
+      margin-bottom: 0.5rem;
     }
 
     .btn-gemini:hover:not(:disabled) {
       background: #3f3f46;
+      transform: translateY(-2px);
     }
 
     .btn-random {
       background: #18181b;
       color: #a1a1aa;
-      margin-top: 10px;
+    }
+
+    .btn-random:hover {
+      background: #27272a;
     }
 
     .btn-download {
       background: #ea580c;
       color: black;
-      margin-top: 20px;
+      margin-top: 0.5rem;
     }
 
     .btn-download:hover {
       background: #16a34a;
+      transform: translateY(-2px);
     }
 
     .antonov-btn:disabled {
@@ -184,25 +203,25 @@ const metadata = {
     .canvas-container {
       background: #0a0a0a;
       border: 2px solid #222;
-      padding: 20px;
+      padding: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 500px;
-      overflow: hidden;
+      border-radius: 4px;
     }
 
     canvas {
       max-width: 100%;
       height: auto !important;
       border: 1px solid #333;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
     }
 
     .slider-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.75rem;
     }
 
     .slider-container input {
@@ -214,81 +233,106 @@ const metadata = {
       font-family: 'Space Mono', monospace;
       color: #ea580c;
       font-weight: bold;
-      min-width: 50px;
+      min-width: 55px;
+      text-align: center;
+      font-size: 0.8rem;
     }
 
     .divider {
       border-top: 1px solid #222;
-      padding-top: 20px;
-      margin-top: 10px;
+      padding-top: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    select.antonov-input {
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      .antonov-container {
+        padding: 1.5rem;
+      }
+
+      .voice-grid {
+        gap: 0.4rem;
+      }
+
+      .v-btn {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+      }
     }
   </style>
 
-  <section class="antonov-body">
-    <div class="container">
-      <div class="header-section">
-        <h1 class="header-title">ANTONOV V5.0</h1>
-        <p class="header-subtitle">
-          SISTEMA MULTI-NÚCLEO // <span id="current-voice-name" class="voice-name-display">SAPO HONESTO</span>
-        </p>
-      </div>
+  <div class="antonov-wrapper">
+    <div class="antonov-container">
+      <section class="antonov-body">
+        <div class="header-section">
+          <h1 class="header-title">ANTONOV V5.0</h1>
+          <p class="header-subtitle">
+            SISTEMA MULTI-NÚCLEO // <span id="current-voice-name" class="voice-name-display">SAPO HONESTO</span>
+          </p>
+        </div>
 
-      <div class="system-grid">
-        <aside class="antonov-panel">
-          <div class="control-group">
-            <label class="label-control label-voice">◢ SELECCIONAR NÚCLEO:</label>
-            <div class="voice-grid">
-              <button class="v-btn active" data-voice="sapo" title="Sapo Honesto">🐸</button>
-              <button class="v-btn" data-voice="coach" title="Coach Sin Azúcar">🥊</button>
-              <button class="v-btn" data-voice="zen" title="Zen Callejero">🕶️</button>
-              <button class="v-btn" data-voice="bufon" title="Bufón Filosófico">🃏</button>
-              <button class="v-btn" data-voice="abuela" title="Abuela Sabia">👵</button>
+        <div class="system-grid">
+          <aside class="antonov-panel">
+            <div class="control-group">
+              <label class="label-control label-voice">◢ SELECCIONAR NÚCLEO:</label>
+              <div class="voice-grid">
+                <button class="v-btn active" data-voice="sapo" title="Sapo Honesto">🐸</button>
+                <button class="v-btn" data-voice="coach" title="Coach Sin Azúcar">🥊</button>
+                <button class="v-btn" data-voice="zen" title="Zen Callejero">🕶️</button>
+                <button class="v-btn" data-voice="bufon" title="Bufón Filosófico">🃏</button>
+                <button class="v-btn" data-voice="abuela" title="Abuela Sabia">👵</button>
+              </div>
             </div>
-          </div>
 
-          <div class="control-group">
-            <label class="label-control">▸ Texto del Núcleo:</label>
-            <textarea id="quote" rows="4" class="antonov-input" placeholder="SISTEMA LISTO..."></textarea>
-          </div>
-
-          <div class="control-group">
-            <button id="btn-gemini" class="antonov-btn btn-gemini">
-              <span id="btn-text">🤖 GENERAR CON GEMINI</span>
-            </button>
-            <button id="btn-random" class="antonov-btn btn-random">🎲 FRASE ALEATORIA</button>
-          </div>
-
-          <div class="control-group divider">
-            <label class="label-control">▸ Tamaño de Fuente:</label>
-            <div class="slider-container">
-              <input type="range" id="fontSizeSlider" min="20" max="300" value="80" />
-              <span id="sizeVal" class="size-display">80px</span>
+            <div class="control-group">
+              <label class="label-control">▸ Texto del Núcleo:</label>
+              <textarea id="quote" class="antonov-input" placeholder="SISTEMA LISTO..."></textarea>
             </div>
-          </div>
 
-          <div class="control-group">
-            <label class="label-control">▸ Formato y Glitch:</label>
-            <select id="format" class="antonov-input" style="margin-bottom: 10px">
-              <option value="post">CUADRADO (1080x1080)</option>
-              <option value="story">STORY (1080x1920)</option>
-              <option value="banner">BANNER (1920x1080)</option>
-            </select>
-            <select id="intensity" class="antonov-input">
-              <option value="0.5">GLITCH: BAJO</option>
-              <option value="1.0" selected>GLITCH: ALTO</option>
-              <option value="1.5">GLITCH: EXTREMO</option>
-            </select>
-          </div>
+            <div class="control-group">
+              <button id="btn-gemini" class="antonov-btn btn-gemini">
+                <span id="btn-text">🤖 GENERAR CON GEMINI</span>
+              </button>
+              <button id="btn-random" class="antonov-btn btn-random">🎲 FRASE ALEATORIA</button>
+            </div>
 
-          <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR IMAGEN</button>
-        </aside>
+            <div class="control-group divider">
+              <label class="label-control">▸ Tamaño de Fuente:</label>
+              <div class="slider-container">
+                <input type="range" id="fontSizeSlider" min="20" max="300" value="80" />
+                <span id="sizeVal" class="size-display">80px</span>
+              </div>
+            </div>
 
-        <section class="canvas-container">
-          <canvas id="canvas"></canvas>
-        </section>
-      </div>
+            <div class="control-group">
+              <label class="label-control">▸ Formato:</label>
+              <select id="format" class="antonov-input">
+                <option value="post">CUADRADO (1080x1080)</option>
+                <option value="story">STORY (1080x1920)</option>
+                <option value="banner">BANNER (1920x1080)</option>
+              </select>
+
+              <label class="label-control" style="margin-top: 0.5rem">▸ Intensidad Glitch:</label>
+              <select id="intensity" class="antonov-input">
+                <option value="0.5">BAJO</option>
+                <option value="1.0" selected>ALTO</option>
+                <option value="1.5">EXTREMO</option>
+              </select>
+            </div>
+
+            <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR IMAGEN</button>
+          </aside>
+
+          <section class="canvas-container">
+            <canvas id="canvas"></canvas>
+          </section>
+        </div>
+      </section>
     </div>
-  </section>
+  </div>
 
   <script is:inline>
     (function () {
@@ -311,7 +355,43 @@ const metadata = {
           voiceName: document.getElementById('current-voice-name'),
         };
 
- PASA',
+        const personalidades = {
+          sapo: {
+            nombre: 'SAPO HONESTO',
+            color: '#22c55e',
+            prompt:
+              'Eres el SAPO HONESTO de barrio latino. Dices verdades que duelen pero que todos necesitan escuchar. Tu estilo es directo, sin rodeos, crudo como la vida misma. Hablas del dinero, el ego, las excusas, la supervivencia real en las calles. Ejemplos de tu estilo: "EL ORGULLO NO PAGA FACTURAS", "TU PLAN NO VALE SI NO HAY EJECUCIÓN", "MIENTRAS HABLAS OTROS FACTURAN". Genera UNA frase de máximo 6 palabras, brutal, honesta, que golpee la conciencia sobre el trabajo, dinero o ego. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
+            frases: [
+              'MENOS CARRETA Y MÁS BILLETE',
+              'EL ORGULLO NO PAGA EL ARRIENDO',
+              'TU PLAN NO VALE NADA',
+              'MIENTRAS HABLAS OTROS FACTURAN',
+              'HABLAR ES GRATIS HACER CUESTA',
+            ],
+          },
+          coach: {
+            nombre: 'COACH SIN AZÚCAR',
+            color: '#ef4444',
+            prompt:
+              'Eres un COACH de gimnasio de barrio, sin tonterías motivacionales de Instagram. Tu estilo es agresivo, militar, como un sargento que grita verdades. Ejemplos: "LEVÁNTATE O QUÉDATE ABAJO", "HOY DUELE MAÑANA PRESUMO", "NADIE VIENE A SALVARTE". Genera UNA orden motivacional de máximo 6 palabras, directa, intensa, que despierte al dormido. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
+            frases: [
+              'MUÉVETE O TE OXIDAS',
+              'LA DISCIPLINA ES TU ÚNICA SALIDA',
+              'HOY DUELE MAÑANA PRESUMO',
+              'NADIE VIENE A SALVARTE',
+              'EXCUSAS O RESULTADOS TÚ ELIGES',
+            ],
+          },
+          zen: {
+            nombre: 'ZEN CALLEJERO',
+            color: '#a855f7',
+            prompt:
+              'Eres un sabio de barrio que mezcla budismo con realidad latina. Hablas simple pero profundo, como un taxista filósofo. Ejemplos: "LO QUE RESISTES PERSISTE", "EL RÍO NO EMPUJA", "SUELTA O TE HUNDE". Genera UNA frase filosófica de máximo 6 palabras, terrenal, sobre aceptación, fluir o soltar. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
+            frases: [
+              'LO QUE RESISTES PERSISTE',
+              'EL RÍO NO EMPUJA',
+              'SUELTA O TE HUNDE',
+              'RESPIRA HONDO TODO PASA',
               'LA CALMA ES PODER',
             ],
           },
@@ -321,18 +401,11 @@ const metadata = {
             prompt:
               'Eres un crítico social sarcástico latino que usa humor negro para exponer hipocresías. Tu estilo es mordaz, irónico, como un comediante stand-up oscuro. Ejemplos: "ESCLAVO CON IPHONE NUEVO", "LIBERTAD FINANCIADA A 36 MESES", "EXITOSO SEGÚN INSTAGRAM". Genera UNA frase irónica de máximo 6 palabras sobre consumismo, apariencias o falsedad social. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
             frases: [
-              'EL ESCLAVO MEJOR VESTIDO',
-              'PAYASO CON IPHONE',
-              'REÍR ES MÁS BARATO QUE TERAPIA',
-              'TODOS SOMOS CIRCO PERO SIN CARPA',
+              'ESCLAVO CON IPHONE NUEVO',
+              'LIBERTAD FINANCIADA A 36 MESES',
+              'EXITOSO SEGÚN INSTAGRAM',
               'FELIZ CON LIKES VACÍO POR DENTRO',
-            ],
-            frases: [
-              'EL ESCLAVO MEJOR VESTIDO',
-              'PAYASO CON IPHONE',
-              'REÍR ES MÁS BARATO QUE TERAPIA',
-              'TODOS SOMOS CIRCO PERO SIN CARPA',
-              'FELIZ CON LIKES VACÍO POR DENTRO',
+              'PAYASO CON MARCA DE LUJO',
             ],
           },
           abuela: {
@@ -341,18 +414,9 @@ const metadata = {
             prompt:
               'Eres una abuela latina con décadas de experiencia. Das consejos simples pero poderosos, como refranes de barrio con sabiduría real. Ejemplos: "DESPACITO Y BUENA LETRA", "LO BARATO SALE CARO", "DIME CON QUIÉN ANDAS". Genera UN consejo de máximo 6 palabras, tradicional pero profundo, sobre paciencia, valores o vida. Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.',
             frases: [
-              'POCO A POCO SE ANDA LEJOS',
-              'LA PLATA ES PAPEL',
-              'LO QUE FÁCIL LLEGA FÁCIL SE VA',
-              'LA PACIENCIA TODO LO ALCANZA',
-              'MÁS VALE TARDE QUE NUNCA',
-            ],
-          },
-        };
-            frases: [
-              'POCO A POCO SE ANDA LEJOS',
-              'LA PLATA ES PAPEL',
-              'LO QUE FÁCIL LLEGA FÁCIL SE VA',
+              'DESPACITO Y BUENA LETRA',
+              'LO BARATO SALE CARO',
+              'DIME CON QUIÉN ANDAS',
               'LA PACIENCIA TODO LO ALCANZA',
               'MÁS VALE TARDE QUE NUNCA',
             ],
@@ -461,18 +525,22 @@ const metadata = {
         [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
           if (input) input.oninput = render;
         });
+
         el.btnGemini.onclick = callGemini;
+
         el.btnRandom.onclick = () => {
           const frases = personalidades[selectedVoice].frases;
           el.quote.value = frases[Math.floor(Math.random() * frases.length)];
           render();
         };
+
         el.btnDownload.onclick = () => {
           const link = document.createElement('a');
           link.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
           link.href = canvas.toDataURL();
           link.click();
         };
+
         render();
       };
 
