@@ -1,6 +1,6 @@
 ---
 title: "No es falta de disciplina, es miedo bien organizado"
-description: "La mayoría no fracasa por pereza, sino por miedo estructurado en excusas elegantes. Este texto no motiva: desmonta el autoengaño que te mantiene ocupado, cansado y exactamente en el mismo lugar."
+excerpt: "La mayoría no fracasa por pereza, sino por miedo estructurado en excusas elegantes. Este texto no motiva: desmonta el autoengaño que te mantiene ocupado, cansado y exactamente en el mismo lugar."
 author: "El Universo de la Mente"
 pubDate: 2026-01-10
 slug: "miedo-bien-organizado"
