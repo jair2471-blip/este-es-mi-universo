@@ -93,7 +93,6 @@ const metadata = {
   </style>
 
   <script is:inline>
-  // Esta función envuelve todo para que Astro lo reactive cada vez que entras a la página
   function initContador() {
     const btn = document.getElementById('btn-calculate');
     const input = document.getElementById('age-input');
@@ -101,16 +100,26 @@ const metadata = {
     const phrasesContainer = document.getElementById('brutal-phrases');
     const cta = document.getElementById('cta-section');
 
-    // Si no encuentra el botón, no hace nada (evita errores)
     if (!btn) return;
 
-    btn.addEventListener('click', () => {
+    // Quitamos cualquier evento previo para que no se duplique
+    btn.replaceWith(btn.cloneNode(true));
+    const newBtn = document.getElementById('btn-calculate');
+
+    newBtn.addEventListener('click', () => {
       const age = parseInt(input.value);
       if (!age || age < 1 || age > 100) return alert('Por favor ingresa una edad válida');
 
       const lifeExp = 80;
       const left = lifeExp - age;
       
+      // LIMPIEZA TOTAL antes de empezar
+      countersContainer.innerHTML = ''; 
+      phrasesContainer.innerHTML = '';
+      countersContainer.classList.remove('hidden');
+      countersContainer.style.display = 'grid';
+      cta.classList.add('hidden');
+
       const countersData = [
         { label: 'Días que te quedan', val: (left * 365).toLocaleString(), sub: 'Si llegas a 80 años' },
         { label: 'Fines de semana', val: (left * 52).toLocaleString(), sub: 'Para hacer lo que nunca haces' },
@@ -119,12 +128,6 @@ const metadata = {
         { label: 'Días ya vividos', val: (age * 365).toLocaleString(), sub: '¿Cuántos recuerdas?' },
         { label: 'Progreso Vital', val: ((age/lifeExp)*100).toFixed(1) + '%', sub: 'Cargando... al revés' }
       ];
-
-      countersContainer.classList.remove('hidden');
-      countersContainer.style.display = 'grid';
-      countersContainer.innerHTML = '';
-      phrasesContainer.innerHTML = '';
-      cta.classList.add('hidden');
 
       countersData.forEach((data, i) => {
         setTimeout(() => {
@@ -136,28 +139,29 @@ const metadata = {
             <div class="text-gray-500 text-xs italic">${data.sub}</div>
           `;
           countersContainer.appendChild(card);
-        }, i * 200);
+        }, i * 150);
       });
 
-      // Lógica de frases y botón final
       setTimeout(() => {
         cta.classList.remove('hidden');
-      }, 4000);
+      }, 2000);
     });
 
-    // BOTÓN DE COMPROMISO (Corregido para ir a la otra herramienta)
+    // Botón de compromiso
     const btnCommit = document.getElementById('btn-commitment');
     if (btnCommit) {
-      btnCommit.addEventListener('click', () => {
+      btnCommit.onclick = () => {
         window.location.href = '/generador-compromisos';
-      });
+      };
     }
   }
 
-  // Se ejecuta al cargar la web y cada vez que cambias de página en Astro
+  // Solo una forma de dispararlo para evitar duplicados
   document.addEventListener('astro:page-load', initContador);
   
-  // Por si no usas ViewTransitions, también lo lanzamos al inicio
-  initContador();
+  // Si es la primera vez que carga sin transiciones
+  if (document.readyState === 'complete') {
+    initContador();
+  }
 </script>
 </Layout>
