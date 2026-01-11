@@ -1,6 +1,6 @@
 ---
 title: "El Efecto Boomerang Cósmico: Lo Que Lanzas al Universo Te Regresa Triplicado"
-description: "Descubre cómo funciona el efecto boomerang en la vida real. Todo lo que das al universo regresa multiplicado: energía positiva, karma y la ley de acción y reacción explicada con estilo."
+excerpt: "Descubre cómo funciona el efecto boomerang en la vida real. Todo lo que das al universo regresa multiplicado: energía positiva, karma y la ley de acción y reacción explicada con estilo."
 author: "El Universo de la Mente"
 pubDate: 2026-01-09
 slug: "efecto-boomerang-cosmico"
