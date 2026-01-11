@@ -4,6 +4,7 @@ description: "Contar tus planes te da dopamina, pero te roba resultados. Una ver
 pubDate: "2026-01-10"
 author: "El Universo de la Mente"
 excerpt: "El mundo está lleno de gente que habla como si ya hubiera ganado, pero vive como si nunca hubiera empezado. Este texto no motiva: confronta."
+image: https://images.unsplash.com/photo-1517409091671-180985f2ca15?q=80
 tags: ["acción", "autoengaño", "disciplina", "mentalidad", "ejecución"]
 slug: "hablar-no-es-poder"
 ---
