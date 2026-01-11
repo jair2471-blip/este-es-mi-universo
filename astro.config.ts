@@ -22,6 +22,8 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
+  // Aquí está su dominio listo
+  site: 'https://eluniversodelamente.com',
   output: 'static',
 
   integrations: [
@@ -83,7 +85,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '~': path.resolve(__dirname, './src'),
+        ~: path.resolve(__dirname, './src'),
       },
     },
   },
