@@ -7,19 +7,20 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <section class="bg-[#0a0a0a] text-[#f4f4f4] min-h-screen font-['Rajdhani'] relative overflow-hidden py-20">
-    <div id="particles-js" class="absolute inset-0 z-0 pointer-events-none opacity-20"></div>
+  <section class="bg-[#0a0a0a] text-[#f4f4f4] min-h-screen font-['Rajdhani'] relative overflow-hidden py-10">
+    <div id="particles" class="fixed inset-0 z-0 pointer-events-none"></div>
 
-    <div class="container mx-auto px-4 relative z-10">
-      <header class="text-center mb-16">
-        <h1 class="glitch text-5xl md:text-7xl font-bold mb-4 tracking-tighter text-white" data-text="TU VIDA SE ESTÁ DESCARGANDO">
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <header class="text-center mb-12 pt-10">
+        <h1 class="glitch text-4xl md:text-7xl font-bold mb-4 tracking-tighter text-white inline-block" data-text="TU VIDA SE ESTÁ DESCARGANDO">
           TU VIDA SE ESTÁ DESCARGANDO
         </h1>
-        <p class="subtitle font-mono text-orange-500 tracking-widest uppercase">>>> CADA SEGUNDO CUENTA. ¿O NO? <<<</p>
+        <p class="subtitle font-mono text-orange-500 tracking-widest uppercase opacity-0 animate-fade-in">>>> CADA SEGUNDO CUENTA. ¿O NO? <<<</p>
       </header>
 
-      <section id="age-input-section" class="max-w-2xl mx-auto text-center p-10 bg-[#1a1a1a] border border-orange-500/20 rounded-2xl backdrop-blur-md shadow-2xl">
-        <h2 class="text-3xl font-bold mb-6 text-orange-500">¿CUÁNTOS AÑOS TIENES?</h2>
+      <section id="age-input-section" class="max-w-2xl mx-auto text-center p-10 bg-[#1a1a1a]/80 border border-orange-500/20 rounded-2xl backdrop-blur-md shadow-2xl mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-orange-500 uppercase">¿Cuántos años tienes?</h2>
+        <p class="text-gray-400 mb-6 italic">No te preocupes, solo necesito esto para mostrarte la verdad...</p>
         <div class="flex flex-col md:flex-row justify-center items-center gap-6">
           <input 
             type="number" 
@@ -27,111 +28,156 @@ const metadata = {
             min="1" 
             max="100" 
             placeholder="25" 
-            class="text-4xl font-bold p-4 bg-[#2D3142] border-2 border-orange-500 rounded-xl text-center w-32 focus:outline-none focus:ring-4 focus:ring-orange-500/50 transition-all"
+            class="text-4xl font-bold p-4 bg-[#2D3142] border-2 border-orange-500 rounded-xl text-center w-32 focus:outline-none focus:ring-4 focus:ring-orange-500/50 transition-all text-white"
           />
           <button 
             id="btn-calculate"
-            class="bg-gradient-to-r from-orange-600 to-orange-400 text-black font-bold py-5 px-10 rounded-xl text-xl hover:scale-105 transition-transform shadow-lg uppercase"
+            class="bg-gradient-to-r from-orange-600 to-orange-400 text-black font-bold py-5 px-10 rounded-xl text-xl hover:scale-105 transition-all shadow-lg uppercase active:scale-95"
           >
-            Mostrarme la Realidad
+            MOSTRARME LA REALIDAD
           </button>
         </div>
       </section>
 
-      <div id="counters" class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 hidden">
-        </div>
+      <div id="counters" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 hidden"></div>
 
-      <div id="brutal-phrases" class="max-w-4xl mx-auto mt-20 text-center">
+      <div id="brutal-phrases" class="max-w-4xl mx-auto mb-16 text-center"></div>
+
+      <section id="cta-section" class="hidden text-center p-12 bg-gradient-to-br from-orange-500/10 to-transparent border-2 border-orange-500 rounded-2xl relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">¿VAS A SEGUIR DESPERDICIANDO TIEMPO?</h2>
+          <p class="text-xl text-gray-300 mb-8">O vas a hacer algo al respecto. Ahora mismo.</p>
+          <button id="btn-commitment" class="bg-white text-black font-black py-6 px-12 rounded-full text-2xl hover:bg-orange-500 hover:text-white transition-colors uppercase tracking-tighter">
+            COMPROMETERME YA
+          </button>
         </div>
+      </section>
     </div>
   </section>
 
-  <style>
+  <style is:global>
     @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap');
     
-    .glitch {
-      position: relative;
-      animation: glitch-anim 3s infinite;
-    }
+    .glitch { position: relative; animation: glitch-main 3s infinite; }
     .glitch::before, .glitch::after {
-      content: attr(data-text);
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     }
-    .glitch::before { left: 2px; text-shadow: -2px 0 #ff6b35; clip: rect(44px, 450px, 56px, 0); animation: glitch-1 2s infinite linear alternate-reverse; }
-    .glitch::after { left: -2px; text-shadow: 2px 0 #00fff9; clip: rect(100px, 450px, 120px, 0); animation: glitch-2 3s infinite linear alternate-reverse; }
+    .glitch::before { left: 2px; text-shadow: -2px 0 #FF6B35; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
+    .glitch::after { left: -2px; text-shadow: -2px 0 #00fff9; clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
 
-    @keyframes glitch-1 { 0% { clip: rect(10px, 999px, 40px, 0); } 100% { clip: rect(80px, 999px, 100px, 0); } }
-    @keyframes glitch-2 { 0% { clip: rect(50px, 999px, 70px, 0); } 100% { clip: rect(10px, 999px, 30px, 0); } }
+    @keyframes glitch-anim {
+      0% { clip: rect(61px, 9999px, 88px, 0); }
+      100% { clip: rect(55px, 9999px, 42px, 0); }
+    }
 
     .counter-card {
       background: linear-gradient(145deg, #1a1a1a, #2D3142);
       border: 1px solid rgba(255, 107, 53, 0.3);
-      padding: 2rem;
-      border-radius: 1.25rem;
-      text-align: center;
+      border-radius: 20px;
+      padding: 30px;
       transition: all 0.3s ease;
     }
-    .counter-card:hover { border-color: #ff6b35; transform: translateY(-5px); }
-    
+    .counter-card:hover { transform: translateY(-5px); border-color: #FF6B35; box-shadow: 0 10px 40px rgba(255, 107, 53, 0.2); }
+
+    .particle {
+      position: absolute; width: 2px; height: 2px; background: #FF6B35; opacity: 0.2; animation: fall linear infinite;
+    }
+    @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
+
     .phrase-box {
-      font-size: 1.8rem;
-      border-left: 4px solid #ff6b35;
-      padding: 1.5rem;
-      background: rgba(255,107,53, 0.05);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeIn 0.8s forwards;
+      font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 500; padding: 30px;
+      background: rgba(255, 107, 53, 0.05); border-left: 4px solid #FF6B35;
+      margin-bottom: 20px; opacity: 0; animation: fadeIn 0.5s forwards;
     }
     @keyframes fadeIn { to { opacity: 1; } }
   </style>
 
   <script is:inline>
+    // Partículas
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        p.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(p);
+      }
+    }
+    createParticles();
+
+    const brutalPhrases = [
+      "Mientras lees esto, 3 segundos se fueron para siempre.",
+      "¿Cuántos de tus días realmente recuerdas?",
+      "El tiempo no se detiene. Ni siquiera para que decidas qué hacer.",
+      "Mañana es el día favorito de los que nunca hacen nada.",
+      "Estás más cerca de tu muerte que de tu nacimiento.",
+      "Tu vida no es un ensayo. Esta es la función principal."
+    ];
+
     const btn = document.getElementById('btn-calculate');
     const input = document.getElementById('age-input');
     const countersContainer = document.getElementById('counters');
     const phrasesContainer = document.getElementById('brutal-phrases');
-
-    const brutalPhrases = [
-      "Mientras leías esto, perdiste tiempo que no volverá jamás.",
-      "Mañana es la mentira favorita de los mediocres.",
-      "Estás más cerca del final que del principio. ¿Qué vas a hacer?",
-      "Tu vida no es un ensayo. Estás en plena función.",
-      "¿Cuántos de tus días realmente valen la pena recordar?"
-    ];
+    const cta = document.getElementById('cta-section');
 
     btn.addEventListener('click', () => {
       const age = parseInt(input.value);
-      if (!age || age < 1 || age > 100) return alert('Pon una edad real, compa.');
+      if (!age || age < 1 || age > 100) return alert('Por favor ingresa una edad válida');
 
       const lifeExp = 80;
       const left = lifeExp - age;
       
-      const data = [
-        { label: 'Días restantes', val: (left * 365).toLocaleString() },
-        { label: 'Fines de semana', val: (left * 52).toLocaleString() },
-        { label: 'Tu progreso vital', val: ((age/lifeExp)*100).toFixed(1) + '%' }
+      const countersData = [
+        { label: 'Días que te quedan', val: (left * 365).toLocaleString(), sub: 'Si llegas a 80 años' },
+        { label: 'Fines de semana', val: (left * 52).toLocaleString(), sub: 'Para hacer lo que nunca haces' },
+        { label: 'Veranos restantes', val: left, sub: 'Menos de los que crees' },
+        { label: 'Lunes por sufrir', val: (left * 52).toLocaleString(), sub: 'O cambias, o los sufres todos' },
+        { label: 'Días ya vividos', val: (age * 365).toLocaleString(), sub: '¿Cuántos recuerdas?' },
+        { label: 'Progreso Vital', val: ((age/lifeExp)*100).toFixed(1) + '%', sub: 'Cargando... al revés' }
       ];
 
       countersContainer.classList.remove('hidden');
+      countersContainer.style.display = 'grid';
       countersContainer.innerHTML = '';
       phrasesContainer.innerHTML = '';
+      cta.classList.add('hidden');
 
-      data.forEach((d, i) => {
+      countersData.forEach((data, i) => {
         setTimeout(() => {
           const card = document.createElement('div');
           card.className = 'counter-card';
-          card.innerHTML = `<div class="text-orange-500 uppercase tracking-widest text-sm mb-2">${d.label}</div>
-                            <div class="text-4xl font-mono font-bold">${d.val}</div>`;
+          card.innerHTML = `
+            <div class="text-orange-500 font-bold uppercase tracking-widest text-sm mb-2">${data.label}</div>
+            <div class="text-4xl font-mono font-bold text-white mb-2">${data.val}</div>
+            <div class="text-gray-500 text-xs italic">${data.sub}</div>
+          `;
           countersContainer.appendChild(card);
         }, i * 200);
       });
 
+      // Frases y CTA
       setTimeout(() => {
-        const p = document.createElement('div');
-        p.className = 'phrase-box';
-        p.textContent = brutalPhrases[Math.floor(Math.random() * brutalPhrases.length)];
-        phrasesContainer.appendChild(p);
-      }, 1000);
+        const selected = brutalPhrases.sort(() => 0.5 - Math.random()).slice(0, 3);
+        selected.forEach((phrase, i) => {
+          setTimeout(() => {
+            const p = document.createElement('div');
+            p.className = 'phrase-box';
+            p.textContent = phrase;
+            phrasesContainer.appendChild(p);
+          }, i * 1500);
+        });
+      }, 1500);
+
+      setTimeout(() => {
+        cta.classList.remove('hidden');
+        cta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 6000);
+    });
+
+    document.getElementById('btn-commitment').addEventListener('click', () => {
+      alert('¡Próximamente: Generador de Compromisos Públicos!\n\nAquí podrás crear tu compromiso y compartirlo con el mundo.');
     });
   </script>
 </Layout>
