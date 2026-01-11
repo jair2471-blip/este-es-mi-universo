@@ -1,6 +1,6 @@
 ---
 title: "El dinero no cae del cielo: el que te lo diga te está mintiendo"
-description: "El dinero no llega por fe ni por deseo. Llega por trabajo sostenido, decisiones incómodas y responsabilidad diaria. Dios ya dio lo esencial. Lo demás no se regala: se construye con mente, tiempo y sacrificio."
+excerpt: "El dinero no llega por fe ni por deseo. Llega por trabajo sostenido, decisiones incómodas y responsabilidad diaria. Dios ya dio lo esencial. Lo demás no se regala: se construye con mente, tiempo y sacrificio."
 author: "El Universo de la Mente"
 pubDate: 2026-01-11
 slug: "el-dinero-no-cae-del-cielo"
