@@ -1,353 +1,8 @@
----
-import Layout from '~/layouts/PageLayout.astro';
-
-const metadata = {
-  title: 'ANTONOV V5.0 | Núcleo de Personalidades',
-  description: 'Sistema robusto de diseño industrial impulsado por IA.',
-};
----
-
-<Layout metadata={metadata}>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@400;700&display=swap');
-
-    .antonov-wrapper {
-      max-width: 1000px; /* CAMBIO: Reducido de 1400px a 1000px para centrarlo */
-      margin: 4rem auto; /* CAMBIO: Más margen arriba/abajo para que respire */
-      padding: 0 1.5rem;
-    }
-
-    .antonov-container {
-      background: #050505;
-      border: 1px solid #333; /* CAMBIO: Borde más sutil */
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Sombra más dramática */
-    }
-
-    .antonov-body {
-      color: white;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .header-section {
-      text-align: center;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #222;
-      padding-bottom: 1.5rem;
-    }
-
-    .header-title {
-      font-size: clamp(1.8rem, 4vw, 2.5rem); /* Título un poco más compacto */
-      font-weight: 900;
-      color: #22c55e;
-      font-style: italic;
-      text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-
-    .header-subtitle {
-      color: #ea580c;
-      font-weight: bold;
-      letter-spacing: 2px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-    }
-
-    .voice-name-display {
-      color: #fff;
-      font-weight: 900;
-    }
-
-    .system-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    @media (min-width: 1024px) {
-      .system-grid {
-        grid-template-columns: 320px 1fr; /* Panel de control ajustado */
-      }
-    }
-
-    .antonov-panel {
-      background: #0a0a0a;
-      border: 1px solid #222;
-      padding: 1.5rem;
-      border-radius: 8px;
-      height: fit-content;
-    }
-
-    .control-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .label-control {
-      color: #666;
-      font-weight: bold;
-      font-size: 0.65rem;
-      display: block;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .label-voice {
-      color: #ea580c;
-    }
-
-    .antonov-input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #333;
-      color: white;
-      padding: 0.75rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
-      outline: none;
-      border-radius: 4px;
-      transition: border-color 0.3s;
-    }
-
-    .antonov-input:focus {
-      border-color: #ea580c;
-    }
-
-    textarea.antonov-input {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .voice-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.5rem;
-    }
-
-    .v-btn {
-      background: #111;
-      border: 2px solid #222;
-      padding: 0;
-      height: 50px; /* Altura fija para botones uniformes */
-      cursor: pointer;
-      font-size: 1.2rem;
-      filter: grayscale(1);
-      transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-    }
-
-    .v-btn:hover {
-      border-color: #444;
-      transform: translateY(-2px);
-    }
-
-    .v-btn.active {
-      border-color: #ea580c;
-      background: #1a1a1a;
-      filter: grayscale(0);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(234, 88, 12, 0.2);
-    }
-
-    .antonov-btn {
-      width: 100%;
-      padding: 0.9rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-      font-size: 0.7rem;
-      letter-spacing: 1.5px;
-      border-radius: 4px;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .btn-gemini {
-      background: #27272a;
-      color: #ea580c;
-      margin-bottom: 0.5rem;
-      border: 1px solid #ea580c;
-    }
-
-    .btn-gemini:hover:not(:disabled) {
-      background: #ea580c;
-      color: black;
-    }
-
-    .btn-random {
-      background: transparent;
-      border: 1px solid #333;
-      color: #888;
-    }
-
-    .btn-random:hover {
-      border-color: #666;
-      color: white;
-    }
-
-    .btn-download {
-      background: #ea580c;
-      color: black;
-      margin-top: 1rem;
-    }
-
-    .btn-download:hover {
-      background: #fff;
-      transform: translateY(-2px);
-    }
-
-    .antonov-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .canvas-container {
-      background: #020202;
-      border: 1px solid #222;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 400px;
-      border-radius: 8px;
-    }
-
-    canvas {
-      max-width: 100%;
-      height: auto !important;
-      border: 1px solid #333;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .slider-container {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .slider-container input {
-      flex: 1;
-      accent-color: #ea580c;
-    }
-
-    .size-display {
-      font-family: 'Space Mono', monospace;
-      color: #ea580c;
-      font-weight: bold;
-      min-width: 50px;
-      text-align: right;
-      font-size: 0.8rem;
-    }
-
-    .divider {
-      border-top: 1px solid #222;
-      padding-top: 1.25rem;
-      margin-top: 0.5rem;
-    }
-
-    select.antonov-input {
-      margin-bottom: 0.5rem;
-    }
-    /* Efecto de destello para el canvas */
-    .canvas-container.glitch-active {
-      animation: pulse-border 0.4s ease-out;
-    }
-
-    @keyframes pulse-border {
-      0% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
-      50% { box-shadow: 0 0 50px rgba(234, 88, 12, 0.8); border-color: #ea580c; }
-      100% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
-    }
-
-    /* Mejora del canvas para que el destello se vea interno también */
-    canvas {
-      transition: filter 0.3s ease;
-    }
-    .processing canvas {
-      filter: brightness(1.5) contrast(1.2);
-    }
-  </style>
-
-  <div class="antonov-wrapper">
-    <div class="antonov-container">
-      <section class="antonov-body">
-        <div class="header-section">
-          <h1 class="header-title">ANTONOV V5.0</h1>
-          <p class="header-subtitle">
-            SISTEMA MULTI-NÚCLEO // <span id="current-voice-name" class="voice-name-display">SAPO HONESTO</span>
-          </p>
-        </div>
-
-        <div class="system-grid">
-          <aside class="antonov-panel">
-            <div class="control-group">
-              <label class="label-control label-voice">◢ SELECCIONAR NÚCLEO:</label>
-              <div class="voice-grid">
-                <button class="v-btn active" data-voice="sapo" title="Sapo Honesto">🐸</button>
-                <button class="v-btn" data-voice="coach" title="Coach Sin Azúcar">🥊</button>
-                <button class="v-btn" data-voice="zen" title="Zen Callejero">🕶️</button>
-                <button class="v-btn" data-voice="bufon" title="Bufón Filosófico">🃏</button>
-                <button class="v-btn" data-voice="abuela" title="Abuela Sabia">👵</button>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="label-control">▸ Texto del Núcleo:</label>
-              <textarea id="quote" class="antonov-input" placeholder="SISTEMA LISTO..."></textarea>
-            </div>
-
-            <div class="control-group">
-              <button id="btn-gemini" class="antonov-btn btn-gemini">
-                <span id="btn-text">🤖 GENERAR CON GEMINI</span>
-              </button>
-              <button id="btn-random" class="antonov-btn btn-random">🎲 FRASE ALEATORIA</button>
-            </div>
-
-            <div class="control-group divider">
-              <label class="label-control">▸ Tamaño de Fuente:</label>
-              <div class="slider-container">
-                <input type="range" id="fontSizeSlider" min="20" max="300" value="80" />
-                <span id="sizeVal" class="size-display">80px</span>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="label-control">▸ Formato:</label>
-              <select id="format" class="antonov-input">
-                <option value="post">CUADRADO (1080x1080)</option>
-                <option value="story">STORY (1080x1920)</option>
-                <option value="banner">BANNER (1920x1080)</option>
-              </select>
-
-              <label class="label-control" style="margin-top: 0.5rem">▸ Intensidad Glitch:</label>
-              <select id="intensity" class="antonov-input">
-                <option value="0.5">BAJO</option>
-                <option value="1.0" selected>ALTO</option>
-                <option value="1.5">EXTREMO</option>
-              </select>
-            </div>
-
-            <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR IMAGEN</button>
-          </aside>
-
-          <section class="canvas-container">
-            <canvas id="canvas"></canvas>
-          </section>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <script is:inline>
+<script is:inline>
   document.addEventListener('astro:page-load', () => {
     const canvas = document.getElementById('canvas');
     if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
 
     const el = {
@@ -364,108 +19,40 @@ const metadata = {
       voiceName: document.getElementById('current-voice-name'),
     };
 
-    // ===============================
-    // MODOS DEL UNIVERSO DE LA MENTE
-    // ===============================
     const personalidades = {
       sapo: {
-        nombre: 'CIRUJANO',
+        nombre: 'ANTONOV // VERDAD',
         color: '#22c55e',
-        prompt: `
-Eres EL UNIVERSO DE LA MENTE en modo CIRUJANO.
-Frase corta, directa y definitiva.
-Entre 6 y 10 palabras.
-No explicas. No motivas. Cortas.
-Todo en MAYÚSCULAS.
-        `,
-        frases: [
-          'LA REALIDAD NO NEGOCIA CON TUS EXCUSAS',
-          'PENSAR SIN ACTUAR ES AUTOENGAÑO ELEGANTE',
-          'NADIE TE DEBE LA VIDA QUE QUIERES',
-          'DISCIPLINA PRIMERO MOTIVACIÓN DESPUÉS',
-        ],
+        basePrompt:
+          'Dicta una sentencia brutal y directa sobre realidad, dinero o responsabilidad personal.',
       },
-
       coach: {
-        nombre: 'FRANCOTIRADOR',
+        nombre: 'ANTONOV // DISCIPLINA',
         color: '#ef4444',
-        prompt: `
-Eres EL UNIVERSO DE LA MENTE en modo FRANCOTIRADOR.
-Frase confrontacional e incómoda.
-Entre 12 y 18 palabras.
-Golpea el ego del lector inteligente.
-Nada de clichés.
-Todo en MAYÚSCULAS.
-        `,
-        frases: [
-          'NO TE FALTA TIEMPO TE SOBRAN DISTRACCIONES DISFRAZADAS DE DESCANSO',
-          'DICES QUE QUIERES CAMBIAR PERO PROTEGES CADA HÁBITO QUE TE MANTIENE IGUAL',
-        ],
+        basePrompt:
+          'Exige acción y disciplina. No motives. No consueles. Dicta una ley.',
       },
-
       zen: {
-        nombre: 'INGENIERO',
+        nombre: 'ANTONOV // CONCIENCIA',
         color: '#a855f7',
-        prompt: `
-Eres EL UNIVERSO DE LA MENTE en modo INGENIERO.
-Verdades frías sobre poder, dinero o control.
-Lógica pura. Sin emoción.
-Entre 10 y 14 palabras.
-Todo en MAYÚSCULAS.
-        `,
-        frases: [
-          'EL SISTEMA PREMIA AL QUE ENTIENDE LAS REGLAS NO AL QUE SE QUEJA',
-          'EL DINERO SIGUE A QUIEN RESUELVE PROBLEMAS NO A QUIEN LOS LLORA',
-        ],
-      },
-
-      bufon: {
-        nombre: 'FANTASMA',
-        color: '#eab308',
-        prompt: `
-Eres EL UNIVERSO DE LA MENTE en modo FANTASMA.
-Frase breve, inquietante y silenciosa.
-Sugiere más de lo que dice.
-Entre 6 y 12 palabras.
-Todo en MAYÚSCULAS.
-        `,
-        frases: [
-          'NADIE ESCUCHA EL SILENCIO HASTA QUE ES TARDE',
-          'ALGUNAS VERDADES SOLO DUELEN CUANDO MADURAN',
-        ],
-      },
-
-      abuela: {
-        nombre: 'ARCHIVO',
-        color: '#3b82f6',
-        prompt: `
-Eres EL UNIVERSO DE LA MENTE en modo ARCHIVO.
-Sabiduría acumulada, sin nostalgia.
-Consejo sobrio y atemporal.
-Entre 10 y 14 palabras.
-Todo en MAYÚSCULAS.
-        `,
-        frases: [
-          'LO QUE NO CUIDAS HOY TE COBRARÁ INTERESES MAÑANA',
-          'EL CARÁCTER SE CONSTRUYE CUANDO NADIE APLAUDE',
-        ],
+        basePrompt:
+          'Revela una verdad profunda sobre control interno, silencio y dominio emocional.',
       },
     };
 
     let selectedVoice = 'sapo';
 
-    // ===============================
-    // RENDER CANVAS (SIN CAMBIOS)
-    // ===============================
     const render = () => {
       const format = el.format.value;
       const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
       const intensity = parseFloat(el.intensity.value || 1.0);
       const fontSize = parseInt(el.slider.value || 80);
       const per = personalidades[selectedVoice];
+
       el.sizeVal.innerText = fontSize + 'px';
 
-      let w = 1080, h = 1080;
+      let w = 1080,
+        h = 1080;
       if (format === 'story') h = 1920;
       if (format === 'banner') w = 1920;
 
@@ -479,67 +66,88 @@ Todo en MAYÚSCULAS.
       ctx.font = `900 ${fontSize}px monospace`;
 
       const words = text.split(' ');
-      let lines = [], line = words[0];
+      let lines = [];
+      let current = words[0];
+
       for (let i = 1; i < words.length; i++) {
-        if (ctx.measureText(line + ' ' + words[i]).width < w * 0.85) {
-          line += ' ' + words[i];
+        if (ctx.measureText(current + ' ' + words[i]).width < w * 0.85) {
+          current += ' ' + words[i];
         } else {
-          lines.push(line);
-          line = words[i];
+          lines.push(current);
+          current = words[i];
         }
       }
-      lines.push(line);
+      lines.push(current);
 
       const lh = fontSize * 1.15;
-      const sy = h / 2 - (lines.length * lh) / 2;
+      const startY = h / 2 - (lines.length * lh) / 2 + fontSize / 2;
 
-      lines.forEach((l, i) => {
-        const y = sy + i * lh;
-        const o = 8 * intensity;
-        ctx.fillStyle = 'rgba(255,0,0,.7)';
-        ctx.fillText(l, w / 2 + o, y);
-        ctx.fillStyle = 'rgba(0,255,255,.7)';
-        ctx.fillText(l, w / 2 - o, y);
+      lines.forEach((line, i) => {
+        const y = startY + i * lh;
+        const off = 8 * intensity;
+
+        ctx.fillStyle = 'rgba(255,0,0,0.6)';
+        ctx.fillText(line, w / 2 + off, y);
+        ctx.fillStyle = 'rgba(0,255,255,0.6)';
+        ctx.fillText(line, w / 2 - off, y);
         ctx.fillStyle = '#fff';
-        ctx.fillText(l, w / 2, y);
+        ctx.fillText(line, w / 2, y);
       });
 
       ctx.strokeStyle = per.color;
       ctx.lineWidth = 12;
       ctx.strokeRect(25, 25, w - 50, h - 50);
+
       ctx.fillStyle = per.color;
       ctx.font = `bold ${w * 0.025}px monospace`;
-      ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
+      ctx.fillText(per.nombre, w / 2, h - 60);
     };
 
-    // ===============================
-    // GEMINI
-    // ===============================
     const callGemini = async () => {
       const per = personalidades[selectedVoice];
+      const keywords = el.quote.value.trim().toUpperCase();
+
+      const prompt = `
+${per.basePrompt}
+PALABRAS CLAVE DEL CONFLICTO:
+${keywords || 'NO PROPORCIONADAS'}
+
+REGLAS:
+- 10 a 14 palabras
+- MAYÚSCULAS
+- SIN CLICHÉS
+- VERDAD + CONSECUENCIA
+- UNA SOLA FRASE
+`;
+
       el.btnGemini.disabled = true;
-      el.btnText.textContent = '⏳ PROCESANDO...';
+      el.btnText.textContent = '⏳ DICTANDO SENTENCIA...';
 
       try {
-        const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: per.prompt }),
+          body: JSON.stringify({ prompt }),
         });
-        const d = await r.json();
-        el.quote.value = d.text.toUpperCase();
-        render();
-      } catch {
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'ERROR');
+
+        el.quote.value = data.text.toUpperCase();
+        setTimeout(render, 300);
+      } catch (e) {
         alert('ERROR DE NÚCLEO');
+        console.error(e);
       } finally {
         el.btnGemini.disabled = false;
         el.btnText.textContent = '🤖 GENERAR CON GEMINI';
       }
     };
 
-    el.voiceButtons.forEach(btn => {
-      btn.onclick = () => {
-        el.voiceButtons.forEach(b => b.classList.remove('active'));
+    el.voiceButtons.forEach((btn) => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        el.voiceButtons.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         selectedVoice = btn.dataset.voice;
         el.voiceName.innerText = personalidades[selectedVoice].nombre;
@@ -547,18 +155,15 @@ Todo en MAYÚSCULAS.
       };
     });
 
-    [el.format, el.intensity, el.slider, el.quote].forEach(i => i.oninput = render);
-    el.btnGemini.onclick = callGemini;
+    [el.format, el.intensity, el.slider, el.quote].forEach((i) => {
+      if (i) i.oninput = render;
+    });
 
-    el.btnRandom.onclick = () => {
-      const f = personalidades[selectedVoice].frases;
-      el.quote.value = f[Math.floor(Math.random() * f.length)];
-      render();
-    };
+    el.btnGemini.onclick = callGemini;
 
     el.btnDownload.onclick = () => {
       const a = document.createElement('a');
-      a.download = `ANTONOV-${Date.now()}.png`;
+      a.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
       a.href = canvas.toDataURL();
       a.click();
     };
@@ -566,4 +171,3 @@ Todo en MAYÚSCULAS.
     render();
   });
 </script>
-</Layout>
