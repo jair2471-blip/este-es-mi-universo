@@ -12,17 +12,17 @@ const metadata = {
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@400;700&display=swap');
 
     .antonov-wrapper {
-      max-width: 1000px; /* CAMBIO: Reducido de 1400px a 1000px para centrarlo */
-      margin: 4rem auto; /* CAMBIO: Más margen arriba/abajo para que respire */
-      padding: 0 1.5rem;
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 1rem;
     }
 
     .antonov-container {
       background: #050505;
-      border: 1px solid #333; /* CAMBIO: Borde más sutil */
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Sombra más dramática */
+      border: 2px solid #222;
+      border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     }
 
     .antonov-body {
@@ -32,19 +32,18 @@ const metadata = {
 
     .header-section {
       text-align: center;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #222;
-      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .header-title {
-      font-size: clamp(1.8rem, 4vw, 2.5rem); /* Título un poco más compacto */
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 900;
       color: #22c55e;
       font-style: italic;
       text-transform: uppercase;
       line-height: 1;
       margin-bottom: 0.5rem;
+      text-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
     }
 
     .header-subtitle {
@@ -68,16 +67,15 @@ const metadata = {
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 320px 1fr; /* Panel de control ajustado */
+        grid-template-columns: 340px 1fr;
       }
     }
 
     .antonov-panel {
-      background: #0a0a0a;
-      border: 1px solid #222;
+      background: #000;
+      border: 2px solid #222;
       padding: 1.5rem;
-      border-radius: 8px;
-      height: fit-content;
+      border-radius: 4px;
     }
 
     .control-group {
@@ -87,7 +85,7 @@ const metadata = {
     .label-control {
       color: #666;
       font-weight: bold;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       display: block;
       margin-bottom: 0.5rem;
       text-transform: uppercase;
@@ -105,10 +103,9 @@ const metadata = {
       color: white;
       padding: 0.75rem;
       font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       outline: none;
       border-radius: 4px;
-      transition: border-color 0.3s;
     }
 
     .antonov-input:focus {
@@ -122,36 +119,37 @@ const metadata = {
 
     .voice-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.5rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
     }
 
     .v-btn {
       background: #111;
       border: 2px solid #222;
-      padding: 0;
-      height: 50px; /* Altura fija para botones uniformes */
+      padding: 1rem;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 2rem;
       filter: grayscale(1);
       transition: all 0.3s;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 6px;
+      aspect-ratio: 1;
+      border-radius: 8px;
     }
 
     .v-btn:hover {
-      border-color: #444;
-      transform: translateY(-2px);
+      border-color: #555;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
     .v-btn.active {
       border-color: #ea580c;
-      background: #1a1a1a;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
       filter: grayscale(0);
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(234, 88, 12, 0.2);
+      transform: scale(1.1) translateY(-2px);
+      box-shadow: 0 0 25px rgba(234, 88, 12, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4);
     }
 
     .antonov-btn {
@@ -162,44 +160,47 @@ const metadata = {
       cursor: pointer;
       border: none;
       transition: all 0.2s;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       letter-spacing: 1.5px;
       border-radius: 4px;
       font-family: 'Inter', sans-serif;
     }
 
     .btn-gemini {
-      background: #27272a;
-      color: #ea580c;
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #000;
       margin-bottom: 0.5rem;
-      border: 1px solid #ea580c;
+      font-weight: 900;
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
     }
 
     .btn-gemini:hover:not(:disabled) {
-      background: #ea580c;
-      color: black;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5);
     }
 
     .btn-random {
-      background: transparent;
-      border: 1px solid #333;
-      color: #888;
+      background: #18181b;
+      color: #a1a1aa;
     }
 
     .btn-random:hover {
-      border-color: #666;
-      color: white;
+      background: #27272a;
     }
 
     .btn-download {
-      background: #ea580c;
-      color: black;
-      margin-top: 1rem;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: white;
+      margin-top: 0.5rem;
+      font-weight: 900;
+      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
     }
 
     .btn-download:hover {
-      background: #fff;
+      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5);
     }
 
     .antonov-btn:disabled {
@@ -208,21 +209,36 @@ const metadata = {
     }
 
     .canvas-container {
-      background: #020202;
-      border: 1px solid #222;
-      padding: 1rem;
+      background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
+      border: 2px solid #222;
+      padding: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 400px;
+      min-height: 550px;
       border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .canvas-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(234, 88, 12, 0.05) 100%);
+      pointer-events: none;
     }
 
     canvas {
       max-width: 100%;
       height: auto !important;
       border: 1px solid #333;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(234, 88, 12, 0.1);
+      position: relative;
+      z-index: 1;
     }
 
     .slider-container {
@@ -240,8 +256,8 @@ const metadata = {
       font-family: 'Space Mono', monospace;
       color: #ea580c;
       font-weight: bold;
-      min-width: 50px;
-      text-align: right;
+      min-width: 55px;
+      text-align: center;
       font-size: 0.8rem;
     }
 
@@ -254,23 +270,20 @@ const metadata = {
     select.antonov-input {
       margin-bottom: 0.5rem;
     }
-    /* Efecto de destello para el canvas */
-    .canvas-container.glitch-active {
-      animation: pulse-border 0.4s ease-out;
-    }
 
-    @keyframes pulse-border {
-      0% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
-      50% { box-shadow: 0 0 50px rgba(234, 88, 12, 0.8); border-color: #ea580c; }
-      100% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
-    }
+    @media (max-width: 1024px) {
+      .antonov-container {
+        padding: 1.5rem;
+      }
 
-    /* Mejora del canvas para que el destello se vea interno también */
-    canvas {
-      transition: filter 0.3s ease;
-    }
-    .processing canvas {
-      filter: brightness(1.5) contrast(1.2);
+      .voice-grid {
+        gap: 0.4rem;
+      }
+
+      .v-btn {
+        font-size: 1.1rem;
+        padding: 0.6rem;
+      }
     }
   </style>
 
@@ -292,9 +305,21 @@ const metadata = {
                 <button class="v-btn active" data-voice="sapo" title="Sapo Honesto">🐸</button>
                 <button class="v-btn" data-voice="coach" title="Coach Sin Azúcar">🥊</button>
                 <button class="v-btn" data-voice="zen" title="Zen Callejero">🕶️</button>
-                <button class="v-btn" data-voice="bufon" title="Bufón Filosófico">🃏</button>
-                <button class="v-btn" data-voice="abuela" title="Abuela Sabia">👵</button>
               </div>
+            </div>
+
+            <div class="control-group">
+              <label class="label-control">▸ Palabras Clave o Tema:</label>
+              <input 
+                type="text" 
+                id="keywords" 
+                class="antonov-input" 
+                placeholder="Ej: dinero, disciplina, paz..."
+                style="margin-bottom: 0.5rem;"
+              />
+              <label class="label-control" style="font-size: 0.6rem; color: #666; margin-top: 0;">
+                Escribe el tema y el núcleo genera su versión
+              </label>
             </div>
 
             <div class="control-group">
@@ -345,176 +370,203 @@ const metadata = {
   </div>
 
   <script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    const canvas = document.getElementById('canvas');
-    if (!canvas) return;
+    (function () {
+      const runAntonov = () => {
+        const canvas = document.getElementById('canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
 
-    const ctx = canvas.getContext('2d');
+        const el = {
+          format: document.getElementById('format'),
+          quote: document.getElementById('quote'),
+          keywords: document.getElementById('keywords'),
+          intensity: document.getElementById('intensity'),
+          slider: document.getElementById('fontSizeSlider'),
+          sizeVal: document.getElementById('sizeVal'),
+          btnGemini: document.getElementById('btn-gemini'),
+          btnText: document.getElementById('btn-text'),
+          btnRandom: document.getElementById('btn-random'),
+          btnDownload: document.getElementById('btn-download'),
+          voiceButtons: document.querySelectorAll('[data-voice]'),
+          voiceName: document.getElementById('current-voice-name'),
+        };
 
-    const el = {
-      format: document.getElementById('format'),
-      quote: document.getElementById('quote'),
-      intensity: document.getElementById('intensity'),
-      slider: document.getElementById('fontSizeSlider'),
-      sizeVal: document.getElementById('sizeVal'),
-      btnGemini: document.getElementById('btn-gemini'),
-      btnText: document.getElementById('btn-text'),
-      btnRandom: document.getElementById('btn-random'),
-      btnDownload: document.getElementById('btn-download'),
-      voiceButtons: document.querySelectorAll('[data-voice]'),
-      voiceName: document.getElementById('current-voice-name'),
-    };
+        const personalidades = {
+          sapo: {
+            nombre: 'SAPO HONESTO',
+            color: '#22c55e',
+            prompt: (keywords) =>
+              `Eres el SAPO HONESTO de barrio latino. Dices verdades crudas sin filtros. El usuario te dio estas palabras clave: "${keywords}". Genera UNA frase de máximo 6 palabras sobre ese tema, pero con tu estilo brutal y directo. Ejemplos de tu estilo: "EL ORGULLO NO PAGA FACTURAS", "MIENTRAS HABLAS OTROS FACTURAN". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
+            frases: [
+              'MENOS CARRETA Y MÁS BILLETE',
+              'EL ORGULLO NO PAGA EL ARRIENDO',
+              'TU PLAN NO VALE NADA',
+              'MIENTRAS HABLAS OTROS FACTURAN',
+              'HABLAR ES GRATIS HACER CUESTA',
+            ],
+          },
+          coach: {
+            nombre: 'COACH SIN AZÚCAR',
+            color: '#ef4444',
+            prompt: (keywords) =>
+              `Eres un COACH agresivo de gimnasio de barrio. El usuario te dio estas palabras clave: "${keywords}". Genera UNA orden motivacional de máximo 6 palabras sobre ese tema con tu estilo militar intenso. Ejemplos: "LEVÁNTATE O QUÉDATE ABAJO", "NADIE VIENE A SALVARTE". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
+            frases: [
+              'MUÉVETE O TE OXIDAS',
+              'LA DISCIPLINA ES TU ÚNICA SALIDA',
+              'HOY DUELE MAÑANA PRESUMO',
+              'NADIE VIENE A SALVARTE',
+              'EXCUSAS O RESULTADOS TÚ ELIGES',
+            ],
+          },
+          zen: {
+            nombre: 'ZEN CALLEJERO',
+            color: '#a855f7',
+            prompt: (keywords) =>
+              `Eres un sabio de barrio que mezcla budismo con realidad latina. El usuario te dio estas palabras clave: "${keywords}". Genera UNA frase filosófica de máximo 6 palabras sobre ese tema, simple pero profunda. Ejemplos: "LO QUE RESISTES PERSISTE", "SUELTA O TE HUNDE". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
+            frases: [
+              'LO QUE RESISTES PERSISTE',
+              'EL RÍO NO EMPUJA',
+              'SUELTA O TE HUNDE',
+              'RESPIRA HONDO TODO PASA',
+              'LA CALMA ES PODER',
+            ],
+          },
+        };
 
-    const personalidades = {
-      sapo: {
-        nombre: 'ANTONOV // VERDAD',
-        color: '#22c55e',
-        basePrompt:
-          'Dicta una sentencia brutal y directa sobre realidad, dinero o responsabilidad personal.',
-      },
-      coach: {
-        nombre: 'ANTONOV // DISCIPLINA',
-        color: '#ef4444',
-        basePrompt:
-          'Exige acción y disciplina. No motives. No consueles. Dicta una ley.',
-      },
-      zen: {
-        nombre: 'ANTONOV // CONCIENCIA',
-        color: '#a855f7',
-        basePrompt:
-          'Revela una verdad profunda sobre control interno, silencio y dominio emocional.',
-      },
-    };
+        let selectedVoice = 'sapo';
 
-    let selectedVoice = 'sapo';
+        const render = () => {
+          const format = el.format.value;
+          const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
+          const intensity = parseFloat(el.intensity.value || 1.0);
+          const fontSize = parseInt(el.slider.value || 80);
+          const per = personalidades[selectedVoice];
+          if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
 
-    const render = () => {
-      const format = el.format.value;
-      const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
-      const intensity = parseFloat(el.intensity.value || 1.0);
-      const fontSize = parseInt(el.slider.value || 80);
-      const per = personalidades[selectedVoice];
+          let w = 1080,
+            h = 1080;
+          if (format === 'story') {
+            w = 1080;
+            h = 1920;
+          }
+          if (format === 'banner') {
+            w = 1920;
+            h = 1080;
+          }
+          canvas.width = w;
+          canvas.height = h;
 
-      el.sizeVal.innerText = fontSize + 'px';
+          ctx.fillStyle = '#000';
+          ctx.fillRect(0, 0, w, h);
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = `900 ${fontSize}px monospace`;
 
-      let w = 1080,
-        h = 1080;
-      if (format === 'story') h = 1920;
-      if (format === 'banner') w = 1920;
+          const words = text.split(' ');
+          let lines = [],
+            currentLine = words[0];
+          for (let i = 1; i < words.length; i++) {
+            if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
+              currentLine += ' ' + words[i];
+            } else {
+              lines.push(currentLine);
+              currentLine = words[i];
+            }
+          }
+          lines.push(currentLine);
 
-      canvas.width = w;
-      canvas.height = h;
+          const lineHeight = fontSize * 1.15;
+          const totalHeight = lines.length * lineHeight;
+          const startY = h / 2 - totalHeight / 2 + fontSize / 2;
 
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, w, h);
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = `900 ${fontSize}px monospace`;
+          lines.forEach((line, i) => {
+            const y = startY + i * lineHeight;
+            const offset = 8 * intensity;
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+            ctx.fillText(line, w / 2 + offset, y);
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
+            ctx.fillText(line, w / 2 - offset, y);
+            ctx.fillStyle = '#fff';
+            ctx.fillText(line, w / 2, y);
+          });
 
-      const words = text.split(' ');
-      let lines = [];
-      let current = words[0];
+          ctx.strokeStyle = per.color;
+          ctx.lineWidth = 12;
+          ctx.strokeRect(25, 25, w - 50, h - 50);
+          ctx.fillStyle = per.color;
+          ctx.font = `bold ${w * 0.025}px monospace`;
+          ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
+        };
 
-      for (let i = 1; i < words.length; i++) {
-        if (ctx.measureText(current + ' ' + words[i]).width < w * 0.85) {
-          current += ' ' + words[i];
-        } else {
-          lines.push(current);
-          current = words[i];
-        }
-      }
-      lines.push(current);
+        const callGemini = async () => {
+          const keywords = el.keywords.value.trim();
+          
+          if (!keywords) {
+            alert('⚠️ Escribe palabras clave primero (ej: dinero, éxito, paz)');
+            return;
+          }
 
-      const lh = fontSize * 1.15;
-      const startY = h / 2 - (lines.length * lh) / 2 + fontSize / 2;
+          const per = personalidades[selectedVoice];
+          el.btnGemini.disabled = true;
+          el.btnText.textContent = '⏳ GENERANDO...';
+          
+          try {
+            const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: per.prompt(keywords) }),
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
+            el.quote.value = data.text.toUpperCase();
+            render();
+          } catch (error) {
+            console.error('Error:', error);
+            alert(`❌ Error: ${error.message}`);
+          } finally {
+            el.btnGemini.disabled = false;
+            el.btnText.textContent = '🤖 GENERAR CON GEMINI';
+          }
+        };
 
-      lines.forEach((line, i) => {
-        const y = startY + i * lh;
-        const off = 8 * intensity;
-
-        ctx.fillStyle = 'rgba(255,0,0,0.6)';
-        ctx.fillText(line, w / 2 + off, y);
-        ctx.fillStyle = 'rgba(0,255,255,0.6)';
-        ctx.fillText(line, w / 2 - off, y);
-        ctx.fillStyle = '#fff';
-        ctx.fillText(line, w / 2, y);
-      });
-
-      ctx.strokeStyle = per.color;
-      ctx.lineWidth = 12;
-      ctx.strokeRect(25, 25, w - 50, h - 50);
-
-      ctx.fillStyle = per.color;
-      ctx.font = `bold ${w * 0.025}px monospace`;
-      ctx.fillText(per.nombre, w / 2, h - 60);
-    };
-
-    const callGemini = async () => {
-      const per = personalidades[selectedVoice];
-      const keywords = el.quote.value.trim().toUpperCase();
-
-      const prompt = `
-${per.basePrompt}
-PALABRAS CLAVE DEL CONFLICTO:
-${keywords || 'NO PROPORCIONADAS'}
-
-REGLAS:
-- 10 a 14 palabras
-- MAYÚSCULAS
-- SIN CLICHÉS
-- VERDAD + CONSECUENCIA
-- UNA SOLA FRASE
-`;
-
-      el.btnGemini.disabled = true;
-      el.btnText.textContent = '⏳ DICTANDO SENTENCIA...';
-
-      try {
-        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt }),
+        el.voiceButtons.forEach((btn) => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            el.voiceButtons.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedVoice = btn.getAttribute('data-voice');
+            if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
+            render();
+          };
         });
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'ERROR');
+        [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
+          if (input) input.oninput = render;
+        });
 
-        el.quote.value = data.text.toUpperCase();
-        setTimeout(render, 300);
-      } catch (e) {
-        alert('ERROR DE NÚCLEO');
-        console.error(e);
-      } finally {
-        el.btnGemini.disabled = false;
-        el.btnText.textContent = '🤖 GENERAR CON GEMINI';
-      }
-    };
+        el.btnGemini.onclick = callGemini;
 
-    el.voiceButtons.forEach((btn) => {
-      btn.onclick = (e) => {
-        e.preventDefault();
-        el.voiceButtons.forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedVoice = btn.dataset.voice;
-        el.voiceName.innerText = personalidades[selectedVoice].nombre;
+        el.btnRandom.onclick = () => {
+          const frases = personalidades[selectedVoice].frases;
+          el.quote.value = frases[Math.floor(Math.random() * frases.length)];
+          render();
+        };
+
+        el.btnDownload.onclick = () => {
+          const link = document.createElement('a');
+          link.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
+          link.href = canvas.toDataURL();
+          link.click();
+        };
+
         render();
       };
-    });
 
-    [el.format, el.intensity, el.slider, el.quote].forEach((i) => {
-      if (i) i.oninput = render;
-    });
-
-    el.btnGemini.onclick = callGemini;
-
-    el.btnDownload.onclick = () => {
-      const a = document.createElement('a');
-      a.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
-      a.href = canvas.toDataURL();
-      a.click();
-    };
-
-    render();
-  });
-</script>
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runAntonov);
+      } else {
+        runAntonov();
+      }
+    })();
+  </script>
 </Layout>
