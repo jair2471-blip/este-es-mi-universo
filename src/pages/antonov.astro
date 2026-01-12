@@ -370,203 +370,231 @@ const metadata = {
   </div>
 
   <script is:inline>
-    (function () {
-      const runAntonov = () => {
-        const canvas = document.getElementById('canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
+    // Envolvemos todo en una función inicializadora
+    function initAntonovSystem() {
+      const canvas = document.getElementById('canvas');
+      
+      // Si no existe el canvas (estamos en otra página), no hacemos nada
+      if (!canvas) return; 
 
-        const el = {
-          format: document.getElementById('format'),
-          quote: document.getElementById('quote'),
-          keywords: document.getElementById('keywords'),
-          intensity: document.getElementById('intensity'),
-          slider: document.getElementById('fontSizeSlider'),
-          sizeVal: document.getElementById('sizeVal'),
-          btnGemini: document.getElementById('btn-gemini'),
-          btnText: document.getElementById('btn-text'),
-          btnRandom: document.getElementById('btn-random'),
-          btnDownload: document.getElementById('btn-download'),
-          voiceButtons: document.querySelectorAll('[data-voice]'),
-          voiceName: document.getElementById('current-voice-name'),
-        };
+      const ctx = canvas.getContext('2d');
 
-        const personalidades = {
-          sapo: {
-            nombre: 'SAPO HONESTO',
-            color: '#22c55e',
-            prompt: (keywords) =>
-              `Eres el SAPO HONESTO de barrio latino. Dices verdades crudas sin filtros. El usuario te dio estas palabras clave: "${keywords}". Genera UNA frase de máximo 6 palabras sobre ese tema, pero con tu estilo brutal y directo. Ejemplos de tu estilo: "EL ORGULLO NO PAGA FACTURAS", "MIENTRAS HABLAS OTROS FACTURAN". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
-            frases: [
-              'MENOS CARRETA Y MÁS BILLETE',
-              'EL ORGULLO NO PAGA EL ARRIENDO',
-              'TU PLAN NO VALE NADA',
-              'MIENTRAS HABLAS OTROS FACTURAN',
-              'HABLAR ES GRATIS HACER CUESTA',
-            ],
-          },
-          coach: {
-            nombre: 'COACH SIN AZÚCAR',
-            color: '#ef4444',
-            prompt: (keywords) =>
-              `Eres un COACH agresivo de gimnasio de barrio. El usuario te dio estas palabras clave: "${keywords}". Genera UNA orden motivacional de máximo 6 palabras sobre ese tema con tu estilo militar intenso. Ejemplos: "LEVÁNTATE O QUÉDATE ABAJO", "NADIE VIENE A SALVARTE". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
-            frases: [
-              'MUÉVETE O TE OXIDAS',
-              'LA DISCIPLINA ES TU ÚNICA SALIDA',
-              'HOY DUELE MAÑANA PRESUMO',
-              'NADIE VIENE A SALVARTE',
-              'EXCUSAS O RESULTADOS TÚ ELIGES',
-            ],
-          },
-          zen: {
-            nombre: 'ZEN CALLEJERO',
-            color: '#a855f7',
-            prompt: (keywords) =>
-              `Eres un sabio de barrio que mezcla budismo con realidad latina. El usuario te dio estas palabras clave: "${keywords}". Genera UNA frase filosófica de máximo 6 palabras sobre ese tema, simple pero profunda. Ejemplos: "LO QUE RESISTES PERSISTE", "SUELTA O TE HUNDE". Solo la frase en MAYÚSCULAS, sin comillas ni explicaciones.`,
-            frases: [
-              'LO QUE RESISTES PERSISTE',
-              'EL RÍO NO EMPUJA',
-              'SUELTA O TE HUNDE',
-              'RESPIRA HONDO TODO PASA',
-              'LA CALMA ES PODER',
-            ],
-          },
-        };
+      const el = {
+        format: document.getElementById('format'),
+        quote: document.getElementById('quote'),
+        keywords: document.getElementById('keywords'),
+        intensity: document.getElementById('intensity'),
+        slider: document.getElementById('fontSizeSlider'),
+        sizeVal: document.getElementById('sizeVal'),
+        btnGemini: document.getElementById('btn-gemini'),
+        btnText: document.getElementById('btn-text'),
+        btnRandom: document.getElementById('btn-random'),
+        btnDownload: document.getElementById('btn-download'),
+        voiceButtons: document.querySelectorAll('[data-voice]'),
+        voiceName: document.getElementById('current-voice-name'),
+      };
 
-        let selectedVoice = 'sapo';
+      // PROMPTS AFINADOS Y AGRESIVOS
+      const personalidades = {
+        sapo: {
+          nombre: 'SAPO HONESTO',
+          color: '#22c55e',
+          prompt: (keywords) =>
+            `Actúa como un 'Sapo de Barrio' cínico, materialista y brutalmente honesto. Odias el romanticismo y las excusas. El usuario te da el tema: "${keywords}".
+            Tu tarea: Genera UNA frase corta (máximo 6 palabras) que golpee con realidad cruda.
+            Estilo: "La plata no tiene amigos", "El amor no paga arriendo".
+            Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
+          frases: [
+            'MENOS LENGUA MÁS BILLETE',
+            'EL AMOR NO PAGA ARRIENDO',
+            'TU OPINIÓN NO FACTURA',
+            'LLORAR NO IMPRIME DINERO',
+            'PRIMERO LA PLATA LUEGO TÚ',
+          ],
+        },
+        coach: {
+          nombre: 'COACH SIN AZÚCAR',
+          color: '#ef4444',
+          prompt: (keywords) =>
+            `Actúa como un entrenador militar psicópata que odia la debilidad. El usuario te da el tema: "${keywords}".
+            Tu tarea: Genera UNA orden o insulto motivacional (máximo 6 palabras) que duela pero active.
+            Estilo: "Vomita o sigue", "Tu dolor no me importa".
+            Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
+          frases: [
+            'EL DOLOR ES TU AMIGO',
+            'DESCANSAR ES PARA MUERTOS',
+            'NADIE VENDRÁ A SALVARTE',
+            'TUS EXCUSAS ME ASQUEAN',
+            'SUFRE AHORA GANA LUEGO',
+          ],
+        },
+        zen: {
+          nombre: 'ZEN CALLEJERO',
+          color: '#a855f7',
+          prompt: (keywords) =>
+            `Actúa como un maestro estoico urbano. No eres hippie, eres firme y frío ante el caos. El usuario te da el tema: "${keywords}".
+            Tu tarea: Genera UNA sentencia filosófica de calle (máximo 6 palabras) sobre el control mental.
+            Estilo: "El caos es tu maestro", "Silencio mata ruido".
+            Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
+          frases: [
+            'CONTROLATE O TE CONTROLAN',
+            'EL SILENCIO ES PODER',
+            'NADA TE PERTENECE REALMENTE',
+            'OBSERVA NO REACCIONES',
+            'EL EGO ES TU JAULA',
+          ],
+        },
+      };
 
-        const render = () => {
-          const format = el.format.value;
-          const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
-          const intensity = parseFloat(el.intensity.value || 1.0);
-          const fontSize = parseInt(el.slider.value || 80);
-          const per = personalidades[selectedVoice];
-          if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
+      let selectedVoice = 'sapo';
 
-          let w = 1080,
-            h = 1080;
-          if (format === 'story') {
-            w = 1080;
-            h = 1920;
+      const render = () => {
+        if (!el.format || !el.quote) return; // Protección extra
+
+        const format = el.format.value;
+        const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
+        const intensity = parseFloat(el.intensity.value || 1.0);
+        const fontSize = parseInt(el.slider.value || 80);
+        const per = personalidades[selectedVoice];
+        
+        if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
+
+        let w = 1080, h = 1080;
+        if (format === 'story') { w = 1080; h = 1920; }
+        if (format === 'banner') { w = 1920; h = 1080; }
+        
+        canvas.width = w;
+        canvas.height = h;
+
+        // Fondo
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+        
+        // Config texto
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = `900 ${fontSize}px monospace`;
+
+        // Word wrap
+        const words = text.split(' ');
+        let lines = [], currentLine = words[0];
+        for (let i = 1; i < words.length; i++) {
+          if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
+            currentLine += ' ' + words[i];
+          } else {
+            lines.push(currentLine);
+            currentLine = words[i];
           }
-          if (format === 'banner') {
-            w = 1920;
-            h = 1080;
-          }
-          canvas.width = w;
-          canvas.height = h;
+        }
+        lines.push(currentLine);
 
-          ctx.fillStyle = '#000';
-          ctx.fillRect(0, 0, w, h);
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.font = `900 ${fontSize}px monospace`;
+        // Renderizado Glitch
+        const lineHeight = fontSize * 1.15;
+        const totalHeight = lines.length * lineHeight;
+        const startY = h / 2 - totalHeight / 2 + fontSize / 2;
 
-          const words = text.split(' ');
-          let lines = [],
-            currentLine = words[0];
-          for (let i = 1; i < words.length; i++) {
-            if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
-              currentLine += ' ' + words[i];
-            } else {
-              lines.push(currentLine);
-              currentLine = words[i];
-            }
-          }
-          lines.push(currentLine);
+        lines.forEach((line, i) => {
+          const y = startY + i * lineHeight;
+          const offset = 8 * intensity;
+          
+          // Capa Roja (Glitch)
+          ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+          ctx.fillText(line, w / 2 + offset, y);
+          
+          // Capa Cyan (Glitch)
+          ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
+          ctx.fillText(line, w / 2 - offset, y);
+          
+          // Capa Blanca (Principal)
+          ctx.fillStyle = '#fff';
+          ctx.fillText(line, w / 2, y);
+        });
 
-          const lineHeight = fontSize * 1.15;
-          const totalHeight = lines.length * lineHeight;
-          const startY = h / 2 - totalHeight / 2 + fontSize / 2;
+        // Borde y Firma
+        ctx.strokeStyle = per.color;
+        ctx.lineWidth = 12;
+        ctx.strokeRect(25, 25, w - 50, h - 50);
+        
+        ctx.fillStyle = per.color;
+        ctx.font = `bold ${w * 0.025}px monospace`;
+        ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
+      };
 
-          lines.forEach((line, i) => {
-            const y = startY + i * lineHeight;
-            const offset = 8 * intensity;
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
-            ctx.fillText(line, w / 2 + offset, y);
-            ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
-            ctx.fillText(line, w / 2 - offset, y);
-            ctx.fillStyle = '#fff';
-            ctx.fillText(line, w / 2, y);
+      const callGemini = async () => {
+        const keywords = el.keywords.value.trim();
+        
+        if (!keywords) {
+          alert('⚠️ Escribe palabras clave primero (ej: dinero, éxito, paz)');
+          return;
+        }
+
+        const per = personalidades[selectedVoice];
+        el.btnGemini.disabled = true;
+        el.btnText.textContent = '⏳ GENERANDO...';
+        
+        try {
+          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: per.prompt(keywords) }),
           });
-
-          ctx.strokeStyle = per.color;
-          ctx.lineWidth = 12;
-          ctx.strokeRect(25, 25, w - 50, h - 50);
-          ctx.fillStyle = per.color;
-          ctx.font = `bold ${w * 0.025}px monospace`;
-          ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
-        };
-
-        const callGemini = async () => {
-          const keywords = el.keywords.value.trim();
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
           
-          if (!keywords) {
-            alert('⚠️ Escribe palabras clave primero (ej: dinero, éxito, paz)');
-            return;
-          }
+          el.quote.value = data.text.toUpperCase();
+          render();
+        } catch (error) {
+          console.error('Error:', error);
+          alert(`❌ Error: ${error.message}`);
+        } finally {
+          el.btnGemini.disabled = false;
+          el.btnText.textContent = '🤖 GENERAR CON GEMINI';
+        }
+      };
 
-          const per = personalidades[selectedVoice];
-          el.btnGemini.disabled = true;
-          el.btnText.textContent = '⏳ GENERANDO...';
-          
-          try {
-            const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt: per.prompt(keywords) }),
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
-            el.quote.value = data.text.toUpperCase();
-            render();
-          } catch (error) {
-            console.error('Error:', error);
-            alert(`❌ Error: ${error.message}`);
-          } finally {
-            el.btnGemini.disabled = false;
-            el.btnText.textContent = '🤖 GENERAR CON GEMINI';
-          }
+      // Event Listeners
+      el.voiceButtons.forEach((btn) => {
+        btn.onclick = (e) => {
+          e.preventDefault();
+          el.voiceButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedVoice = btn.getAttribute('data-voice');
+          if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
+          render();
         };
+      });
 
-        el.voiceButtons.forEach((btn) => {
-          btn.onclick = (e) => {
-            e.preventDefault();
-            el.voiceButtons.forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedVoice = btn.getAttribute('data-voice');
-            if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
-            render();
-          };
-        });
+      [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
+        if (input) input.oninput = render;
+      });
 
-        [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
-          if (input) input.oninput = render;
-        });
+      if (el.btnGemini) el.btnGemini.onclick = callGemini;
 
-        el.btnGemini.onclick = callGemini;
-
+      if (el.btnRandom) {
         el.btnRandom.onclick = () => {
           const frases = personalidades[selectedVoice].frases;
           el.quote.value = frases[Math.floor(Math.random() * frases.length)];
           render();
         };
+      }
 
+      if (el.btnDownload) {
         el.btnDownload.onclick = () => {
           const link = document.createElement('a');
           link.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
           link.href = canvas.toDataURL();
           link.click();
         };
-
-        render();
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runAntonov);
-      } else {
-        runAntonov();
       }
-    })();
+
+      // Render inicial
+      render();
+    }
+
+    // 🔥 EL SECRETO: Ejecutar en carga inicial Y en navegación de Astro
+    document.addEventListener('astro:page-load', initAntonovSystem);
+    
+    // Fallback por si acaso no usas View Transitions en alguna parte
+    initAntonovSystem();
   </script>
 </Layout>
