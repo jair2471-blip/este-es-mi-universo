@@ -309,22 +309,11 @@ const metadata = {
             </div>
 
             <div class="control-group">
-              <label class="label-control">▸ Palabras Clave o Tema:</label>
-              <input 
-                type="text" 
-                id="keywords" 
-                class="antonov-input" 
-                placeholder="Ej: dinero, disciplina, paz..."
-                style="margin-bottom: 0.5rem;"
-              />
-              <label class="label-control" style="font-size: 0.6rem; color: #666; margin-top: 0;">
-                Escribe el tema y el núcleo genera su versión
-              </label>
-            </div>
-
-            <div class="control-group">
               <label class="label-control">▸ Texto del Núcleo:</label>
               <textarea id="quote" class="antonov-input" placeholder="SISTEMA LISTO..."></textarea>
+              <label class="label-control" style="font-size: 0.6rem; color: #666; margin-top: 0.5rem;">
+                O genera una frase original con Gemini
+              </label>
             </div>
 
             <div class="control-group">
@@ -370,231 +359,216 @@ const metadata = {
   </div>
 
   <script is:inline>
-    // Envolvemos todo en una función inicializadora
-    function initAntonovSystem() {
-      const canvas = document.getElementById('canvas');
-      
-      // Si no existe el canvas (estamos en otra página), no hacemos nada
-      if (!canvas) return; 
+    (function () {
+      const runAntonov = () => {
+        const canvas = document.getElementById('canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
 
-      const ctx = canvas.getContext('2d');
+        const el = {
+          format: document.getElementById('format'),
+          quote: document.getElementById('quote'),
+          intensity: document.getElementById('intensity'),
+          slider: document.getElementById('fontSizeSlider'),
+          sizeVal: document.getElementById('sizeVal'),
+          btnGemini: document.getElementById('btn-gemini'),
+          btnText: document.getElementById('btn-text'),
+          btnRandom: document.getElementById('btn-random'),
+          btnDownload: document.getElementById('btn-download'),
+          voiceButtons: document.querySelectorAll('[data-voice]'),
+          voiceName: document.getElementById('current-voice-name'),
+        };
 
-      const el = {
-        format: document.getElementById('format'),
-        quote: document.getElementById('quote'),
-        keywords: document.getElementById('keywords'),
-        intensity: document.getElementById('intensity'),
-        slider: document.getElementById('fontSizeSlider'),
-        sizeVal: document.getElementById('sizeVal'),
-        btnGemini: document.getElementById('btn-gemini'),
-        btnText: document.getElementById('btn-text'),
-        btnRandom: document.getElementById('btn-random'),
-        btnDownload: document.getElementById('btn-download'),
-        voiceButtons: document.querySelectorAll('[data-voice]'),
-        voiceName: document.getElementById('current-voice-name'),
-      };
+        const personalidades = {
+          sapo: {
+            nombre: 'SAPO HONESTO',
+            color: '#22c55e',
+            prompt: `Eres el Sapo Honesto, un sabio de barrio que habla con verdad cruda pero con respeto. Tu estilo es directo, fluido, con sabor de calle, sin groserías pero sin pelos en la lengua. Hablas de la vida real: el dinero, el trabajo, los sueños, la supervivencia. 
 
-      // PROMPTS AFINADOS Y AGRESIVOS
-      const personalidades = {
-        sapo: {
-          nombre: 'SAPO HONESTO',
-          color: '#22c55e',
-          prompt: (keywords) =>
-            `Actúa como un 'Sapo de Barrio' cínico, materialista y brutalmente honesto. Odias el romanticismo y las excusas. El usuario te da el tema: "${keywords}".
-            Tu tarea: Genera UNA frase corta (máximo 6 palabras) que golpee con realidad cruda.
-            Estilo: "La plata no tiene amigos", "El amor no paga arriendo".
-            Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
-          frases: [
-            'MENOS LENGUA MÁS BILLETE',
-            'EL AMOR NO PAGA ARRIENDO',
-            'TU OPINIÓN NO FACTURA',
-            'LLORAR NO IMPRIME DINERO',
-            'PRIMERO LA PLATA LUEGO TÚ',
-          ],
-        },
-        coach: {
-          nombre: 'COACH SIN AZÚCAR',
-          color: '#ef4444',
-          prompt: (keywords) =>
-            `Actúa como un entrenador militar psicópata que odia la debilidad. El usuario te da el tema: "${keywords}".
-            Tu tarea: Genera UNA orden o insulto motivacional (máximo 6 palabras) que duela pero active.
-            Estilo: "Vomita o sigue", "Tu dolor no me importa".
-            Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
-          frases: [
-            'EL DOLOR ES TU AMIGO',
-            'DESCANSAR ES PARA MUERTOS',
-            'NADIE VENDRÁ A SALVARTE',
-            'TUS EXCUSAS ME ASQUEAN',
-            'SUFRE AHORA GANA LUEGO',
-          ],
-        },
-        zen: {
-  nombre: 'ZEN CALLEJERO',
-  color: '#a855f7',
-  prompt: (keywords) =>
-    `Actúa como un maestro estoico urbano y sofisticado. El usuario te da el tema: "${keywords}".
-    Tu tarea: Genera UNA sentencia de Causa y Efecto (máximo 8 palabras) que conecte la mentalidad con el resultado.
-    Estilo: "Una mente clara produce una acción certera", "Si controlas tu mente controlas tu dinero".
-    Respuesta: Solo la frase en MAYÚSCULAS. Nada más.`,
-  frases: [
-    'MENTE CLARA ACCIÓN CERTERA',
-    'SI DUDAS PIERDES',
-    'EL CAOS INTERNO CREA POBREZA EXTERNA',
-    'CALMA TU MENTE DOMINA TU JUEGO',
-    'LO QUE PIENSAS LO FACTURAS',
-    ],
-   },
-  };
+Tus frases son originales, nunca repetidas, como conversaciones de café. Ejemplos de tu esencia:
+- "La ambición sin acción es solo ruido"
+- "Primero la renta luego la apariencia"
+- "Tu ego no negocia con la realidad"
+- "Los resultados no mienten nunca"
 
-      let selectedVoice = 'sapo';
+Genera UNA frase ORIGINAL y ÚNICA de máximo 7 palabras, directa, fluida, con esa sabiduría de barrio. Que suene natural, como si hablaras con un amigo. SOLO la frase en MAYÚSCULAS, sin comillas, sin explicaciones, sin puntos.`,
+            frases: [
+              'LA AMBICIÓN SIN ACCIÓN ES RUIDO',
+              'PRIMERO LA RENTA LUEGO LA APARIENCIA',
+              'TU EGO NO NEGOCIA CON REALIDAD',
+              'LOS RESULTADOS NO MIENTEN NUNCA',
+              'SOÑAR ES GRATIS EJECUTAR CUESTA',
+            ],
+          },
+          coach: {
+            nombre: 'COACH SIN AZÚCAR',
+            color: '#ef4444',
+            prompt: `Eres un Coach de barrio, intenso pero respetuoso. Motivas con verdad, no con frases bonitas. Tu estilo es firme, directo, como un hermano mayor que te empuja a ser mejor. Hablas de disciplina, esfuerzo, consistencia.
 
-      const render = () => {
-        if (!el.format || !el.quote) return; // Protección extra
+Tus frases son fluidas y originales, nunca repetidas. Ejemplos de tu esencia:
+- "La comodidad no construye campeones"
+- "Hoy decides mañana cosechas"
+- "El dolor pasa el logro queda"
+- "Nadie hará tu parte del camino"
 
-        const format = el.format.value;
-        const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
-        const intensity = parseFloat(el.intensity.value || 1.0);
-        const fontSize = parseInt(el.slider.value || 80);
-        const per = personalidades[selectedVoice];
-        
-        if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
+Genera UNA frase ORIGINAL y ÚNICA de máximo 7 palabras, motivacional, fluida, directa pero respetuosa. Que inspire acción real. SOLO la frase en MAYÚSCULAS, sin comillas, sin explicaciones, sin puntos.`,
+            frases: [
+              'LA COMODIDAD NO CONSTRUYE CAMPEONES',
+              'HOY DECIDES MAÑANA COSECHAS',
+              'EL DOLOR PASA EL LOGRO QUEDA',
+              'NADIE HARÁ TU PARTE DEL CAMINO',
+              'LA CONSTANCIA VENCE AL TALENTO',
+            ],
+          },
+          zen: {
+            nombre: 'ZEN CALLEJERO',
+            color: '#a855f7',
+            prompt: `Eres un sabio urbano que mezcla filosofía con realidad de barrio. Hablas de paz interior, aceptación, fluir, pero con lenguaje simple y cercano. Tu estilo es tranquilo, profundo, como un viejo amigo que te da perspectiva.
 
-        let w = 1080, h = 1080;
-        if (format === 'story') { w = 1080; h = 1920; }
-        if (format === 'banner') { w = 1920; h = 1080; }
-        
-        canvas.width = w;
-        canvas.height = h;
+Tus frases son originales, fluidas, nunca repetidas. Ejemplos de tu esencia:
+- "Lo que sueltas te libera siempre"
+- "El río no fuerza su camino"
+- "La paz empieza aceptando lo que es"
+- "Resistir duele más que soltar"
 
-        // Fondo
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, w, h);
-        
-        // Config texto
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.font = `900 ${fontSize}px monospace`;
+Genera UNA frase ORIGINAL y ÚNICA de máximo 7 palabras, filosófica pero terrenal, fluida, que invite a la reflexión tranquila. SOLO la frase en MAYÚSCULAS, sin comillas, sin explicaciones, sin puntos.`,
+            frases: [
+              'LO QUE SUELTAS TE LIBERA SIEMPRE',
+              'EL RÍO NO FUERZA SU CAMINO',
+              'LA PAZ EMPIEZA ACEPTANDO LO QUE ES',
+              'RESISTIR DUELE MÁS QUE SOLTAR',
+              'EL SILENCIO TAMBIÉN ES RESPUESTA',
+            ],
+          },
+        };
 
-        // Word wrap
-        const words = text.split(' ');
-        let lines = [], currentLine = words[0];
-        for (let i = 1; i < words.length; i++) {
-          if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
-            currentLine += ' ' + words[i];
-          } else {
-            lines.push(currentLine);
-            currentLine = words[i];
+        let selectedVoice = 'sapo';
+
+        const render = () => {
+          const format = el.format.value;
+          const text = (el.quote.value || 'SISTEMA LISTO').toUpperCase();
+          const intensity = parseFloat(el.intensity.value || 1.0);
+          const fontSize = parseInt(el.slider.value || 80);
+          const per = personalidades[selectedVoice];
+          if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
+
+          let w = 1080,
+            h = 1080;
+          if (format === 'story') {
+            w = 1080;
+            h = 1920;
           }
-        }
-        lines.push(currentLine);
+          if (format === 'banner') {
+            w = 1920;
+            h = 1080;
+          }
+          canvas.width = w;
+          canvas.height = h;
 
-        // Renderizado Glitch
-        const lineHeight = fontSize * 1.15;
-        const totalHeight = lines.length * lineHeight;
-        const startY = h / 2 - totalHeight / 2 + fontSize / 2;
+          ctx.fillStyle = '#000';
+          ctx.fillRect(0, 0, w, h);
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.font = `900 ${fontSize}px monospace`;
 
-        lines.forEach((line, i) => {
-          const y = startY + i * lineHeight;
-          const offset = 8 * intensity;
+          const words = text.split(' ');
+          let lines = [],
+            currentLine = words[0];
+          for (let i = 1; i < words.length; i++) {
+            if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
+              currentLine += ' ' + words[i];
+            } else {
+              lines.push(currentLine);
+              currentLine = words[i];
+            }
+          }
+          lines.push(currentLine);
+
+          const lineHeight = fontSize * 1.15;
+          const totalHeight = lines.length * lineHeight;
+          const startY = h / 2 - totalHeight / 2 + fontSize / 2;
+
+          lines.forEach((line, i) => {
+            const y = startY + i * lineHeight;
+            const offset = 8 * intensity;
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
+            ctx.fillText(line, w / 2 + offset, y);
+            ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
+            ctx.fillText(line, w / 2 - offset, y);
+            ctx.fillStyle = '#fff';
+            ctx.fillText(line, w / 2, y);
+          });
+
+          ctx.strokeStyle = per.color;
+          ctx.lineWidth = 12;
+          ctx.strokeRect(25, 25, w - 50, h - 50);
+          ctx.fillStyle = per.color;
+          ctx.font = `bold ${w * 0.025}px monospace`;
+          ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
+        };
+
+        const callGemini = async () => {
+          const per = personalidades[selectedVoice];
+          el.btnGemini.disabled = true;
+          el.btnText.textContent = '⏳ GENERANDO...';
           
-          // Capa Roja (Glitch)
-          ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
-          ctx.fillText(line, w / 2 + offset, y);
-          
-          // Capa Cyan (Glitch)
-          ctx.fillStyle = 'rgba(0, 255, 255, 0.7)';
-          ctx.fillText(line, w / 2 - offset, y);
-          
-          // Capa Blanca (Principal)
-          ctx.fillStyle = '#fff';
-          ctx.fillText(line, w / 2, y);
+          try {
+            const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: per.prompt }),
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
+            el.quote.value = data.text.toUpperCase();
+            render();
+          } catch (error) {
+            console.error('Error:', error);
+            alert(`❌ Error: ${error.message}`);
+          } finally {
+            el.btnGemini.disabled = false;
+            el.btnText.textContent = '🤖 GENERAR CON GEMINI';
+          }
+        };
+
+        el.voiceButtons.forEach((btn) => {
+          btn.onclick = (e) => {
+            e.preventDefault();
+            el.voiceButtons.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedVoice = btn.getAttribute('data-voice');
+            if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
+            render();
+          };
         });
 
-        // Borde y Firma
-        ctx.strokeStyle = per.color;
-        ctx.lineWidth = 12;
-        ctx.strokeRect(25, 25, w - 50, h - 50);
-        
-        ctx.fillStyle = per.color;
-        ctx.font = `bold ${w * 0.025}px monospace`;
-        ctx.fillText(`>>> ${per.nombre} <<<`, w / 2, h - 60);
-      };
+        [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
+          if (input) input.oninput = render;
+        });
 
-      const callGemini = async () => {
-        const keywords = el.keywords.value.trim();
-        
-        if (!keywords) {
-          alert('⚠️ Escribe palabras clave primero (ej: dinero, éxito, paz)');
-          return;
-        }
+        el.btnGemini.onclick = callGemini;
 
-        const per = personalidades[selectedVoice];
-        el.btnGemini.disabled = true;
-        el.btnText.textContent = '⏳ GENERANDO...';
-        
-        try {
-          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: per.prompt(keywords) }),
-          });
-          const data = await response.json();
-          if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
-          
-          el.quote.value = data.text.toUpperCase();
-          render();
-        } catch (error) {
-          console.error('Error:', error);
-          alert(`❌ Error: ${error.message}`);
-        } finally {
-          el.btnGemini.disabled = false;
-          el.btnText.textContent = '🤖 GENERAR CON GEMINI';
-        }
-      };
-
-      // Event Listeners
-      el.voiceButtons.forEach((btn) => {
-        btn.onclick = (e) => {
-          e.preventDefault();
-          el.voiceButtons.forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedVoice = btn.getAttribute('data-voice');
-          if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
-          render();
-        };
-      });
-
-      [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
-        if (input) input.oninput = render;
-      });
-
-      if (el.btnGemini) el.btnGemini.onclick = callGemini;
-
-      if (el.btnRandom) {
         el.btnRandom.onclick = () => {
           const frases = personalidades[selectedVoice].frases;
           el.quote.value = frases[Math.floor(Math.random() * frases.length)];
           render();
         };
-      }
 
-      if (el.btnDownload) {
         el.btnDownload.onclick = () => {
           const link = document.createElement('a');
           link.download = `ANTONOV-${selectedVoice}-${Date.now()}.png`;
           link.href = canvas.toDataURL();
           link.click();
         };
+
+        render();
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runAntonov);
+      } else {
+        runAntonov();
       }
-
-      // Render inicial
-      render();
-    }
-
-    // 🔥 EL SECRETO: Ejecutar en carga inicial Y en navegación de Astro
-    document.addEventListener('astro:page-load', initAntonovSystem);
-    
-    // Fallback por si acaso no usas View Transitions en alguna parte
-    initAntonovSystem();
+    })();
   </script>
 </Layout>
