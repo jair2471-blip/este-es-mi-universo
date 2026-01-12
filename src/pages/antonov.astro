@@ -1,4 +1,350 @@
-<script is:inline>
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'ANTONOV V5.0 | Núcleo de Personalidades',
+  description: 'Sistema robusto de diseño industrial impulsado por IA.',
+};
+---
+
+<Layout metadata={metadata}>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@400;700&display=swap');
+
+    .antonov-wrapper {
+      max-width: 1000px; /* CAMBIO: Reducido de 1400px a 1000px para centrarlo */
+      margin: 4rem auto; /* CAMBIO: Más margen arriba/abajo para que respire */
+      padding: 0 1.5rem;
+    }
+
+    .antonov-container {
+      background: #050505;
+      border: 1px solid #333; /* CAMBIO: Borde más sutil */
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7); /* Sombra más dramática */
+    }
+
+    .antonov-body {
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .header-section {
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid #222;
+      padding-bottom: 1.5rem;
+    }
+
+    .header-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem); /* Título un poco más compacto */
+      font-weight: 900;
+      color: #22c55e;
+      font-style: italic;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-subtitle {
+      color: #ea580c;
+      font-weight: bold;
+      letter-spacing: 2px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .voice-name-display {
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+      .system-grid {
+        grid-template-columns: 320px 1fr; /* Panel de control ajustado */
+      }
+    }
+
+    .antonov-panel {
+      background: #0a0a0a;
+      border: 1px solid #222;
+      padding: 1.5rem;
+      border-radius: 8px;
+      height: fit-content;
+    }
+
+    .control-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .label-control {
+      color: #666;
+      font-weight: bold;
+      font-size: 0.65rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .label-voice {
+      color: #ea580c;
+    }
+
+    .antonov-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid #333;
+      color: white;
+      padding: 0.75rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      outline: none;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+
+    .antonov-input:focus {
+      border-color: #ea580c;
+    }
+
+    textarea.antonov-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+
+    .v-btn {
+      background: #111;
+      border: 2px solid #222;
+      padding: 0;
+      height: 50px; /* Altura fija para botones uniformes */
+      cursor: pointer;
+      font-size: 1.2rem;
+      filter: grayscale(1);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .v-btn:hover {
+      border-color: #444;
+      transform: translateY(-2px);
+    }
+
+    .v-btn.active {
+      border-color: #ea580c;
+      background: #1a1a1a;
+      filter: grayscale(0);
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(234, 88, 12, 0.2);
+    }
+
+    .antonov-btn {
+      width: 100%;
+      padding: 0.9rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-gemini {
+      background: #27272a;
+      color: #ea580c;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ea580c;
+    }
+
+    .btn-gemini:hover:not(:disabled) {
+      background: #ea580c;
+      color: black;
+    }
+
+    .btn-random {
+      background: transparent;
+      border: 1px solid #333;
+      color: #888;
+    }
+
+    .btn-random:hover {
+      border-color: #666;
+      color: white;
+    }
+
+    .btn-download {
+      background: #ea580c;
+      color: black;
+      margin-top: 1rem;
+    }
+
+    .btn-download:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    .antonov-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .canvas-container {
+      background: #020202;
+      border: 1px solid #222;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      border-radius: 8px;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+      border: 1px solid #333;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .slider-container input {
+      flex: 1;
+      accent-color: #ea580c;
+    }
+
+    .size-display {
+      font-family: 'Space Mono', monospace;
+      color: #ea580c;
+      font-weight: bold;
+      min-width: 50px;
+      text-align: right;
+      font-size: 0.8rem;
+    }
+
+    .divider {
+      border-top: 1px solid #222;
+      padding-top: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    select.antonov-input {
+      margin-bottom: 0.5rem;
+    }
+    /* Efecto de destello para el canvas */
+    .canvas-container.glitch-active {
+      animation: pulse-border 0.4s ease-out;
+    }
+
+    @keyframes pulse-border {
+      0% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
+      50% { box-shadow: 0 0 50px rgba(234, 88, 12, 0.8); border-color: #ea580c; }
+      100% { box-shadow: 0 0 0px rgba(234, 88, 12, 0); border-color: #222; }
+    }
+
+    /* Mejora del canvas para que el destello se vea interno también */
+    canvas {
+      transition: filter 0.3s ease;
+    }
+    .processing canvas {
+      filter: brightness(1.5) contrast(1.2);
+    }
+  </style>
+
+  <div class="antonov-wrapper">
+    <div class="antonov-container">
+      <section class="antonov-body">
+        <div class="header-section">
+          <h1 class="header-title">ANTONOV V5.0</h1>
+          <p class="header-subtitle">
+            SISTEMA MULTI-NÚCLEO // <span id="current-voice-name" class="voice-name-display">SAPO HONESTO</span>
+          </p>
+        </div>
+
+        <div class="system-grid">
+          <aside class="antonov-panel">
+            <div class="control-group">
+              <label class="label-control label-voice">◢ SELECCIONAR NÚCLEO:</label>
+              <div class="voice-grid">
+                <button class="v-btn active" data-voice="sapo" title="Sapo Honesto">🐸</button>
+                <button class="v-btn" data-voice="coach" title="Coach Sin Azúcar">🥊</button>
+                <button class="v-btn" data-voice="zen" title="Zen Callejero">🕶️</button>
+                <button class="v-btn" data-voice="bufon" title="Bufón Filosófico">🃏</button>
+                <button class="v-btn" data-voice="abuela" title="Abuela Sabia">👵</button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="label-control">▸ Texto del Núcleo:</label>
+              <textarea id="quote" class="antonov-input" placeholder="SISTEMA LISTO..."></textarea>
+            </div>
+
+            <div class="control-group">
+              <button id="btn-gemini" class="antonov-btn btn-gemini">
+                <span id="btn-text">🤖 GENERAR CON GEMINI</span>
+              </button>
+              <button id="btn-random" class="antonov-btn btn-random">🎲 FRASE ALEATORIA</button>
+            </div>
+
+            <div class="control-group divider">
+              <label class="label-control">▸ Tamaño de Fuente:</label>
+              <div class="slider-container">
+                <input type="range" id="fontSizeSlider" min="20" max="300" value="80" />
+                <span id="sizeVal" class="size-display">80px</span>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="label-control">▸ Formato:</label>
+              <select id="format" class="antonov-input">
+                <option value="post">CUADRADO (1080x1080)</option>
+                <option value="story">STORY (1080x1920)</option>
+                <option value="banner">BANNER (1920x1080)</option>
+              </select>
+
+              <label class="label-control" style="margin-top: 0.5rem">▸ Intensidad Glitch:</label>
+              <select id="intensity" class="antonov-input">
+                <option value="0.5">BAJO</option>
+                <option value="1.0" selected>ALTO</option>
+                <option value="1.5">EXTREMO</option>
+              </select>
+            </div>
+
+            <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR IMAGEN</button>
+          </aside>
+
+          <section class="canvas-container">
+            <canvas id="canvas"></canvas>
+          </section>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script is:inline>
   document.addEventListener('astro:page-load', () => {
     const canvas = document.getElementById('canvas');
     if (!canvas) return;
@@ -171,3 +517,4 @@ REGLAS:
     render();
   });
 </script>
+</Layout>
