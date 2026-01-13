@@ -18,6 +18,10 @@ export const headerData = {
       text: 'Herramientas',
       links: [
         {
+          text: 'Oráculo Astro 🔮', // Lo pusimos de primero para que resalte
+          href: getPermalink('/oraculo'),
+        },
+        {
           text: 'Contador de Vida',
           href: getPermalink('/contadordevida'),
         },
