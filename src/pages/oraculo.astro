@@ -166,15 +166,22 @@ Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.`
       ctx.lineWidth = 30;
       ctx.strokeRect(15, 15, w-30, h-30);
 
-      // 1. PREGUNTA (arriba, discreta)
-      let pregunta = input.value.trim().toUpperCase();
-      if (!pregunta.startsWith('¿')) pregunta = '¿' + pregunta;
-      if (!pregunta.endsWith('?')) pregunta = pregunta + '?';
-      
-      ctx.fillStyle = '#333333';
-      ctx.textAlign = 'center';
-      ctx.font = `bold ${Math.floor(w * 0.023)}px monospace`;
-      ctx.fillText(pregunta, w/2, h * 0.15);
+      // LÓGICA INTELIGENTE DE ENCABEZADO
+let textoUsuario = input.value.trim().toUpperCase();
+let encabezadoFinal = textoUsuario;
+
+// Si parece pregunta (tiene palabras clave o el usuario puso un signo), le ponemos signos
+const palabrasPregunta = ['QUÉ', 'CÓMO', 'CUÁNDO', 'QUIÉN', 'DÓNDE', 'POR QUÉ', 'SERÁ'];
+const esPregunta = palabrasPregunta.some(p => textoUsuario.includes(p)) || textoUsuario.includes('?');
+
+if (esPregunta) {
+  let limpia = textoUsuario.replace(/^[¿\?]+|[¿\?]+$/g, '');
+  encabezadoFinal = `¿${limpia}?`;
+}
+
+ctx.fillStyle = '#222'; ctx.textAlign = 'center';
+ctx.font = 'bold 26px monospace';
+ctx.fillText(encabezadoFinal.substring(0, 60), w/2, h * 0.12);
 
       // 2. SENTENCIA (centro, protagonista)
       ctx.fillStyle = '#ffffff';
