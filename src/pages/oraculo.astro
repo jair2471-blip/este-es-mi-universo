@@ -111,16 +111,15 @@ import Layout from '../layouts/Layout.astro';
       const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({ 
-  prompt: `Eres EL ORÁCULO DE HIERRO. El usuario te dice: "${consulta}". 
-  prompt: `Eres EL ORÁCULO DE HIERRO. El usuario te dice: "${consulta}". 
+        body: JSON.stringify({ 
+          prompt: `Eres EL ORÁCULO DE HIERRO. El usuario te dice: "${consulta}". 
 INSTRUCCIÓN DE TONO:
 1. Usa sabiduría callejera colombiana, sé directo y contundente.
 2. NUNCA uses groserías, palabras vulgares ni insultos pesados. 
 3. Si el usuario pregunta una bobada, usa el sarcasmo o el "vaciadón" elegante (ej: "mándelo a recoger", "valórese").
 4. Si es algo serio, da aliento berraco.
 ESTILO: Máximo 12 palabras, TODO EN MAYÚSCULAS.` 
-})
+        })
       });
       
       const data = await response.json();
