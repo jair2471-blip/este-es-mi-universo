@@ -17,11 +17,10 @@ import Layout from '../layouts/Layout.astro';
       <div class="space-y-8">
         <div class="relative">
           <textarea
-            id="consulta-input"
-            class="w-full bg-transparent border-b-2 border-zinc-900 text-white focus:border-yellow-600 outline-none text-2xl py-4 placeholder:text-zinc-800 text-center uppercase font-bold tracking-tighter transition-all resize-none"
-            placeholder="Escriba su duda..."
-            rows="2"
-          ></textarea>
+  id="consulta-input"
+  class="..."
+  placeholder="SUELTE SU PENA O SU DUDA AQUÍ..."
+></textarea>
         </div>
 
         <button
@@ -102,7 +101,9 @@ import Layout from '../layouts/Layout.astro';
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
-          prompt: `Eres EL ORÁCULO DE HIERRO. Responde a: "${consulta}". Estilo sabio de barrio colombiano, directo, berraco, máximo 12 palabras. TODO EN MAYÚSCULAS.` 
+          prompt: `Eres EL ORÁCULO DE HIERRO. El usuario te dice: "${consulta}". 
+Reacciona, aconseja o sentencia con sabiduría callejera colombiana. 
+Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.` 
         })
       });
       
