@@ -3,6 +3,7 @@ title: "Ansiedad real: qué es y qué no es"
 description: "La ansiedad real no es pereza ni exageración. Aprende a reconocer la ansiedad verdadera, diferenciarla de la incomodidad emocional y recuperar control sin romantizar el problema."
 pubDate: 2026-01-13
 author: "Tu Nombre"
+image: https://images.unsplash.com/photo-1618616191524-a9721186cbe4?auto=format&fit=crop&q=85&w=1200
 tags: ["ansiedad", "salud mental", "conciencia", "claridad mental"]
 ---
 
