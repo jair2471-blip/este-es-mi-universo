@@ -3,53 +3,82 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="ORÁCULO DE HIERRO | Sentencia de la Calle">
-  <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-6 selection:bg-yellow-600">
+  <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4 md:p-8 selection:bg-yellow-600">
     
-    <div class="max-w-xl w-full">
-      <div class="text-center mb-16 space-y-2">
-        <h1 class="text-7xl md:text-8xl font-black tracking-tighter text-yellow-600 uppercase italic leading-[0.8]">
+    <div class="max-w-2xl w-full">
+      <!-- HEADER MEJORADO -->
+      <div class="text-center mb-12 md:mb-20 space-y-3">
+        <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-yellow-600 uppercase italic leading-[0.85]">
           ORÁCULO<br/><span class="text-white">DE HIERRO</span>
         </h1>
-        <div class="h-1 w-20 bg-yellow-600 mx-auto mt-4"></div>
-        <p class="text-zinc-600 tracking-[0.8em] text-[9px] font-bold uppercase pt-2">Justicia Final // E.U.L.M</p>
+        <div class="h-1 w-24 bg-yellow-600 mx-auto mt-6"></div>
+        <p class="text-zinc-600 tracking-[0.6em] text-[10px] md:text-xs font-bold uppercase pt-3">Justicia Final // E.U.L.M</p>
       </div>
 
-      <div class="space-y-8">
-        <div class="relative">
+      <!-- ZONA DE CONSULTA -->
+      <div class="space-y-6 md:space-y-8">
+        <div class="relative bg-zinc-950 border border-zinc-900 p-6 md:p-8 rounded-sm">
           <textarea
             id="consulta-input"
-            class="w-full bg-transparent border-b-2 border-zinc-900 text-white focus:border-yellow-600 outline-none text-2xl py-4 placeholder:text-zinc-800 text-center uppercase font-bold tracking-tighter transition-all resize-none"
+            class="w-full bg-transparent text-white outline-none text-xl md:text-2xl placeholder:text-zinc-700 text-center uppercase font-bold tracking-tight transition-all resize-none min-h-[80px]"
             placeholder="SUELTE SU PENA O SU DUDA AQUÍ..."
             rows="2"></textarea>
         </div>
 
         <button
           id="btn-consultar"
-          class="w-full border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-black font-black py-4 uppercase italic tracking-[0.3em] transition-all active:scale-95"
+          class="w-full border-2 border-yellow-600 bg-transparent text-yellow-600 hover:bg-yellow-600 hover:text-black font-black py-5 md:py-6 uppercase italic tracking-[0.25em] transition-all duration-300 active:scale-[0.98] text-sm md:text-base"
         >
           PEDIR SENTENCIA
         </button>
 
-        <div id="resultado-seccion" class="hidden space-y-12 pt-10">
-          <div class="text-center relative py-10">
-            <span class="absolute top-0 left-0 text-6xl text-zinc-900 font-serif select-none">"</span>
-            <p id="respuesta-texto" class="text-4xl md:text-5xl font-black uppercase italic leading-[1.1] text-white tracking-tighter px-8"></p>
-            <span class="absolute bottom-0 right-0 text-6xl text-zinc-900 font-serif select-none">"</span>
+        <!-- RESULTADO MEJORADO -->
+        <div id="resultado-seccion" class="hidden space-y-8 md:space-y-12 pt-8 md:pt-12">
+          
+          <!-- SENTENCIA -->
+          <div class="bg-zinc-950 border-2 border-yellow-600 p-8 md:p-12 rounded-sm relative overflow-hidden">
+            <div class="absolute top-4 left-4 text-5xl md:text-6xl text-zinc-900 font-serif select-none opacity-50">"</div>
+            <div class="absolute bottom-4 right-4 text-5xl md:text-6xl text-zinc-900 font-serif select-none opacity-50">"</div>
+            
+            <p id="respuesta-texto" class="text-3xl md:text-4xl lg:text-5xl font-black uppercase italic leading-[1.15] text-white tracking-tighter text-center py-4 md:py-6 relative z-10"></p>
           </div>
 
-          <div class="grid grid-cols-1 gap-4">
-            <button id="btn-compartir-nativa" class="w-full bg-zinc-100 text-black font-black py-4 text-[10px] uppercase tracking-[0.4em] hover:bg-yellow-600 transition-all">
-              COMPARTIR DICTAMEN
+          <!-- ACCIONES MEJORADAS -->
+          <div class="space-y-4">
+            <!-- Botón compartir principal -->
+            <button id="btn-compartir-nativa" class="w-full bg-yellow-600 text-black font-black py-5 text-xs md:text-sm uppercase tracking-[0.3em] hover:bg-yellow-500 transition-all duration-300 active:scale-[0.98]">
+              📜 COMPARTIR DICTAMEN
             </button>
             
-            <div class="grid grid-cols-4 gap-2">
-              <button data-format="post" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">POST</button>
-              <button data-format="story" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">STORY</button>
-              <button data-format="fb" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">FB</button>
-              <button data-format="tw" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">TW</button>
+            <!-- Opciones de descarga -->
+            <div class="pt-4 border-t border-zinc-900">
+              <p class="text-zinc-600 text-[10px] uppercase tracking-widest text-center mb-3 font-bold">Descargar imagen para:</p>
+              <div class="grid grid-cols-4 gap-2 md:gap-3">
+                <button data-format="post" class="btn-download bg-zinc-950 border border-zinc-800 p-4 md:p-5 text-[9px] md:text-[10px] uppercase font-bold text-zinc-400 hover:border-yellow-600 hover:text-yellow-600 hover:bg-zinc-900 transition-all duration-300">
+                  <span class="block mb-1">📱</span>
+                  POST
+                </button>
+                <button data-format="story" class="btn-download bg-zinc-950 border border-zinc-800 p-4 md:p-5 text-[9px] md:text-[10px] uppercase font-bold text-zinc-400 hover:border-yellow-600 hover:text-yellow-600 hover:bg-zinc-900 transition-all duration-300">
+                  <span class="block mb-1">📲</span>
+                  STORY
+                </button>
+                <button data-format="fb" class="btn-download bg-zinc-950 border border-zinc-800 p-4 md:p-5 text-[9px] md:text-[10px] uppercase font-bold text-zinc-400 hover:border-yellow-600 hover:text-yellow-600 hover:bg-zinc-900 transition-all duration-300">
+                  <span class="block mb-1">👥</span>
+                  FB
+                </button>
+                <button data-format="tw" class="btn-download bg-zinc-950 border border-zinc-800 p-4 md:p-5 text-[9px] md:text-[10px] uppercase font-bold text-zinc-400 hover:border-yellow-600 hover:text-yellow-600 hover:bg-zinc-900 transition-all duration-300">
+                  <span class="block mb-1">🐦</span>
+                  TW
+                </button>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- FOOTER SUTIL -->
+      <div class="text-center mt-16 md:mt-20 opacity-30 hover:opacity-60 transition-opacity">
+        <p class="text-zinc-700 text-[9px] tracking-widest uppercase">La sentencia es inapelable</p>
       </div>
     </div>
   </div>
@@ -59,10 +88,10 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
   @keyframes fadeSlideIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .animate-in { animation: fadeSlideIn 1s ease-out; }
+  .animate-in { animation: fadeSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
 </style>
 
 <script>
