@@ -1,5 +1,6 @@
 ---
 title: "Ansiedad real: qué es y qué no es"
+excerpt: La ansiedad real no es incomodidad ni excusa. Es un problema que interfiere con tu vida y requiere claridad para gestionarse.
 description: "La ansiedad real no es pereza ni exageración. Aprende a reconocer la ansiedad verdadera, diferenciarla de la incomodidad emocional y recuperar control sin romantizar el problema."
 pubDate: 2026-01-13
 author: "El universo de la mente"
