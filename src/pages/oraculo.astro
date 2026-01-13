@@ -17,10 +17,10 @@ import Layout from '../layouts/Layout.astro';
       <div class="space-y-8">
         <div class="relative">
           <textarea
-  id="consulta-input"
-  class="..."
-  placeholder="SUELTE SU PENA O SU DUDA AQUÍ..."
-></textarea>
+            id="consulta-input"
+            class="w-full bg-transparent border-b-2 border-zinc-900 text-white focus:border-yellow-600 outline-none text-2xl py-4 placeholder:text-zinc-800 text-center uppercase font-bold tracking-tighter transition-all resize-none"
+            placeholder="SUELTE SU PENA O SU DUDA AQUÍ..."
+            rows="2"></textarea>
         </div>
 
         <button
@@ -31,7 +31,6 @@ import Layout from '../layouts/Layout.astro';
         </button>
 
         <div id="resultado-seccion" class="hidden space-y-12 pt-10">
-          
           <div class="text-center relative py-10">
             <span class="absolute top-0 left-0 text-6xl text-zinc-900 font-serif select-none">"</span>
             <p id="respuesta-texto" class="text-4xl md:text-5xl font-black uppercase italic leading-[1.1] text-white tracking-tighter px-8"></p>
@@ -44,18 +43,10 @@ import Layout from '../layouts/Layout.astro';
             </button>
             
             <div class="grid grid-cols-4 gap-2">
-              <button data-format="post" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">
-                POST
-              </button>
-              <button data-format="story" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">
-                STORY
-              </button>
-              <button data-format="fb" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">
-                FB
-              </button>
-              <button data-format="tw" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">
-                TW
-              </button>
+              <button data-format="post" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">POST</button>
+              <button data-format="story" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">STORY</button>
+              <button data-format="fb" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">FB</button>
+              <button data-format="tw" class="btn-download bg-transparent border border-zinc-900 p-3 text-[8px] uppercase font-bold text-zinc-500 hover:border-yellow-600 hover:text-yellow-600 transition-all">TW</button>
             </div>
           </div>
         </div>
@@ -68,19 +59,10 @@ import Layout from '../layouts/Layout.astro';
 
 <style>
   @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-
-  .animate-in {
-    animation: fadeSlideIn 1s ease-out;
-  }
+  .animate-in { animation: fadeSlideIn 1s ease-out; }
 </style>
 
 <script>
@@ -102,8 +84,8 @@ import Layout from '../layouts/Layout.astro';
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           prompt: `Eres EL ORÁCULO DE HIERRO. El usuario te dice: "${consulta}". 
-Reacciona, aconseja o sentencia con sabiduría callejera colombiana. 
-Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.` 
+          Reacciona, aconseja o sentencia con sabiduría callejera colombiana. 
+          Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.` 
         })
       });
       
@@ -113,23 +95,19 @@ Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.`
       resContainer.classList.remove('hidden');
       resContainer.classList.add('animate-in');
       
-      // Scroll suave
       setTimeout(() => {
         resContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }, 100);
       
     } catch (e) {
-      console.error('Error:', e);
       resTexto.innerText = "ERROR EN LA MATRIZ.";
       resContainer.classList.remove('hidden');
-      resContainer.classList.add('animate-in');
     } finally {
       btn.innerText = 'PEDIR SENTENCIA';
       btn.disabled = false;
     }
   });
 
-  // Enter para enviar
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -137,7 +115,6 @@ Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.`
     }
   });
 
-  // GENERACIÓN DE IMÁGENES
   document.querySelectorAll('.btn-download').forEach(b => {
     b.addEventListener('click', () => {
       const format = b.getAttribute('data-format');
@@ -145,7 +122,6 @@ Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.`
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // Dimensiones según formato
       const dimensions = {
         post: { w: 1080, h: 1080 },
         story: { w: 1080, h: 1920 },
@@ -157,102 +133,80 @@ Sé directo, crudo y sin filtros. Máximo 15 palabras. TODO EN MAYÚSCULAS.`
       canvas.width = w;
       canvas.height = h;
 
-      // FONDO NEGRO PREMIUM
       ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, w, h);
       
-      // MARCO SUTIL
       ctx.strokeStyle = '#1a1a1a';
       ctx.lineWidth = 30;
       ctx.strokeRect(15, 15, w-30, h-30);
 
       // LÓGICA INTELIGENTE DE ENCABEZADO
-let textoUsuario = input.value.trim().toUpperCase();
-let encabezadoFinal = textoUsuario;
+      let textoUsuario = input.value.trim().toUpperCase();
+      let encabezadoFinal = textoUsuario;
+      const palabrasPregunta = ['QUÉ', 'CÓMO', 'CUÁNDO', 'QUIÉN', 'DÓNDE', 'POR QUÉ', 'SERÁ'];
+      const esPregunta = palabrasPregunta.some(p => textoUsuario.includes(p)) || textoUsuario.includes('?');
 
-// Si parece pregunta (tiene palabras clave o el usuario puso un signo), le ponemos signos
-const palabrasPregunta = ['QUÉ', 'CÓMO', 'CUÁNDO', 'QUIÉN', 'DÓNDE', 'POR QUÉ', 'SERÁ'];
-const esPregunta = palabrasPregunta.some(p => textoUsuario.includes(p)) || textoUsuario.includes('?');
+      if (esPregunta) {
+        let limpia = textoUsuario.replace(/^[¿\?]+|[¿\?]+$/g, '');
+        encabezadoFinal = `¿${limpia}?`;
+      }
 
-if (esPregunta) {
-  let limpia = textoUsuario.replace(/^[¿\?]+|[¿\?]+$/g, '');
-  encabezadoFinal = `¿${limpia}?`;
-}
+      ctx.fillStyle = '#222'; ctx.textAlign = 'center';
+      ctx.font = 'bold 26px monospace';
+      ctx.fillText(encabezadoFinal.substring(0, 60), w/2, h * 0.12);
 
-ctx.fillStyle = '#222'; ctx.textAlign = 'center';
-ctx.font = 'bold 26px monospace';
-ctx.fillText(encabezadoFinal.substring(0, 60), w/2, h * 0.12);
-
-      // 2. SENTENCIA (centro, protagonista)
+      // SENTENCIA (CORREGIDA)
       ctx.fillStyle = '#ffffff';
-      const fontSize = format === 'story' ? Math.floor(w * 0.07) : Math.floor(w * 0.075);
+      const fontSize = format === 'story' ? Math.floor(w * 0.08) : Math.floor(w * 0.075);
       ctx.font = `italic 900 ${fontSize}px Arial, sans-serif`;
       
-      const respuestaTexto = resTexto.innerText;
-      const words = respuestaTexto.split(' ');
+      const words = resTexto.innerText.split(' ');
       const maxWidth = w * 0.85;
-      let lines = [];
-      let currentLine = '';
+      let lines = [], currentLine = '';
 
       words.forEach(word => {
-        const testLine = currentLine + word + ' ';
-        const metrics = ctx.measureText(testLine);
-        if (metrics.width > maxWidth && currentLine !== '') {
+        if (ctx.measureText(currentLine + word).width < maxWidth) {
+          currentLine += word + ' ';
+        } else {
           lines.push(currentLine.trim());
           currentLine = word + ' ';
-        } else {
-          currentLine = testLine;
         }
       });
-      if (currentLine) lines.push(currentLine.trim());
+      lines.push(currentLine.trim());
 
-      const lineHeight = fontSize * 1.3;
-      const totalHeight = lines.length * lineHeight;
-      let startY = (h / 2) - (totalHeight / 2) + (fontSize * 0.7);
+      const lineHeight = fontSize * 1.2;
+      let startY = (h / 2) - ((lines.length - 1) * lineHeight / 2);
 
       lines.forEach(line => {
         ctx.fillText(line, w/2, startY);
         startY += lineHeight;
       });
 
-      // 3. FIRMA ESTÉTICA (abajo)
-      const footerY = h - (h * 0.12);
-      
-      // Línea decorativa arriba del footer
+      // FIRMA
+      const footerY = h - (h * 0.1);
       ctx.fillStyle = '#ca8a04';
-      ctx.fillRect(w/2 - (w * 0.04), footerY - (h * 0.08), w * 0.08, 3);
-
-      // Título
-      ctx.font = `900 ${Math.floor(w * 0.04)}px Arial, sans-serif`;
+      ctx.fillRect(w/2 - 40, footerY - 60, 80, 4);
+      ctx.font = `900 ${Math.floor(w * 0.045)}px Arial, sans-serif`;
       ctx.fillText('ORÁCULO DE HIERRO', w/2, footerY);
       
-      // Subtítulo
-      ctx.fillStyle = '#333333';
-      ctx.font = `bold ${Math.floor(w * 0.018)}px monospace`;
-      ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, footerY + (h * 0.045));
+      ctx.fillStyle = '#333';
+      ctx.font = `bold ${Math.floor(w * 0.02)}px monospace`;
+      ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, footerY + 40);
 
-      // Descargar imagen
       const link = document.createElement('a');
-      link.download = `ORACULO-${format}-${Date.now()}.png`;
+      link.download = `ORACULO-${format}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
   });
 
-  // Compartir nativo
   document.getElementById('btn-compartir-nativa')?.addEventListener('click', async () => {
     const texto = `📜 SENTENCIA DEL ORÁCULO DE HIERRO:\n\n"${resTexto.innerText}"\n\nConsulta el tuyo: ${window.location.href}`;
-    
     if (navigator.share) {
-      try {
-        await navigator.share({ text: texto });
-      } catch (e) {
-        console.log('Share cancelled');
-      }
+      try { await navigator.share({ text: texto }); } catch (e) {}
     } else {
-      // Fallback: copiar al portapapeles
       await navigator.clipboard.writeText(texto);
-      alert('Texto copiado al portapapeles');
+      alert('Copiado al portapapeles');
     }
   });
 </script>
