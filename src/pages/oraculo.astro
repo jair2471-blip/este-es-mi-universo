@@ -108,49 +108,54 @@ import Layout from '../layouts/Layout.astro';
     }
   });
 
-  // LÓGICA DE IMAGEN (TODOS LOS TAMAÑOS)
-  document.querySelectorAll('.btn-download').forEach(b => {
-    b.addEventListener('click', () => {
-      const format = b.getAttribute('data-format');
-      const canvas = document.getElementById('hidden-canvas');
-      const ctx = canvas.getContext('2d');
-      
-      let w = 1080, h = 1080;
-      if (format === 'ig-story') h = 1920;
-      if (format === 'fb' || format === 'tw') h = 630;
+  // LÓGICA DE IMAGEN (CON SIGNOS AUTOMÁTICOS)
+document.querySelectorAll('.btn-download').forEach(b => {
+  b.addEventListener('click', () => {
+    const format = b.getAttribute('data-format');
+    const canvas = document.getElementById('hidden-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    let w = 1080, h = 1080;
+    if (format === 'ig-story') h = 1920;
+    if (format === 'fb' || format === 'tw') h = 630;
 
-      canvas.width = w; canvas.height = h;
+    canvas.width = w; canvas.height = h;
 
-      // FONDO NEGRO Y MARCO ORO
-      ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
-      ctx.strokeStyle = '#ca8a04'; ctx.lineWidth = 20;
-      ctx.strokeRect(40, 40, w-80, h-80);
+    // FONDO Y MARCO
+    ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = '#ca8a04'; ctx.lineWidth = 20;
+    ctx.strokeRect(40, 40, w-80, h-80);
 
-      // PREGUNTA PEQUEÑA ARRIBA
-      ctx.fillStyle = '#444'; ctx.textAlign = 'center';
-      ctx.font = 'bold 24px Courier New';
-      ctx.fillText(`CONSULTA: ${input.value.toUpperCase().substring(0, 50)}...`, w/2, 120);
+    // FORMATEO DE PREGUNTA AUTOMÁTICO
+    let preguntaLimpia = input.value.trim().toUpperCase();
+    // Quitamos signos si el usuario ya los puso para no duplicarlos
+    preguntaLimpia = preguntaLimpia.replace(/^[¿\?]+|[¿\?]+$/g, '');
+    const preguntaFinal = `¿${preguntaLimpia}?`;
 
-      // SENTENCIA GRANDE
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 70px Arial';
-      const words = resTexto.innerText.split(' ');
-      let line = '', y = h/2 - (words.length > 5 ? 100 : 0);
-      words.forEach(word => {
-        if(ctx.measureText(line + word).width < w * 0.8) line += word + ' ';
-        else { ctx.fillText(line, w/2, y); line = word + ' '; y += 90; }
-      });
-      ctx.fillText(line, w/2, y);
+    // PREGUNTA PEQUEÑA ARRIBA
+    ctx.fillStyle = '#444'; ctx.textAlign = 'center';
+    ctx.font = 'bold 24px monospace';
+    ctx.fillText(preguntaFinal.substring(0, 60), w/2, 120);
 
-      // NOMBRE BERRRACO ABAJO
-      ctx.fillStyle = '#ca8a04'; ctx.font = '900 60px Arial';
-      ctx.fillText('ORÁCULO DE HIERRO', w/2, h - 160);
-      ctx.fillStyle = '#555'; ctx.font = 'bold 24px Courier New';
-      ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, h - 100);
-
-      const link = document.createElement('a');
-      link.download = `sentencia-hierro-${format}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
+    // SENTENCIA GRANDE
+    ctx.fillStyle = '#ffffff'; ctx.font = 'bold 75px sans-serif';
+    const words = resTexto.innerText.split(' ');
+    let line = '', y = h/2 - (words.length > 5 ? 100 : 0);
+    words.forEach(word => {
+      if(ctx.measureText(line + word).width < w * 0.8) line += word + ' ';
+      else { ctx.fillText(line, w/2, y); line = word + ' '; y += 100; }
     });
+    ctx.fillText(line, w/2, y);
+
+    // NOMBRE ABAJO
+    ctx.fillStyle = '#ca8a04'; ctx.font = '900 60px sans-serif';
+    ctx.fillText('ORÁCULO DE HIERRO', w/2, h - 160);
+    ctx.fillStyle = '#555'; ctx.font = 'bold 24px monospace';
+    ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, h - 100);
+
+    const link = document.createElement('a');
+    link.download = `sentencia-hierro-${format}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
   });
-</script>
+});
