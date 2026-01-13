@@ -3,11 +3,11 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="EL ORÁCULO DE HIERRO | Sentencia Firme">
-  <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4 selection:bg-yellow-600">
+  <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4">
     
     <div class="max-w-2xl w-full text-center">
       <div class="mb-10">
-        <h1 class="text-6xl md:text-7xl font-black tracking-tighter text-yellow-600 uppercase italic drop-shadow-[0_4px_10px_rgba(202,138,4,0.4)]">
+        <h1 class="text-6xl md:text-7xl font-black tracking-tighter text-yellow-600 uppercase italic">
           ORÁCULO DE HIERRO
         </h1>
         <p class="text-zinc-500 tracking-[0.5em] text-[10px] font-bold uppercase mt-4">
@@ -15,7 +15,7 @@ import Layout from '../layouts/Layout.astro';
         </p>
       </div>
 
-      <div class="bg-zinc-900/30 backdrop-blur-xl border-2 border-zinc-800 rounded-none p-8 shadow-2xl relative">
+      <div class="bg-zinc-900/40 border-2 border-zinc-800 rounded-none p-8 shadow-2xl relative">
         <div class="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-yellow-600"></div>
         <div class="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-yellow-600"></div>
 
@@ -28,20 +28,32 @@ import Layout from '../layouts/Layout.astro';
 
         <button
           id="btn-consultar"
-          class="w-full bg-yellow-600 hover:bg-yellow-500 text-black font-black py-5 rounded-none transition-all text-xl uppercase tracking-[0.2em] italic"
+          class="w-full bg-yellow-600 hover:bg-yellow-500 text-black font-black py-5 rounded-none transition-all text-xl uppercase tracking-[0.2em] italic shadow-lg shadow-yellow-900/20"
         >
           PEDIR SENTENCIA
         </button>
 
         <div id="resultado-seccion" class="hidden mt-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          
           <div class="p-8 bg-zinc-950 border-l-8 border-yellow-600 text-left">
             <h3 class="text-yellow-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Dictamen:</h3>
             <p id="respuesta-texto" class="text-3xl md:text-4xl font-black uppercase italic leading-tight text-white"></p>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <button data-format="ig-post" class="btn-download bg-white text-black p-4 font-black uppercase text-[10px] tracking-widest hover:bg-yellow-600 transition-all">Instagram Post</button>
-            <button data-format="ig-story" class="btn-download bg-transparent border border-zinc-700 text-zinc-400 p-4 font-black uppercase text-[10px] tracking-widest hover:border-white hover:text-white transition-all">Instagram Story</button>
+          <div class="space-y-4">
+            <button id="btn-compartir-nativa" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black py-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-xs transition-all">
+              <span>🔗</span> COMPARTIR EN REDES
+            </button>
+
+            <div class="text-center space-y-4">
+              <p class="text-yellow-600 text-[10px] font-bold uppercase tracking-widest">Descargar Imágenes:</p>
+              <div class="grid grid-cols-2 gap-3">
+                <button data-format="ig-post" class="btn-download bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl font-bold text-[10px] uppercase transition-all border border-zinc-700">IG Post</button>
+                <button data-format="ig-story" class="btn-download bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl font-bold text-[10px] uppercase transition-all border border-zinc-700">IG Story</button>
+                <button data-format="fb" class="btn-download bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl font-bold text-[10px] uppercase transition-all border border-zinc-700">Facebook</button>
+                <button data-format="tw" class="btn-download bg-zinc-800 hover:bg-zinc-700 p-3 rounded-xl font-bold text-[10px] uppercase transition-all border border-zinc-700">Twitter/X</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,6 +69,7 @@ import Layout from '../layouts/Layout.astro';
   const resContainer = document.getElementById('resultado-seccion');
   const resTexto = document.getElementById('respuesta-texto');
 
+  // LÓGICA DE CONSULTA
   btn.addEventListener('click', async () => {
     const consulta = input.value.trim();
     if(!consulta) return;
@@ -75,52 +88,67 @@ import Layout from '../layouts/Layout.astro';
       const data = await response.json();
       resTexto.innerText = data.response || data.text || data.message || "EL DESTINO ESTÁ BLOQUEADO.";
       resContainer.classList.remove('hidden');
+      resContainer.scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
-      resTexto.innerText = "ERROR EN EL SISTEMA. LA VERDAD NO PUDO SALIR.";
+      resTexto.innerText = "ERROR EN EL SISTEMA. INTENTA LUEGO.";
     } finally {
       btn.innerText = 'PEDIR SENTENCIA';
       btn.disabled = false;
     }
   });
 
+  // BOTÓN COMPARTIR
+  document.getElementById('btn-compartir-nativa').addEventListener('click', async () => {
+    const texto = `🔮 ORÁCULO DE HIERRO SENTENCIA:\n\n"${resTexto.innerText}"\n\nPregúntale tú en: ${window.location.href}`;
+    if (navigator.share) {
+      await navigator.share({ title: 'Oráculo de Hierro', text: texto });
+    } else {
+      navigator.clipboard.writeText(texto);
+      alert('¡Copiado al portapapeles, mijo!');
+    }
+  });
+
+  // LÓGICA DE IMAGEN (TODOS LOS TAMAÑOS)
   document.querySelectorAll('.btn-download').forEach(b => {
     b.addEventListener('click', () => {
       const format = b.getAttribute('data-format');
       const canvas = document.getElementById('hidden-canvas');
       const ctx = canvas.getContext('2d');
-      const w = 1080, h = (format === 'ig-story' ? 1920 : 1080);
+      
+      let w = 1080, h = 1080;
+      if (format === 'ig-story') h = 1920;
+      if (format === 'fb' || format === 'tw') h = 630;
+
       canvas.width = w; canvas.height = h;
 
-      // FONDO
+      // FONDO NEGRO Y MARCO ORO
       ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
-      
-      // MARCOS
-      ctx.strokeStyle = '#ca8a04'; ctx.lineWidth = 15;
-      ctx.strokeRect(50, 50, w-100, h-100);
+      ctx.strokeStyle = '#ca8a04'; ctx.lineWidth = 20;
+      ctx.strokeRect(40, 40, w-80, h-80);
 
-      // PREGUNTA (PEQUEÑA ARRIBA)
+      // PREGUNTA PEQUEÑA ARRIBA
       ctx.fillStyle = '#444'; ctx.textAlign = 'center';
-      ctx.font = 'bold 24px monospace';
-      ctx.fillText(`CONSULTA: ${input.value.toUpperCase()}`, w/2, 120);
+      ctx.font = 'bold 24px Courier New';
+      ctx.fillText(`CONSULTA: ${input.value.toUpperCase().substring(0, 50)}...`, w/2, 120);
 
-      // SENTENCIA (GRANDE)
-      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 75px sans-serif';
+      // SENTENCIA GRANDE
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 70px Arial';
       const words = resTexto.innerText.split(' ');
-      let line = '', y = h/2 - 50;
+      let line = '', y = h/2 - (words.length > 5 ? 100 : 0);
       words.forEach(word => {
         if(ctx.measureText(line + word).width < w * 0.8) line += word + ' ';
-        else { ctx.fillText(line, w/2, y); line = word + ' '; y += 100; }
+        else { ctx.fillText(line, w/2, y); line = word + ' '; y += 90; }
       });
       ctx.fillText(line, w/2, y);
 
-      // MARCA FINAL
-      ctx.fillStyle = '#ca8a04'; ctx.font = '900 60px sans-serif';
-      ctx.fillText('ORÁCULO DE HIERRO', w/2, h - 180);
-      ctx.fillStyle = '#555'; ctx.font = 'bold 22px monospace';
-      ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, h - 120);
+      // NOMBRE BERRRACO ABAJO
+      ctx.fillStyle = '#ca8a04'; ctx.font = '900 60px Arial';
+      ctx.fillText('ORÁCULO DE HIERRO', w/2, h - 160);
+      ctx.fillStyle = '#555'; ctx.font = 'bold 24px Courier New';
+      ctx.fillText('SENTENCIA FIRME // E.U.L.M', w/2, h - 100);
 
       const link = document.createElement('a');
-      link.download = `sentencia-hierro-${Date.now()}.png`;
+      link.download = `sentencia-hierro-${format}.png`;
       link.href = canvas.toDataURL();
       link.click();
     });
