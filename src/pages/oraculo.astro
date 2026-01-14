@@ -112,7 +112,7 @@ import Layout from '../layouts/Layout.astro';
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      prompt: ERES EL ORÁCULO DE LA MENTE.
+  prompt: `ERES EL ORÁCULO DE LA MENTE.
 
 EL USUARIO TE DICE: "${consulta}"
 
@@ -127,9 +127,8 @@ ESTILO:
 - FRASE ÚNICA.
 - LENGUAJE PRECISO Y CONTUNDENTE.
 - TODO EN MAYÚSCULAS.
-- SIN GROCERÍAS, SIN SARCASMO, SIN MOTIVACIÓN VACÍA.
-
-    })
+- SIN GROCERÍAS, SIN SARCASMO, SIN MOTIVACIÓN VACÍA.`
+   })
   });
 
   const data = await response.json();
