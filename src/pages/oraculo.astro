@@ -173,7 +173,7 @@ ESTILO: Máximo 12 palabras, TODO EN MAYÚSCULAS.`
       ctx.lineWidth = 30;
       ctx.strokeRect(15, 15, w-30, h-30);
 
-      // LÓGICA INTELIGENTE DE ENCABEZADO
+      // LÓGICA INTELIGENTE DE ENCABEZADO - MEJORADO
       let textoUsuario = input.value.trim().toUpperCase();
       let encabezadoFinal = textoUsuario;
       const palabrasPregunta = ['QUÉ', 'CÓMO', 'CUÁNDO', 'QUIÉN', 'DÓNDE', 'POR QUÉ', 'SERÁ'];
@@ -184,17 +184,20 @@ ESTILO: Máximo 12 palabras, TODO EN MAYÚSCULAS.`
         encabezadoFinal = `¿${limpia}?`;
       }
 
-      ctx.fillStyle = '#222'; ctx.textAlign = 'center';
-      ctx.font = 'bold 26px monospace';
+      // Pregunta con color más visible y mejor tamaño
+      ctx.fillStyle = '#666666'; 
+      ctx.textAlign = 'center';
+      const preguntaSize = Math.floor(w * 0.028);
+      ctx.font = `bold ${preguntaSize}px Arial, sans-serif`;
       ctx.fillText(encabezadoFinal.substring(0, 60), w/2, h * 0.12);
 
-      // SENTENCIA (CORREGIDA)
+      // SENTENCIA - MÁS ESPACIOSA
       ctx.fillStyle = '#ffffff';
-      const fontSize = format === 'story' ? Math.floor(w * 0.08) : Math.floor(w * 0.075);
+      const fontSize = format === 'story' ? Math.floor(w * 0.07) : Math.floor(w * 0.065);
       ctx.font = `italic 900 ${fontSize}px Arial, sans-serif`;
       
       const words = resTexto.innerText.split(' ');
-      const maxWidth = w * 0.85;
+      const maxWidth = w * 0.80; // Reducido para más margen
       let lines = [], currentLine = '';
 
       words.forEach(word => {
@@ -207,7 +210,7 @@ ESTILO: Máximo 12 palabras, TODO EN MAYÚSCULAS.`
       });
       lines.push(currentLine.trim());
 
-      const lineHeight = fontSize * 1.2;
+      const lineHeight = fontSize * 1.4; // Más espacio entre líneas
       let startY = (h / 2) - ((lines.length - 1) * lineHeight / 2);
 
       lines.forEach(line => {
