@@ -15,8 +15,6 @@ tags:
   - redes sociales
 ---
 
-# 2026 será el año del éxito para estas personas (¿estás entre ellas?)
-
 El 2026 no será especial para todo el mundo.  
 No será mágico.  
 No será justo.
