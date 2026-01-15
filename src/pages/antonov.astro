@@ -286,7 +286,6 @@ const metadata = {
   </div>
 
   <script is:inline>
-    // Configuración inicial
     const elements = {
       canvas: document.getElementById('canvas'),
       pregunta: document.getElementById('pregunta'),
@@ -300,7 +299,6 @@ const metadata = {
 
     const ctx = elements.canvas.getContext('2d');
 
-    // FRASES PRE-CARGADAS (Estilo compa directo)
     const frasesDuras = [
       "LO QUE ESCONDES TE ESTÁ MATANDO. SÁCALO YA.",
       "NO ES MALA SUERTE. ES FALTA DE DISCIPLINA.",
@@ -312,37 +310,54 @@ const metadata = {
       "DEJA DE CULPAR A TUS PADRES Y CONSTRUYE TU VIDA."
     ];
 
-    // FUNCIÓN: DIBUJAR RUIDO (Noise)
+    // --- NUEVA LÓGICA DE FORMATO ---
+    function formatearTextoSuperior(texto) {
+      if (!texto) return "";
+      let t = texto.trim();
+      
+      // Lista de palabras que indican pregunta
+      const indicadoresPregunta = /^(qué|quién|cómo|cuándo|dónde|por qué|cuál|será|debo|puedo|vale|conviene|es bueno)/i;
+      
+      // Detectar si es pregunta (por signo o por palabra clave)
+      const esPregunta = t.startsWith('¿') || t.endsWith('?') || indicadoresPregunta.test(t);
+
+      if (esPregunta) {
+        // Asegurar signos de interrogación
+        if (!t.startsWith('¿')) t = '¿' + t;
+        if (!t.endsWith('?')) t = t + '?';
+        return t;
+      } else {
+        // Si no es pregunta, es comentario: Poner comillas
+        // Quitamos comillas existentes para no duplicar
+        t = t.replace(/^["']|["']$/g, ''); 
+        return `"${t}"`;
+      }
+    }
+
     function drawNoise(ctx, w, h) {
       const iData = ctx.createImageData(w, h);
       const buffer32 = new Uint32Array(iData.data.buffer);
-      const len = buffer32.length;
-      for (let i = 0; i < len; i++) {
-        if (Math.random() < 0.08) { // Densidad del ruido
-          buffer32[i] = 0xffffffff; // Puntos blancos
-        }
+      for (let i = 0; i < buffer32.length; i++) {
+        if (Math.random() < 0.08) buffer32[i] = 0xffffffff;
       }
-      
-      // Dibujar ruido en un canvas temporal para bajarle opacidad
       const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = w;
-      tempCanvas.height = h;
-      const tempCtx = tempCanvas.getContext('2d');
-      tempCtx.putImageData(iData, 0, 0);
-      
+      tempCanvas.width = w; tempCanvas.height = h;
+      tempCanvas.getContext('2d').putImageData(iData, 0, 0);
       ctx.save();
-      ctx.globalAlpha = 0.04; // Muy sutil
+      ctx.globalAlpha = 0.04;
       ctx.drawImage(tempCanvas, 0, 0);
       ctx.restore();
     }
 
-    // FUNCIÓN PRINCIPAL: RENDER
     const render = () => {
       const w = elements.format.value === 'story' ? 1080 : 1080;
       const h = elements.format.value === 'story' ? 1920 : 1080;
       const fontSize = parseInt(elements.slider.value);
       const text = (elements.respuesta.value || "EL SILENCIO TAMBIÉN ES RESPUESTA").toUpperCase();
-      const question = (elements.pregunta.value || "").trim();
+      
+      // APLICAR EL NUEVO FORMATO
+      const rawPregunta = elements.pregunta.value;
+      const question = formatearTextoSuperior(rawPregunta);
 
       elements.canvas.width = w;
       elements.canvas.height = h;
@@ -354,35 +369,49 @@ const metadata = {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      // 2. TEXTURA DE RUIDO
+      // 2. RUIDO
       drawNoise(ctx, w, h);
 
-      // 3. MARCOS ESQUINEROS (Estilo Visor)
+      // 3. MARCOS
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
       ctx.lineWidth = 3;
-      const m = 60; // Margen
-      const l = 80; // Largo de la línea
-
-      // Esquina Superior Izq
+      const m = 60; const l = 80;
       ctx.beginPath(); ctx.moveTo(m, m+l); ctx.lineTo(m, m); ctx.lineTo(m+l, m); ctx.stroke();
-      // Esquina Superior Der
       ctx.beginPath(); ctx.moveTo(w-m-l, m); ctx.lineTo(w-m, m); ctx.lineTo(w-m, m+l); ctx.stroke();
-      // Esquina Inferior Izq
       ctx.beginPath(); ctx.moveTo(m, h-m-l); ctx.lineTo(m, h-m); ctx.lineTo(m+l, h-m); ctx.stroke();
-      // Esquina Inferior Der
       ctx.beginPath(); ctx.moveTo(w-m-l, h-m); ctx.lineTo(w-m, h-m); ctx.lineTo(w-m, h-m-l); ctx.stroke();
 
-      // 4. PREGUNTA (Fantasmal en el fondo)
+      // 4. PREGUNTA / COMENTARIO (Mejorada)
       if (question) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        ctx.font = `600 30px 'Inter', sans-serif`;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'; // Un poco más brillante para que se lea mejor
+        ctx.font = `500 28px 'Inter', sans-serif`; // Fuente un poco más fina y elegante
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.letterSpacing = '2px';
-        ctx.fillText(question.length > 50 ? question.substring(0,47) + "..." : question, w/2, m + 60);
+        
+        // Lógica de salto de línea para el texto superior
+        const wordsQ = question.split(' ');
+        let linesQ = [];
+        let currentLineQ = wordsQ[0];
+        const maxWidthQ = w - (m * 4); // Margen interno
+
+        for (let i = 1; i < wordsQ.length; i++) {
+          const testLine = currentLineQ + " " + wordsQ[i];
+          if (ctx.measureText(testLine).width < maxWidthQ) {
+            currentLineQ = testLine;
+          } else {
+            linesQ.push(currentLineQ);
+            currentLineQ = wordsQ[i];
+          }
+        }
+        linesQ.push(currentLineQ);
+        
+        // Dibujar líneas centradas arriba
+        linesQ.forEach((line, i) => {
+          ctx.fillText(line, w/2, m + 50 + (i * 35));
+        });
       }
 
-      // 5. RESPUESTA (Impacto Principal)
+      // 5. RESPUESTA (Cuerpo principal)
       ctx.fillStyle = '#fff';
       ctx.font = `900 ${fontSize}px 'Space Grotesk', sans-serif`;
       ctx.textAlign = 'center';
@@ -390,11 +419,10 @@ const metadata = {
       ctx.shadowColor = "rgba(255, 255, 255, 0.4)";
       ctx.shadowBlur = 20;
 
-      // Wrap text logic
       const words = text.split(' ');
       let lines = [];
       let currentLine = words[0];
-      const maxWidth = w - (m * 4);
+      const maxWidth = w - (m * 3); // Un poco más ancho el margen de seguridad
 
       for (let i = 1; i < words.length; i++) {
         const testLine = currentLine + " " + words[i];
@@ -409,13 +437,14 @@ const metadata = {
 
       const lineHeight = fontSize * 1.1;
       const totalHeight = lines.length * lineHeight;
-      const startY = (h/2) - (totalHeight/2) + (lineHeight/2);
+      // Ajuste vertical: Si hay pregunta, bajamos un poco la respuesta para que no se peguen
+      const offsetY = question ? 40 : 0; 
+      const startY = (h/2) - (totalHeight/2) + (lineHeight/2) + offsetY;
 
       lines.forEach((line, index) => {
         ctx.fillText(line, w/2, startY + (index * lineHeight));
       });
       
-      // Reset Shadow
       ctx.shadowBlur = 0;
 
       // 6. FIRMA
@@ -425,7 +454,6 @@ const metadata = {
       ctx.fillText("ORÁCULO DE LA MENTE", w/2, h - m - 20);
     };
 
-    // LOGICA DE LLAMADA A IA
     const callGemini = async () => {
       const pregunta = elements.pregunta.value.trim();
       if (!pregunta) return alert("El silencio no trae respuestas. Escribe algo.");
@@ -433,40 +461,28 @@ const metadata = {
       elements.btnConsultar.disabled = true;
       elements.btnConsultar.innerText = "🔮 CONECTANDO...";
       
-      // PROMPT DURO Y DIRECTO
       const promptSystem = `
-        ERES UN AMIGO SABIO, DIRECTO Y SIN FILTRO. NO ERES UN ASISTENTE VIRTUAL.
-        TU OBJETIVO: Dar una lección de vida dura pero necesaria basada en la pregunta: "${pregunta}".
-        
+        ERES UN AMIGO SABIO, DIRECTO Y SIN FILTRO.
+        TU OBJETIVO: Dar una lección de vida dura pero necesaria basada en: "${pregunta}".
         REGLAS:
         1. RESPONDE EN MAYÚSCULAS SOSTENIDAS.
-        2. MÁXIMO 15 PALABRAS. TIENE QUE SER UNA SENTENCIA CORTA.
-        3. NO USES PALABRAS REBUSCADAS. HABLA CLARO.
-        4. NO JUZGUES, PERO NO TENGAS PIEDAD CON LA VERDAD.
-        5. SI PREGUNTA POR AMOR TÓXICO: Dile que se valore.
-        6. SI PREGUNTA POR MIEDO: Dile que actúe.
-        
-        EJEMPLO DE TONO:
-        - "YA SABES QUE NO TE CONVIENE. DEJA DE HACERTE EL CIEGO."
-        - "EL MIEDO TE ESTÁ ROBANDO LA VIDA QUE DICES QUERER."
+        2. MÁXIMO 15 PALABRAS.
+        3. SI ES UNA PREGUNTA DE SÍ/NO, RESPONDELA PRIMERO Y LUEGO DA LA RAZÓN.
+        4. TONO: EMPÁTICO PERO FIRME.
       `;
 
       try {
-        // AQUÍ VA TU LLAMADA A TU API DE WORKER O BACKEND
-        // Simularé la llamada para el diseño:
         const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
              method: 'POST',
              headers: { 'Content-Type': 'application/json' },
              body: JSON.stringify({ prompt: promptSystem }),
         });
         const data = await response.json();
-        
         elements.respuesta.value = data.text.toUpperCase();
         render();
-
       } catch (e) {
         console.error(e);
-        elements.respuesta.value = "LA CONEXIÓN FALLÓ, PERO TU INTUICIÓN YA SABE LA RESPUESTA.";
+        elements.respuesta.value = "ERROR DE CONEXIÓN. TU INSTINTO SABE LA RESPUESTA.";
         render();
       } finally {
         elements.btnConsultar.disabled = false;
@@ -474,19 +490,15 @@ const metadata = {
       }
     };
 
-    // EVENT LISTENERS
     elements.respuesta.addEventListener('input', render);
     elements.pregunta.addEventListener('input', render);
     elements.slider.addEventListener('input', render);
     elements.format.addEventListener('change', render);
-    
     elements.btnConsultar.addEventListener('click', callGemini);
-    
     elements.btnAzar.addEventListener('click', () => {
       elements.respuesta.value = frasesDuras[Math.floor(Math.random() * frasesDuras.length)];
       render();
     });
-
     elements.btnDownload.addEventListener('click', () => {
       const link = document.createElement('a');
       link.download = `ORACULO-${Date.now()}.png`;
@@ -494,9 +506,7 @@ const metadata = {
       link.click();
     });
 
-    // Render inicial
     window.addEventListener('load', render);
     render();
-
   </script>
 </Layout>
