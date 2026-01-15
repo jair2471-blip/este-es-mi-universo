@@ -3,8 +3,8 @@ title: "Cuando la fantasía se vuelve excusa para no pensar"
 description: "La superstición moderna, los videntes y las teorías mágicas prosperan cuando la gente renuncia a pensar y asumir responsabilidad sobre su vida."
 pubDate: 2026-01-02
 author: "El Universo de la Mente"
-image: https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=1200
-canonical: "https://tusitio.com/cuando-la-fantasia-se-vuelve-excusa-para-no-pensar"
+image: https://images.unsplash.com/photo-1731757793312-03b317772f77?auto=format&fit=crop&q=80&w=1200
+canonical: "https://eluniversodelamente.com/cuando-la-fantasia-se-vuelve-excusa-para-no-pensar"
 tags:
   - pensamiento crítico
   - mentalidad
