@@ -1,6 +1,6 @@
 ---
 title: "La IA no te va a esclavizar. Tu mentalidad ya lo hizo"
-description: "La inteligencia artificial no es el enemigo. Es un amplificador: potencia la disciplina o expone la mediocridad de quien la usa."
+description: "La inteligencia artificial no es el enemigo. Es un mejor-legado-ser-buena-persoamplificador: potencia la disciplina o expone la mediocridad de quien la usa."
 excerpt: "La IA no divide a la humanidad entre humanos y máquinas, sino entre quienes la usan para crecer y quienes la usan para distraerse."
 pubDate: 2026-01-03
 author: "El Universo de la Mente"
