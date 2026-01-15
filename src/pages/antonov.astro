@@ -2,371 +2,287 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'ANTONOV V5.0 | Núcleo de Personalidades',
-  description: 'Sistema robusto de diseño industrial impulsado por IA.',
+  title: 'ORÁCULO DE LA MENTE | Sentencias de Calle',
+  description: 'Pregunta sin miedo. El Oráculo responde directo.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@700&display=swap');
 
-    .antonov-wrapper {
+    .oraculo-wrapper {
       max-width: 1400px;
       margin: 3rem auto;
       padding: 0 1rem;
     }
 
-    .antonov-container {
-      background: #050505;
-      border: 2px solid #222;
-      border-radius: 8px;
-      padding: 2.5rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    .oraculo-container {
+      background: #000;
+      border: 3px solid #fff;
+      border-radius: 0;
+      padding: 3rem;
+      box-shadow: 0 30px 80px rgba(255, 255, 255, 0.1);
     }
 
-    .antonov-body {
+    .oraculo-body {
       color: white;
       font-family: 'Inter', sans-serif;
     }
 
     .header-section {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid #333;
+      padding-bottom: 2rem;
     }
 
     .header-title {
-      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-size: clamp(2.5rem, 7vw, 5rem);
       font-weight: 900;
-      color: #22c55e;
-      font-style: italic;
+      color: #fff;
       text-transform: uppercase;
-      line-height: 1;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+      line-height: 0.9;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
     }
 
     .header-subtitle {
-      color: #ea580c;
+      color: #666;
       font-weight: bold;
-      letter-spacing: 2px;
-      font-size: 0.7rem;
+      letter-spacing: 3px;
+      font-size: 0.75rem;
       text-transform: uppercase;
-    }
-
-    .voice-name-display {
-      color: #fff;
-      font-weight: 900;
     }
 
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 340px 1fr;
+        grid-template-columns: 380px 1fr;
       }
     }
 
-    .antonov-panel {
-      background: #000;
+    .oraculo-panel {
+      background: #0a0a0a;
       border: 2px solid #222;
-      padding: 1.5rem;
-      border-radius: 4px;
+      padding: 2rem;
     }
 
     .control-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
 
     .label-control {
-      color: #666;
+      color: #888;
       font-weight: bold;
       font-size: 0.7rem;
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
-    .label-voice {
-      color: #ea580c;
-    }
-
-    .antonov-input {
+    .oraculo-input {
       width: 100%;
-      background: #111;
-      border: 1px solid #333;
+      background: #000;
+      border: 2px solid #333;
       color: white;
-      padding: 0.75rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      outline: none;
-      border-radius: 4px;
-    }
-
-    .antonov-input:focus {
-      border-color: #ea580c;
-    }
-
-    textarea.antonov-input {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .voice-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-    }
-
-    .v-btn {
-      background: #111;
-      border: 2px solid #222;
       padding: 1rem;
-      cursor: pointer;
-      font-size: 2rem;
-      filter: grayscale(1);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
       transition: all 0.3s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      aspect-ratio: 1;
-      border-radius: 8px;
     }
 
-    .v-btn:hover {
-      border-color: #555;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    .oraculo-input:focus {
+      border-color: #fff;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     }
 
-    .v-btn.active {
-      border-color: #ea580c;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-      filter: grayscale(0);
-      transform: scale(1.1) translateY(-2px);
-      box-shadow: 0 0 25px rgba(234, 88, 12, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4);
+    textarea.oraculo-input {
+      resize: vertical;
+      min-height: 140px;
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
-    .antonov-btn {
+    .oraculo-btn {
       width: 100%;
-      padding: 0.9rem;
+      padding: 1.2rem;
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
       border: none;
-      transition: all 0.2s;
-      font-size: 0.75rem;
-      letter-spacing: 1.5px;
-      border-radius: 4px;
+      transition: all 0.3s;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
       font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden;
     }
 
-    .btn-gemini {
-      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    .btn-consultar {
+      background: #fff;
       color: #000;
-      margin-bottom: 0.5rem;
-      font-weight: 900;
-      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+      margin-bottom: 0.75rem;
+      border: 3px solid #fff;
     }
 
-    .btn-gemini:hover:not(:disabled) {
-      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    .btn-consultar:hover:not(:disabled) {
+      background: #000;
+      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.5);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
     }
 
-    .btn-random {
-      background: #18181b;
-      color: #a1a1aa;
+    .btn-azar {
+      background: #000;
+      color: #666;
+      border: 2px solid #333;
     }
 
-    .btn-random:hover {
-      background: #27272a;
+    .btn-azar:hover {
+      background: #111;
+      color: #fff;
+      border-color: #555;
     }
 
     .btn-download {
-      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-      color: white;
-      margin-top: 0.5rem;
-      font-weight: 900;
-      box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+      background: #000;
+      color: #fff;
+      border: 2px solid #fff;
+      margin-top: 1rem;
     }
 
     .btn-download:hover {
-      background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+      background: #fff;
+      color: #000;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.5);
     }
 
-    .antonov-btn:disabled {
-      opacity: 0.5;
+    .oraculo-btn:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
     .canvas-container {
-      background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
+      background: #000;
       border: 2px solid #222;
       padding: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 550px;
-      border-radius: 8px;
+      min-height: 600px;
       position: relative;
-      overflow: hidden;
-    }
-
-    .canvas-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at center, transparent 0%, rgba(234, 88, 12, 0.05) 100%);
-      pointer-events: none;
     }
 
     canvas {
       max-width: 100%;
       height: auto !important;
       border: 1px solid #333;
-      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(234, 88, 12, 0.1);
-      position: relative;
-      z-index: 1;
+      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.9);
     }
 
     .slider-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
     }
 
     .slider-container input {
       flex: 1;
-      accent-color: #ea580c;
+      accent-color: #fff;
     }
 
     .size-display {
       font-family: 'Space Mono', monospace;
-      color: #ea580c;
+      color: #fff;
       font-weight: bold;
-      min-width: 55px;
+      min-width: 60px;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
 
     .divider {
       border-top: 1px solid #222;
-      padding-top: 1.25rem;
-      margin-top: 0.5rem;
+      padding-top: 1.5rem;
+      margin-top: 1rem;
     }
 
-    select.antonov-input {
-      margin-bottom: 0.5rem;
+    select.oraculo-input {
+      margin-bottom: 0.75rem;
+    }
+
+    .helper-text {
+      font-size: 0.65rem;
+      color: #555;
+      margin-top: 0.5rem;
+      font-style: italic;
     }
 
     @media (max-width: 1024px) {
-      .antonov-container {
+      .oraculo-container {
         padding: 1.5rem;
-      }
-
-      .voice-grid {
-        gap: 0.4rem;
-      }
-
-      .v-btn {
-        font-size: 1.1rem;
-        padding: 0.6rem;
       }
     }
   </style>
 
-  <div class="antonov-wrapper">
-    <div class="antonov-container">
-      <section class="antonov-body">
+  <div class="oraculo-wrapper">
+    <div class="oraculo-container">
+      <section class="oraculo-body">
         <div class="header-section">
-          <h1 class="header-title">ANTONOV V5.0</h1>
-          <p class="header-subtitle">
-            SISTEMA MULTI-NÚCLEO // <span id="current-voice-name" class="voice-name-display">SAPO HONESTO</span>
-          </p>
+          <h1 class="header-title">ORÁCULO<br/>DE LA MENTE</h1>
+          <p class="header-subtitle">PREGUNTA SIN MIEDO // EL ORÁCULO RESPONDE DIRECTO</p>
         </div>
 
         <div class="system-grid">
-          <aside class="antonov-panel">
+          <aside class="oraculo-panel">
             <div class="control-group">
-              <label class="label-control label-voice">◢ ELIGE TU ORÁCULO:</label>
-              <div class="voice-grid">
-                <button class="v-btn active" data-voice="sapo" title="EL PATRÓN (Negocios/Dinero)">🐸</button>
-                <button class="v-btn" data-voice="coach" title="EL VARÓN (Lealtad/Calle)">🥊</button>
-                <button class="v-btn" data-voice="zen" title="EL MÍSTICO (Destino/Karma)">🔮</button>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <label class="label-control">▸ ¿QUÉ TE ATORMENTA?:</label>
+              <label class="label-control">▸ ¿QUÉ TE ATORMENTA?</label>
               <input 
                 type="text" 
-                id="keywords" 
-                class="antonov-input" 
-                placeholder="Ej: ¿Debo renunciar? ¿Ese socio me conviene?..."
-                style="margin-bottom: 0.5rem;"
+                id="pregunta" 
+                class="oraculo-input" 
+                placeholder="Ej: ¿Debo renunciar? ¿Me conviene ese socio?"
               />
-              <label class="label-control" style="font-size: 0.6rem; color: #666; margin-top: 0;">
-                Pregunta sin miedo, el Oráculo responde directo.
-              </label>
+              <p class="helper-text">El Oráculo no juzga. Solo dice la verdad.</p>
             </div>
 
             <div class="control-group">
-              <label class="label-control">▸ LA SENTENCIA:</label>
-              <textarea id="quote" class="antonov-input" placeholder="EL DESTINO AGUARDA..."></textarea>
+              <label class="label-control">▸ LA SENTENCIA</label>
+              <textarea id="respuesta" class="oraculo-input" placeholder="AQUÍ APARECERÁ TU RESPUESTA..."></textarea>
             </div>
 
             <div class="control-group">
-              <button id="btn-gemini" class="antonov-btn btn-gemini">
+              <button id="btn-consultar" class="oraculo-btn btn-consultar">
                 <span id="btn-text">👁️ CONSULTAR AL ORÁCULO</span>
               </button>
-              <button id="btn-random" class="antonov-btn btn-random">🎲 PREDICCIÓN AL AZAR</button>
+              <button id="btn-azar" class="oraculo-btn btn-azar">🎲 SENTENCIA AL AZAR</button>
             </div>
 
             <div class="control-group divider">
-              <label class="label-control">▸ Tamaño de Fuente:</label>
+              <label class="label-control">▸ TAMAÑO DE FUENTE</label>
               <div class="slider-container">
-                <input type="range" id="fontSizeSlider" min="20" max="300" value="80" />
-                <span id="sizeVal" class="size-display">80px</span>
+                <input type="range" id="fontSizeSlider" min="30" max="200" value="90" />
+                <span id="sizeVal" class="size-display">90px</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="label-control">▸ Formato:</label>
-              <select id="format" class="antonov-input">
+              <label class="label-control">▸ FORMATO</label>
+              <select id="format" class="oraculo-input">
                 <option value="post">CUADRADO (1080x1080)</option>
                 <option value="story">STORY (1080x1920)</option>
                 <option value="banner">BANNER (1920x1080)</option>
               </select>
-
-              <label class="label-control" style="margin-top: 0.5rem">▸ Intensidad Glitch:</label>
-              <select id="intensity" class="antonov-input">
-                <option value="0.5">BAJO</option>
-                <option value="1.0" selected>ALTO</option>
-                <option value="1.5">EXTREMO</option>
-              </select>
             </div>
 
-            <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR SENTENCIA</button>
-          </aside>
-
-          <section class="canvas-container">
-            <canvas id="canvas"></canvas>
-          </section>
-        </div>
-
-            <button id="btn-download" class="antonov-btn btn-download">⬇ DESCARGAR IMAGEN</button>
+            <button id="btn-download" class="oraculo-btn btn-download">⬇ DESCARGAR SENTENCIA</button>
           </aside>
 
           <section class="canvas-container">
@@ -377,138 +293,90 @@ const metadata = {
     </div>
   </div>
 
- <script is:inline>
-    function initAntonovSystem() {
+  <script is:inline>
+    function initOraculo() {
       const canvas = document.getElementById('canvas');
-      if (!canvas) return; 
+      if (!canvas) return;
 
       const ctx = canvas.getContext('2d');
 
       const el = {
         format: document.getElementById('format'),
-        quote: document.getElementById('quote'),
-        keywords: document.getElementById('keywords'), // Ahora es la Pregunta
-        intensity: document.getElementById('intensity'),
+        respuesta: document.getElementById('respuesta'),
+        pregunta: document.getElementById('pregunta'),
         slider: document.getElementById('fontSizeSlider'),
         sizeVal: document.getElementById('sizeVal'),
-        btnGemini: document.getElementById('btn-gemini'),
+        btnConsultar: document.getElementById('btn-consultar'),
         btnText: document.getElementById('btn-text'),
-        btnRandom: document.getElementById('btn-random'),
+        btnAzar: document.getElementById('btn-azar'),
         btnDownload: document.getElementById('btn-download'),
-        voiceButtons: document.querySelectorAll('[data-voice]'),
-        voiceName: document.getElementById('current-voice-name'),
       };
 
-      // 🔥 CEREBROS DEL ORÁCULO CALLEJERO 🔥
-      const personalidades = {
-        sapo: {
-          nombre: 'EL PATRÓN', // Enfoque: Poder, Negocios, Dinero Frío
-          color: '#22c55e', // Verde Billetes
-          prompt: (question) =>
-            `Actúa como un ORÁCULO DE NEGOCIOS Y PODER, tipo "El Padrino" o un magnate sin escrúpulos.
-            El usuario te hace esta consulta: "${question}".
-            
-            Tu misión: Darle una respuesta definitiva sobre si le conviene o no, basada en interés y ganancia.
-            Reglas:
-            1. NO seas motivador. Sé calculador.
-            2. Usa lenguaje de calle pero con autoridad.
-            3. Longitud: 8 a 12 palabras. Fluido, como una sentencia.
-            
-            Ejemplos de tono: 
-            - "Si tienes que preguntar el precio es porque no te alcanza, vete."
-            - "Socios pobres traen problemas ricos, mejor camina solo."
-            
-            Respuesta: SOLO la frase en MAYÚSCULAS.`,
-          frases: [
-            'EL DINERO NO TIENE AMIGOS, SOLO TIENE INTERESES',
-            'SI EL NEGOCIO ES BUENO NO NECESITAS CONVENCER A NADIE',
-            'LO BARATO SALE CARO Y LO GRATIS SALE SOSPECHOSO',
-            'NO FIRMES PAPELES CON QUIEN NO PUEDES MIRAR A LOS OJOS',
-            'EL QUE PAGA MANDA, EL QUE PIDE OBEDECE',
-          ],
-        },
-        coach: {
-          nombre: 'EL VARÓN', // Enfoque: Calle, Códigos, Supervivencia
-          color: '#ef4444', // Rojo Alerta
-          prompt: (question) =>
-            `Actúa como un ORÁCULO DE LA CALLE, un tipo que sabe quién es leal y quién es sapo.
-            El usuario te hace esta consulta: "${question}".
-            
-            Tu misión: Detectar si el usuario está siendo ingenuo o débil y cantarle la tabla.
-            Reglas:
-            1. Enfoque en lealtad, códigos de honor y "avispase".
-            2. Respuesta directa, cruda, sin anestesia.
-            3. Longitud: 8 a 12 palabras. Con mucho ritmo y verdad.
-            
-            Ejemplos de tono:
-            - "El perro que ladra no muerde, pero el que calla te arranca el brazo."
-            - "No esperes lealtad de gente barata, eso cuesta caro."
-            
-            Respuesta: SOLO la frase en MAYÚSCULAS.`,
-          frases: [
-            'NO ESPERES LEALTAD DE GENTE QUE SE VENDE POR MONEDAS',
-            'AL QUE MUCHO SE AGACHA SE LE VE EL CULO, PÁRATE FIRME',
-            'MEJOR SOLO Y TRANQUILO QUE ACOMPAÑADO Y CUIDANDO LA BILLETERA',
-            'SI HUELE A PROBLEMA ES PORQUE ES UN PROBLEMA, CORRE',
-            'CUÍDATE DE LAS AGUAS MANSAS, DE LAS BRAVAS ME CUIDO YO',
-          ],
-        },
-        zen: {
-          nombre: 'EL MÍSTICO', // Enfoque: Karma, Destino, Verdad Oculta
-          color: '#a855f7', // Morado Misterio
-          prompt: (question) =>
-            `Actúa como un CHAMÁN URBANO que ve lo que nadie más ve.
-            El usuario te hace esta consulta: "${question}".
-            
-            Tu misión: Revelar la consecuencia oculta de sus actos (Causa y Efecto).
-            Reglas:
-            1. Enfoque en Karma, intuición y verdad espiritual cruda.
-            2. No seas hippie, sé un profeta del desastre o del éxito.
-            3. Longitud: 10 a 14 palabras. Profundo y misterioso.
-            
-            Ejemplos de tono:
-            - "Lo que niegas te somete, lo que aceptas te transforma."
-            - "Estás buscando afuera la respuesta que ya gritaste por dentro."
-            
-            Respuesta: SOLO la frase en MAYÚSCULAS.`,
-          frases: [
-            'TU MENTE CLARA PRODUCE UNA ACCIÓN CERTERA, DEJA DE DUDAR',
-            'LO QUE HACES EN LA OSCURIDAD SIEMPRE SALE A LA LUZ',
-            'SI FUERZAS LA PUERTA ES PORQUE NO ES TU ENTRADA',
-            'EL UNIVERSO TE COBRA TODO, A VECES CON DINERO, A VECES CON TIEMPO',
-            'NO ES MALA SUERTE, SON LAS CONSECUENCIAS DE TUS MALAS DECISIONES',
-          ],
-        },
-      };
+      // 🔥 PROMPT DEL ORÁCULO 🔥
+      const promptOraculo = (pregunta) => `
+ERES EL ORÁCULO DE LA MENTE.
 
-      let selectedVoice = 'sapo';
+EL USUARIO TE DICE: "${pregunta}"
+
+REGLAS:
+1. DOS FRASES CORTAS Y CONTUNDENTES.
+2. TODO EN MAYÚSCULAS.
+3. DIRECTO AL HUESO, SIN RODEOS.
+4. NADA DE METÁFORAS, POESÍA NI CUENTOS.
+5. NO EXPLIQUES. NO TE JUSTIFIQUES.
+6. NO HUMILLES NI JUZGUES CON MALDAD.
+7. RESPONDE DESDE LA EXPERIENCIA DE LA CALLE, NO DESDE EL LIBRO.
+8. DI LA CONSECUENCIA REAL, LA QUE TODO EL MUNDO SABE PERO NO DICE.
+9. NO SERMONEES. NO DES CONSEJOS TIBIOS. DI LA VERDAD INCÓMODA.
+10. SI LA PERSONA YA DECIDIÓ HACER ALGO DESTRUCTIVO, MUÉSTRALE EL COSTO REAL.
+11. CADA FRASE DEBE SONAR NATURAL, COMO SI LA DIJERA UNA PERSONA NORMAL.
+12. NO PREGUNTES, DECLARA. NO SUGIERAS, ADVIERTE.
+
+ESTILO:
+- COMO LE HABLARÍAS A UN AMIGO QUE NECESITA QUE LE DIGAN LA NETA.
+- PRIMERA FRASE: LA VERDAD CRUDA (MÁXIMO 8 PALABRAS).
+- SEGUNDA FRASE: LA CONSECUENCIA PRÁCTICA (MÁXIMO 8 PALABRAS).
+- FIRME Y DIRECTO, SIN ANDAR CON RODEOS.
+- SIN GROSERIAS, SIN SARCASMO, SIN MELODRAMA.
+- HABLA COMO PERSONA, NO COMO ROBOT ARMANDO PALABRAS.
+`;
+
+      // Frases de respaldo
+      const sentencias = [
+        'LO QUE ESCONDES SIEMPRE COBRA FACTURA. TARDE O TEMPRANO PAGAS.',
+        'SI TIENES QUE PREGUNTAR ES PORQUE YA SABES LA RESPUESTA.',
+        'EL DINERO NO TIENE AMIGOS. SOLO TIENE INTERESES.',
+        'NO ESPERES LEALTAD DE GENTE BARATA. ESO CUESTA CARO.',
+        'LO QUE NIEGAS TE SOMETE. LO QUE ACEPTAS TE LIBERA.',
+        'SI FUERZAS LA PUERTA ES PORQUE NO ES TU CAMINO.',
+        'EL SILENCIO A VECES GRITA MÁS FUERTE QUE LAS PALABRAS.',
+        'NO ES MALA SUERTE. SON CONSECUENCIAS DE MALAS DECISIONES.',
+      ];
 
       const render = () => {
-        if (!el.format || !el.quote) return;
+        if (!el.format || !el.respuesta) return;
 
         const format = el.format.value;
-        const text = (el.quote.value || 'HAZ TU PREGUNTA...').toUpperCase();
-        const intensity = parseFloat(el.intensity.value || 1.0);
-        const fontSize = parseInt(el.slider.value || 80);
-        const per = personalidades[selectedVoice];
-        
+        const text = (el.respuesta.value || 'HAZ TU PREGUNTA AL ORÁCULO...').toUpperCase();
+        const fontSize = parseInt(el.slider.value || 90);
+
         if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
 
         let w = 1080, h = 1080;
         if (format === 'story') { w = 1080; h = 1920; }
         if (format === 'banner') { w = 1920; h = 1080; }
-        
+
         canvas.width = w;
         canvas.height = h;
 
-        // Fondo Negro Puro
-        ctx.fillStyle = '#050505';
+        // Fondo Negro Absoluto
+        ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
-        
+
         // Config texto
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = `900 ${fontSize}px monospace`;
+        ctx.font = `900 ${fontSize}px 'Space Mono', monospace`;
 
         const words = text.split(' ');
         let lines = [], currentLine = words[0];
@@ -522,99 +390,76 @@ const metadata = {
         }
         lines.push(currentLine);
 
-        const lineHeight = fontSize * 1.15;
+        const lineHeight = fontSize * 1.2;
         const totalHeight = lines.length * lineHeight;
         const startY = h / 2 - totalHeight / 2 + fontSize / 2;
 
+        // Texto Blanco Puro
         lines.forEach((line, i) => {
           const y = startY + i * lineHeight;
-          const offset = 6 * intensity;
-          
-          // Efecto Glitch más sutil pero agresivo
-          ctx.fillStyle = per.color; // El color de la personalidad de fondo
-          ctx.globalAlpha = 0.4;
-          ctx.fillText(line, w / 2 + offset, y + offset);
-          
-          ctx.globalAlpha = 1.0;
           ctx.fillStyle = '#fff';
           ctx.fillText(line, w / 2, y);
         });
 
-        // Borde y Firma
-        ctx.strokeStyle = per.color;
-        ctx.lineWidth = 8;
-        ctx.strokeRect(30, 30, w - 60, h - 60);
-        
+        // Marco blanco
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 6;
+        ctx.strokeRect(40, 40, w - 80, h - 80);
+
         // Firma abajo
-        ctx.fillStyle = per.color;
-        ctx.font = `bold ${w * 0.03}px monospace`;
-        ctx.fillText(`/// ORÁCULO: ${per.nombre} ///`, w / 2, h - 80);
+        ctx.fillStyle = '#fff';
+        ctx.font = `bold ${w * 0.025}px 'Inter', sans-serif`;
+        ctx.fillText('/// ORÁCULO DE LA MENTE ///', w / 2, h - 70);
       };
 
       const callGemini = async () => {
-        const question = el.keywords.value.trim();
-        
-        if (!question) {
-          alert('⚠️ Oye, el Oráculo no adivina si no preguntas. Escribe algo.');
+        const pregunta = el.pregunta.value.trim();
+
+        if (!pregunta) {
+          alert('⚠️ El Oráculo no adivina. Escribe tu pregunta.');
           return;
         }
 
-        const per = personalidades[selectedVoice];
-        el.btnGemini.disabled = true;
-        el.btnText.textContent = '🔮 CONSULTANDO EL FUTURO...';
-        
+        el.btnConsultar.disabled = true;
+        el.btnText.textContent = '🔮 CONSULTANDO...';
+
         try {
-          // Nota: Aquí se usa el prompt modificado para responder preguntas
           const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: per.prompt(question) }),
+            body: JSON.stringify({ prompt: promptOraculo(pregunta) }),
           });
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
-          
-          el.quote.value = data.text.toUpperCase();
+
+          el.respuesta.value = data.text.toUpperCase();
           render();
         } catch (error) {
           console.error('Error:', error);
-          alert(`❌ El Oráculo está mudo: ${error.message}`);
+          alert(`❌ El Oráculo está en silencio: ${error.message}`);
         } finally {
-          el.btnGemini.disabled = false;
-          el.btnText.textContent = '👁️ CONSULTAR ORÁCULO';
+          el.btnConsultar.disabled = false;
+          el.btnText.textContent = '👁️ CONSULTAR AL ORÁCULO';
         }
       };
 
-      el.voiceButtons.forEach((btn) => {
-        btn.onclick = (e) => {
-          e.preventDefault();
-          el.voiceButtons.forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedVoice = btn.getAttribute('data-voice');
-          if (el.voiceName) el.voiceName.innerText = personalidades[selectedVoice].nombre;
-          render();
-        };
-      });
-
-      [el.format, el.intensity, el.slider, el.quote].forEach((input) => {
+      [el.format, el.slider, el.respuesta].forEach((input) => {
         if (input) input.oninput = render;
       });
 
-      if (el.btnGemini) el.btnGemini.onclick = callGemini;
+      if (el.btnConsultar) el.btnConsultar.onclick = callGemini;
 
-      if (el.btnRandom) {
-        el.btnRandom.onclick = () => {
-          const frases = personalidades[selectedVoice].frases;
-          el.quote.value = frases[Math.floor(Math.random() * frases.length)];
+      if (el.btnAzar) {
+        el.btnAzar.onclick = () => {
+          el.respuesta.value = sentencias[Math.floor(Math.random() * sentencias.length)];
           render();
         };
-        // Cambiar texto del botón random también
-        el.btnRandom.textContent = '🎲 PREDICCIÓN AL AZAR';
       }
 
       if (el.btnDownload) {
         el.btnDownload.onclick = () => {
           const link = document.createElement('a');
-          link.download = `ORACULO-${selectedVoice}-${Date.now()}.png`;
+          link.download = `ORACULO-${Date.now()}.png`;
           link.href = canvas.toDataURL();
           link.click();
         };
@@ -623,6 +468,7 @@ const metadata = {
       render();
     }
 
-    document.addEventListener('astro:page-load', initAntonovSystem);
-    initAntonovSystem();
-</script>
+    document.addEventListener('astro:page-load', initOraculo);
+    initOraculo();
+  </script>
+</Layout>
