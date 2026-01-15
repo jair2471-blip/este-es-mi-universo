@@ -433,6 +433,7 @@ ESTILO:
         const format = el.format.value;
         const text = (el.respuesta.value || 'HAZ TU PREGUNTA AL ORÁCULO...').toUpperCase();
         const fontSize = parseInt(el.slider.value || 90);
+        const preguntaTexto = el.pregunta.value.trim();
 
         if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
 
@@ -447,7 +448,40 @@ ESTILO:
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
 
-        // Config texto
+        // 🔥 MOSTRAR LA PREGUNTA ARRIBA 🔥
+        if (preguntaTexto) {
+          const formatted = formatearPregunta(preguntaTexto);
+          const preguntaSize = Math.max(w * 0.022, 18); // Tamaño proporcional pero legible
+          
+          ctx.font = `600 ${preguntaSize}px 'Inter', sans-serif`;
+          ctx.fillStyle = '#666';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'top';
+          
+          // Partir en líneas si es muy larga
+          const maxWidth = w * 0.85;
+          const words = formatted.texto.split(' ');
+          let lines = [], currentLine = words[0];
+          
+          for (let i = 1; i < words.length; i++) {
+            const testLine = currentLine + ' ' + words[i];
+            if (ctx.measureText(testLine).width < maxWidth) {
+              currentLine = testLine;
+            } else {
+              lines.push(currentLine);
+              currentLine = words[i];
+            }
+          }
+          lines.push(currentLine);
+          
+          // Dibujar pregunta arriba
+          const preguntaY = 80;
+          lines.forEach((line, i) => {
+            ctx.fillText(line, w / 2, preguntaY + (i * preguntaSize * 1.3));
+          });
+        }
+
+        // Config texto de la sentencia (centrado)
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = `900 ${fontSize}px 'Space Mono', monospace`;
@@ -468,7 +502,7 @@ ESTILO:
         const totalHeight = lines.length * lineHeight;
         const startY = h / 2 - totalHeight / 2 + fontSize / 2;
 
-        // Texto Blanco Puro
+        // Texto Blanco Puro (Sentencia)
         lines.forEach((line, i) => {
           const y = startY + i * lineHeight;
           ctx.fillStyle = '#fff';
@@ -483,6 +517,7 @@ ESTILO:
         // Firma abajo
         ctx.fillStyle = '#fff';
         ctx.font = `bold ${w * 0.025}px 'Inter', sans-serif`;
+        ctx.textBaseline = 'bottom';
         ctx.fillText('/// ORÁCULO DE LA MENTE ///', w / 2, h - 70);
       };
 
@@ -523,7 +558,10 @@ ESTILO:
 
       // Actualizar header en tiempo real
       if (el.pregunta) {
-        el.pregunta.oninput = actualizarHeader;
+        el.pregunta.oninput = () => {
+          actualizarHeader();
+          render(); // Re-renderizar canvas cuando cambia la pregunta
+        };
       }
 
       if (el.btnConsultar) el.btnConsultar.onclick = callGemini;
