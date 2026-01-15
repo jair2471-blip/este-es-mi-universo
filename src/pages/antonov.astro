@@ -63,6 +63,31 @@ const metadata = {
       text-transform: uppercase;
     }
 
+    .pregunta-display {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #0a0a0a;
+      border: 1px solid #222;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pregunta-text {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
+
+    .pregunta-text.empty {
+      color: #333;
+      font-style: normal;
+    }
+
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -246,6 +271,9 @@ const metadata = {
         <div class="header-section">
           <h1 class="header-title">ORÁCULO<br/>DE LA MENTE</h1>
           <p class="header-subtitle">PREGUNTA SIN MIEDO // EL ORÁCULO RESPONDE DIRECTO</p>
+          <div class="pregunta-display">
+            <p id="pregunta-header" class="pregunta-text empty">Esperando tu consulta...</p>
+          </div>
         </div>
 
         <div class="system-grid">
@@ -312,12 +340,50 @@ const metadata = {
         format: document.getElementById('format'),
         respuesta: document.getElementById('respuesta'),
         pregunta: document.getElementById('pregunta'),
+        preguntaHeader: document.getElementById('pregunta-header'),
         slider: document.getElementById('fontSizeSlider'),
         sizeVal: document.getElementById('sizeVal'),
         btnConsultar: document.getElementById('btn-consultar'),
         btnText: document.getElementById('btn-text'),
         btnAzar: document.getElementById('btn-azar'),
         btnDownload: document.getElementById('btn-download'),
+      };
+
+      // Función para detectar si es pregunta o comentario
+      const formatearPregunta = (texto) => {
+        if (!texto || texto.trim() === '') {
+          return { texto: 'Esperando tu consulta...', isEmpty: true };
+        }
+        
+        const limpio = texto.trim();
+        
+        // Detecta si es pregunta (contiene ?, qué, cuál, cómo, dónde, cuándo, por qué, debe, debo, etc)
+        const esPregunta = limpio.includes('?') || 
+                          /^(qué|cuál|cómo|dónde|cuándo|por qué|porqué|debe|debo|debería|puedo|podría|es bueno|conviene)/i.test(limpio);
+        
+        if (esPregunta) {
+          // Si ya tiene signos, los respeta; si no, los agrega
+          const tieneSignos = limpio.startsWith('¿') || limpio.startsWith('?');
+          return { 
+            texto: tieneSignos ? limpio : `¿${limpio.replace('?', '')}?`,
+            isEmpty: false 
+          };
+        } else {
+          // Es un comentario/afirmación, lo deja tal cual
+          return { texto: `"${limpio}"`, isEmpty: false };
+        }
+      };
+
+      // Actualizar header cuando escriba
+      const actualizarHeader = () => {
+        const formatted = formatearPregunta(el.pregunta.value);
+        el.preguntaHeader.textContent = formatted.texto;
+        
+        if (formatted.isEmpty) {
+          el.preguntaHeader.classList.add('empty');
+        } else {
+          el.preguntaHeader.classList.remove('empty');
+        }
       };
 
       // 🔥 PROMPT DEL ORÁCULO 🔥
@@ -454,6 +520,11 @@ ESTILO:
       [el.format, el.slider, el.respuesta].forEach((input) => {
         if (input) input.oninput = render;
       });
+
+      // Actualizar header en tiempo real
+      if (el.pregunta) {
+        el.pregunta.oninput = actualizarHeader;
+      }
 
       if (el.btnConsultar) el.btnConsultar.onclick = callGemini;
 
