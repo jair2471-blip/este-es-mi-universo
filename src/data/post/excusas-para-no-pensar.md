@@ -14,8 +14,6 @@ tags:
   - conciencia
 ---
 
-# Cuando la fantasía se vuelve excusa para no pensar
-
 Vivimos en una época extraña.  
 Cada noticia importante viene acompañada de algo más:  
 el vidente, el adivino, la profecía, la “señal”.
