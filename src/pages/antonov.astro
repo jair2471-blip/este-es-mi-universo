@@ -563,7 +563,8 @@ Responde SOLO con las dos frases en MAYÚSCULAS. Nada más.
         if (!el.format || !el.respuesta) return;
 
         const format = el.format.value;
-        const text = (el.respuesta.value || 'CONSULTA AL ORÁCULO...').toUpperCase();
+        const respuestaTexto = el.respuesta.value.trim();
+        const text = (respuestaTexto || 'CONSULTA AL ORÁCULO...').toUpperCase();
         const fontSize = parseInt(el.slider.value || 95);
         const preguntaTexto = el.pregunta.value.trim();
 
