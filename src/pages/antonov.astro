@@ -2,35 +2,57 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'ORÁCULO DE LA MENTE | Sentencias de Calle',
+  title: 'ORÁCULO DE LA MENTE | La Verdad Sin Filtro',
   description: 'Pregunta sin miedo. El Oráculo responde directo.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      background: #0a0a0a;
+      background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000 100%);
+      min-height: 100vh;
     }
 
     .oraculo-wrapper {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      min-height: calc(100vh - 4rem);
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      min-height: 100vh;
       display: flex;
       align-items: center;
     }
 
     .oraculo-container {
-      background: #000;
-      border: 3px solid #fff;
-      border-radius: 0;
-      padding: 2.5rem;
-      box-shadow: 0 30px 80px rgba(255, 255, 255, 0.15), 0 0 100px rgba(255, 255, 255, 0.05);
+      background: linear-gradient(135deg, #0a0a0a 0%, #000 100%);
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 0;
+      box-shadow: 
+        0 50px 100px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
       width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .oraculo-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     }
 
     .oraculo-body {
@@ -40,161 +62,205 @@ const metadata = {
 
     .header-section {
       text-align: center;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #222;
-      padding-bottom: 1.5rem;
+      padding: 3rem 2rem 2rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+      border-bottom: 1px solid #111;
+      position: relative;
+    }
+
+    .header-glow {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .header-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 900;
       color: #fff;
       text-transform: uppercase;
-      line-height: 0.9;
-      margin-bottom: 0.75rem;
-      letter-spacing: -2px;
+      line-height: 0.85;
+      margin-bottom: 1rem;
+      letter-spacing: -3px;
+      font-family: 'Space Grotesk', sans-serif;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
     }
 
     .header-subtitle {
       color: #666;
-      font-weight: bold;
-      letter-spacing: 2px;
-      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      font-size: 0.7rem;
       text-transform: uppercase;
+      opacity: 0.8;
     }
 
     .pregunta-display {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #0a0a0a;
-      border: 1px solid #222;
-      min-height: 50px;
+      margin-top: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      min-height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(10px);
     }
 
     .pregunta-text {
       color: #fff;
-      font-size: 0.85rem;
+      font-size: 0.95rem;
       font-weight: 600;
       text-align: center;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
+      line-height: 1.5;
     }
 
     .pregunta-text.empty {
       color: #333;
-      font-style: normal;
+      font-weight: 400;
     }
 
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2.5rem;
+      gap: 0;
     }
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 360px 1fr;
       }
     }
 
     .oraculo-panel {
-      background: #0a0a0a;
-      border: 2px solid #1a1a1a;
-      padding: 1.5rem;
+      background: #000;
+      border-right: 1px solid #111;
+      padding: 2rem;
     }
 
     .control-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
     }
 
     .label-control {
       color: #888;
-      font-weight: bold;
-      font-size: 0.7rem;
+      font-weight: 700;
+      font-size: 0.65rem;
       display: block;
       margin-bottom: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
     }
 
     .oraculo-input {
       width: 100%;
-      background: #000;
-      border: 2px solid #333;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: white;
-      padding: 1rem;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.9rem;
+      padding: 1rem 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
       outline: none;
-      transition: all 0.3s;
+      border-radius: 6px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .oraculo-input:focus {
-      border-color: #fff;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.03);
+    }
+
+    .oraculo-input::placeholder {
+      color: #444;
     }
 
     textarea.oraculo-input {
       resize: vertical;
-      min-height: 140px;
-      font-size: 1.1rem;
+      min-height: 120px;
+      font-size: 0.95rem;
       line-height: 1.6;
+      font-family: 'Inter', sans-serif;
     }
 
     .oraculo-btn {
       width: 100%;
-      padding: 1.2rem;
+      padding: 1.1rem 1.5rem;
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
       border: none;
-      transition: all 0.3s;
-      font-size: 0.8rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 0.75rem;
       letter-spacing: 2px;
       font-family: 'Inter', sans-serif;
       position: relative;
       overflow: hidden;
+      border-radius: 6px;
     }
 
     .btn-consultar {
-      background: #fff;
+      background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
       color: #000;
       margin-bottom: 0.75rem;
-      border: 3px solid #fff;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-consultar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-consultar:hover:not(:disabled)::before {
+      left: 100%;
     }
 
     .btn-consultar:hover:not(:disabled) {
-      background: #000;
-      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-consultar:active:not(:disabled) {
+      transform: translateY(0);
     }
 
     .btn-azar {
-      background: #000;
-      color: #666;
-      border: 2px solid #333;
+      background: rgba(255, 255, 255, 0.03);
+      color: #888;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .btn-azar:hover {
-      background: #111;
+      background: rgba(255, 255, 255, 0.06);
       color: #fff;
-      border-color: #555;
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     .btn-download {
-      background: #000;
+      background: rgba(255, 255, 255, 0.05);
       color: #fff;
-      border: 2px solid #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       margin-top: 1rem;
     }
 
     .btn-download:hover {
-      background: #fff;
-      color: #000;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
     }
 
@@ -204,21 +270,22 @@ const metadata = {
     }
 
     .canvas-container {
-      background: #0a0a0a;
-      border: 2px solid #1a1a1a;
-      padding: 2rem;
+      background: #000;
+      padding: 3rem 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 500px;
+      min-height: 600px;
       position: relative;
     }
 
     canvas {
       max-width: 100%;
       height: auto !important;
-      border: 1px solid #333;
-      box-shadow: 0 10px 60px rgba(0, 0, 0, 0.9);
+      border-radius: 8px;
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        0 0 1px rgba(255, 255, 255, 0.1);
     }
 
     .slider-container {
@@ -227,41 +294,87 @@ const metadata = {
       gap: 1rem;
     }
 
-    .slider-container input {
+    .slider-container input[type="range"] {
       flex: 1;
-      accent-color: #fff;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .slider-container input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .slider-container input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     }
 
     .size-display {
-      font-family: 'Space Mono', monospace;
+      font-family: 'JetBrains Mono', monospace;
       color: #fff;
-      font-weight: bold;
+      font-weight: 700;
       min-width: 60px;
       text-align: center;
       font-size: 0.85rem;
     }
 
     .divider {
-      border-top: 1px solid #222;
-      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 1.75rem;
       margin-top: 1rem;
     }
 
     select.oraculo-input {
       margin-bottom: 0.75rem;
+      cursor: pointer;
     }
 
     .helper-text {
-      font-size: 0.65rem;
-      color: #555;
+      font-size: 0.7rem;
+      color: #444;
       margin-top: 0.5rem;
-      font-style: italic;
+      line-height: 1.4;
     }
 
     @media (max-width: 1024px) {
       .oraculo-container {
-        padding: 1.5rem;
+        padding: 0;
       }
+      
+      .oraculo-panel {
+        border-right: none;
+        border-bottom: 1px solid #111;
+      }
+      
+      .canvas-container {
+        padding: 2rem 1rem;
+      }
+    }
+
+    /* Animación de carga */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .btn-consultar:disabled {
+      animation: pulse 1.5s infinite;
     }
   </style>
 
@@ -269,8 +382,9 @@ const metadata = {
     <div class="oraculo-container">
       <section class="oraculo-body">
         <div class="header-section">
+          <div class="header-glow"></div>
           <h1 class="header-title">ORÁCULO<br/>DE LA MENTE</h1>
-          <p class="header-subtitle">PREGUNTA SIN MIEDO // EL ORÁCULO RESPONDE DIRECTO</p>
+          <p class="header-subtitle">LA VERDAD SIN FILTRO</p>
           <div class="pregunta-display">
             <p id="pregunta-header" class="pregunta-text empty">Esperando tu consulta...</p>
           </div>
@@ -279,38 +393,38 @@ const metadata = {
         <div class="system-grid">
           <aside class="oraculo-panel">
             <div class="control-group">
-              <label class="label-control">▸ ¿QUÉ TE ATORMENTA?</label>
+              <label class="label-control">▸ TU PREGUNTA</label>
               <input 
                 type="text" 
                 id="pregunta" 
                 class="oraculo-input" 
-                placeholder="Ej: ¿Debo renunciar? ¿Me conviene ese socio?"
+                placeholder="¿Debo renunciar? ¿Me conviene ese socio?"
               />
-              <p class="helper-text">El Oráculo no juzga. Solo dice la verdad.</p>
+              <p class="helper-text">El Oráculo ve lo que tú no quieres ver.</p>
             </div>
 
             <div class="control-group">
               <label class="label-control">▸ LA SENTENCIA</label>
-              <textarea id="respuesta" class="oraculo-input" placeholder="AQUÍ APARECERÁ TU RESPUESTA..."></textarea>
+              <textarea id="respuesta" class="oraculo-input" placeholder="La verdad aparecerá aquí..."></textarea>
             </div>
 
             <div class="control-group">
               <button id="btn-consultar" class="oraculo-btn btn-consultar">
-                <span id="btn-text">👁️ CONSULTAR AL ORÁCULO</span>
+                <span id="btn-text">👁️ CONSULTAR ORÁCULO</span>
               </button>
-              <button id="btn-azar" class="oraculo-btn btn-azar">🎲 SENTENCIA AL AZAR</button>
+              <button id="btn-azar" class="oraculo-btn btn-azar">⚡ SENTENCIA ALEATORIA</button>
             </div>
 
             <div class="control-group divider">
-              <label class="label-control">▸ TAMAÑO DE FUENTE</label>
+              <label class="label-control">▸ TAMAÑO DE TEXTO</label>
               <div class="slider-container">
-                <input type="range" id="fontSizeSlider" min="30" max="200" value="90" />
-                <span id="sizeVal" class="size-display">90px</span>
+                <input type="range" id="fontSizeSlider" min="40" max="180" value="95" />
+                <span id="sizeVal" class="size-display">95px</span>
               </div>
             </div>
 
             <div class="control-group">
-              <label class="label-control">▸ FORMATO</label>
+              <label class="label-control">▸ FORMATO DE IMAGEN</label>
               <select id="format" class="oraculo-input">
                 <option value="post">CUADRADO (1080x1080)</option>
                 <option value="story">STORY (1080x1920)</option>
@@ -318,7 +432,7 @@ const metadata = {
               </select>
             </div>
 
-            <button id="btn-download" class="oraculo-btn btn-download">⬇ DESCARGAR SENTENCIA</button>
+            <button id="btn-download" class="oraculo-btn btn-download">⬇ DESCARGAR IMAGEN</button>
           </aside>
 
           <section class="canvas-container">
@@ -349,44 +463,7 @@ const metadata = {
         btnDownload: document.getElementById('btn-download'),
       };
 
-      // Función para detectar si es pregunta o comentario
-      const formatearPregunta = (texto) => {
-        if (!texto || texto.trim() === '') {
-          return { texto: 'Esperando tu consulta...', isEmpty: true };
-        }
-        
-        const limpio = texto.trim();
-        
-        // Detecta si es pregunta (contiene ?, qué, cuál, cómo, dónde, cuándo, por qué, debe, debo, etc)
-        const esPregunta = limpio.includes('?') || 
-                          /^(qué|cuál|cómo|dónde|cuándo|por qué|porqué|debe|debo|debería|puedo|podría|es bueno|conviene)/i.test(limpio);
-        
-        if (esPregunta) {
-          // Si ya tiene signos, los respeta; si no, los agrega
-          const tieneSignos = limpio.startsWith('¿') || limpio.startsWith('?');
-          return { 
-            texto: tieneSignos ? limpio : `¿${limpio.replace('?', '')}?`,
-            isEmpty: false 
-          };
-        } else {
-          // Es un comentario/afirmación, lo deja tal cual
-          return { texto: `"${limpio}"`, isEmpty: false };
-        }
-      };
-
-      // Actualizar header cuando escriba
-      const actualizarHeader = () => {
-        const formatted = formatearPregunta(el.pregunta.value);
-        el.preguntaHeader.textContent = formatted.texto;
-        
-        if (formatted.isEmpty) {
-          el.preguntaHeader.classList.add('empty');
-        } else {
-          el.preguntaHeader.classList.remove('empty');
-        }
-      };
-
-      // 🔥 PROMPT DEL ORÁCULO 🔥
+      // 🔥 PROMPT MEJORADO DEL ORÁCULO 🔥
       const promptOraculo = (pregunta) => `
 ERES EL ORÁCULO DE LA MENTE.
 
@@ -415,24 +492,59 @@ ESTILO:
 - HABLA COMO PERSONA, NO COMO ROBOT ARMANDO PALABRAS.
 `;
 
-      // Frases de respaldo
+      // Sentencias de respaldo mejoradas
       const sentencias = [
-        'LO QUE ESCONDES SIEMPRE COBRA FACTURA. TARDE O TEMPRANO PAGAS.',
-        'SI TIENES QUE PREGUNTAR ES PORQUE YA SABES LA RESPUESTA.',
-        'EL DINERO NO TIENE AMIGOS. SOLO TIENE INTERESES.',
-        'NO ESPERES LEALTAD DE GENTE BARATA. ESO CUESTA CARO.',
-        'LO QUE NIEGAS TE SOMETE. LO QUE ACEPTAS TE LIBERA.',
-        'SI FUERZAS LA PUERTA ES PORQUE NO ES TU CAMINO.',
-        'EL SILENCIO A VECES GRITA MÁS FUERTE QUE LAS PALABRAS.',
-        'NO ES MALA SUERTE. SON CONSECUENCIAS DE MALAS DECISIONES.',
+        'LO OCULTO SIEMPRE COBRA FACTURA. TARDE O TEMPRANO PAGAS.',
+        'SI TIENES QUE PREGUNTAR YA SABES LA RESPUESTA.',
+        'EL DINERO NO PERDONA ERRORES. TAMPOCO LA VIDA.',
+        'NO ESPERES LEALTAD DE QUIEN SE VENDE BARATO.',
+        'LO QUE NIEGAS TE SOMETE. ACÉPTALO Y AVANZA.',
+        'SI FUERZAS LA PUERTA ES QUE NO ES TU CAMINO.',
+        'EL SILENCIO DICE MÁS QUE MIL PALABRAS.',
+        'NO ES MALA SUERTE. SON MALAS DECISIONES.',
+        'LO FÁCIL AHORA SALE CARO DESPUÉS.',
+        'QUIEN TE QUIERE TE BUSCA. LO DEMÁS ES CUENTO.',
       ];
+
+      // Detectar si es pregunta o comentario
+      const formatearPregunta = (texto) => {
+        if (!texto || texto.trim() === '') {
+          return { texto: 'Esperando tu consulta...', isEmpty: true };
+        }
+        
+        const limpio = texto.trim();
+        const esPregunta = limpio.includes('?') || 
+                          /^(qué|cuál|cómo|dónde|cuándo|por qué|porqué|debe|debo|debería|puedo|podría|es bueno|conviene)/i.test(limpio);
+        
+        if (esPregunta) {
+          const tieneSignos = limpio.startsWith('¿') || limpio.startsWith('?');
+          return { 
+            texto: tieneSignos ? limpio : `¿${limpio.replace('?', '')}?`,
+            isEmpty: false 
+          };
+        } else {
+          return { texto: `"${limpio}"`, isEmpty: false };
+        }
+      };
+
+      // Actualizar header
+      const actualizarHeader = () => {
+        const formatted = formatearPregunta(el.pregunta.value);
+        el.preguntaHeader.textContent = formatted.texto;
+        
+        if (formatted.isEmpty) {
+          el.preguntaHeader.classList.add('empty');
+        } else {
+          el.preguntaHeader.classList.remove('empty');
+        }
+      };
 
       const render = () => {
         if (!el.format || !el.respuesta) return;
 
         const format = el.format.value;
-        const text = (el.respuesta.value || 'HAZ TU PREGUNTA AL ORÁCULO...').toUpperCase();
-        const fontSize = parseInt(el.slider.value || 90);
+        const text = (el.respuesta.value || 'CONSULTA AL ORÁCULO...').toUpperCase();
+        const fontSize = parseInt(el.slider.value || 95);
         const preguntaTexto = el.pregunta.value.trim();
 
         if (el.sizeVal) el.sizeVal.innerText = fontSize + 'px';
@@ -444,21 +556,23 @@ ESTILO:
         canvas.width = w;
         canvas.height = h;
 
-        // Fondo Negro Absoluto
-        ctx.fillStyle = '#000';
+        // 🔥 FONDO CON GRADIENTE SUTIL 🔥
+        const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.max(w, h)/1.5);
+        gradient.addColorStop(0, '#0a0a0a');
+        gradient.addColorStop(1, '#000000');
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, w, h);
 
-        // 🔥 MOSTRAR LA PREGUNTA ARRIBA 🔥
+        // 🔥 PREGUNTA ARRIBA 🔥
         if (preguntaTexto) {
           const formatted = formatearPregunta(preguntaTexto);
-          const preguntaSize = Math.max(w * 0.022, 18); // Tamaño proporcional pero legible
+          const preguntaSize = Math.max(w * 0.024, 20);
           
           ctx.font = `600 ${preguntaSize}px 'Inter', sans-serif`;
-          ctx.fillStyle = '#666';
+          ctx.fillStyle = '#555';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'top';
           
-          // Partir en líneas si es muy larga
           const maxWidth = w * 0.85;
           const words = formatted.texto.split(' ');
           let lines = [], currentLine = words[0];
@@ -474,22 +588,22 @@ ESTILO:
           }
           lines.push(currentLine);
           
-          // Dibujar pregunta arriba
-          const preguntaY = 80;
+          const preguntaY = 100;
           lines.forEach((line, i) => {
-            ctx.fillText(line, w / 2, preguntaY + (i * preguntaSize * 1.3));
+            ctx.fillText(line, w / 2, preguntaY + (i * preguntaSize * 1.4));
           });
         }
 
-        // Config texto de la sentencia (centrado)
+        // 🔥 SENTENCIA PRINCIPAL 🔥
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.font = `900 ${fontSize}px 'Space Mono', monospace`;
+        ctx.font = `900 ${fontSize}px 'Space Grotesk', sans-serif`;
+        ctx.letterSpacing = '-2px';
 
         const words = text.split(' ');
         let lines = [], currentLine = words[0];
         for (let i = 1; i < words.length; i++) {
-          if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.85) {
+          if (ctx.measureText(currentLine + ' ' + words[i]).width < w * 0.88) {
             currentLine += ' ' + words[i];
           } else {
             lines.push(currentLine);
@@ -498,34 +612,49 @@ ESTILO:
         }
         lines.push(currentLine);
 
-        const lineHeight = fontSize * 1.2;
+        const lineHeight = fontSize * 1.15;
         const totalHeight = lines.length * lineHeight;
         const startY = h / 2 - totalHeight / 2 + fontSize / 2;
 
-        // Texto Blanco Puro (Sentencia)
+        // Efecto de sombra sutil
         lines.forEach((line, i) => {
           const y = startY + i * lineHeight;
-          ctx.fillStyle = '#fff';
+          
+          // Sombra
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+          ctx.fillText(line, w / 2 + 3, y + 3);
+          
+          // Texto principal
+          ctx.fillStyle = '#ffffff';
           ctx.fillText(line, w / 2, y);
         });
 
-        // Marco blanco
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 6;
-        ctx.strokeRect(40, 40, w - 80, h - 80);
+        // 🔥 BORDES MINIMALISTAS 🔥
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(50, 50, w - 100, h - 100);
 
-        // Firma abajo
-        ctx.fillStyle = '#fff';
-        ctx.font = `bold ${w * 0.025}px 'Inter', sans-serif`;
+        // Líneas de acento
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(w/2 - 80, 70);
+        ctx.lineTo(w/2 + 80, 70);
+        ctx.stroke();
+
+        // 🔥 FIRMA ELEGANTE 🔥
+        ctx.fillStyle = '#666';
+        ctx.font = `700 ${w * 0.02}px 'Inter', sans-serif`;
         ctx.textBaseline = 'bottom';
-        ctx.fillText('/// ORÁCULO DE LA MENTE ///', w / 2, h - 70);
+        ctx.letterSpacing = '3px';
+        ctx.fillText('ORÁCULO DE LA MENTE', w / 2, h - 80);
       };
 
       const callGemini = async () => {
         const pregunta = el.pregunta.value.trim();
 
         if (!pregunta) {
-          alert('⚠️ El Oráculo no adivina. Escribe tu pregunta.');
+          alert('⚠️ Escribe tu pregunta primero.');
           return;
         }
 
@@ -545,10 +674,10 @@ ESTILO:
           render();
         } catch (error) {
           console.error('Error:', error);
-          alert(`❌ El Oráculo está en silencio: ${error.message}`);
+          alert(`❌ Error: ${error.message}`);
         } finally {
           el.btnConsultar.disabled = false;
-          el.btnText.textContent = '👁️ CONSULTAR AL ORÁCULO';
+          el.btnText.textContent = '👁️ CONSULTAR ORÁCULO';
         }
       };
 
@@ -556,11 +685,10 @@ ESTILO:
         if (input) input.oninput = render;
       });
 
-      // Actualizar header en tiempo real
       if (el.pregunta) {
         el.pregunta.oninput = () => {
           actualizarHeader();
-          render(); // Re-renderizar canvas cuando cambia la pregunta
+          render();
         };
       }
 
