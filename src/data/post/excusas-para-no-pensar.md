@@ -1,6 +1,7 @@
 ---
 title: "Cuando la fantasía se vuelve excusa para no pensar"
 description: "La superstición moderna, los videntes y las teorías mágicas prosperan cuando la gente renuncia a pensar y asumir responsabilidad sobre su vida."
+excerpt: "Cada noticia trae un vidente, una profecía o una señal. Creer se volvió más cómodo que pensar, y alguien siempre gana con esa fantasía."
 pubDate: 2026-01-02
 author: "El Universo de la Mente"
 image: https://images.unsplash.com/photo-1731757793312-03b317772f77?auto=format&fit=crop&q=80&w=1200
