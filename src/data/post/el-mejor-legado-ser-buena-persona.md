@@ -4,7 +4,7 @@ description: "En una era obsesionada con la fama y el ruido, la integridad sigue
 excerpt: "Cuando el aplauso se apaga y el ruido desaparece, solo queda la huella que dejaste como persona."
 pubDate: 2026-01-03
 author: "El Universo de la Mente"
-image: https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=1200
+image: hhttps://plus.unsplash.com/premium_photo-1671641797707-36e36881edc3?auto=format&fit=crop&w=1200&q=80
 canonical: "https://eluniversodelamente.com/legado-o-farandula"
 tags:
   - legado
