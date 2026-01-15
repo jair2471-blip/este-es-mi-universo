@@ -11,18 +11,26 @@ const metadata = {
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Space+Mono:wght@700&display=swap');
 
+    body {
+      background: #0a0a0a;
+    }
+
     .oraculo-wrapper {
-      max-width: 1400px;
-      margin: 3rem auto;
+      max-width: 1200px;
+      margin: 2rem auto;
       padding: 0 1rem;
+      min-height: calc(100vh - 4rem);
+      display: flex;
+      align-items: center;
     }
 
     .oraculo-container {
       background: #000;
       border: 3px solid #fff;
       border-radius: 0;
-      padding: 3rem;
-      box-shadow: 0 30px 80px rgba(255, 255, 255, 0.1);
+      padding: 2.5rem;
+      box-shadow: 0 30px 80px rgba(255, 255, 255, 0.15), 0 0 100px rgba(255, 255, 255, 0.05);
+      width: 100%;
     }
 
     .oraculo-body {
@@ -32,26 +40,26 @@ const metadata = {
 
     .header-section {
       text-align: center;
-      margin-bottom: 3rem;
-      border-bottom: 2px solid #333;
-      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #222;
+      padding-bottom: 1.5rem;
     }
 
     .header-title {
-      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-size: clamp(2rem, 5vw, 3.5rem);
       font-weight: 900;
       color: #fff;
       text-transform: uppercase;
       line-height: 0.9;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       letter-spacing: -2px;
     }
 
     .header-subtitle {
       color: #666;
       font-weight: bold;
-      letter-spacing: 3px;
-      font-size: 0.75rem;
+      letter-spacing: 2px;
+      font-size: 0.65rem;
       text-transform: uppercase;
     }
 
@@ -63,14 +71,14 @@ const metadata = {
 
     @media (min-width: 1024px) {
       .system-grid {
-        grid-template-columns: 380px 1fr;
+        grid-template-columns: 320px 1fr;
       }
     }
 
     .oraculo-panel {
       background: #0a0a0a;
-      border: 2px solid #222;
-      padding: 2rem;
+      border: 2px solid #1a1a1a;
+      padding: 1.5rem;
     }
 
     .control-group {
@@ -171,13 +179,13 @@ const metadata = {
     }
 
     .canvas-container {
-      background: #000;
-      border: 2px solid #222;
+      background: #0a0a0a;
+      border: 2px solid #1a1a1a;
       padding: 2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 600px;
+      min-height: 500px;
       position: relative;
     }
 
