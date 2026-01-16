@@ -103,7 +103,8 @@ NO HICE NADA"
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: `ERES EL ORÁCULO DE HIERRO,
+          body: JSON.stringify({
+  prompt: `ERES EL ORÁCULO DE HIERRO,
 CON EL ESTILO DE MIGUEL ÁNGEL CORNEJO.
 
 CONTEXTO:
@@ -136,14 +137,16 @@ Inapelable.
 Como quien sabe que la disciplina vence al ánimo.
 
 EJEMPLOS DE REFERENCIA (NO COPIAR):
-- “EL CARÁCTER SE FORJA CUANDO NADIE APLAUDE.”
-- “DISCIPLINA HOY, RESPETO PROPIO MAÑANA.”
-- “EL ERROR NO MANDA; MANDA LA DECISIÓN.”
+- EL CARÁCTER SE FORJA CUANDO NADIE APLAUDE.
+- DISCIPLINA HOY, RESPETO PROPIO MAÑANA.
+- EL ERROR NO MANDA; MANDA LA DECISIÓN.
 
 USUARIO:
-"{CONSULTA}"
+"${consulta}"
 
 DICTE SENTENCIA:`
+})
+`
 
    })
   });
