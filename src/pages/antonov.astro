@@ -2,290 +2,301 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'ANTONOV | Oráculo de la Mente',
-  description: 'La conciencia artificial que te sacude con la verdad de la excelencia.',
+  title: 'ANTONOV PRO | Elite Mindset',
+  description: 'La conciencia artificial de los líderes.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&family=JetBrains+Mono:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap');
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    /* Fondo de escritorio para que parezca una App flotante */
     body {
-      background: radial-gradient(circle at 50% 0%, #121212 0%, #000 100%);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .oraculo-wrapper {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
+      background: #080808;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 215, 0, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0px, transparent 50%);
       min-height: 100vh;
       display: flex;
       align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: 'Inter', sans-serif;
     }
 
-    .oraculo-container {
-      background: #000;
-      border: 1px solid #1a1a1a;
-      border-radius: 16px;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+    /* El contenedor de la "Aplicación" */
+    .app-window {
       width: 100%;
+      max-width: 1100px; /* Evita que ocupe toda la pantalla en PC */
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
       overflow: hidden;
-      position: relative;
+      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
     }
 
-    .header-section {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-      border-bottom: 1px solid #111;
+    /* Barra superior tipo Mac/Windows */
+    .app-bar {
+      padding: 15px 25px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .header-title {
-      font-size: clamp(3rem, 8vw, 6rem);
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-      line-height: 0.8;
-      letter-spacing: -4px;
+    .dots { display: flex; gap: 8px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; background: #333; }
+    .dot.gold { background: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+
+    .app-title {
       font-family: 'Space Grotesk', sans-serif;
-      text-shadow: 0 0 30px rgba(255,255,255,0.1);
-    }
-
-    .header-subtitle {
-      color: #ffd700;
-      font-weight: 700;
-      letter-spacing: 5px;
+      color: #fff;
       font-size: 0.8rem;
-      text-transform: uppercase;
-      margin-top: 1rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      opacity: 0.6;
     }
 
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
+      min-height: 600px;
     }
 
-    @media (min-width: 1024px) {
-      .system-grid { grid-template-columns: 400px 1fr; }
+    @media (min-width: 900px) {
+      .system-grid { grid-template-columns: 380px 1fr; }
     }
 
-    .oraculo-panel {
-      background: #050505;
-      border-right: 1px solid #111;
-      padding: 2.5rem;
+    /* Panel de controles (Izquierda) */
+    .side-panel {
+      padding: 40px;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
     }
 
-    .label-control {
-      color: #555;
-      font-weight: 800;
-      font-size: 0.7rem;
-      margin-bottom: 0.8rem;
-      display: block;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+    .brand-box { margin-bottom: 10px; }
+    .brand-box h1 { font-family: 'Bebas Neue', cursive; font-size: 3.5rem; color: #fff; line-height: 1; margin: 0; }
+    .brand-box p { color: #ffd700; font-size: 0.7rem; letter-spacing: 2px; font-weight: 700; }
 
-    .oraculo-input {
-      width: 100%;
-      background: #0f0f0f;
-      border: 1px solid #222;
+    .input-group { display: flex; flex-direction: column; gap: 10px; }
+    .label { color: #555; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+
+    textarea, select, input[type="range"] {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       color: #fff;
-      padding: 1.2rem;
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      margin-bottom: 1.5rem;
-      transition: all 0.3s;
-    }
-
-    .btn-main {
-      width: 100%;
-      padding: 1.2rem;
-      border-radius: 8px;
-      font-weight: 900;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      letter-spacing: 1px;
+      padding: 15px;
+      font-size: 0.9rem;
       transition: 0.3s;
     }
 
-    .btn-consultar { background: #fff; color: #000; }
-    .btn-consultar:hover { background: #ffd700; transform: scale(1.02); }
+    textarea:focus { border-color: #ffd700; outline: none; background: rgba(255, 255, 255, 0.05); }
 
-    .canvas-container {
+    .btn-fire {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 18px;
+      border-radius: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .btn-fire:hover { background: #ffd700; transform: translateY(-2px); }
+
+    /* Área del Canvas (Derecha) */
+    .preview-area {
       background: #000;
-      padding: 4rem;
+      padding: 40px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 700px;
+      position: relative;
     }
 
-    #canvas {
+    canvas {
       max-width: 100%;
-      height: auto;
-      border: 1px solid #1a1a1a;
+      max-height: 70vh;
+      border-radius: 8px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     }
 
-    .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
+    .download-link {
+      margin-top: 20px;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+    .download-link:hover { color: #fff; }
+
+    /* Animación de carga */
+    .loading-pulse { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
   </style>
 
-  <div class="oraculo-wrapper">
-    <div class="oraculo-container">
-      <header class="header-section">
-        <h1 class="header-title">ANTONOV</h1>
-        <p class="header-subtitle">Conciencia Artificial de Excelencia</p>
-      </header>
-
-      <div class="system-grid">
-        <aside class="oraculo-panel">
-          <label class="label-control">Tu Realidad Actual</label>
-          <textarea id="pregunta" class="oraculo-input" placeholder="Escribe tu queja o duda aquí..."></textarea>
-          
-          <button id="btn-consultar" class="btn-main btn-consultar">👁️ SACUDIR MI CONCIENCIA</button>
-          
-          <div style="margin-top: 2rem;">
-            <label class="label-control">Personalizar Imagen</label>
-            <select id="format" class="oraculo-input">
-              <option value="post">INSTAGRAM POST</option>
-              <option value="story">INSTAGRAM STORY</option>
-            </select>
-            <input type="range" id="fontSizeSlider" min="40" max="150" value="100" class="oraculo-input" />
-          </div>
-
-          <button id="btn-download" class="btn-main" style="background:#111; color:#fff; border: 1px solid #333;">⬇ DESCARGAR SENTENCIA</button>
-        </aside>
-
-        <section class="canvas-container" id="canvas-area">
-          <canvas id="canvas"></canvas>
-          <textarea id="respuesta" style="display: none;"></textarea>
-        </section>
+  <div class="app-window">
+    <div class="app-bar">
+      <div class="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot gold"></div>
       </div>
+      <div class="app-title">ANTONOV CORE SYSTEM V2.0</div>
+      <div style="width: 50px;"></div>
+    </div>
+
+    <div class="system-grid">
+      <aside class="side-panel">
+        <div class="brand-box">
+          <h1>ANTONOV</h1>
+          <p>ORÁCULO DE EXCELENCIA</p>
+        </div>
+
+        <div class="input-group">
+          <span class="label">Entrada de Realidad</span>
+          <textarea id="pregunta" placeholder="Escribe tu situación..." rows="3"></textarea>
+        </div>
+
+        <button id="btn-run" class="btn-fire">SACUDIR CONCIENCIA</button>
+
+        <div class="input-group">
+          <span class="label">Formato & Tamaño</span>
+          <select id="format">
+            <option value="post">IG POST (1:1)</option>
+            <option value="story">IG STORY (9:16)</option>
+          </select>
+          <input type="range" id="size" min="40" max="150" value="100">
+        </div>
+
+        <button id="btn-save" style="background: transparent; border: 1px solid #333; color: #666;" class="btn-fire">DESCARGAR ARTE</button>
+      </aside>
+
+      <main class="preview-area">
+        <canvas id="canvas"></canvas>
+        <textarea id="resp_hidden" style="display: none;"></textarea>
+      </main>
     </div>
   </div>
 
   <script is:inline>
-    function initOraculo() {
+    function boot() {
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-      const el = {
-        pregunta: document.getElementById('pregunta'),
-        respuesta: document.getElementById('respuesta'),
-        format: document.getElementById('format'),
-        slider: document.getElementById('fontSizeSlider'),
-        btn: document.getElementById('btn-consultar'),
-        download: document.getElementById('btn-download'),
-        area: document.getElementById('canvas-area')
+      const inputs = {
+        q: document.getElementById('pregunta'),
+        r: document.getElementById('resp_hidden'),
+        fmt: document.getElementById('format'),
+        sz: document.getElementById('size'),
+        btn: document.getElementById('btn-run'),
+        dl: document.getElementById('btn-save')
       };
 
-      const render = () => {
-        const isStory = el.format.value === 'story';
+      const draw = () => {
+        const isStory = inputs.fmt.value === 'story';
         const w = 1080;
         const h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
-        // Fondo
+        // Background
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
 
-        // Ruido
-        for (let i = 0; i < 8000; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.015})`;
-          ctx.fillRect(Math.random() * w, Math.random() * h, 1, 1);
+        // Noise
+        for(let i=0; i<5000; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.02})`;
+          ctx.fillRect(Math.random()*w, Math.random()*h, 1, 1);
         }
 
-        // 🔥 PINTE LA PREGUNTA ARRIBA (CONTEXTO) 🔥
-        const preguntaTexto = el.pregunta.value.trim();
-        if (preguntaTexto) {
-          const qSize = Math.max(w * 0.03, 28);
-          ctx.font = `italic 600 ${qSize}px 'Inter'`;
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-          ctx.textAlign = 'center';
-          
-          const wordsQ = preguntaTexto.toUpperCase().split(' ');
-          let linesQ = [], lineQ = '';
-          wordsQ.forEach(word => {
-            if (ctx.measureText(lineQ + word).width < w * 0.8) lineQ += word + ' ';
-            else { linesQ.push(lineQ); lineQ = word + ' '; }
-          });
-          linesQ.push(lineQ);
-          
-          linesQ.forEach((l, i) => {
-            ctx.fillText(l, w/2, 100 + (i * qSize * 1.3));
-          });
+        // Render Pregunta (Top)
+        const qVal = inputs.q.value.trim().toUpperCase();
+        if(qVal) {
+          ctx.font = "600 30px 'Inter'";
+          ctx.fillStyle = "rgba(255,255,255,0.3)";
+          ctx.textAlign = "center";
+          wrapText(ctx, qVal, w/2, 120, w*0.8, 40);
         }
 
-        // Sentencia
-        const text = (el.respuesta.value || "HAZ UNA PREGUNTA PARA DESPERTAR").toUpperCase();
-        const fontSize = parseInt(el.slider.value);
-        ctx.font = `900 ${fontSize}px 'Bebas Neue'`;
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+        // Render Respuesta (Center)
+        const rVal = (inputs.r.value || "ESPERANDO COMANDO...").toUpperCase();
+        const fSize = parseInt(inputs.sz.value);
+        ctx.font = `900 ${fSize}px 'Bebas Neue'`;
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        wrapText(ctx, rVal, w/2, h/2, w*0.85, fSize * 1.05);
 
-        const words = text.split(' ');
-        let lines = [], line = '';
-        words.forEach(wrd => {
-          if (ctx.measureText(line + wrd).width < w * 0.85) line += wrd + ' ';
-          else { lines.push(line); line = wrd + ' '; }
-        });
-        lines.push(line);
-
-        const totalH = lines.length * (fontSize * 1.05);
-        const startY = h/2 - totalH/2 + fontSize/2;
-
-        lines.forEach((l, i) => {
-          ctx.fillText(l, w/2, startY + (i * fontSize * 1.05));
-        });
-
-        // Branding
-        ctx.font = `700 25px 'Inter'`;
-        ctx.fillStyle = '#ffd700';
-        ctx.letterSpacing = '10px';
-        ctx.fillText('EL UNIVERSO DE LA MENTE', w/2, h - 80);
+        // Branding (Bottom)
+        ctx.font = "700 22px 'Inter'";
+        ctx.fillStyle = "#ffd700";
+        ctx.letterSpacing = "12px";
+        ctx.fillText("EL UNIVERSO DE LA MENTE", w/2, h - 100);
       };
 
-      el.btn.onclick = async () => {
-        if (!el.pregunta.value) return alert("¡No seas mediocre, pregunta algo!");
-        el.btn.innerText = "PROCESANDO REALIDAD...";
+      function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let lines = [];
+        for(let n = 0; n < words.length; n++) {
+          let testLine = line + words[n] + ' ';
+          if (context.measureText(testLine).width > maxWidth && n > 0) {
+            lines.push(line);
+            line = words[n] + ' ';
+          } else { line = testLine; }
+        }
+        lines.push(line);
+        let currentY = y - ((lines.length - 1) * lineHeight) / 2;
+        lines.forEach(l => {
+          context.fillText(l, x, currentY);
+          currentY += lineHeight;
+        });
+      }
+
+      inputs.btn.onclick = async () => {
+        if(!inputs.q.value) return;
+        inputs.btn.innerText = "SINTONIZANDO...";
+        inputs.btn.classList.add('loading-pulse');
+        
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: `Actúa como Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${el.pregunta.value}". Responde SOLO 2 FRASES EN MAYÚSCULAS. Primera frase: Diagnóstico crudo. Segunda frase: Acción inmediata.` })
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${inputs.q.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`})
           });
           const data = await res.json();
-          el.respuesta.value = data.text;
-          el.area.classList.add('shake');
-          setTimeout(() => el.area.classList.remove('shake'), 500);
-          render();
-        } catch (e) { alert("Error cuántico."); }
-        finally { el.btn.innerText = "👁️ SACUDIR MI CONCIENCIA"; }
+          inputs.r.value = data.text;
+          draw();
+        } catch (e) { alert("Error de sistema."); }
+        finally {
+          inputs.btn.innerText = "SACUDIR CONCIENCIA";
+          inputs.btn.classList.remove('loading-pulse');
+        }
       };
 
-      el.slider.oninput = render;
-      el.format.onchange = render;
-      el.download.onclick = () => {
-        const a = document.createElement('a');
-        a.download = 'ANTONOV-SENTENCIA.png';
-        a.href = canvas.toDataURL();
-        a.click();
+      inputs.sz.oninput = draw;
+      inputs.fmt.onchange = draw;
+      inputs.dl.onclick = () => {
+        const link = document.createElement('a');
+        link.download = 'ANTONOV-ARTE.png';
+        link.href = canvas.toDataURL();
+        link.click();
       };
-      render();
+
+      draw();
     }
-    document.addEventListener('astro:page-load', initOraculo);
-    initOraculo();
+
+    document.addEventListener('astro:page-load', boot);
+    boot();
   </script>
 </Layout>
