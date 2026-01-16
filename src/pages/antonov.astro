@@ -450,47 +450,34 @@ const metadata = {
         ctx.shadowBlur = 0;
       }
 
-      // --- 2. SENTENCIA PRINCIPAL (CON AUTO-AJUSTE) ---
-const text = (ui.r.value || "ESPERANDO SENTENCIA...").toUpperCase();
-let fSize = parseInt(ui.sz.value); // Tamaño base que usted elige
-
-ctx.textAlign = "center";
-ctx.fillStyle = "#fff";
-ctx.letterSpacing = "2px";
-
-// FUNCIÓN MÁGICA: Si el texto es muy largo, baja el tamaño de la letra
-const words = text.split(' ');
-const totalChars = text.length;
-
-if (totalChars > 60) {
-    fSize = fSize * 0.7; // Si es un párrafo largo, reduce al 70%
-} else if (totalChars > 100) {
-    fSize = fSize * 0.5; // Si es larguísimo, reduce al 50%
-}
-
-ctx.font = `900 ${fSize}px 'Bebas Neue'`;
-
-// Calculamos el interlineado basado en el nuevo tamaño ajustado
-const interlineadoPro = fSize * 1.3;
-
-// Definimos un área segura (Safe Zone)
-// El alto máximo que puede ocupar el bloque de texto es el 60% del canvas
-const maxHeight = canvas.height * 0.6; 
-const maxWidth = canvas.width * 0.85;
-
-drawWrappedText(ctx, text, canvas.width/2, canvas.height/2, maxWidth, interlineadoPro, true);
-
-ctx.letterSpacing = "0px"; // Reset para lo que sigue
+      // 2. SENTENCIA PRINCIPAL (CENTRO) con efecto de brillo
+      const text = (ui.r.value || "ESPERANDO SENTENCIA...").toUpperCase();
+      let fSize = parseInt(ui.sz.value); // Usamos 'let' para poder ajustarlo
       
-      // Sombra dorada para el texto principal
-      ctx.shadowColor = 'rgba(255, 215, 0, 0.4)';
-      ctx.shadowBlur = 30;
+      // AUTO-AJUSTE: Si la frase es muy larga (más de 80 letras), bajamos el tamaño
+      if (text.length > 80) fSize = fSize * 0.75;
+      if (text.length > 130) fSize = fSize * 0.6;
+
+      ctx.font = `900 ${fSize}px 'Bebas Neue'`;
+      
+      // Sombra dorada (El brillo de Antonov)
+      ctx.shadowColor = 'rgba(255, 215, 0, 0.6)'; // Subí un pelo la opacidad a 0.6
+      ctx.shadowBlur = 25;
       ctx.fillStyle = "#fff";
       ctx.textAlign = "center";
       
-      const interlineadoPro = fSize * 1.3; 
-      drawWrappedText(ctx, text, w/2, h/2, w*0.8, interlineadoPro, true);
+      // ESPACIADO DE LETRAS: Para que el brillo no pegue las letras
+      ctx.letterSpacing = "2px"; 
+      
+      // INTERLINEADO CON AIRE: 1.4 para que respire entre líneas
+      const interlineadoPro = fSize * 1.4; 
+      
+      // DIBUJO: Usamos 0.8 del ancho para dejar margen a los lados
+      drawWrappedText(ctx, text, w/2, h/2, w * 0.8, interlineadoPro, true);
+      
+      // RESET DE EFECTOS: Para que no afecte a la marca de abajo
       ctx.shadowBlur = 0;
+      ctx.letterSpacing = "0px";
 
       // 3. MARCA (ABAJO) con efecto premium
       ctx.font = "700 24px 'Inter'";
