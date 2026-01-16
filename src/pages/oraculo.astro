@@ -103,14 +103,14 @@ NO HICE NADA"
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-         const consulta = input.value.trim();
+        const consulta = input.value.trim();
+if (!consulta) return;
 
 const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     prompt: `
-
 CONTEXTO:
 El usuario admite EN QUÉ FALLÓ HOY.
 No busca consuelo.
@@ -153,9 +153,12 @@ DICTE SENTENCIA:`
 });
 
 const data = await r.json();
-resTexto.innerText = data.response || 'EL ORÁCULO GUARDA SILENCIO.';
+
+resTexto.innerText =
+  data.response || data.text || 'EL ORÁCULO GUARDA SILENCIO.';
+
 resContainer.classList.remove('hidden');
-resBox.scrollIntoView({ behavior: 'smooth' });
+resContainer.scrollIntoView({ behavior: 'smooth' });
 
     } catch {
       resText.innerText = 'ERROR EN LA MATRIZ.';
