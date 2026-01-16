@@ -37,19 +37,41 @@ const metadata = {
       flex-direction: column;
     }
 
+    /* 🔥 CORRECCIÓN DEL HEADER 🔥 */
     .app-bar {
-      padding: 12px 20px;
+      height: 50px;
+      padding: 0 20px;
       background: rgba(255, 255, 255, 0.02);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center; /* Centra el título */
+      position: relative; /* Para anclar los botones */
     }
 
-    .dots { display: flex; gap: 6px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #222; }
-    .dot.gold { background: #ffd700; }
+    .window-controls {
+      position: absolute;
+      left: 20px;
+      display: flex;
+      gap: 8px;
+    }
+    
+    .dot { width: 12px; height: 12px; border-radius: 50%; background: #222; transition: 0.2s; }
+    .dot:hover { background: #444; }
+    .dot.close { background: #ff5f56; }
+    .dot.min { background: #ffbd2e; }
+    .dot.max { background: #27c93f; }
 
+    .app-title {
+      color: #666;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Resto del diseño igual de berraco */
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -81,7 +103,9 @@ const metadata = {
       color: #fff;
       padding: 12px;
       font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
     }
+    textarea:focus { outline: 1px solid #ffd700; }
 
     .btn-action {
       background: #fff;
@@ -104,6 +128,7 @@ const metadata = {
       align-items: center;
       justify-content: center;
       min-height: 500px;
+      position: relative;
     }
 
     canvas {
@@ -118,9 +143,12 @@ const metadata = {
 
   <div class="app-window">
     <div class="app-bar">
-      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot gold"></div></div>
-      <span style="color:#444; font-size:0.7rem; font-weight:700; letter-spacing:2px;">ANTONOV_CORE_v2.1</span>
-      <div style="width:30px;"></div>
+      <div class="window-controls">
+        <div class="dot close"></div>
+        <div class="dot min"></div>
+        <div class="dot max"></div>
+      </div>
+      <span class="app-title">ANTONOV CORE SYSTEM v2.1</span>
     </div>
 
     <div class="system-grid">
@@ -175,17 +203,14 @@ const metadata = {
         const h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
-        // Fondo Base
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
 
-        // Textura
         for(let i=0; i<6000; i++){
           ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.02})`;
           ctx.fillRect(Math.random()*w, Math.random()*h, 1, 1);
         }
 
-        // 1. Dibujar Pregunta (Arriba)
         const qText = ui.q.value.trim().toUpperCase();
         if(qText) {
           ctx.font = "600 32px 'Inter'";
@@ -194,7 +219,6 @@ const metadata = {
           drawWrappedText(ctx, qText, w/2, 120, w*0.8, 45, false);
         }
 
-        // 2. Dibujar Respuesta (Centro)
         const rText = (ui.r.value || "ANTONOV ESTÁ ESCUCHANDO...").toUpperCase();
         const fSize = parseInt(ui.sz.value);
         ctx.font = `900 ${fSize}px 'Bebas Neue'`;
@@ -202,7 +226,6 @@ const metadata = {
         ctx.textAlign = "center";
         drawWrappedText(ctx, rText, w/2, h/2, w*0.85, fSize * 1.05, true);
 
-        // 3. Branding (Abajo)
         ctx.font = "700 24px 'Inter'";
         ctx.fillStyle = "#ffd700";
         ctx.letterSpacing = "10px";
