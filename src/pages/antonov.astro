@@ -11,18 +11,23 @@ const metadata = {
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap');
 
-    body {
+    /* 🔥 MODO INMERSIVO: ESTO TAPA EL MENÚ DE LA WEB ORIGINAL 🔥 */
+    .immersive-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background: #050505;
       background-image: 
         radial-gradient(at 0% 0%, rgba(255, 215, 0, 0.03) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.01) 0px, transparent 50%);
-      min-height: 100vh;
+      z-index: 9999; /* Se pone encima de todo el layout de Astro */
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      font-family: 'Inter', sans-serif;
-      margin: 0;
+      overflow-y: auto; /* Permite scroll si la pantalla es muy pequeña */
+      padding: 20px;
     }
 
     .app-window {
@@ -32,12 +37,19 @@ const metadata = {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+      box-shadow: 0 50px 100px rgba(0,0,0,0.9);
       display: flex;
       flex-direction: column;
+      position: relative;
+      /* Animación de entrada */
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* 🔥 CORRECCIÓN DEL HEADER 🔥 */
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
     .app-bar {
       height: 50px;
       padding: 0 20px;
@@ -45,8 +57,8 @@ const metadata = {
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
-      justify-content: center; /* Centra el título */
-      position: relative; /* Para anclar los botones */
+      justify-content: center;
+      position: relative;
     }
 
     .window-controls {
@@ -64,14 +76,13 @@ const metadata = {
 
     .app-title {
       color: #666;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 3px;
       text-transform: uppercase;
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Resto del diseño igual de berraco */
     .system-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -90,97 +101,110 @@ const metadata = {
       background: #0c0c0c;
     }
 
-    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: #fff; margin: 0; line-height: 1; }
-    .brand p { color: #ffd700; font-size: 0.65rem; letter-spacing: 2px; font-weight: 700; margin-top: 5px; }
+    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 3.2rem; color: #fff; margin: 0; line-height: 0.9; }
+    .brand p { color: #ffd700; font-size: 0.65rem; letter-spacing: 2px; font-weight: 700; margin-top: 8px; opacity: 0.8; }
 
     .control-group { display: flex; flex-direction: column; gap: 8px; }
-    .control-group label { color: #444; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .control-group label { color: #555; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
 
     textarea, select, input[type="range"] {
       background: #111;
       border: 1px solid #222;
-      border-radius: 10px;
+      border-radius: 8px;
       color: #fff;
       padding: 12px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       font-family: 'Inter', sans-serif;
+      transition: 0.3s;
     }
-    textarea:focus { outline: 1px solid #ffd700; }
+    textarea:focus { outline: 1px solid #ffd700; background: #151515; }
 
     .btn-action {
       background: #fff;
       color: #000;
       border: none;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 16px;
+      border-radius: 8px;
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
       transition: 0.2s;
+      letter-spacing: 1px;
     }
-    .btn-action:hover { background: #ffd700; }
+    .btn-action:hover { background: #ffd700; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2); }
 
     .preview-box {
       background: #000;
-      padding: 20px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 500px;
+      min-height: 600px;
       position: relative;
     }
 
     canvas {
       max-width: 100%;
       height: auto;
-      border-radius: 4px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      border: 1px solid #1a1a1a;
     }
 
-    .loading { opacity: 0.5; pointer-events: none; }
+    .loading-pulse { animation: pulse 1s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
   </style>
 
-  <div class="app-window">
-    <div class="app-bar">
-      <div class="window-controls">
-        <div class="dot close"></div>
-        <div class="dot min"></div>
-        <div class="dot max"></div>
+  <div class="immersive-overlay">
+    <div class="app-window">
+      <div class="app-bar">
+        <div class="window-controls">
+          <a href="/" class="dot close" title="Salir"></a>
+          <div class="dot min"></div>
+          <div class="dot max"></div>
+        </div>
+        <span class="app-title">ANTONOV CORE SYSTEM v2.1</span>
       </div>
-      <span class="app-title">ANTONOV CORE SYSTEM v2.1</span>
-    </div>
 
-    <div class="system-grid">
-      <aside class="side-panel">
-        <div class="brand">
-          <h1>ANTONOV</h1>
-          <p>SISTEMA DE EXCELENCIA</p>
-        </div>
+      <div class="system-grid">
+        <aside class="side-panel">
+          <div class="brand">
+            <h1>ANTONOV</h1>
+            <p>SISTEMA DE EXCELENCIA</p>
+          </div>
 
-        <div class="control-group">
-          <label>Situación Actual</label>
-          <textarea id="in-pregunta" rows="3" placeholder="¿Qué te detiene?"></textarea>
-        </div>
+          <div class="control-group">
+            <label>SITUACIÓN ACTUAL</label>
+            <textarea id="in-pregunta" rows="3" placeholder="¿Qué te detiene?"></textarea>
+          </div>
 
-        <button id="run-btn" class="btn-action">EJECUTAR SENTENCIA</button>
+          <button id="run-btn" class="btn-action">EJECUTAR SENTENCIA</button>
 
-        <div class="control-group">
-          <label>Ajustes de Arte</label>
-          <select id="in-format">
-            <option value="post">CUADRADO (FEED)</option>
-            <option value="story">VERTICAL (STORY)</option>
-          </select>
-          <input type="range" id="in-size" min="50" max="150" value="100">
-        </div>
+          <hr style="border: 0; border-top: 1px solid #222; margin: 10px 0;">
 
-        <button id="dl-btn" style="background:transparent; border:1px solid #222; color:#555;" class="btn-action">DESCARGAR PNG</button>
-      </aside>
+          <div class="control-group">
+            <label>AJUSTES DE ARTE</label>
+            <select id="in-format">
+              <option value="post">CUADRADO (FEED)</option>
+              <option value="story">VERTICAL (STORY)</option>
+            </select>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label style="margin:0;">ZOOM LETRA</label>
+              <span id="zoom-val" style="color:#666; font-size: 0.6rem;">100%</span>
+            </div>
+            <input type="range" id="in-size" min="50" max="180" value="100">
+          </div>
 
-      <main class="preview-box">
-        <canvas id="main-canvas"></canvas>
-        <input type="hidden" id="hidden-res">
-      </main>
+          <button id="dl-btn" style="background:transparent; border:1px solid #333; color:#888; margin-top: auto;" class="btn-action">DESCARGAR PNG</button>
+        </aside>
+
+        <main class="preview-box">
+          <canvas id="main-canvas"></canvas>
+          <input type="hidden" id="hidden-res">
+        </main>
+      </div>
     </div>
   </div>
 
@@ -193,6 +217,7 @@ const metadata = {
         r: document.getElementById('hidden-res'),
         fmt: document.getElementById('in-format'),
         sz: document.getElementById('in-size'),
+        zoomVal: document.getElementById('zoom-val'),
         btn: document.getElementById('run-btn'),
         dl: document.getElementById('dl-btn')
       };
@@ -203,35 +228,45 @@ const metadata = {
         const h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
+        // 1. FONDO
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
 
+        // 2. RUIDO / TEXTURA
         for(let i=0; i<6000; i++){
           ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.02})`;
-          ctx.fillRect(Math.random()*w, Math.random()*h, 1, 1);
+          ctx.fillRect(Math.random()*w, Math.random()*h, 2, 2);
         }
 
+        // 3. DIBUJAR PREGUNTA (ARRIBA)
         const qText = ui.q.value.trim().toUpperCase();
         if(qText) {
-          ctx.font = "600 32px 'Inter'";
-          ctx.fillStyle = "rgba(255,255,255,0.3)";
+          ctx.font = "italic 600 32px 'Inter'";
+          ctx.fillStyle = "rgba(255,255,255,0.4)";
           ctx.textAlign = "center";
-          drawWrappedText(ctx, qText, w/2, 120, w*0.8, 45, false);
+          drawWrappedText(ctx, qText, w/2, 140, w*0.8, 45, false);
         }
 
-        const rText = (ui.r.value || "ANTONOV ESTÁ ESCUCHANDO...").toUpperCase();
+        // 4. DIBUJAR RESPUESTA (CENTRO)
+        // Si no hay respuesta aún, poner un placeholder militar
+        const rText = (ui.r.value || "ESPERANDO INGRESO DE DATOS...").toUpperCase();
         const fSize = parseInt(ui.sz.value);
+        
         ctx.font = `900 ${fSize}px 'Bebas Neue'`;
         ctx.fillStyle = "#fff";
         ctx.textAlign = "center";
+        
+        // Centrado dinámico
         drawWrappedText(ctx, rText, w/2, h/2, w*0.85, fSize * 1.05, true);
 
+        // 5. BRANDING (ABAJO)
         ctx.font = "700 24px 'Inter'";
         ctx.fillStyle = "#ffd700";
         ctx.letterSpacing = "10px";
         ctx.fillText("EL UNIVERSO DE LA MENTE", w/2, h - 100);
       };
 
+      // Función auxiliar para saltos de línea y centrado vertical
       function drawWrappedText(context, text, x, y, maxWidth, lineHeight, centerV) {
         const words = text.split(' ');
         let lines = [];
@@ -247,43 +282,55 @@ const metadata = {
         }
         lines.push(currentLine);
 
+        // Si es centerV, calculamos dónde debe empezar la primera línea para que el bloque quede centrado en Y
         let startY = centerV ? y - ((lines.length - 1) * lineHeight) / 2 : y;
+        
         lines.forEach(line => {
           context.fillText(line.trim(), x, startY);
           startY += lineHeight;
         });
       }
 
+      // CLICK EN BOTÓN "EJECUTAR"
       ui.btn.onclick = async () => {
-        if(!ui.q.value) return alert("Escribe algo, compa.");
-        ui.btn.innerText = "SINTONIZANDO...";
-        ui.btn.classList.add('loading');
+        if(!ui.q.value) return alert("¡Sin datos no hay diagnóstico! Escribe tu problema.");
+        
+        ui.btn.innerText = "PROCESANDO...";
+        ui.btn.classList.add('loading-pulse');
+        ui.btn.disabled = true;
 
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ prompt: `Responde como Antonov (Cornejo). Contexto: "${ui.q.value}". 2 frases cortas, crudas, en mayúsculas.`})
+            body: JSON.stringify({ 
+                prompt: `Actúa como Antonov (Estilo rudo de Miguel Ángel Cornejo). Contexto: "${ui.q.value}". Dame 2 frases cortas y contundentes en MAYÚSCULAS. Que duelan pero motiven.`
+            })
           });
           const data = await res.json();
           ui.r.value = data.text;
           render();
-        } catch (e) { alert("Falla en la matriz."); }
-        finally {
+        } catch (e) { 
+            alert("Error de conexión con el núcleo."); 
+        } finally {
           ui.btn.innerText = "EJECUTAR SENTENCIA";
-          ui.btn.classList.remove('loading');
+          ui.btn.classList.remove('loading-pulse');
+          ui.btn.disabled = false;
         }
       };
 
-      ui.sz.oninput = render;
+      // Eventos de controles
+      ui.sz.oninput = () => { ui.zoomVal.innerText = ui.sz.value + '%'; render(); };
       ui.fmt.onchange = render;
+      
       ui.dl.onclick = () => {
         const link = document.createElement('a');
-        link.download = 'ANTONOV_SENTENCIA.png';
+        link.download = `ANTONOV_${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
       };
 
+      // Render inicial
       render();
     }
 
