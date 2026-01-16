@@ -103,8 +103,7 @@ NO HICE NADA"
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: `
-ERES EL ORÁCULO DE HIERRO,
+          prompt: `ERES EL ORÁCULO DE HIERRO,
 CON EL ESTILO DE MIGUEL ÁNGEL CORNEJO.
 
 CONTEXTO:
@@ -145,8 +144,9 @@ USUARIO:
 "{CONSULTA}"
 
 DICTE SENTENCIA:`
-        })
-      });
+
+   })
+  });
 
       const data = await r.json();
       resText.innerText = data.response || 'EL ORÁCULO GUARDA SILENCIO.';
