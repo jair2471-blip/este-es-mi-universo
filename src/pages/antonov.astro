@@ -199,7 +199,7 @@ const metadata = {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ prompt: `Antonov (estilo rudo). Contexto: ${ui.q.value}. 2 frases cortas en MAYÚSCULAS.` })
+            body: JSON.stringify({ prompt: `Antonov (estilo de miguel angel cornejo). Contexto: ${ui.q.value}. 2 frases cortas en MAYÚSCULAS.` })
           });
           const data = await res.json();
           ui.r.value = data.text;
