@@ -86,41 +86,41 @@ NO HICE NADA"
 </Layout>
 
 <script>
+  // 1. Referencias correctas a los elementos del HTML
   const btn = document.getElementById('btn-consultar');
   const input = document.getElementById('consulta-input');
-  const resBox = document.getElementById('resultado-seccion');
-  const resText = document.getElementById('respuesta-texto');
+  const resBox = document.getElementById('resultado-seccion'); // El contenedor que está hidden
+  const resText = document.getElementById('respuesta-texto'); // El párrafo <p> donde va el texto
 
+  // 2. Función principal
   btn.addEventListener('click', async () => {
     const consulta = input.value.trim();
-    if (!consulta) return;
+    
+    // Si no escribió nada, no hacemos nada
+    if (!consulta) {
+      input.focus();
+      return;
+    }
 
-    btn.innerText = 'DICTANDO…';
+    // Cambiar estado del botón (Loading)
+    const textoOriginal = btn.innerText;
+    btn.innerText = 'DICTANDO SENTENCIA...';
     btn.disabled = true;
 
     try {
+      // 3. Llamada a la API (Limpia)
       const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-        const consulta = input.value.trim();
-if (!consulta) return;
-
-const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    prompt: `
+          prompt: `
 CONTEXTO:
-El usuario admite EN QUÉ FALLÓ HOY.
-No busca consuelo.
-Busca dirección.
+El usuario admite EN QUÉ FALLÓ HOY: "${consulta}".
+No busca consuelo. Busca dirección.
 
 TU PERSONALIDAD:
-Autoridad serena.
-Lenguaje elegante y firme.
+Autoridad serena. Lenguaje elegante y firme.
 Hablas como un líder que espera excelencia.
-Nunca humillas. Nunca dramatizas.
 
 OBJETIVO ÚNICO:
 EVITAR QUE EL USUARIO ABANDONE.
@@ -130,45 +130,39 @@ REGLAS OBLIGATORIAS:
 - UNA sola frase
 - Máximo 12 palabras
 - TODO en MAYÚSCULAS
-- Debe mencionar MAÑANA o VOLVER
-- Acción clara, sin metáforas
-- Sin violencia, sin culpa, sin consuelo barato
+- Debe mencionar MAÑANA, VOLVER o DISCIPLINA
+- Acción clara, sin metáforas complejas
 
-TONO:
-Firme.
-Sereno.
-Inapelable.
-Como quien sabe que la disciplina vence al ánimo.
-
-EJEMPLOS DE REFERENCIA (NO COPIAR):
-- EL CARÁCTER SE FORJA CUANDO NADIE APLAUDE.
-- DISCIPLINA HOY, RESPETO PROPIO MAÑANA.
-- EL ERROR NO MANDA; MANDA LA DECISIÓN.
-
-USUARIO:
-${consulta}
+USUARIO: ${consulta}
 
 DICTE SENTENCIA:`
-  })
-});
+        })
+      });
 
-const data = await r.json();
+      const data = await r.json();
 
-resTexto.innerText =
-  data.response || data.text || 'EL ORÁCULO GUARDA SILENCIO.';
-
-resContainer.classList.remove('hidden');
-resContainer.scrollIntoView({ behavior: 'smooth' });
-
-    } catch {
-      resText.innerText = 'ERROR EN LA MATRIZ.';
+      // 4. Mostrar el resultado
+      // Aseguramos que lea 'response' o 'text' según venga de tu API
+      const frase = data.response || data.text || 'EL SILENCIO ES LA RESPUESTA.';
+      
+      resText.innerText = frase;
       resBox.classList.remove('hidden');
-    }
+      
+      // Scroll suave hacia la respuesta
+      resBox.scrollIntoView({ behavior: 'smooth' });
 
-    btn.innerText = 'DÍGAME CÓMO VOLVER';
-    btn.disabled = false;
+    } catch (error) {
+      console.error(error);
+      resText.innerText = 'ERROR EN LA CONEXIÓN. INTENTA DE NUEVO.';
+      resBox.classList.remove('hidden');
+    } finally {
+      // 5. Restaurar el botón pase lo que pase
+      btn.innerText = textoOriginal;
+      btn.disabled = false;
+    }
   });
 
+  // Permitir enviar con Enter
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
