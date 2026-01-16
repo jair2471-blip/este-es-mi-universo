@@ -166,42 +166,48 @@ const metadata = {
             <p>SISTEMA DE EXCELENCIA</p>
           </div>
 
-          <div class="control-group">
-            <label>Situación Actual</label>
-            <textarea id="in-pregunta" rows="3" placeholder="¿Qué te detiene, líder?"></textarea>
-          </div>
+          <div class="control-group" style="margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+  <button id="share-btn" class="btn-action" style="background: #25D366; color: white; font-size: 0.7rem;">
+    COMPARTIR
+  </button>
+  <button id="ig-btn" class="btn-action" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; font-size: 0.7rem;">
+    IG STORY
+  </button>
+</div>
 
-          <button id="run-btn" class="btn-action">EJECUTAR SENTENCIA</button>
+<script is:inline>
+  // ... (dentro de su función startSystem existente) ...
 
-          <hr style="border:0; border-top:1px solid #1a1a1a; margin: 5px 0;">
+  // BOTÓN COMPARTIR (Nativo de celular)
+  ui.shareBtn = document.getElementById('share-btn');
+  ui.igBtn = document.getElementById('ig-btn');
 
-          <div class="control-group">
-            <label>Formato de Salida</label>
-            <select id="in-format">
-              <option value="post">CUADRADO (IG FEED)</option>
-              <option value="story">VERTICAL (IG STORY)</option>
-            </select>
-          </div>
+  ui.shareBtn.onclick = async () => {
+    const dataUrl = canvas.toDataURL('image/png');
+    const blob = await (await fetch(dataUrl)).blob();
+    const file = new File([blob], 'antonov-sentencia.png', { type: 'image/png' });
 
-          <div class="control-group">
-            <div style="display:flex; justify-content:space-between;">
-               <label>Tamaño Texto</label>
-               <span id="txt-val" style="font-size:0.6rem; color:#666;">100%</span>
-            </div>
-            <input type="range" id="in-size" min="50" max="180" value="100">
-          </div>
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: 'Sentencia de Antonov',
+          text: '¿Eres capaz de aguantar la verdad? #AntonovMindset',
+        });
+      } catch (err) {
+        console.log('Error compartiendo:', err);
+      }
+    } else {
+      alert("Tu navegador no soporta compartir directamente, usa el botón de Descargar, compa.");
+    }
+  };
 
-          <button id="dl-btn" style="background:transparent; border:1px solid #333; color:#666; margin-top:auto;" class="btn-action">DESCARGAR ARTE</button>
-        </aside>
-
-        <main class="preview-box">
-          <canvas id="main-canvas"></canvas>
-          <input type="hidden" id="hidden-res">
-        </main>
-      </div>
-    </div>
-  
-  </div>
+  // BOTÓN IG STORY (Descarga rápida con aviso)
+  ui.igBtn.onclick = () => {
+    alert("Descargando imagen... Súbela a tus Stories y etiqueta a la élite.");
+    ui.dl.click(); // Reutiliza la lógica de descarga que ya tenemos
+  };
+</script>
 
   <script is:inline>
     function startSystem() {
