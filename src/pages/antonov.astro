@@ -9,21 +9,15 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&family=Space+Grotesk:wght@700&display=swap');
-
-    body {
-      background: #050505;
-      min-height: 100vh;
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;900&display=swap');
 
     .stage-area {
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 90vh;
-      padding: 40px 20px;
+      padding: 20px;
+      background: #050505;
     }
 
     .app-window {
@@ -33,9 +27,9 @@ const metadata = {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.8);
       display: flex;
       flex-direction: column;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.8);
     }
 
     .app-bar {
@@ -46,14 +40,9 @@ const metadata = {
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
 
-    .window-controls { position: absolute; left: 20px; display: flex; gap: 8px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
-    .dot.close { background: #ff5f56; }
-
-    .app-title { color: #555; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .app-title { color: #555; font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; }
 
     .system-grid { display: grid; grid-template-columns: 1fr; }
     @media (min-width: 900px) { .system-grid { grid-template-columns: 340px 1fr; } }
@@ -67,8 +56,8 @@ const metadata = {
       gap: 15px;
     }
 
-    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: #fff; margin: 0; line-height: 0.9; }
-    .brand p { color: #ffd700; font-size: 0.6rem; letter-spacing: 2px; font-weight: 700; margin-top: 5px; }
+    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 3rem; color: #fff; margin: 0; }
+    .brand p { color: #ffd700; font-size: 0.6rem; letter-spacing: 2px; font-weight: 700; }
 
     .control-group { display: flex; flex-direction: column; gap: 8px; }
     .control-group label { color: #666; font-size: 0.6rem; font-weight: 800; text-transform: uppercase; }
@@ -103,37 +92,21 @@ const metadata = {
       align-items: center;
     }
 
-    canvas {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    }
+    canvas { max-width: 100%; height: auto; border-radius: 6px; }
   </style>
 
   <div class="stage-area">
     <div class="app-window">
-      <div class="app-bar">
-        <div class="window-controls"><div class="dot close"></div></div>
-        <span class="app-title">ANTONOV CORE v2.3</span>
-      </div>
-
+      <div class="app-bar"><span class="app-title">ANTONOV CORE v2.4</span></div>
       <div class="system-grid">
         <aside class="side-panel">
-          <div class="brand">
-            <h1>ANTONOV</h1>
-            <p>SISTEMA DE EXCELENCIA</p>
-          </div>
-
+          <div class="brand"><h1>ANTONOV</h1><p>SISTEMA DE EXCELENCIA</p></div>
           <div class="control-group">
             <label>SITUACIÓN ACTUAL</label>
-            <textarea id="in-pregunta" rows="3" placeholder="¿Qué te detiene, líder?"></textarea>
+            <textarea id="in-pregunta" rows="3" placeholder="¿Qué te detiene?"></textarea>
           </div>
-
           <button id="run-btn" class="btn-action">EJECUTAR SENTENCIA</button>
-
           <hr style="border:0; border-top:1px solid #1a1a1a; margin: 10px 0;">
-
           <div class="control-group">
             <label>FORMATO</label>
             <select id="in-format">
@@ -141,17 +114,14 @@ const metadata = {
               <option value="story">VERTICAL (IG STORY)</option>
             </select>
           </div>
-
           <div class="control-group">
             <label>TAMAÑO TEXTO</label>
             <input type="range" id="in-size" min="40" max="180" value="100">
           </div>
-
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <button id="share-btn" class="btn-action" style="background: #25D366; color: white; font-size: 0.65rem;">COMPARTIR</button>
             <button id="ig-btn" class="btn-action" style="background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; font-size: 0.65rem;">IG STORY</button>
           </div>
-
           <button id="dl-btn" style="background:transparent; border:1px solid #333; color:#666;" class="btn-action">DESCARGAR PNG</button>
         </aside>
 
@@ -167,7 +137,6 @@ const metadata = {
     function startSystem() {
       const canvas = document.getElementById('main-canvas');
       const ctx = canvas.getContext('2d');
-      
       const ui = {
         q: document.getElementById('in-pregunta'),
         r: document.getElementById('hidden-res'),
@@ -179,59 +148,45 @@ const metadata = {
         ig: document.getElementById('ig-btn')
       };
 
+      function drawWrappedText(context, text, x, y, maxWidth, lineHeight, centerV) {
+        const words = text.split(' ');
+        let lines = [];
+        let currentLine = '';
+        for (let n = 0; n < words.length; n++) {
+          let testLine = currentLine + words[n] + ' ';
+          if (context.measureText(testLine).width > maxWidth && n > 0) {
+            lines.push(currentLine);
+            currentLine = words[n] + ' ';
+          } else { currentLine = testLine; }
+        }
+        lines.push(currentLine);
+        let startY = centerV ? y - ((lines.length - 1) * lineHeight) / 2 : y;
+        lines.forEach(line => {
+          context.fillText(line.trim(), x, startY);
+          startY += lineHeight;
+        });
+      }
+
       const render = () => {
         const isStory = ui.fmt.value === 'story';
-        const w = 1080;
-        const h = isStory ? 1920 : 1080;
+        const w = 1080; const h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
+        ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, w, h);
-
-        // Ruido de fondo
-        for(let i=0; i<5000; i++){
-          ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.02})`;
-          ctx.fillRect(Math.random()*w, Math.random()*h, 2, 2);
+        if(ui.q.value) {
+          ctx.font = "italic 600 30px 'Inter'";
+          ctx.fillStyle = "rgba(255,255,255,0.3)";
+          ctx.textAlign = "center";
+          drawWrappedText(ctx, ui.q.value.toUpperCase(), w/2, 100, w*0.8, 40, false);
         }
 
-        // Título de la situación
-        // 3. SITUACIÓN ACTUAL (CORREGIDO)
-if(ui.q.value) {
-  ctx.font = "italic 600 25px 'Inter'"; // Un poco más pequeña para que no estorbe
-  ctx.fillStyle = "rgba(255,255,255,0.3)";
-  ctx.textAlign = "center";
-  
-  // USAMOS LA FUNCIÓN DE SALTO DE LÍNEA AQUÍ TAMBIÉN
-  const qText = ui.q.value.toUpperCase();
-  drawWrappedText(ctx, qText, w/2, 80, w*0.8, 35, false); 
-}
-
-        // Sentencia principal
         const text = (ui.r.value || "ESPERANDO SENTENCIA...").toUpperCase();
         const fSize = parseInt(ui.sz.value);
         ctx.font = `900 ${fSize}px 'Bebas Neue'`;
         ctx.fillStyle = "#fff";
         ctx.textAlign = "center";
+        drawWrappedText(ctx, text, w/2, h/2, w*0.85, fSize * 1.1, true);
 
-        // Dibujar con saltos de línea
-        const words = text.split(' ');
-        let lines = [];
-        let curLine = '';
-        for(let n=0; n<words.length; n++) {
-          let test = curLine + words[n] + ' ';
-          if(ctx.measureText(test).width > w*0.85 && n > 0) {
-            lines.push(curLine); curLine = words[n] + ' ';
-          } else { curLine = test; }
-        }
-        lines.push(curLine);
-
-        let startY = h/2 - ((lines.length - 1) * fSize * 1.1) / 2;
-        lines.forEach(l => {
-          ctx.fillText(l.trim(), w/2, startY);
-          startY += fSize * 1.1;
-        });
-
-        // Marca
         ctx.font = "700 24px 'Inter'";
         ctx.fillStyle = "#ffd700";
         ctx.fillText("EL UNIVERSO DE LA MENTE", w/2, h - 80);
@@ -264,16 +219,14 @@ if(ui.q.value) {
         const blob = await (await fetch(canvas.toDataURL())).blob();
         const file = new File([blob], 'sentencia.png', {type: 'image/png'});
         if(navigator.share) await navigator.share({ files: [file] });
-        else alert("Usa el botón de descargar, compa.");
+        else alert("Descarga la imagen, líder.");
       };
 
       ui.ig.onclick = () => ui.dl.click();
       ui.sz.oninput = render;
       ui.fmt.onchange = render;
-
       render();
     }
-
     document.addEventListener('astro:page-load', startSystem);
     startSystem();
   </script>
