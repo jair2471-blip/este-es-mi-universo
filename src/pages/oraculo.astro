@@ -103,9 +103,15 @@ NO HICE NADA"
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          body: JSON.stringify({
-  prompt: `ERES EL ORÁCULO DE HIERRO,
-CON EL ESTILO DE MIGUEL ÁNGEL CORNEJO.
+         const consulta = input.value.trim();
+
+const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    prompt: `
+ERES EL ORÁCULO DE HIERRO,
+CON EL ESTILO DE MIGUEL ANGEL CORNEJO.
 
 CONTEXTO:
 El usuario admite EN QUÉ FALLÓ HOY.
@@ -142,16 +148,16 @@ EJEMPLOS DE REFERENCIA (NO COPIAR):
 - EL ERROR NO MANDA; MANDA LA DECISIÓN.
 
 USUARIO:
-"${consulta}"
+${consulta}
 
 DICTE SENTENCIA:`
-   })
-  });
+  })
+});
 
-      const data = await r.json();
-      resText.innerText = data.response || 'EL ORÁCULO GUARDA SILENCIO.';
-      resBox.classList.remove('hidden');
-      resBox.scrollIntoView({ behavior: 'smooth' });
+const data = await r.json();
+resTexto.innerText = data.response || 'EL ORÁCULO GUARDA SILENCIO.';
+resContainer.classList.remove('hidden');
+resBox.scrollIntoView({ behavior: 'smooth' });
 
     } catch {
       resText.innerText = 'ERROR EN LA MATRIZ.';
