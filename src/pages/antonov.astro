@@ -134,100 +134,113 @@ const metadata = {
   </div>
 
   <script is:inline>
-    function startSystem() {
-      const canvas = document.getElementById('main-canvas');
-      const ctx = canvas.getContext('2d');
-      const ui = {
-        q: document.getElementById('in-pregunta'),
-        r: document.getElementById('hidden-res'),
-        fmt: document.getElementById('in-format'),
-        sz: document.getElementById('in-size'),
-        btn: document.getElementById('run-btn'),
-        dl: document.getElementById('dl-btn'),
-        sh: document.getElementById('share-btn'),
-        ig: document.getElementById('ig-btn')
-      };
+  function startSystem() {
+    const canvas = document.getElementById('main-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Su objeto se llama "ui", por eso abajo usamos ui.q.value
+    const ui = {
+      q: document.getElementById('in-pregunta'),
+      r: document.getElementById('hidden-res'),
+      fmt: document.getElementById('in-format'),
+      sz: document.getElementById('in-size'),
+      btn: document.getElementById('run-btn'),
+      dl: document.getElementById('dl-btn'),
+      sh: document.getElementById('share-btn'),
+      ig: document.getElementById('ig-btn')
+    };
 
-      function drawWrappedText(context, text, x, y, maxWidth, lineHeight, centerV) {
-        const words = text.split(' ');
-        let lines = [];
-        let currentLine = '';
-        for (let n = 0; n < words.length; n++) {
-          let testLine = currentLine + words[n] + ' ';
-          if (context.measureText(testLine).width > maxWidth && n > 0) {
-            lines.push(currentLine);
-            currentLine = words[n] + ' ';
-          } else { currentLine = testLine; }
-        }
-        lines.push(currentLine);
-        let startY = centerV ? y - ((lines.length - 1) * lineHeight) / 2 : y;
-        lines.forEach(line => {
-          context.fillText(line.trim(), x, startY);
-          startY += lineHeight;
-        });
+    function drawWrappedText(context, text, x, y, maxWidth, lineHeight, centerV) {
+      const words = text.split(' ');
+      let lines = [];
+      let currentLine = '';
+      for (let n = 0; n < words.length; n++) {
+        let testLine = currentLine + words[n] + ' ';
+        if (context.measureText(testLine).width > maxWidth && n > 0) {
+          lines.push(currentLine);
+          currentLine = words[n] + ' ';
+        } else { currentLine = testLine; }
+      }
+      lines.push(currentLine);
+      let startY = centerV ? y - ((lines.length - 1) * lineHeight) / 2 : y;
+      lines.forEach(line => {
+        context.fillText(line.trim(), x, startY);
+        startY += lineHeight;
+      });
+    }
+
+    const render = () => {
+      const isStory = ui.fmt.value === 'story';
+      const w = 1080; const h = isStory ? 1920 : 1080;
+      canvas.width = w; canvas.height = h;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+
+      if(ui.q.value) {
+        ctx.font = "italic 600 30px 'Inter'";
+        ctx.fillStyle = "rgba(255,255,255,0.3)";
+        ctx.textAlign = "center";
+        // Aquí usamos ui.q.value correctamente para el dibujo
+        drawWrappedText(ctx, ui.q.value.toUpperCase(), w/2, 100, w*0.8, 40, false);
       }
 
-      const render = () => {
-        const isStory = ui.fmt.value === 'story';
-        const w = 1080; const h = isStory ? 1920 : 1080;
-        canvas.width = w; canvas.height = h;
-        ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+      const text = (ui.r.value || "ESPERANDO SENTENCIA...").toUpperCase();
+      const fSize = parseInt(ui.sz.value);
+      ctx.font = `900 ${fSize}px 'Bebas Neue'`;
+      ctx.fillStyle = "#fff";
+      ctx.textAlign = "center";
+      drawWrappedText(ctx, text, w/2, h/2, w*0.85, fSize * 1.1, true);
 
-        if(ui.q.value) {
-          ctx.font = "italic 600 30px 'Inter'";
-          ctx.fillStyle = "rgba(255,255,255,0.3)";
-          ctx.textAlign = "center";
-          drawWrappedText(ctx, ui.q.value.toUpperCase(), w/2, 100, w*0.8, 40, false);
-        }
+      ctx.font = "700 24px 'Inter'";
+      ctx.fillStyle = "#ffd700";
+      ctx.fillText("EL UNIVERSO DE LA MENTE", w/2, h - 80);
+    };
 
-        const text = (ui.r.value || "ESPERANDO SENTENCIA...").toUpperCase();
-        const fSize = parseInt(ui.sz.value);
-        ctx.font = `900 ${fSize}px 'Bebas Neue'`;
-        ctx.fillStyle = "#fff";
-        ctx.textAlign = "center";
-        drawWrappedText(ctx, text, w/2, h/2, w*0.85, fSize * 1.1, true);
+    ui.btn.onclick = async () => {
+      if(!ui.q.value) return alert("Escribe algo, compa.");
+      ui.btn.innerText = "PROCESANDO...";
+      try {
+        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          // AQUÍ ESTABA EL ERROR: Cambié inputs.q.value por ui.q.value
+          body: JSON.stringify({ prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${ui.q.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`})
+        });
+        const data = await res.json();
+        ui.r.value = data.text;
+        render();
+      } catch(e) { 
+        console.error(e);
+        alert("Error en el núcleo."); 
+      }
+      finally { ui.btn.innerText = "EJECUTAR SENTENCIA"; }
+    };
 
-        ctx.font = "700 24px 'Inter'";
-        ctx.fillStyle = "#ffd700";
-        ctx.fillText("EL UNIVERSO DE LA MENTE", w/2, h - 80);
-      };
+    ui.dl.onclick = () => {
+      const link = document.createElement('a');
+      link.download = 'SENTENCIA_ANTONOV.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    };
 
-      ui.btn.onclick = async () => {
-        if(!ui.q.value) return alert("Escribe algo, compa.");
-        ui.btn.innerText = "PROCESANDO...";
-        try {
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${inputs.q.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`})
-          });
-          const data = await res.json();
-          ui.r.value = data.text;
-          render();
-        } catch(e) { alert("Error en el núcleo."); }
-        finally { ui.btn.innerText = "EJECUTAR SENTENCIA"; }
-      };
+    ui.sh.onclick = async () => {
+      const blob = await (await fetch(canvas.toDataURL())).blob();
+      const file = new File([blob], 'sentencia.png', {type: 'image/png'});
+      if(navigator.share) {
+        await navigator.share({ files: [file], title: 'Antonov Core', text: 'Mi sentencia de hoy.' });
+      }
+      else alert("Descarga la imagen, líder.");
+    };
 
-      ui.dl.onclick = () => {
-        const link = document.createElement('a');
-        link.download = 'SENTENCIA_ANTONOV.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      };
+    ui.ig.onclick = () => ui.dl.click();
+    ui.sz.oninput = render;
+    ui.fmt.onchange = render;
+    
+    // Ejecutamos render una vez al inicio
+    render();
+  }
 
-      ui.sh.onclick = async () => {
-        const blob = await (await fetch(canvas.toDataURL())).blob();
-        const file = new File([blob], 'sentencia.png', {type: 'image/png'});
-        if(navigator.share) await navigator.share({ files: [file] });
-        else alert("Descarga la imagen, líder.");
-      };
-
-      ui.ig.onclick = () => ui.dl.click();
-      ui.sz.oninput = render;
-      ui.fmt.onchange = render;
-      render();
-    }
-    document.addEventListener('astro:page-load', startSystem);
-    startSystem();
-  </script>
-</Layout>
+  // Esto es vital en Astro para que funcione al navegar entre páginas
+  document.addEventListener('astro:page-load', startSystem);
+  // Y esto por si es la primera carga
+  startSystem();
+</script>
