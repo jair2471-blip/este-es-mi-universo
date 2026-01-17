@@ -9,8 +9,7 @@ tags:
   - realidad
   - legado
 ---
-
-## El Último Brindis de un Aventurero  
+ 
 **De la plaza de mercado a los estadios: disciplina antes que suerte**
 
 Colombia no solo despide a un cantante.  
