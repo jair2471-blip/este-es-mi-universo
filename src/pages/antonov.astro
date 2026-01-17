@@ -506,7 +506,7 @@ const metadata = {
           body: JSON.stringify({ prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${ui.q.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`})
         });
         const data = await res.json();
-        ui.r.value = data.text;
+       ui.r.value = data.text.replace(/\*\*/g, ''); // Limpia los asteriscos
         render();
       } catch(e) { alert("Error en el núcleo."); }
       finally { ui.btn.innerText = "EJECUTAR SENTENCIA"; }
