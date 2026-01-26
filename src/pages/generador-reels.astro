@@ -1,0 +1,14 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import ReelGenerator from '~/components/ReelGenerator';
+
+const metadata = {
+  title: 'Portal Cósmico - Generador de Reels',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-4 py-16 mx-auto max-w-7xl lg:py-20">
+    <ReelGenerator client:load />
+  </section>
+</Layout>
