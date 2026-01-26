@@ -1,209 +1,444 @@
 ---
-// Si usas un layout, deja tu import aquí. Si no, quítalo.
-// import Layout from '../layouts/Layout.astro';
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'ANTONOV PRO | Elite Mindset',
+  description: 'La conciencia artificial de los líderes.',
+};
 ---
 
-<div class="antonov-shell">
-  <div class="scanlines"></div>
-  
-  <div class="main-frame">
-    <header class="header">
-      <h1 class="glitch-title" data-text="ANTONOV">ANTONOV</h1>
-      <p class="subtitle">SISTEMA DE CORRECCIÓN DE MENTALIDAD</p>
-    </header>
+<Layout metadata={metadata}>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap');
 
-    <div class="terminal-body">
-      <div class="canvas-container">
-        <canvas id="mainCanvas"></canvas>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    .stage {
+      min-height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .brand {
+      text-align: center;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .brand h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3.5rem;
+      color: #fff;
+      letter-spacing: 3px;
+      text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .brand p {
+      color: #ffd700;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .canvas-area {
+      background: #000;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 12px;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .controls {
+      background: linear-gradient(135deg, #0a0a0a, #0d0d0d);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .input-group label {
+      color: #888;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    textarea {
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      resize: none;
+      transition: all 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    select {
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      padding: 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: rgba(255, 215, 0, 0.5);
+    }
+
+    .size-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 8px;
+      padding: 8px 15px;
+    }
+
+    .size-control span {
+      color: #888;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 30px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      background: rgba(255, 215, 0, 0.2);
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+      flex: 1;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffd700;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #fff, #f0f0f0);
+      color: #000;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-generate {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .btn-generate:hover {
+      background: linear-gradient(135deg, #ffed4e, #ffd700);
+    }
+
+    @media (max-width: 768px) {
+      .brand h1 {
+        font-size: 2.5rem;
+      }
+      
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+      
+      .actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .btn-generate {
+        grid-column: 1;
+      }
+      
+      .canvas-area {
+        padding: 15px;
+      }
+    }
+  </style>
+
+  <div class="stage">
+    <div class="container">
+      <div class="brand">
+        <h1>ANTONOV</h1>
+        <p>SISTEMA DE EXCELENCIA</p>
       </div>
 
-      <div class="ui-controls">
-        <div class="input-area">
-          <label>INGRESA TU EXCUSA O MIEDO:</label>
-          <textarea id="userInput" placeholder="Escribe aquí..."></textarea>
+      <div class="canvas-area">
+        <canvas id="canvas"></canvas>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label>Tu situación</label>
+          <textarea id="input" rows="2" placeholder="Escribe lo que te detiene..."></textarea>
         </div>
 
-        <div class="button-grid">
-          <button id="btnExecute" class="btn-main">EJECUTAR PROTOCOLO</button>
-          <button id="btnDownload">DESCARGAR</button>
-          <select id="aspectRatio">
-            <option value="1">POST (1:1)</option>
-            <option value="1.77">STORY (9:16)</option>
+        <div class="toolbar">
+          <select id="format">
+            <option value="post">Cuadrado (Feed)</option>
+            <option value="story">Vertical (Story)</option>
           </select>
+
+          <div class="size-control">
+            <span id="size-label">100</span>
+            <input type="range" id="size" min="50" max="150" value="100">
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="generate" class="btn-generate">Generar</button>
+          <button id="share">Compartir</button>
+          <button id="download">Descargar</button>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<style>
-  :root { --gold: #ffd700; --dark: #050505; }
-  
-  .antonov-shell {
-    background: var(--dark);
-    color: white;
-    min-height: 100vh;
-    font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* Efecto de líneas de monitor viejo */
-  .scanlines {
-    position: absolute; top:0; left:0; width:100%; height:100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 4px, 3px 100%;
-    pointer-events: none; z-index: 10;
-  }
-
-  .main-frame { width: 100%; max-width: 800px; z-index: 5; }
-
-  .header { text-align: center; margin-bottom: 2rem; }
-  .glitch-title { font-size: 4rem; font-weight: 900; letter-spacing: 10px; color: var(--gold); margin: 0; }
-
-  .canvas-container { 
-    background: #000; border: 2px solid #222; 
-    display: flex; justify-content: center; margin-bottom: 1.5rem;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
-  }
-  
-  canvas { max-width: 100%; height: auto; }
-
-  .ui-controls { background: #111; padding: 20px; border: 1px solid #333; }
-  
-  textarea {
-    width: 100%; background: #000; color: #fff; border: 1px solid #444;
-    padding: 15px; margin-top: 10px; font-family: sans-serif; resize: none;
-  }
-
-  .button-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 10px; margin-top: 15px; }
-
-  button, select {
-    background: #222; color: #fff; border: 1px solid #444; 
-    padding: 12px; cursor: pointer; font-weight: bold; text-transform: uppercase;
-  }
-
-  .btn-main { background: var(--gold); color: #000; border: none; }
-  button:hover { filter: brightness(1.2); }
-
-  @media (max-width: 600px) {
-    .button-grid { grid-template-columns: 1fr; }
-    .glitch-title { font-size: 2.5rem; }
-  }
-</style>
-
-<script is:inline>
-  // Encapsulamos todo para evitar fugas de memoria y errores de cierre
-  (function() {
-    const canvas = document.getElementById('mainCanvas');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const input = document.getElementById('userInput');
-    const btnExecute = document.getElementById('btnExecute');
-    const aspectRatioSelect = document.getElementById('aspectRatio');
-    
-    let currentText = "SISTEMA LISTO PARA EJECUCIÓN";
-
-    function draw(text = currentText) {
-      const w = canvas.width;
-      const h = canvas.height;
-
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.strokeStyle = '#ffd700';
-      ctx.lineWidth = 40;
-      ctx.strokeRect(0, 0, w, h);
-
-      ctx.fillStyle = '#fff';
-      ctx.textAlign = 'center';
-      ctx.font = '900 70px sans-serif'; 
+  <script is:inline>
+    function init() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
       
-      const words = text.split(' ');
-      let line = '';
-      let y = h / 2 - ((words.length / 3) * 50);
-      
-      for(let n = 0; n < words.length; n++) {
-        let testLine = line + words[n] + ' ';
-        let metrics = ctx.measureText(testLine);
-        if (metrics.width > w * 0.8 && n > 0) {
-          ctx.fillText(line, w/2, y);
-          line = words[n] + ' ';
-          y += 90;
-        } else {
-          line = testLine;
-        }
-      }
-      ctx.fillText(line, w/2, y);
-      
-      ctx.fillStyle = '#ffd700';
-      ctx.font = 'bold 25px monospace';
-      ctx.fillText('ANTONOV // ELITE MINDSET', w/2, h - 80);
-    }
+      const el = {
+        input: document.getElementById('input'),
+        format: document.getElementById('format'),
+        size: document.getElementById('size'),
+        sizeLabel: document.getElementById('size-label'),
+        generate: document.getElementById('generate'),
+        share: document.getElementById('share'),
+        download: document.getElementById('download')
+      };
 
-    function initCanvas() {
-      const ratio = parseFloat(aspectRatioSelect.value) || 1;
-      canvas.width = 1080;
-      canvas.height = 1080 * ratio;
-      draw();
-    }
+      let currentText = '';
 
-    function glitchAnimate(targetText) {
-      let iteration = 0;
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&@$";
-      const interval = setInterval(() => {
-        const gText = targetText.split('').map((char, index) => {
-          if(index < iteration) return targetText[index];
-          if(targetText[index] === " ") return " ";
-          return chars[Math.floor(Math.random() * chars.length)];
-        }).join('');
+      function wrapText(context, text, x, y, maxW, lineH, centerV) {
+        const words = text.split(' ');
+        let lines = [];
+        let line = '';
         
-        draw(gText);
-        iteration += 0.5;
-        if(iteration >= targetText.length) {
-          clearInterval(interval);
-          draw(targetText);
+        words.forEach(word => {
+          const test = line + word + ' ';
+          if (context.measureText(test).width > maxW && line.length > 0) {
+            lines.push(line);
+            line = word + ' ';
+          } else {
+            line = test;
+          }
+        });
+        lines.push(line);
+
+        let startY = centerV ? y - ((lines.length - 1) * lineH) / 2 : y;
+        
+        lines.forEach(l => {
+          context.fillText(l.trim(), x, startY);
+          startY += lineH;
+        });
+      }
+
+      function render() {
+        const isStory = el.format.value === 'story';
+        const w = 1080;
+        const h = isStory ? 1920 : 1080;
+        
+        canvas.width = w;
+        canvas.height = h;
+
+        // Fondo
+        const grad = ctx.createLinearGradient(0, 0, 0, h);
+        grad.addColorStop(0, '#000');
+        grad.addColorStop(0.5, '#0a0a0a');
+        grad.addColorStop(1, '#000');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Pregunta/situación arriba
+        if (el.input.value.trim()) {
+          const questionSize = w < 600 ? 20 : 30; // Más pequeño en móvil
+          ctx.font = `italic 600 ${questionSize}px 'Inter'`;
+          ctx.fillStyle = "rgba(255,255,255,0.35)";
+          ctx.textAlign = "center";
+          ctx.shadowColor = 'rgba(255, 215, 0, 0.3)';
+          ctx.shadowBlur = 20;
+          const questionY = w < 600 ? 80 : 120;
+          const questionLineHeight = w < 600 ? 32 : 45;
+          wrapText(ctx, el.input.value.toUpperCase(), w/2, questionY, w*0.85, questionLineHeight, false);
+          ctx.shadowBlur = 0;
         }
-      }, 30);
+
+        // Texto principal
+        const text = (currentText || 'ESPERANDO SENTENCIA...').toUpperCase();
+        const fSize = parseInt(el.size.value);
+        
+        ctx.font = `900 ${fSize}px 'Bebas Neue'`;
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.4)';
+        ctx.shadowBlur = 30;
+        
+        wrapText(ctx, text, w/2, h/2, w*0.85, fSize * 1.3, true);
+        
+        ctx.shadowBlur = 0;
+
+        // Firma
+        const brandSize = w < 600 ? 18 : 22;
+        ctx.font = `700 ${brandSize}px 'Inter'`;
+        const brandGrad = ctx.createLinearGradient(0, h - 70, w, h - 70);
+        brandGrad.addColorStop(0, '#ffd700');
+        brandGrad.addColorStop(0.5, '#ffed4e');
+        brandGrad.addColorStop(1, '#ffd700');
+        ctx.fillStyle = brandGrad;
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.6)';
+        ctx.shadowBlur = 15;
+        const brandY = w < 600 ? h - 50 : h - 70;
+        ctx.fillText('EL UNIVERSO DE LA MENTE', w/2, brandY);
+        ctx.shadowBlur = 0;
+      }
+
+      el.generate.onclick = async () => {
+        if (!el.input.value.trim()) {
+          alert('Escribe algo primero, líder.');
+          return;
+        }
+
+        el.generate.textContent = 'Generando...';
+        el.generate.disabled = true;
+
+        try {
+          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${el.input.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`
+            })
+          });
+          
+          const data = await res.json();
+          currentText = data.text.replace(/\*\*/g, '');
+          render();
+        } catch (e) {
+          alert('Error al generar. Intenta de nuevo.');
+        } finally {
+          el.generate.textContent = 'Generar';
+          el.generate.disabled = false;
+        }
+      };
+
+      el.download.onclick = () => {
+        const link = document.createElement('a');
+        link.download = 'antonov-sentencia.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      };
+
+      el.share.onclick = async () => {
+        const blob = await (await fetch(canvas.toDataURL())).blob();
+        const file = new File([blob], 'antonov.png', { type: 'image/png' });
+        
+        if (navigator.share) {
+          await navigator.share({ files: [file] });
+        } else {
+          alert('Descarga la imagen para compartir.');
+        }
+      };
+
+      el.size.oninput = () => {
+        el.sizeLabel.textContent = el.size.value;
+        render();
+      };
+
+      el.format.onchange = render;
+      el.input.oninput = render;
+
+      // Enter para generar
+      el.input.onkeydown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          el.generate.click();
+        }
+      };
+
+      render();
     }
 
-    btnExecute.addEventListener('click', async () => {
-      const val = input.value.trim();
-      if(!val) return;
-      
-      btnExecute.innerText = "HACKEANDO EXCUSA...";
-      
-      try {
-        const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: `Eres Antonov. El usuario dice: "${val}". Responde con una frase de máximo 12 palabras, brutal, directa y en mayúsculas.` })
-        });
-        const data = await response.json();
-        currentText = data.text.toUpperCase();
-        glitchAnimate(currentText);
-      } catch (e) {
-        currentText = "ERROR DE CONEXIÓN";
-        draw();
-      }
-      btnExecute.innerText = "EJECUTAR PROTOCOLO";
-    });
-
-    document.getElementById('btnDownload').onclick = () => {
-      const link = document.createElement('a');
-      link.download = `ANTONOV_${Date.now()}.png`;
-      link.href = canvas.toDataURL();
-      link.click();
-    };
-
-    aspectRatioSelect.onchange = initCanvas;
-
-    // Ejecución inicial
-    initCanvas();
-  })();
-</script>
+    document.addEventListener('astro:page-load', init);
+    init();
+  </script>
+</Layout>
