@@ -11,11 +11,16 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  {/* HERO: Impacto visual puro */}
+  {/* HERO: Ahora el Antonov es el protagonista */}
   <Hero
     actions={[
-      { variant: 'primary', text: 'Entrar al Portal', href: '/portal', icon: 'tabler:bolt' },
-      { text: 'Ver Manifiestos', href: '#blog' },
+      { 
+        variant: 'primary', 
+        text: 'Entrar al Antonov', 
+        href: '/antonov', 
+        icon: 'tabler:plane-departure' 
+      },
+      { text: 'Explorar Reflexiones', href: '#blog', icon: 'tabler:book' },
     ]}
   >
     <Fragment slot="title">
@@ -28,39 +33,39 @@ const metadata = {
     <Fragment slot="subtitle">
       <span class="italic text-gray-300">"Donde la conciencia deja de ser un concepto y se convierte en un arma."</span>
       <br /><br />
-      Este es el espacio para los que no se tragan el cuento completo. Aquí diseccionamos la realidad, cuestionamos lo establecido y construimos con la verdad, aunque duela. 
+      Bienvenidos a la resistencia intelectual. Aquí diseccionamos la realidad y construimos con la verdad. Entra al **Antonov** y despega hacia una nueva perspectiva.
     </Fragment>
   </Hero>
 
-  {/* SECCIÓN DE VALORES: Lo que nos hace únicos */}
+  {/* SECCIÓN DE VALORES */}
   <Features
     id="features"
     title="La Hoja de Ruta"
-    subtitle="Aquí no venimos a pasar el rato, venimos a marcar la diferencia."
+    subtitle="Contenido con carácter para mentes que no se conforman."
     items={[
       {
-        title: 'Pensamiento Crítico',
-        description: 'No aceptamos verdades absolutas. Analizamos la psicología detrás del caos social.',
-        icon: 'tabler:brain',
+        title: 'Antonov',
+        description: 'Nuestra sección insignia. El punto de partida para la transformación real.',
+        icon: 'tabler:plane-tilt',
       },
       {
-        title: 'Tecnología Aplicada',
-        description: 'Usamos la IA y las herramientas digitales como extensiones de nuestra creatividad.',
-        icon: 'tabler:api',
+        title: 'Portal Cósmico',
+        description: 'Herramientas de IA y tecnología para potenciar tu presencia digital.',
+        icon: 'tabler:rocket',
       },
       {
-        title: 'Legado Real',
-        description: '91 piezas de pensamiento que buscan dejar una huella en tu forma de ver el mundo.',
-        icon: 'tabler:shield-check',
+        title: '91 Manifiestos',
+        description: 'Una biblioteca de pensamiento crítico lista para ser explorada.',
+        icon: 'tabler:separator-horizontal',
       },
     ]}
   />
 
-  {/* BLOG: Los 91 artículos que ya son leyenda */}
-  <section id="blog" class="bg-black/50">
+  {/* BLOG: Tus 91 joyas en el fondo */}
+  <section id="blog">
     <BlogLatestPosts
       title="Últimas Entradas al Universo"
-      information="Reflexiones directas a la yugular. Sin anestesia."
+      information="Reflexiones directas. Sin anestesia."
     />
   </section>
 </Layout>
