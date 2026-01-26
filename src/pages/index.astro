@@ -11,13 +11,11 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  {/* HERO: El golpe de autoridad inicial */}
   <Hero
     actions={[
       { variant: 'primary', text: 'Entrar al Portal Cósmico', href: '/portal', icon: 'tabler:sparkles' },
       { text: 'Explorar Reflexiones', href: '#blog', icon: 'tabler:book' },
     ]}
-    image={{ src: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80', alt: 'Universo Profundo' }}
   >
     <Fragment slot="title">
       Domina tu <span class="text-accent dark:text-secondary highlight">Mente</span>, <br />
@@ -25,27 +23,25 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      No somos un blog más. Somos el epicentro de la **psicología profunda**, el análisis sin filtros y la tecnología creativa. Bienvenido al lugar donde el pensamiento se vuelve acción.
+      No somos un blog más. Somos el epicentro de la **psicología profunda**, el análisis sin filtros y la tecnología creativa.
     </Fragment>
   </Hero>
 
-  {/* FEATURES: Para que vean que hay sustancia */}
   <Features
     id="features"
     tagline="Lo que encontrarás"
     title="Contenido con Berraquera"
     items={[
-      { title: 'Análisis Crítico', description: 'Desmontamos las verdades a medias de la sociedad moderna.', icon: 'tabler:brain' },
-      { title: 'Portal Cósmico', description: 'Herramientas de IA para potenciar tu presencia digital.', icon: 'tabler:device-floppy' },
-      { title: 'Filosofía Viva', description: '91 lecciones de vida y estrategia mental listas para ti.', icon: 'tabler: comet' },
+      { title: 'Análisis Crítico', description: 'Desmontamos las verdades a medias.', icon: 'tabler:brain' },
+      { title: 'Portal Cósmico', description: 'IA para potenciar tu presencia digital.', icon: 'tabler:device-floppy' },
+      { title: 'Filosofía Viva', description: '91 lecciones de vida listas para ti.', icon: 'tabler:comet' },
     ]}
   />
 
-  {/* BLOG: Los 91 guerreros en pantalla */}
   <section id="blog">
     <BlogLatestPosts
       title="Manifiestos y Reflexiones"
-      information="Cada artículo es una pieza del rompecabezas. ¿Estás listo para armarlo?"
+      information="Cada artículo es una pieza del rompecabezas."
     />
   </section>
 </Layout>
