@@ -4,8 +4,10 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 
 export default defineConfig({
-  // Ponemos una URL base para que no de error de "Invalid URL"
-  site: 'https://ejemplo.com', 
+  // Tu dominio real para que Astro genere los links correctamente
+  site: 'https://eluniversodelamente.com', 
+  base: '/',
+  trailingSlash: 'never', 
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
@@ -22,7 +24,7 @@ export default defineConfig({
           if (id === 'astrowind:config') {
             return `
               export const I18N = { language: 'es', textDirection: 'ltr' };
-              export const SITE = { name: 'Universo', base: 'https://ejemplo.com', trailingSlash: false };
+              export const SITE = { name: 'El Universo de la Mente', base: 'https://eluniversodelamente.com', trailingSlash: false };
               export const METADATA = {};
               export const APP_BLOG = { isEnabled: true };
               export const UI = { theme: 'system' };
