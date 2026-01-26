@@ -1,19 +1,16 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import Hero from '~/components/widgets/Hero.astro';
-import ReelGenerator from '~/components/ReelGenerator.jsx'; 
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+const metadata = {
+  title: 'El Universo de la Mente — Inicio',
+  ignoreTitleTemplate: true,
+};
 ---
 
-<Layout metadata={{ title: 'E.U.L.M | El Universo de la Mente' }}>
-  <Hero tagline="Bienvenidos al vacío">
-    <Fragment slot="title">
-      EL UNIVERSO DE LA <span class="text-red-700">MENTE</span>
-    </Fragment>
-  </Hero>
-
-  <section class="bg-black py-10" style="min-height: 500px;">
-     <ReelGenerator client:only="react" />
-
-  </section>
-  
+<Layout metadata={metadata}>
+  <BlogLatestPosts
+    title="Últimas Reflexiones"
+    information="Explora los pensamientos y análisis del Universo de la Mente."
+  />
 </Layout>
