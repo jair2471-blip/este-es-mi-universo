@@ -1,0 +1,8 @@
+# Bienvenido al Universo de la Mente
+# www.robotstxt.org/
+
+User-agent: *
+Allow: /
+
+# Aquí le damos la ruta de su mapa a los buscadores
+Sitemap: https://eluniversodelamente.com/sitemap-index.xml

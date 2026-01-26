@@ -1,0 +1,167 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+const metadata = {
+  title: 'Contador de Vida | El Universo de la Mente',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-[#0a0a0a] text-[#f4f4f4] min-h-screen font-['Rajdhani'] relative overflow-hidden py-10">
+    <div id="particles" class="fixed inset-0 z-0 pointer-events-none"></div>
+
+    <div class="container mx-auto max-w-6xl px-4 relative z-10">
+      <header class="text-center mb-12 pt-10">
+        <h1 class="glitch text-4xl md:text-7xl font-bold mb-4 tracking-tighter text-white inline-block" data-text="TU VIDA SE ESTÁ DESCARGANDO">
+          TU VIDA SE ESTÁ DESCARGANDO
+        </h1>
+        <p class="subtitle font-mono text-orange-500 tracking-widest uppercase opacity-0 animate-fade-in">>>> CADA SEGUNDO CUENTA. ¿O NO? <<<</p>
+      </header>
+
+      <section id="age-input-section" class="max-w-2xl mx-auto text-center p-10 bg-[#1a1a1a]/80 border border-orange-500/20 rounded-2xl backdrop-blur-md shadow-2xl mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-orange-500 uppercase">¿Cuántos años tienes?</h2>
+        <p class="text-gray-400 mb-6 italic">No te preocupes, solo necesito esto para mostrarte la verdad...</p>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+          <input 
+            type="number" 
+            id="age-input" 
+            min="1" 
+            max="100" 
+            placeholder="25" 
+            class="text-4xl font-bold p-4 bg-[#2D3142] border-2 border-orange-500 rounded-xl text-center w-32 focus:outline-none focus:ring-4 focus:ring-orange-500/50 transition-all text-white"
+          />
+          <button 
+            id="btn-calculate"
+            class="bg-gradient-to-r from-orange-600 to-orange-400 text-black font-bold py-5 px-10 rounded-xl text-xl hover:scale-105 transition-all shadow-lg uppercase active:scale-95"
+          >
+            MOSTRARME LA REALIDAD
+          </button>
+        </div>
+      </section>
+
+      <div id="counters" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 hidden"></div>
+
+      <div id="brutal-phrases" class="max-w-4xl mx-auto mb-16 text-center"></div>
+
+      <section id="cta-section" class="hidden text-center p-12 bg-gradient-to-br from-orange-500/10 to-transparent border-2 border-orange-500 rounded-2xl relative overflow-hidden">
+        <div class="relative z-10">
+          <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">¿VAS A SEGUIR DESPERDICIANDO TIEMPO?</h2>
+          <p class="text-xl text-gray-300 mb-8">O vas a hacer algo al respecto. Ahora mismo.</p>
+          <button id="btn-commitment" class="bg-white text-black font-black py-6 px-12 rounded-full text-2xl hover:bg-orange-500 hover:text-white transition-colors uppercase tracking-tighter">
+            COMPROMETERME YA
+          </button>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <style is:global>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Share+Tech+Mono&display=swap');
+    
+    .glitch { position: relative; animation: glitch-main 3s infinite; }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .glitch::before { left: 2px; text-shadow: -2px 0 #FF6B35; clip: rect(24px, 550px, 90px, 0); animation: glitch-anim 2s infinite linear alternate-reverse; }
+    .glitch::after { left: -2px; text-shadow: -2px 0 #00fff9; clip: rect(85px, 550px, 140px, 0); animation: glitch-anim 3s infinite linear alternate-reverse; }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(61px, 9999px, 88px, 0); }
+      100% { clip: rect(55px, 9999px, 42px, 0); }
+    }
+
+    .counter-card {
+      background: linear-gradient(145deg, #1a1a1a, #2D3142);
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+    .counter-card:hover { transform: translateY(-5px); border-color: #FF6B35; box-shadow: 0 10px 40px rgba(255, 107, 53, 0.2); }
+
+    .particle {
+      position: absolute; width: 2px; height: 2px; background: #FF6B35; opacity: 0.2; animation: fall linear infinite;
+    }
+    @keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
+
+    .phrase-box {
+      font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 500; padding: 30px;
+      background: rgba(255, 107, 53, 0.05); border-left: 4px solid #FF6B35;
+      margin-bottom: 20px; opacity: 0; animation: fadeIn 0.5s forwards;
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+  </style>
+
+  <script is:inline>
+  function initContador() {
+    const btn = document.getElementById('btn-calculate');
+    const input = document.getElementById('age-input');
+    const countersContainer = document.getElementById('counters');
+    const phrasesContainer = document.getElementById('brutal-phrases');
+    const cta = document.getElementById('cta-section');
+
+    if (!btn) return;
+
+    // Quitamos cualquier evento previo para que no se duplique
+    btn.replaceWith(btn.cloneNode(true));
+    const newBtn = document.getElementById('btn-calculate');
+
+    newBtn.addEventListener('click', () => {
+      const age = parseInt(input.value);
+      if (!age || age < 1 || age > 100) return alert('Por favor ingresa una edad válida');
+
+      const lifeExp = 80;
+      const left = lifeExp - age;
+      
+      // LIMPIEZA TOTAL antes de empezar
+      countersContainer.innerHTML = ''; 
+      phrasesContainer.innerHTML = '';
+      countersContainer.classList.remove('hidden');
+      countersContainer.style.display = 'grid';
+      cta.classList.add('hidden');
+
+      const countersData = [
+        { label: 'Días que te quedan', val: (left * 365).toLocaleString(), sub: 'Si llegas a 80 años' },
+        { label: 'Fines de semana', val: (left * 52).toLocaleString(), sub: 'Para hacer lo que nunca haces' },
+        { label: 'Veranos restantes', val: left, sub: 'Menos de los que crees' },
+        { label: 'Lunes por sufrir', val: (left * 52).toLocaleString(), sub: 'O cambias, o los sufres todos' },
+        { label: 'Días ya vividos', val: (age * 365).toLocaleString(), sub: '¿Cuántos recuerdas?' },
+        { label: 'Progreso Vital', val: ((age/lifeExp)*100).toFixed(1) + '%', sub: 'Cargando... al revés' }
+      ];
+
+      countersData.forEach((data, i) => {
+        setTimeout(() => {
+          const card = document.createElement('div');
+          card.className = 'counter-card';
+          card.innerHTML = `
+            <div class="text-orange-500 font-bold uppercase tracking-widest text-sm mb-2">${data.label}</div>
+            <div class="text-4xl font-mono font-bold text-white mb-2">${data.val}</div>
+            <div class="text-gray-500 text-xs italic">${data.sub}</div>
+          `;
+          countersContainer.appendChild(card);
+        }, i * 150);
+      });
+
+      setTimeout(() => {
+        cta.classList.remove('hidden');
+      }, 2000);
+    });
+
+    // Botón de compromiso
+    const btnCommit = document.getElementById('btn-commitment');
+    if (btnCommit) {
+      btnCommit.onclick = () => {
+        window.location.href = '/generador-compromisos';
+      };
+    }
+  }
+
+  // Solo una forma de dispararlo para evitar duplicados
+  document.addEventListener('astro:page-load', initContador);
+  
+  // Si es la primera vez que carga sin transiciones
+  if (document.readyState === 'complete') {
+    initContador();
+  }
+</script>
+</Layout>

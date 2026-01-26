@@ -1,0 +1,15 @@
+---
+// src/pages/universo.astro
+import Layout from '~/layouts/PageLayout.astro';
+import PortalCosmico from '~/components/PortalCosmico.jsx';
+
+const metadata = {
+  title: 'Universo de la Mente',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-black min-h-screen">
+    <PortalCosmico client:only="react" />
+  </section>
+</Layout>

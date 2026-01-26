@@ -1,0 +1,172 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="ORÁCULO DE HIERRO | Sentencia de la Calle">
+  <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4 md:p-8 selection:bg-yellow-600">
+    
+    <div class="max-w-2xl w-full">
+
+      <!-- HEADER -->
+      <div class="text-center mb-12 md:mb-20 space-y-3">
+        <h1 class="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-yellow-600 uppercase italic leading-[0.85]">
+          ORÁCULO<br /><span class="text-white">DE HIERRO</span>
+        </h1>
+        <div class="h-1 w-24 bg-yellow-600 mx-auto mt-6"></div>
+        <p class="text-zinc-600 tracking-[0.6em] text-[10px] md:text-xs font-bold uppercase pt-3">
+          Justicia Final // E.U.L.M
+        </p>
+      </div>
+
+      <!-- ZONA DE CONSULTA -->
+      <div class="space-y-6 md:space-y-8">
+
+        <p class="text-center text-zinc-500 text-xs uppercase tracking-widest font-bold">
+          ESCRIBA EN QUÉ FALLÓ HOY
+        </p>
+
+        <div class="bg-zinc-950 border border-zinc-900 p-6 md:p-8 rounded-sm">
+          <textarea
+            id="consulta-input"
+            class="w-full bg-transparent text-white outline-none text-xl md:text-2xl placeholder:text-zinc-700 text-center uppercase font-bold resize-none min-h-[80px]"
+            placeholder="EJEMPLOS:
+NO ENTRENÉ
+PROCRASTINÉ TODO EL DÍA
+ROMPÍ EL HÁBITO
+NO HICE NADA"
+            rows="3"></textarea>
+        </div>
+
+        <button
+          id="btn-consultar"
+          class="w-full border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-black font-black py-5 uppercase italic tracking-[0.25em] transition-all active:scale-[0.98]">
+          DÍGAME CÓMO VOLVER
+        </button>
+
+        <!-- RESULTADO -->
+        <div id="resultado-seccion" class="hidden space-y-10 pt-10">
+
+          <div class="bg-zinc-950 border-2 border-yellow-600 p-10 rounded-sm relative overflow-hidden">
+            <div class="absolute top-4 left-4 text-6xl text-zinc-900 font-serif">"</div>
+            <div class="absolute bottom-4 right-4 text-6xl text-zinc-900 font-serif">"</div>
+            <p
+              id="respuesta-texto"
+              class="text-4xl md:text-5xl font-black uppercase italic text-center leading-tight">
+            </p>
+          </div>
+
+          <!-- ACCIONES -->
+          <div class="space-y-4">
+            <button
+              id="btn-compartir-nativa"
+              class="w-full bg-yellow-600 text-black font-black py-5 uppercase tracking-[0.3em]">
+              📜 COMPARTIR DICTAMEN
+            </button>
+
+            <div class="grid grid-cols-4 gap-2 pt-4 border-t border-zinc-900">
+              <button data-format="post" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">POST</button>
+              <button data-format="story" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">STORY</button>
+              <button data-format="fb" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">FB</button>
+              <button data-format="tw" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">TW</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="text-center mt-20 opacity-40">
+        <p class="text-zinc-700 text-[9px] uppercase tracking-widest">
+          La sentencia es inapelable
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="hidden-canvas" style="display:none;"></canvas>
+</Layout>
+
+<script>
+  // 1. Referencias correctas a los elementos del HTML
+  const btn = document.getElementById('btn-consultar');
+  const input = document.getElementById('consulta-input');
+  const resBox = document.getElementById('resultado-seccion'); // El contenedor que está hidden
+  const resText = document.getElementById('respuesta-texto'); // El párrafo <p> donde va el texto
+
+  // 2. Función principal
+  btn.addEventListener('click', async () => {
+    const consulta = input.value.trim();
+    
+    // Si no escribió nada, no hacemos nada
+    if (!consulta) {
+      input.focus();
+      return;
+    }
+
+    // Cambiar estado del botón (Loading)
+    const textoOriginal = btn.innerText;
+    btn.innerText = 'DICTANDO SENTENCIA...';
+    btn.disabled = true;
+
+    try {
+      // 3. Llamada a la API (Limpia)
+      const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: `
+CONTEXTO:
+El usuario admite EN QUÉ FALLÓ HOY: "${consulta}".
+No busca consuelo. Busca dirección.
+
+TU PERSONALIDAD:
+Autoridad serena. Lenguaje elegante y firme.
+Hablas como un líder que espera excelencia.
+
+OBJETIVO ÚNICO:
+EVITAR QUE EL USUARIO ABANDONE.
+Convertir el error de hoy en una decisión clara de volver mañana.
+
+REGLAS OBLIGATORIAS:
+- UNA sola frase
+- Máximo 12 palabras
+- TODO en MAYÚSCULAS
+- Debe mencionar MAÑANA, VOLVER o DISCIPLINA
+- Acción clara, sin metáforas complejas
+
+USUARIO: ${consulta}
+
+DICTE SENTENCIA:`
+        })
+      });
+
+      const data = await r.json();
+
+      // 4. Mostrar el resultado
+      // Aseguramos que lea 'response' o 'text' según venga de tu API
+      const frase = data.response || data.text || 'EL SILENCIO ES LA RESPUESTA.';
+      
+      resText.innerText = frase;
+      resBox.classList.remove('hidden');
+      
+      // Scroll suave hacia la respuesta
+      resBox.scrollIntoView({ behavior: 'smooth' });
+
+    } catch (error) {
+      console.error(error);
+      resText.innerText = 'ERROR EN LA CONEXIÓN. INTENTA DE NUEVO.';
+      resBox.classList.remove('hidden');
+    } finally {
+      // 5. Restaurar el botón pase lo que pase
+      btn.innerText = textoOriginal;
+      btn.disabled = false;
+    }
+  });
+
+  // Permitir enviar con Enter
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+</script>
