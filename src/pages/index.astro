@@ -1,16 +1,42 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 const metadata = {
-  title: 'El Universo de la Mente — Inicio',
+  title: 'El Universo de la Mente — Despierta tu Conciencia',
   ignoreTitleTemplate: true,
 };
 ---
 
 <Layout metadata={metadata}>
-  <BlogLatestPosts
-    title="Últimas Reflexiones"
-    information="Explora los pensamientos y análisis del Universo de la Mente."
-  />
+  {/* El toque de berraquera: Un encabezado potente */}
+  <Hero
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Ir al Portal Cósmico',
+        href: '/portal',
+        icon: 'tabler:rocket',
+      },
+      { text: 'Leer el Blog', href: '#blog' },
+    ]}
+    image={{ src: '~/assets/images/hero.jpg', alt: 'Universo de la Mente Hero Image' }}
+  >
+    <Fragment slot="title">
+      Bienvenido al <span class="text-accent dark:text-white highlight">Universo de la Mente</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Explora las profundidades del pensamiento, la psicología y la realidad. Aquí no solo leemos, transformamos la percepción.
+    </Fragment>
+  </Hero>
+
+  {/* Los posts que ya sabemos que el build genera */}
+  <section id="blog">
+    <BlogLatestPosts
+      title="Reflexiones Recientes"
+      information="Sumérgete en nuestros últimos análisis y artículos destacados."
+    />
+  </section>
 </Layout>
