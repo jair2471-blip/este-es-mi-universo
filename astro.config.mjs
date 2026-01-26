@@ -4,10 +4,8 @@ import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 
 export default defineConfig({
-  // Tu dominio real para que Astro genere los links correctamente
-  site: 'https://eluniversodelamente.com', 
+  site: 'https://eluniversodelamente.com',
   base: '/',
-  trailingSlash: 'never', 
   integrations: [
     react(),
     tailwind({ applyBaseStyles: false }),
@@ -24,9 +22,25 @@ export default defineConfig({
           if (id === 'astrowind:config') {
             return `
               export const I18N = { language: 'es', textDirection: 'ltr' };
-              export const SITE = { name: 'El Universo de la Mente', base: 'https://eluniversodelamente.com', trailingSlash: false };
-              export const METADATA = {};
-              export const APP_BLOG = { isEnabled: true };
+              export const SITE = { 
+                name: 'El Universo de la Mente', 
+                site: 'https://eluniversodelamente.com', 
+                base: '/', 
+                trailingSlash: false 
+              };
+              export const METADATA = { 
+                title: 'El Universo de la Mente',
+                titleTemplate: '%s — El Universo de la Mente',
+              };
+              export const APP_BLOG = { 
+                isEnabled: true, 
+                postsPerPage: 6, 
+                isRelatedPostsEnabled: true,
+                post: { isEnabled: true },
+                list: { isEnabled: true },
+                category: { isEnabled: true },
+                tag: { isEnabled: true }
+              };
               export const UI = { theme: 'system' };
               export const ANALYTICS = { vendors: { googleAnalytics: { id: null } } };
               export default { I18N, SITE, METADATA, APP_BLOG, UI, ANALYTICS };
