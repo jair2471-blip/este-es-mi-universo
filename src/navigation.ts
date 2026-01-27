@@ -6,7 +6,7 @@ export const headerData = {
     },
     {
       text: 'Bitácora',
-      href: '/blog', // <--- Ruta directa al listado de artículos
+      href: '/post', // <--- Ruta directa al listado de artículos
     },
     {
       text: 'Antonov',
