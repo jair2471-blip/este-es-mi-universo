@@ -48,15 +48,14 @@ const metadataDefinition = () =>
 
 const postCollection = defineCollection({
   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
-  schema: ({ image }) => z.object({ // <--- Agregamos ({ image }) aquí
+  schema: ({ image }) => z.object({ // <--- Asegúrese de que esto diga ({ image })
     publishDate: z.date().optional(),
     updateDate: z.date().optional(),
     draft: z.boolean().optional(),
 
     title: z.string(),
     excerpt: z.string().optional(),
-    // CAMBIO CLAVE: Ya no es un string, ahora Astro lo valida como imagen
-    image: image().optional(), 
+    image: image().optional(), // <--- Esto es lo que activa la magia
 
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
