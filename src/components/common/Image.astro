@@ -18,56 +18,27 @@ type ImageType = {
 const props = Astro.props;
 
 if (props.alt === undefined || props.alt === null) {
-  throw new Error("El atributo 'alt' es obligatorio para las imágenes.");
+  throw new Error("El atributo 'alt' es obligatorio.");
 }
 
-if (typeof props.width === 'string') {
-  props.width = parseInt(props.width);
-}
+// Limpieza de dimensiones para evitar el error de build
+if (typeof props.width === 'string') props.width = parseInt(props.width);
+if (typeof props.height === 'string') props.height = parseInt(props.height);
 
-if (typeof props.height === 'string') {
-  props.height = parseInt(props.height);
-}
-
-if (!props.loading) {
-  props.loading = 'lazy';
-}
-
-if (!props.decoding) {
-  props.decoding = 'async';
-}
-
-// --- LÓGICA DE DETECCIÓN DE IMÁGENES PÚBLICAS O EXTERNAS ---
-const isPublicImage = typeof props.src === 'string' && (props.src.startsWith('/') || props.src.startsWith('http'));
+const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;
 
-if (isPublicImage) {
-  // Si la imagen está en la carpeta public o es un link, la pintamos directo
-  image = {
-    src: props.src as string,
-    attributes: {
-      width: props.width,
-      height: props.height,
-      loading: props.loading,
-      decoding: props.decoding,
-      class: props.class,
-      alt: props.alt,
-    }
-  };
-} else {
-  // Si no es pública, usamos el buscador de AstroWind en src/assets
-  const _image = await findImage(props.src);
-
-  if (
-    typeof _image === 'string' &&
-    (_image.startsWith('http://') || _image.startsWith('https://')) &&
-    isUnpicCompatible(_image)
-  ) {
-    image = await getImagesOptimized(_image, props, unpicOptimizer);
-  } else if (_image) {
-    image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
-  }
+if (
+  typeof _image === 'string' &&
+  (_image.startsWith('http://') || _image.startsWith('https://')) &&
+  isUnpicCompatible(_image)
+) {
+  image = await getImagesOptimized(_image, props, unpicOptimizer);
+} else if (_image) {
+  // AQUÍ ES DONDE ASTRO OPTIMIZA LA IMAGEN
+  // Si faltan dimensiones, AstroWind intentará obtenerlas del archivo físico
+  image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
 }
 ---
 
