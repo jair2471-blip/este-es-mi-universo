@@ -48,14 +48,15 @@ const metadataDefinition = () =>
 
 const postCollection = defineCollection({
   loader: glob({ pattern: ['*.md', '*.mdx'], base: 'src/data/post' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({ // <--- Agregamos ({ image }) aquí
     publishDate: z.date().optional(),
     updateDate: z.date().optional(),
     draft: z.boolean().optional(),
 
     title: z.string(),
     excerpt: z.string().optional(),
-    image: z.string().optional(),
+    // CAMBIO CLAVE: Ya no es un string, ahora Astro lo valida como imagen
+    image: image().optional(), 
 
     category: z.string().optional(),
     tags: z.array(z.string()).optional(),
@@ -64,7 +65,3 @@ const postCollection = defineCollection({
     metadata: metadataDefinition(),
   }),
 });
-
-export const collections = {
-  post: postCollection,
-};
