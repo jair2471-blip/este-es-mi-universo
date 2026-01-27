@@ -18,7 +18,7 @@ type ImageType = {
 const props = Astro.props;
 
 if (props.alt === undefined || props.alt === null) {
-  throw new Error();
+  throw new Error("El atributo 'alt' es obligatorio para las imágenes.");
 }
 
 if (typeof props.width === 'string') {
@@ -37,18 +37,37 @@ if (!props.decoding) {
   props.decoding = 'async';
 }
 
-const _image = await findImage(props.src);
+// --- LÓGICA DE DETECCIÓN DE IMÁGENES PÚBLICAS O EXTERNAS ---
+const isPublicImage = typeof props.src === 'string' && (props.src.startsWith('/') || props.src.startsWith('http'));
 
 let image: ImageType | undefined = undefined;
 
-if (
-  typeof _image === 'string' &&
-  (_image.startsWith('http://') || _image.startsWith('https://')) &&
-  isUnpicCompatible(_image)
-) {
-  image = await getImagesOptimized(_image, props, unpicOptimizer);
-} else if (_image) {
-  image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
+if (isPublicImage) {
+  // Si la imagen está en la carpeta public o es un link, la pintamos directo
+  image = {
+    src: props.src as string,
+    attributes: {
+      width: props.width,
+      height: props.height,
+      loading: props.loading,
+      decoding: props.decoding,
+      class: props.class,
+      alt: props.alt,
+    }
+  };
+} else {
+  // Si no es pública, usamos el buscador de AstroWind en src/assets
+  const _image = await findImage(props.src);
+
+  if (
+    typeof _image === 'string' &&
+    (_image.startsWith('http://') || _image.startsWith('https://')) &&
+    isUnpicCompatible(_image)
+  ) {
+    image = await getImagesOptimized(_image, props, unpicOptimizer);
+  } else if (_image) {
+    image = await getImagesOptimized(_image, props, astroAssetsOptimizer);
+  }
 }
 ---
 
