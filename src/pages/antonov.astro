@@ -190,13 +190,18 @@ const metadata = {
       transition: all 0.3s ease;
     }
 
-    button:hover {
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button:hover:not(:disabled) {
       background: linear-gradient(135deg, #ffd700, #ffed4e);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
     }
 
-    button:active {
+    button:active:not(:disabled) {
       transform: translateY(0);
     }
 
@@ -207,8 +212,13 @@ const metadata = {
       font-size: 0.9rem;
     }
 
-    .btn-generate:hover {
+    .btn-generate:hover:not(:disabled) {
       background: linear-gradient(135deg, #ffed4e, #ffd700);
+    }
+
+    #variant {
+      grid-column: 1 / -1;
+      font-size: 0.75rem;
     }
 
     @media (max-width: 768px) {
@@ -264,7 +274,8 @@ const metadata = {
         </div>
 
         <div class="actions">
-          <button id="generate" class="btn-generate">Generar</button>
+          <button id="generate" class="btn-generate">Generar Sentencia</button>
+          <button id="variant" style="display:none; background: linear-gradient(135deg, #888, #666);">Nueva Variación</button>
           <button id="share">Compartir</button>
           <button id="download">Descargar</button>
         </div>
@@ -283,11 +294,13 @@ const metadata = {
         size: document.getElementById('size'),
         sizeLabel: document.getElementById('size-label'),
         generate: document.getElementById('generate'),
+        variant: document.getElementById('variant'),
         share: document.getElementById('share'),
         download: document.getElementById('download')
       };
 
       let currentText = '';
+      let lastPrompt = '';
 
       function wrapText(context, text, x, y, maxW, lineH, centerV) {
         const words = text.split(' ');
@@ -372,34 +385,45 @@ const metadata = {
         ctx.shadowBlur = 0;
       }
 
-      el.generate.onclick = async () => {
+      async function generateSentence() {
         if (!el.input.value.trim()) {
           alert('Escribe algo primero, líder.');
           return;
         }
 
-        el.generate.textContent = 'Generando...';
-        el.generate.disabled = true;
+        const isVariant = lastPrompt === el.input.value;
+        const btn = isVariant ? el.variant : el.generate;
+        
+        btn.textContent = 'Generando...';
+        btn.disabled = true;
 
         try {
+          lastPrompt = el.input.value;
+          
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${el.input.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.`
+              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${el.input.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo. ${isVariant ? 'Da una versión diferente a la anterior.' : ''}`
             })
           });
           
           const data = await res.json();
           currentText = data.text.replace(/\*\*/g, '');
           render();
+          
+          // Mostrar botón de variación
+          el.variant.style.display = 'block';
         } catch (e) {
           alert('Error al generar. Intenta de nuevo.');
         } finally {
-          el.generate.textContent = 'Generar';
-          el.generate.disabled = false;
+          btn.textContent = isVariant ? 'Nueva Variación' : 'Generar Sentencia';
+          btn.disabled = false;
         }
-      };
+      }
+
+      el.generate.onclick = generateSentence;
+      el.variant.onclick = generateSentence;
 
       el.download.onclick = () => {
         const link = document.createElement('a');
@@ -425,7 +449,15 @@ const metadata = {
       };
 
       el.format.onchange = render;
-      el.input.oninput = render;
+      
+      // Preview en tiempo real mientras escribes
+      let typingTimer;
+      el.input.oninput = () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          render();
+        }, 300); // Espera 300ms después de que el usuario deje de escribir
+      };
 
       // Enter para generar
       el.input.onkeydown = (e) => {
