@@ -2,7 +2,7 @@
 publishDate: 2026-01-17T18:00:00Z
 title: "El Salto Cuántico del Payaso Interior: Desarrollo Personal Disruptivo"
 excerpt: "Hackea la autoexigencia con el Salto Cuántico del Payaso Interior. Una técnica de humor consciente y clowning para potenciar tu resiliencia en 2026."
-image: "../../assets/images/saltocuanticodelpayaso.png"
+image: "~/assets/images/saltocuanticodelpayaso.png"
 category: "Desarrollo Personal"
 tags:
   - desarrollo personal
