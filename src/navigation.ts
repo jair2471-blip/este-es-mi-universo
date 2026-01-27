@@ -1,38 +1,41 @@
-import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 export const headerData = {
   links: [
     {
       text: 'Inicio',
-      href: getPermalink('/'),
+      href: '/',
     },
     {
       text: 'Bitácora',
-      href: getBlogPermalink(),
+      href: '/blog', // <--- Ruta directa al listado de artículos
     },
     {
       text: 'Antonov',
-      href: getPermalink('/antonov'),
+      href: '/antonov',
     },
     {
       text: 'Herramientas',
       links: [
         {
           text: 'Contador de Vida',
-          href: getPermalink('/contadordevida'),
+          href: '/contadordevida',
         },
         {
           text: 'Compromisos',
-          href: getPermalink('/generador-compromisos'),
+          href: '/generador-compromisos',
         },
         {
           text: 'Oráculo de Hierro',
-          href: getPermalink('/oraculo'),
+          href: '/oraculo',
+        },
+        {
+          text: 'Portal Cósmico', // Añadí tu nuevo generador aquí
+          href: '/portal',
         },
       ],
     },
     {
-      text: 'El manifiesto',
-      href: getPermalink('/elmanifiesto'),
+      text: 'El Manifiesto',
+      href: '/elmanifiesto',
     },
   ],
   actions: [],
