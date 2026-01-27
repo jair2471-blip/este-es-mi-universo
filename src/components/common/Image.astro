@@ -1,51 +1,36 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
-import { findImage } from '~/utils/images';
-import {
-  getImagesOptimized,
-  astroAssetsOptimizer,
-  unpicOptimizer,
-  isUnpicCompatible,
-  type ImageProps,
-} from '~/utils/images-optimization';
-
-type Props = ImageProps;
-type ImageType = {
-  src: string;
-  attributes: HTMLAttributes<'img'>;
-};
+import { Image as AstroImage } from 'astro:assets';
 
 const props = Astro.props;
+const { src, alt, width, height, ...rest } = props;
 
-if (props.alt === undefined || props.alt === null) {
+if (!alt) {
   throw new Error("El atributo 'alt' es obligatorio.");
 }
 
-// Limpiamos dimensiones para evitar errores de build
-if (typeof props.width === 'string') props.width = parseInt(props.width);
-if (typeof props.height === 'string') props.height = parseInt(props.height);
+// 1. Verificamos si la imagen es una ruta de texto (Markdown)
+const isLocalString = typeof src === 'string' && (src.startsWith('~/') || src.startsWith('../../') || src.startsWith('/src/'));
 
-// Buscamos la imagen usando la ruta relativa del Markdown
-const _image = await findImage(props.src);
-
-let image: ImageType | undefined = undefined;
-
-if (
-  typeof _image === 'string' &&
-  (_image.startsWith('http://') || _image.startsWith('https://')) &&
-  isUnpicCompatible(_image)
-) {
-  image = await getImagesOptimized(_image, props, unpicOptimizer);
-} else if (_image) {
-  // Optimizamos con inferSize para que Astro calcule el tamaño solo
-  image = await getImagesOptimized(_image, { ...props, inferSize: true }, astroAssetsOptimizer);
+// 2. Limpiamos la ruta para que Astro la entienda si viene con tilde
+let finalSrc = src;
+if (typeof src === 'string' && src.startsWith('~/')) {
+    finalSrc = src.replace('~/', '/src/');
 }
 ---
 
 {
-  !image ? (
-    <Fragment />
+  /* Si es una URL externa (http), usamos una etiqueta img normal para no fallar */
+  typeof src === 'string' && src.startsWith('http') ? (
+    <img src={src} alt={alt} width={width} height={height} {...rest} />
   ) : (
-    <img src={image.src} crossorigin="anonymous" referrerpolicy="no-referrer" {...image.attributes} />
+    /* Si es local, usamos el componente de Astro con inferSize para que NO pida dimensiones */
+    <AstroImage 
+      src={finalSrc as any} 
+      alt={alt} 
+      width={width || 800} 
+      height={height || 450}
+      inferSize={true}
+      {...rest} 
+    />
   )
 }
