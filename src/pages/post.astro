@@ -1,0 +1,25 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import BlogList from '~/components/blog/List.astro';
+import { fetchPosts } from '~/utils/blog';
+
+const metadata = {
+  title: 'Bitácora — El Universo de la Mente',
+};
+
+// Traemos los 91 artículos que ya sabemos que el sistema reconoce
+const posts = await fetchPosts();
+---
+
+<Layout metadata={metadata}>
+  <section class="px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <header>
+      <h1 class="text-5xl font-black uppercase tracking-tighter mb-8 text-red-600">
+        Bitácora de Vuelo
+      </h1>
+    </header>
+    
+    {/* Este componente dibujará los links a tus archivos .md */}
+    <BlogList posts={posts} />
+  </section>
+</Layout>
