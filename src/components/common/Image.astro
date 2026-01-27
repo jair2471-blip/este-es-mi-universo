@@ -21,10 +21,11 @@ if (props.alt === undefined || props.alt === null) {
   throw new Error("El atributo 'alt' es obligatorio.");
 }
 
-// Limpiamos dimensiones
+// Limpiamos dimensiones para evitar errores de build
 if (typeof props.width === 'string') props.width = parseInt(props.width);
 if (typeof props.height === 'string') props.height = parseInt(props.height);
 
+// Buscamos la imagen usando la ruta relativa del Markdown
 const _image = await findImage(props.src);
 
 let image: ImageType | undefined = undefined;
@@ -36,9 +37,8 @@ if (
 ) {
   image = await getImagesOptimized(_image, props, unpicOptimizer);
 } else if (_image) {
-  // AGREGAMOS INFERSIZE PARA QUE NO CHILLE POR EL HEIGHT
-  const optimizedProps = { ...props, inferSize: true };
-  image = await getImagesOptimized(_image, optimizedProps, astroAssetsOptimizer);
+  // Optimizamos con inferSize para que Astro calcule el tamaño solo
+  image = await getImagesOptimized(_image, { ...props, inferSize: true }, astroAssetsOptimizer);
 }
 ---
 
