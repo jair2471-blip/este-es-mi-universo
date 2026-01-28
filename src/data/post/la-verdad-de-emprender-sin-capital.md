@@ -10,8 +10,6 @@ tags:
 - mentalidad de negocios
 ---
 
-## O Por Qué Estás Haciendo Las Preguntas Equivocadas
-
 Déjame decirte algo que te va a doler: si estás buscando "cómo emprender sin dinero", estás haciendo la pregunta equivocada. Y ahí está tu primer problema.
 
 Todo el mundo quiere la fórmula mágica. El atajo. El hack secreto que los "gurús" no quieren que sepas. Pero aquí viene la verdad que nadie te va a decir porque no vende cursos ni genera clicks:
