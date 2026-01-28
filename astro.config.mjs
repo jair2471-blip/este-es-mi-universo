@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://eluniversodelamente.com',
@@ -10,6 +11,7 @@ export default defineConfig({
     react(),
     tailwind({ applyBaseStyles: false }),
     icon(),
+    sitemap(),
   ],
   vite: {
     plugins: [
