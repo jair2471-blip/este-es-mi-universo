@@ -5,6 +5,9 @@ excerpt: "Emprender sin capital no es un problema de dinero, sino de valor. Esta
 image: "../../assets/images/emprender-sin-capital-verdad-incomoda.png"
 category: "Emprendimiento"
 tags:
+- emprendimiento
+- emprender sin capital
+- mentalidad de negocios
 ---
 
 ## O Por Qué Estás Haciendo Las Preguntas Equivocadas
