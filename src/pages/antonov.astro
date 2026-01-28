@@ -566,24 +566,54 @@ const metadata = {
         try {
           lastUserInput = userText;
           
+          console.log('=== DEBUG INFO ===');
+          console.log('Método: POST');
+          console.log('URL:', 'https://mis-frases.poderparatriunfar.workers.dev/');
+          console.log('Prompt:', userText);
+          
+          const requestBody = {
+            prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${userText}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.${isVariation ? ' Da una versión DIFERENTE a la anterior.' : ''}`
+          };
+          
+          console.log('Body:', JSON.stringify(requestBody));
+          
           const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${userText}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.${isVariation ? ' Da una versión DIFERENTE a la anterior.' : ''}`
-            })
+            mode: 'cors',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
           });
 
-          const data = await response.json();
-          generatedText = data.text.replace(/\*\*/g, '').replace(/\*/g, '');
-          renderCanvas();
+          console.log('Status:', response.status);
+          console.log('Headers:', [...response.headers.entries()]);
 
-          // Mostrar botón de variación
-          ui.variantBtn.style.display = 'block';
+          const responseText = await response.text();
+          console.log('Response text:', responseText);
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${responseText}`);
+          }
+
+          const data = JSON.parse(responseText);
+          console.log('Parsed data:', data);
+          
+          if (data && data.text) {
+            generatedText = data.text.replace(/\*\*/g, '').replace(/\*/g, '');
+            renderCanvas();
+            ui.variantBtn.style.display = 'block';
+          } else if (data && data.error) {
+            throw new Error(data.error);
+          } else {
+            throw new Error('Respuesta sin texto válido');
+          }
 
         } catch (error) {
-          console.error('Error:', error);
-          alert('Error al generar. Intenta de nuevo.');
+          console.error('=== ERROR COMPLETO ===');
+          console.error(error);
+          alert(`Error: ${error.message}`);
         } finally {
           activeBtn.textContent = isVariation ? 'NUEVA VARIACIÓN' : 'GENERAR SENTENCIA';
           activeBtn.disabled = false;
