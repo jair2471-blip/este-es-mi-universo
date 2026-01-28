@@ -9,39 +9,88 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap');
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    .stage {
-      min-height: 100vh;
+    body {
       background: #000;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .app-container {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 30px 20px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .container {
+    /* Partículas de fondo */
+    .app-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20% 30%, rgba(255, 215, 0, 0.1), transparent),
+        radial-gradient(2px 2px at 60% 70%, rgba(255, 255, 255, 0.05), transparent),
+        radial-gradient(1px 1px at 50% 50%, rgba(255, 215, 0, 0.08), transparent);
+      background-size: 200px 200px, 300px 300px, 150px 150px;
+      animation: particleFloat 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes particleFloat {
+      from { background-position: 0 0, 0 0, 0 0; }
+      to { background-position: 200px 200px, -300px 300px, 150px -150px; }
+    }
+
+    .desktop-layout {
       width: 100%;
-      max-width: 900px;
+      max-width: 1400px;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Panel lateral de controles */
+    .control-panel {
+      background: linear-gradient(135deg, #0d0d0d 0%, #0a0a0a 100%);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
+      padding: 35px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 25px;
+      box-shadow: 
+        0 30px 60px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      height: fit-content;
+      position: sticky;
+      top: 30px;
     }
 
     .brand {
       text-align: center;
-      padding-bottom: 15px;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(255, 215, 0, 0.2);
     }
 
     .brand h1 {
-      font-family: 'Arial Black', cursive;
-      font-size: 3.5rem;
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3.8rem;
       color: #fff;
-      letter-spacing: 3px;
-      text-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+      letter-spacing: 4px;
+      text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+      margin-bottom: 8px;
     }
 
     .brand p {
@@ -49,82 +98,76 @@ const metadata = {
       font-size: 0.7rem;
       letter-spacing: 3px;
       font-weight: 700;
-      margin-top: 8px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     }
 
-    .canvas-area {
-      background: #000;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 12px;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    canvas {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    }
-
-    .controls {
-      background: linear-gradient(135deg, #0a0a0a, #0d0d0d);
-      border: 1px solid rgba(255, 215, 0, 0.15);
-      border-radius: 12px;
-      padding: 25px;
+    .input-section {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 10px;
     }
 
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .input-group label {
+    .input-section label {
       color: #888;
       font-size: 0.65rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
     }
 
     textarea {
-      background: #0a0a0a;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 8px;
+      background: linear-gradient(to bottom, #0a0a0a, #080808);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 12px;
       color: #fff;
-      padding: 14px;
+      padding: 16px;
       font-size: 0.95rem;
       font-family: 'Inter', sans-serif;
       resize: none;
       transition: all 0.3s ease;
+      min-height: 100px;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
     }
 
     textarea:focus {
       outline: none;
       border-color: rgba(255, 215, 0, 0.5);
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      box-shadow: 
+        inset 0 2px 8px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(255, 215, 0, 0.2);
     }
 
-    .toolbar {
+    textarea::placeholder {
+      color: #444;
+    }
+
+    .controls-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 10px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .control-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-item label {
+      color: #888;
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
     }
 
     select {
-      background: #0a0a0a;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 8px;
+      background: linear-gradient(to bottom, #0a0a0a, #080808);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: 10px;
       color: #fff;
       padding: 12px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s ease;
     }
@@ -132,62 +175,102 @@ const metadata = {
     select:focus {
       outline: none;
       border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
     }
 
     .size-control {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #0a0a0a;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 8px;
-      padding: 8px 15px;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .size-control span {
+    .size-display {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      background: #0a0a0a;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .size-display span:first-child {
       color: #888;
       font-size: 0.75rem;
       font-weight: 700;
-      min-width: 30px;
+    }
+
+    .size-display span:last-child {
+      color: #ffd700;
+      font-size: 1.2rem;
+      font-weight: 900;
     }
 
     input[type="range"] {
       -webkit-appearance: none;
-      background: rgba(255, 215, 0, 0.2);
-      height: 4px;
-      border-radius: 2px;
+      background: transparent;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.1));
       outline: none;
-      flex: 1;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: #ffd700;
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+      transition: all 0.2s ease;
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 10px;
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
     }
 
     button {
       background: linear-gradient(135deg, #fff, #f0f0f0);
       color: #000;
       border: none;
-      padding: 14px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.8rem;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       cursor: pointer;
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 215, 0, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
     button:disabled {
@@ -198,279 +281,374 @@ const metadata = {
     button:hover:not(:disabled) {
       background: linear-gradient(135deg, #ffd700, #ffed4e);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
     }
 
-    button:active:not(:disabled) {
-      transform: translateY(0);
-    }
-
-    .btn-generate {
-      grid-column: 1 / -1;
+    .btn-primary {
       background: linear-gradient(135deg, #ffd700, #ffed4e);
       font-weight: 900;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      padding: 18px;
+      animation: pulse 2s ease-in-out infinite;
     }
 
-    .btn-generate:hover:not(:disabled) {
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 8px 35px rgba(255, 215, 0, 0.6); }
+    }
+
+    .btn-primary:hover:not(:disabled) {
       background: linear-gradient(135deg, #ffed4e, #ffd700);
     }
 
-    #variant {
-      grid-column: 1 / -1;
-      font-size: 0.75rem;
+    .btn-variant {
+      background: linear-gradient(135deg, #444, #333);
+      color: #fff;
+    }
+
+    .btn-variant:hover:not(:disabled) {
+      background: linear-gradient(135deg, #666, #555);
+    }
+
+    .secondary-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* Panel de visualización */
+    .preview-panel {
+      background: #000;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 600px;
+      box-shadow: 
+        0 30px 60px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+
+    .preview-panel::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      right: 25px;
+      bottom: 25px;
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 
+        0 25px 70px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 215, 0, 0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .desktop-layout {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+      }
+
+      .control-panel {
+        position: static;
+      }
+
+      .brand h1 {
+        font-size: 3rem;
+      }
     }
 
     @media (max-width: 768px) {
+      .app-container {
+        padding: 20px 15px;
+      }
+
       .brand h1 {
         font-size: 2.5rem;
       }
-      
-      .toolbar {
+
+      .controls-grid {
         grid-template-columns: 1fr;
       }
-      
-      .actions {
+
+      .secondary-actions {
         grid-template-columns: 1fr;
-      }
-      
-      .btn-generate {
-        grid-column: 1;
-      }
-      
-      .canvas-area {
-        padding: 15px;
       }
     }
   </style>
 
-  <div class="stage">
-    <div class="container">
-      <div class="brand">
-        <h1>ANTONOV</h1>
-        <p>SISTEMA DE EXCELENCIA</p>
-      </div>
-
-      <div class="canvas-area">
-        <canvas id="canvas"></canvas>
-      </div>
-
-      <div class="controls">
-        <div class="input-group">
-          <label>Tu situación</label>
-          <textarea id="input" rows="2" placeholder="Escribe lo que te detiene..."></textarea>
+  <div class="app-container">
+    <div class="desktop-layout">
+      <!-- Panel de control -->
+      <aside class="control-panel">
+        <div class="brand">
+          <h1>ANTONOV</h1>
+          <p>SISTEMA DE EXCELENCIA</p>
         </div>
 
-        <div class="toolbar">
-          <select id="format">
-            <option value="post">Cuadrado (Feed)</option>
-            <option value="story">Vertical (Story)</option>
-          </select>
+        <div class="input-section">
+          <label>Tu Situación</label>
+          <textarea id="userInput" placeholder="Escribe lo que te detiene..."></textarea>
+        </div>
 
-          <div class="size-control">
-            <span id="size-label">100</span>
-            <input type="range" id="size" min="50" max="150" value="100">
+        <div class="controls-grid">
+          <div class="control-item">
+            <label>Formato</label>
+            <select id="formatSelect">
+              <option value="post">Cuadrado (Feed)</option>
+              <option value="story">Vertical (Story)</option>
+            </select>
+          </div>
+
+          <div class="control-item size-control">
+            <label>Tamaño Texto</label>
+            <div class="size-display">
+              <span>Size</span>
+              <span id="sizeValue">100</span>
+            </div>
+            <input type="range" id="sizeSlider" min="60" max="160" value="100">
           </div>
         </div>
 
-        <div class="actions">
-          <button id="generate" class="btn-generate">Generar Sentencia</button>
-          <button id="variant" style="display:none; background: linear-gradient(135deg, #888, #666);">Nueva Variación</button>
-          <button id="share">Compartir</button>
-          <button id="download">Descargar</button>
+        <div class="action-buttons">
+          <button id="generateBtn" class="btn-primary">Generar Sentencia</button>
+          <button id="variantBtn" class="btn-variant" style="display:none;">Nueva Variación</button>
+          
+          <div class="secondary-actions">
+            <button id="shareBtn">Compartir</button>
+            <button id="downloadBtn">Descargar</button>
+          </div>
         </div>
-      </div>
+      </aside>
+
+      <!-- Panel de visualización -->
+      <main class="preview-panel">
+        <canvas id="mainCanvas"></canvas>
+      </main>
     </div>
   </div>
 
   <script is:inline>
-    function init() {
-      const canvas = document.getElementById('canvas');
+    function initApp() {
+      const canvas = document.getElementById('mainCanvas');
       const ctx = canvas.getContext('2d');
       
-      const el = {
-        input: document.getElementById('input'),
-        format: document.getElementById('format'),
-        size: document.getElementById('size'),
-        sizeLabel: document.getElementById('size-label'),
-        generate: document.getElementById('generate'),
-        variant: document.getElementById('variant'),
-        share: document.getElementById('share'),
-        download: document.getElementById('download')
+      const ui = {
+        input: document.getElementById('userInput'),
+        format: document.getElementById('formatSelect'),
+        size: document.getElementById('sizeSlider'),
+        sizeValue: document.getElementById('sizeValue'),
+        generateBtn: document.getElementById('generateBtn'),
+        variantBtn: document.getElementById('variantBtn'),
+        shareBtn: document.getElementById('shareBtn'),
+        downloadBtn: document.getElementById('downloadBtn')
       };
 
-      let currentText = '';
-      let lastPrompt = '';
+      let generatedText = '';
+      let lastUserInput = '';
 
-      function wrapText(context, text, x, y, maxW, lineH, centerV) {
+      function wrapText(context, text, x, y, maxWidth, lineHeight, centerVertical) {
         const words = text.split(' ');
         let lines = [];
-        let line = '';
-        
+        let currentLine = '';
+
         words.forEach(word => {
-          const test = line + word + ' ';
-          if (context.measureText(test).width > maxW && line.length > 0) {
-            lines.push(line);
-            line = word + ' ';
+          const testLine = currentLine + word + ' ';
+          const metrics = context.measureText(testLine);
+          
+          if (metrics.width > maxWidth && currentLine.length > 0) {
+            lines.push(currentLine);
+            currentLine = word + ' ';
           } else {
-            line = test;
+            currentLine = testLine;
           }
         });
-        lines.push(line);
+        lines.push(currentLine);
 
-        let startY = centerV ? y - ((lines.length - 1) * lineH) / 2 : y;
-        
-        lines.forEach(l => {
-          context.fillText(l.trim(), x, startY);
-          startY += lineH;
+        let startY = centerVertical ? y - ((lines.length - 1) * lineHeight) / 2 : y;
+
+        lines.forEach(line => {
+          context.fillText(line.trim(), x, startY);
+          startY += lineHeight;
         });
       }
 
-      function render() {
-        const isStory = el.format.value === 'story';
+      function renderCanvas() {
+        const isStory = ui.format.value === 'story';
         const w = 1080;
         const h = isStory ? 1920 : 1080;
-        
+
         canvas.width = w;
         canvas.height = h;
 
-        // Fondo
-        const grad = ctx.createLinearGradient(0, 0, 0, h);
-        grad.addColorStop(0, '#000');
-        grad.addColorStop(0.5, '#0a0a0a');
-        grad.addColorStop(1, '#000');
-        ctx.fillStyle = grad;
+        // Fondo con gradiente
+        const bgGradient = ctx.createLinearGradient(0, 0, 0, h);
+        bgGradient.addColorStop(0, '#000000');
+        bgGradient.addColorStop(0.5, '#0a0a0a');
+        bgGradient.addColorStop(1, '#000000');
+        ctx.fillStyle = bgGradient;
         ctx.fillRect(0, 0, w, h);
 
-        // Pregunta/situación arriba
-        if (el.input.value.trim()) {
-          const questionSize = w < 600 ? 20 : 30; // Más pequeño en móvil
+        // Efecto de viñeta
+        const vignette = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w*0.7);
+        vignette.addColorStop(0, 'rgba(0,0,0,0)');
+        vignette.addColorStop(1, 'rgba(0,0,0,0.5)');
+        ctx.fillStyle = vignette;
+        ctx.fillRect(0, 0, w, h);
+
+        // Pregunta del usuario (arriba)
+        if (ui.input.value.trim()) {
+          const questionSize = 28;
           ctx.font = `italic 600 ${questionSize}px 'Inter'`;
           ctx.fillStyle = "rgba(255,255,255,0.35)";
           ctx.textAlign = "center";
           ctx.shadowColor = 'rgba(255, 215, 0, 0.3)';
           ctx.shadowBlur = 20;
-          const questionY = w < 600 ? 80 : 120;
-          const questionLineHeight = w < 600 ? 32 : 45;
-          wrapText(ctx, el.input.value.toUpperCase(), w/2, questionY, w*0.85, questionLineHeight, false);
+          wrapText(ctx, ui.input.value.toUpperCase(), w/2, 130, w*0.85, 42, false);
           ctx.shadowBlur = 0;
         }
 
-        // Texto principal
-        const text = (currentText || 'ESPERANDO SENTENCIA...').toUpperCase();
-        const fSize = parseInt(el.size.value);
+        // Texto principal (sentencia)
+        const mainText = (generatedText || 'ESPERANDO SENTENCIA...').toUpperCase();
+        const fontSize = parseInt(ui.size.value);
         
-        ctx.font = `900 ${fSize}px 'Oswald'`;
+        ctx.font = `900 ${fontSize}px 'Bebas Neue'`;
         ctx.fillStyle = '#fff';
         ctx.textAlign = 'center';
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.4)';
-        ctx.shadowBlur = 30;
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.5)';
+        ctx.shadowBlur = 35;
         
-        wrapText(ctx, text, w/2, h/2, w*0.85, fSize * 1.3, true);
+        // Más espacio entre líneas (1.5 en lugar de 1.3)
+        const lineSpacing = fontSize * 1.5;
+        wrapText(ctx, mainText, w/2, h/2, w*0.85, lineSpacing, true);
         
         ctx.shadowBlur = 0;
 
-        // Firma
-        const brandSize = w < 600 ? 18 : 22;
-        ctx.font = `700 ${brandSize}px 'Inter'`;
-        const brandGrad = ctx.createLinearGradient(0, h - 70, w, h - 70);
-        brandGrad.addColorStop(0, '#ffd700');
-        brandGrad.addColorStop(0.5, '#ffed4e');
-        brandGrad.addColorStop(1, '#ffd700');
-        ctx.fillStyle = brandGrad;
+        // Firma (abajo)
+        ctx.font = "700 24px 'Inter'";
+        const brandGradient = ctx.createLinearGradient(0, h - 75, w, h - 75);
+        brandGradient.addColorStop(0, '#ffd700');
+        brandGradient.addColorStop(0.5, '#ffed4e');
+        brandGradient.addColorStop(1, '#ffd700');
+        ctx.fillStyle = brandGradient;
         ctx.shadowColor = 'rgba(255, 215, 0, 0.6)';
-        ctx.shadowBlur = 15;
-        const brandY = w < 600 ? h - 50 : h - 70;
-        ctx.fillText('EL UNIVERSO DE LA MENTE', w/2, brandY);
+        ctx.shadowBlur = 20;
+        ctx.fillText('EL UNIVERSO DE LA MENTE', w/2, h - 75);
         ctx.shadowBlur = 0;
       }
 
-      async function generateSentence() {
-        if (!el.input.value.trim()) {
+      async function generateSentence(isVariation = false) {
+        const userText = ui.input.value.trim();
+        
+        if (!userText) {
           alert('Escribe algo primero, líder.');
           return;
         }
 
-        const isVariant = lastPrompt === el.input.value;
-        const btn = isVariant ? el.variant : el.generate;
-        
-        btn.textContent = 'Generando...';
-        btn.disabled = true;
+        const activeBtn = isVariation ? ui.variantBtn : ui.generateBtn;
+        activeBtn.textContent = 'GENERANDO...';
+        activeBtn.disabled = true;
 
         try {
-          lastPrompt = el.input.value;
+          lastUserInput = userText;
           
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${el.input.value}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo. ${isVariant ? 'Da una versión diferente a la anterior.' : ''}`
+              prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${userText}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.${isVariation ? ' Da una versión DIFERENTE a la anterior.' : ''}`
             })
           });
-          
-          const data = await res.json();
-          currentText = data.text.replace(/\*\*/g, '');
-          render();
-          
+
+          const data = await response.json();
+          generatedText = data.text.replace(/\*\*/g, '').replace(/\*/g, '');
+          renderCanvas();
+
           // Mostrar botón de variación
-          el.variant.style.display = 'block';
-        } catch (e) {
+          ui.variantBtn.style.display = 'block';
+
+        } catch (error) {
+          console.error('Error:', error);
           alert('Error al generar. Intenta de nuevo.');
         } finally {
-          btn.textContent = isVariant ? 'Nueva Variación' : 'Generar Sentencia';
-          btn.disabled = false;
+          activeBtn.textContent = isVariation ? 'NUEVA VARIACIÓN' : 'GENERAR SENTENCIA';
+          activeBtn.disabled = false;
         }
       }
 
-      el.generate.onclick = generateSentence;
-      el.variant.onclick = generateSentence;
+      // Event listeners
+      ui.generateBtn.onclick = () => generateSentence(false);
+      ui.variantBtn.onclick = () => generateSentence(true);
 
-      el.download.onclick = () => {
+      ui.downloadBtn.onclick = () => {
         const link = document.createElement('a');
-        link.download = 'antonov-sentencia.png';
-        link.href = canvas.toDataURL();
+        link.download = `antonov-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
         link.click();
       };
 
-      el.share.onclick = async () => {
-        const blob = await (await fetch(canvas.toDataURL())).blob();
-        const file = new File([blob], 'antonov.png', { type: 'image/png' });
-        
-        if (navigator.share) {
-          await navigator.share({ files: [file] });
-        } else {
-          alert('Descarga la imagen para compartir.');
+      ui.shareBtn.onclick = async () => {
+        try {
+          const blob = await (await fetch(canvas.toDataURL())).blob();
+          const file = new File([blob], 'antonov.png', { type: 'image/png' });
+          
+          if (navigator.share) {
+            await navigator.share({ files: [file] });
+          } else {
+            alert('Descarga la imagen para compartir.');
+          }
+        } catch (error) {
+          console.error('Error al compartir:', error);
         }
       };
 
-      el.size.oninput = () => {
-        el.sizeLabel.textContent = el.size.value;
-        render();
+      ui.size.oninput = () => {
+        ui.sizeValue.textContent = ui.size.value;
+        renderCanvas();
       };
 
-      el.format.onchange = render;
-      
-      // Preview en tiempo real mientras escribes
+      ui.format.onchange = renderCanvas;
+
+      // Preview en tiempo real
       let typingTimer;
-      el.input.oninput = () => {
+      ui.input.oninput = () => {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
-          render();
-        }, 300); // Espera 300ms después de que el usuario deje de escribir
+          renderCanvas();
+        }, 400);
       };
 
       // Enter para generar
-      el.input.onkeydown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
+      ui.input.onkeydown = (e) => {
+        if (e.key === 'Enter' && e.ctrlKey) {
           e.preventDefault();
-          el.generate.click();
+          ui.generateBtn.click();
         }
       };
 
-      render();
+      // Render inicial
+      renderCanvas();
     }
 
-    document.addEventListener('astro:page-load', init);
-    init();
+    document.addEventListener('astro:page-load', initApp);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </Layout>
