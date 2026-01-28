@@ -22,7 +22,7 @@ Permíteme destruir una ilusión: Jeff Bezos no necesitaba 300 mil dólares para
 
 ¿Sabes qué necesitaban? Una respuesta clara a esta pregunta:
 
-**"¿En qué soy tan malditamente bueno que la gente pagaría por ello?"**
+### ¿En qué soy tan malditamente bueno que la gente pagaría por ello?"
 
 Y aquí está el problema: el 90% de la gente que quiere "emprender sin capital" ni siquiera sabe responder esa pregunta. Quieren el resultado sin hacer el trabajo interno. Quieren el edificio sin poner los cimientos.
 
@@ -60,6 +60,7 @@ Aquí está lo que realmente necesitas hacer antes de buscar un solo peso de inv
 No el autoconocimiento de "soy creativo y me gusta ayudar a la gente". Eso es basura de test de personalidad.
 
 Pregúntate:
+
 - ¿Qué hago que hace que la gente me busque específicamente a mí?
 - ¿Cuándo fue la última vez que alguien me pagó por mi tiempo/conocimiento/habilidad?
 - ¿Qué problemas he resuelto que otros no pudieron?
@@ -115,23 +116,26 @@ El mercado no paga por tu potencial. Paga por tus resultados comprobados.
 
 Si realmente quieres emprender sin capital, aquí está el único mapa que necesitas:
 
-**Mes 1-2: Descubrimiento**
+### Mes 1-2: Descubrimiento
 
 - Identifica tu zona de genialidad (donde talento, habilidad y demanda se cruzan)
 - Habla con 100 personas sobre problemas que enfrentan
 - Encuentra el dolor que puedes aliviar mejor que nadie
 
-**Mes 3-4: Validación**
+### Mes 3–4: Validación
+
 - Ofrece tu solución gratis a 10 personas
 - Documenta TODO: proceso, resultados, testimonios
 - Ajusta basado en feedback real, no en tu ego
 
-**Mes 5-6: Monetización Inicial**
+### Mes 5-6: Monetización Inicial
+
 - Cobra precios ridículamente bajos pero COBRA
 - Entrega valor 10x superior al precio
 - Construye casos de éxito documentados
 
-**Mes 7-12: Escalamiento**
+### Mes 7-12: Escalamiento
+
 - Sube precios gradualmente
 - Sistematiza lo que funciona
 - Ahora sí, busca capital si lo necesitas (probablemente no)
