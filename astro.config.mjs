@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://eluniversodelamente.com',
+  output: 'static',
   base: '/',
   integrations: [
     react(),
