@@ -1,6 +1,6 @@
 ---
 publishDate: 2026-01-28T18:00:00Z
-title: "Emprender sin capital: la verdad que nadie te dice"
+title: "Emprender sin capital: la verdad incómoda que nadie te dice"
 excerpt: "Emprender sin capital no es un problema de dinero, sino de valor. Esta es la verdad incómoda que nadie te dice sobre negocios, talento y ejecución real."
 image: "../../assets/images/emprender-sin-capital-verdad-incomoda.png"
 category: "Emprendimiento"
