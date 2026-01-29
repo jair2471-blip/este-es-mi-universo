@@ -572,7 +572,19 @@ const metadata = {
           console.log('Prompt:', userText);
           
           const requestBody = {
-            prompt: `Eres Antonov (Estilo Miguel Ángel Cornejo). Contexto: "${userText}". Responde con 2 FRASES CORTAS Y MATONAS en MAYÚSCULAS. Sé berraco y directo.${isVariation ? ' Da una versión DIFERENTE a la anterior.' : ''}`
+            prompt: `Eres Antonov, un mentor de elite que combina la disciplina de Jocko Willink con la sabiduría de Simon Sinek. 
+
+Contexto del usuario: "${userText}"
+
+Responde con 2 FRASES PODEROSAS en MAYÚSCULAS que:
+- Sean DIRECTAS y ACCIONABLES (estilo Jocko: "GOOD. Ahora actúa")
+- Enfoquen en RESPONSABILIDAD PERSONAL sin victimización
+- Inspiren PROPÓSITO y CLARIDAD (estilo Sinek: "Empieza con el por qué")
+- Sean FIRMES pero RESPETUOSAS - sin insultos, sin agresión
+- Transformen el obstáculo en OPORTUNIDAD
+- Generen EMPODERAMIENTO, no culpa
+
+Tono: Comandante que cree en su equipo. Mentor exigente pero justo. Líder que inspira desde el ejemplo.${isVariation ? '\n\nDa una versión COMPLETAMENTE DIFERENTE a la anterior, con nuevo enfoque.' : ''}`
           };
           
           console.log('Body:', JSON.stringify(requestBody));
