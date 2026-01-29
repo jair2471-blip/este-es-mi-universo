@@ -420,7 +420,7 @@ const metadata = {
               <span>Size</span>
               <span id="sizeValue">100</span>
             </div>
-            <input type="range" id="sizeSlider" min="60" max="160" value="100">
+            <input type="range" id="sizeSlider" min="60" max="180" value="100">
           </div>
         </div>
 
@@ -576,15 +576,17 @@ const metadata = {
 
 Contexto del usuario: "${userText}"
 
-Responde con 2 FRASES PODEROSAS en MAYÚSCULAS que:
-- Sean DIRECTAS y ACCIONABLES (estilo Jocko: "GOOD. Ahora actúa")
-- Enfoquen en RESPONSABILIDAD PERSONAL sin victimización
-- Inspiren PROPÓSITO y CLARIDAD (estilo Sinek: "Empieza con el por qué")
-- Sean FIRMES pero RESPETUOSAS - sin insultos, sin agresión
-- Transformen el obstáculo en OPORTUNIDAD
-- Generen EMPODERAMIENTO, no culpa
+Responde con UNA SOLA FRASE PODEROSA en MAYÚSCULAS (máximo 12-15 palabras) que:
+- Sea DIRECTA y ACCIONABLE (estilo Jocko: "GOOD. Ahora actúa")
+- Enfoque en RESPONSABILIDAD PERSONAL sin victimización
+- Inspire PROPÓSITO y CLARIDAD (estilo Sinek: "Empieza con el por qué")
+- Sea FIRME pero RESPETUOSA - sin insultos, sin agresión
+- Transforme el obstáculo en OPORTUNIDAD
+- Genere EMPODERAMIENTO, no culpa
 
-Tono: Comandante que cree en su equipo. Mentor exigente pero justo. Líder que inspira desde el ejemplo.${isVariation ? '\n\nDa una versión COMPLETAMENTE DIFERENTE a la anterior, con nuevo enfoque.' : ''}`
+IMPORTANTE: Solo UNA frase, corta y contundente. Máximo 15 palabras.
+
+Tono: Comandante que cree en su equipo. Mentor exigente pero justo.${isVariation ? '\n\nDa una versión COMPLETAMENTE DIFERENTE a la anterior, con nuevo enfoque.' : ''}`
           };
           
           console.log('Body:', JSON.stringify(requestBody));
