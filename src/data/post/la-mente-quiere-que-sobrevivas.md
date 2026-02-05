@@ -6,8 +6,6 @@ heroImage: ""
 tags: ["Mente Humana", "Psicología", "Ansiedad", "Autoconocimiento"]
 ---
 
-## La mente no quiere que seas feliz (quiere que sobrevivas)
-
 Suena duro, pero es verdad.  
 La mente humana no está diseñada para hacerte feliz. Está diseñada para **mantenerte con vida**.
 
