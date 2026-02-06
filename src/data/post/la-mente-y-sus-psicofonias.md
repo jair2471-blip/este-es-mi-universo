@@ -4,12 +4,10 @@ description: "Descubre por qué el cerebro crea psicofonías y señales visuales
 pubDate: 2026-02-07
 author: "El Universo de la Mente"
 excerpt: "No es el más allá, es tu cerebro. Entiende cómo la pareidolia y el instinto de supervivencia nos hacen escuchar voces en el ruido y ver señales en el cielo."
-image: "https://images.unsplash.com/photo-1474204075013-fafcfee9bfd7?q=80&w=1200&h=670&fit=crop&crop=center&auto=format&fm=avif"
+image: "https://images.unsplash.com/photo-1623077495207-d1daf2aaa36e?q=80&w=1200&h=676&fit=crop&crop=center&auto=format&fm=avif"
 tags: ["psicología", "ciencia", "pareidolia", "supervivencia", "mente"]
 slug: "el-fantasma-en-la-maquina-cerebro-supervivencia"
 ---
-
-# El fantasma en la máquina: ¿Por qué vemos y oímos lo que queremos?
 
 Usted y yo somos realistas, compa. Sabemos que la mente es un universo berraco, pero también es la reina de los efectos especiales. Tras sucesos impactantes como la partida de **Yeison Jiménez**, las redes se llenan de "pruebas" paranormales: voces en el ruido y luces en las nubes. Pero, ¿es un mensaje del más allá o es simplemente su **córtex visual y auditivo** jugándole una broma pesada para sobrevivir?
 
