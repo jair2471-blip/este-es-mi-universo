@@ -9,8 +9,6 @@ tags: ["mente", "percepción", "psicología", "sesgos cognitivos", "duelo"]
 slug: "el-fantasma-en-la-maquina"
 ---
 
-## El fantasma en la máquina: ¿por qué vemos y oímos lo que queremos?
-
 Vivimos rodeados de tecnología, pero nuestro cerebro sigue operando con reflejos de la prehistoria.  
 Tras la muerte de figuras públicas como Yeison Jiménez, las redes sociales se llenan de supuestas señales del más allá: voces entre el ruido, siluetas en el humo, luces con significado oculto.
 
