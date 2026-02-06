@@ -220,35 +220,50 @@ const metadata = {
       }
 
       async function callAntonov(isVariation = false) {
-        const text = ui.input.value.trim();
-        if (!text) return alert("Habla conmigo, líder. Escribe algo.");
+  const text = ui.input.value.trim();
+  if (!text) return alert("Dime qué pasa, compa. Te escucho.");
 
-        const btn = isVariation ? ui.variantBtn : ui.generateBtn;
-        btn.textContent = "PROCESANDO...";
-        btn.disabled = true;
+  const btn = isVariation ? ui.variantBtn : ui.generateBtn;
+  btn.textContent = "ANALIZANDO...";
+  btn.disabled = true;
 
-        try {
-          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `Antonov, actúa como un mentor sabio, cercano y de mente brillante. Contexto: "${text}". Dicta una SENTENCIA (máx 15 palabras) en MAYÚSCULAS que se sienta como un consejo de un amigo que sabe la verdad. Sé profundo, usa metáforas frescas de vida y evita clichés. ${isVariation ? 'Dale un giro radical a la perspectiva anterior.' : ''}`
-            })
-          });
-          const data = await response.json();
-          if (data.text) {
-            currentText = data.text;
-            sentenceID = `SENTENCIA-ID: ${Math.random().toString(36).toUpperCase().substring(2, 10)}`;
-            render();
-            ui.variantBtn.style.display = 'block';
-          }
-        } catch (e) {
-          alert("Error de conexión con el Oráculo.");
-        } finally {
-          btn.textContent = isVariation ? "INVOCAR OTRO ÁNGULO" : "DICTAR SENTENCIA";
-          btn.disabled = false;
-        }
-      }
+  try {
+    const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: `Antonov, olvida la poesía y la filosofía barata. Responde como un psicólogo experto y un amigo cercano que habla SENCILLO.
+        
+        CONTEXTO: "${text}"
+        
+        TU MISIÓN: Da un consejo basado en la psicología del comportamiento y la sabiduría práctica.
+        
+        REGLAS DE ORO:
+        - LENGUAJE HUMANO: Habla como hablamos tú y yo. Sin palabras rebuscadas.
+        - CERCANÍA: Que el usuario sienta que lo entiendes de verdad, no que le estás dando un sermón.
+        - DIRECTO AL GRANO: No adornes la verdad. Si el problema es el miedo, habla del miedo con claridad.
+        - FORMATO: Una sola frase corta (máximo 12-15 palabras) en MAYÚSCULAS.
+        
+        ESTILO: "Menos oráculo, más mentor de confianza".
+        
+        ${isVariation ? 'Dámelo desde otro ángulo, pero igual de sencillo y claro.' : ''}`
+      })
+    });
+    
+    const data = await response.json();
+    if (data.text) {
+      currentText = data.text.replace(/\*/g, ''); // Limpiar asteriscos si la IA los pone
+      sentenceID = `SENTENCIA-ID: ${Math.random().toString(36).toUpperCase().substring(2, 10)}`;
+      render();
+      ui.variantBtn.style.display = 'block';
+    }
+  } catch (e) {
+    alert("Se cayó la conexión, intentemos de nuevo.");
+  } finally {
+    btn.textContent = isVariation ? "VER OTRA OPCIÓN" : "DICTAR SENTENCIA";
+    btn.disabled = false;
+  }
+}
 
       ui.generateBtn.onclick = () => callAntonov(false);
       ui.variantBtn.onclick = () => callAntonov(true);
