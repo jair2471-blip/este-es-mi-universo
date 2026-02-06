@@ -12,11 +12,7 @@ const metadata = {
     @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;900&display=swap');
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: #000;
-      font-family: 'Inter', sans-serif;
-    }
+    body { background: #000; font-family: 'Inter', sans-serif; color: white; }
 
     .app-container {
       min-height: 100vh;
@@ -29,7 +25,6 @@ const metadata = {
       overflow: hidden;
     }
 
-    /* Partículas de fondo estilo "polvo estelar" */
     .app-container::before {
       content: '';
       position: absolute;
@@ -68,113 +63,39 @@ const metadata = {
       backdrop-filter: blur(10px);
       box-shadow: 0 30px 60px rgba(0,0,0,0.8);
       height: fit-content;
-      position: sticky;
-      top: 30px;
     }
 
-    .brand {
-      text-align: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-    }
-
-    .brand h1 {
-      font-family: 'Bebas Neue', cursive;
-      font-size: 4rem;
-      color: #fff;
-      letter-spacing: 6px;
-      text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-    }
-
-    .brand p {
-      color: #ffd700;
-      font-size: 0.65rem;
-      letter-spacing: 4px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
+    .brand { text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 215, 0, 0.1); }
+    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 4rem; letter-spacing: 6px; margin: 0; }
+    .brand p { color: #ffd700; font-size: 0.65rem; letter-spacing: 4px; font-weight: 800; text-transform: uppercase; }
 
     textarea {
-      background: #050505;
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 12px;
-      color: #fff;
-      padding: 16px;
-      font-size: 0.9rem;
-      resize: none;
-      min-height: 120px;
-      transition: all 0.3s;
+      background: #050505; border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 12px; color: #fff; padding: 16px; font-size: 0.9rem;
+      resize: none; min-height: 120px; width: 100%;
     }
 
-    textarea:focus {
-      outline: none;
-      border-color: #ffd700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-    }
-
-    label {
-      color: #666;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-      display: block;
-    }
+    label { color: #666; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; display: block; }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ffd700, #b8860b);
-      color: #000;
-      border: none;
-      padding: 18px;
-      border-radius: 12px;
-      font-weight: 900;
-      font-size: 1rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: 0.3s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+      background: linear-gradient(135deg, #ffd700, #b8860b); color: #000;
+      border: none; padding: 18px; border-radius: 12px; font-weight: 900;
+      font-size: 1rem; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
     }
 
     .btn-variant {
-      background: transparent;
-      color: #ffd700;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
+      background: transparent; color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
     }
 
     .preview-panel {
-      background: #000;
-      border: 1px solid rgba(255, 215, 0, 0.1);
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 600px;
-      position: relative;
+      background: #000; border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 20px; padding: 20px; display: flex; align-items: center; justify-content: center; min-height: 600px;
     }
 
-    canvas {
-      max-width: 100%;
-      height: auto;
-      border-radius: 4px;
-      box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-    }
+    canvas { max-width: 100%; height: auto; border-radius: 4px; }
 
-    @media (max-width: 1100px) {
-      .desktop-layout { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 1100px) { .desktop-layout { grid-template-columns: 1fr; } }
   </style>
 
   <div class="app-container">
@@ -199,7 +120,7 @@ const metadata = {
             </select>
           </div>
           <div>
-            <label>Texto</label>
+            <label>Tamaño</label>
             <input type="range" id="sizeSlider" min="60" max="150" value="90" style="width: 100%;">
           </div>
         </div>
@@ -207,7 +128,7 @@ const metadata = {
         <button id="generateBtn" class="btn-primary">DICTAR SENTENCIA</button>
         <button id="variantBtn" class="btn-variant" style="display:none;">INVOCAR OTRO ÁNGULO</button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
           <button id="downloadBtn" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; border-radius: 8px; cursor: pointer;">Guardar</button>
           <button id="shareBtn" style="background: #111; color: #fff; border: 1px solid #333; padding: 10px; border-radius: 8px; cursor: pointer;">Compartir</button>
         </div>
@@ -222,6 +143,7 @@ const metadata = {
   <script is:inline>
     function initApp() {
       const canvas = document.getElementById('mainCanvas');
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
       
       const ui = {
@@ -266,63 +188,39 @@ const metadata = {
         canvas.width = w;
         canvas.height = h;
 
-        // Fondo profundo
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, w, h);
         
         const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w);
-        grad.addColorStop(0, '#0a0a0a');
+        grad.addColorStop(0, '#0d0d0d');
         grad.addColorStop(1, '#000');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Texto principal
         const fontSize = parseInt(ui.size.value);
         ctx.font = `900 ${fontSize}px 'Bebas Neue'`;
         ctx.textAlign = 'center';
         ctx.fillStyle = '#fff';
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.4)';
+        ctx.shadowColor = 'rgba(255, 191, 0, 0.4)';
         ctx.shadowBlur = 40;
         
-        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.8, fontSize * 1.2, true);
+        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.85, fontSize * 1.2, true);
 
-        // --- DETALLES DE ORÁCULO ---
         ctx.shadowBlur = 0;
-        
-        // Sello de autenticidad (ID único)
-        const id = `SENTENCIA-ID: ${Math.random().toString(36).toUpperCase().substring(2, 10)}`;
-        ctx.font = "400 14px 'Inter'";
-        ctx.fillStyle = "rgba(255, 215, 0, 0.3)";
-        ctx.textAlign = "right";
-        ctx.fillText(id, w - 80, h - 80);
-
-        // Firma Antonov
-        ctx.font = "900 20px 'Inter'";
+        ctx.font = "900 22px 'Inter'";
         ctx.fillStyle = "#ffd700";
-        ctx.textAlign = "center";
         ctx.fillText("ANTONOV PRO • SISTEMA DE EXCELENCIA", w/2, h - 80);
 
-        // Marca lateral
-        ctx.save();
-        ctx.translate(60, h/2);
-        ctx.rotate(-Math.PI/2);
-        ctx.font = "700 12px 'Inter'";
-        ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
-        ctx.fillText("LA CONSCIENCIA NO TIENE FILTROS", 0, 0);
-        ctx.restore();
-
-        // Efecto de ruido analógico
-        for(let i=0; i<4000; i++) {
-          const x = Math.random() * w;
-          const y = Math.random() * h;
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
-          ctx.fillRect(x, y, 1, 1);
+        // Ruido
+        for(let i=0; i<3000; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.02})`;
+          ctx.fillRect(Math.random() * w, Math.random() * h, 1, 1);
         }
       }
 
       async function callAntonov(isVariation = false) {
         const text = ui.input.value.trim();
-        if (!text) return alert("Habla conmigo, líder. Escribe algo.");
+        if (!text) return alert("Habla conmigo, líder.");
 
         const btn = isVariation ? ui.variantBtn : ui.generateBtn;
         btn.textContent = "CONECTANDO...";
@@ -333,33 +231,17 @@ const metadata = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-  prompt: `Antonov, actúa como un mentor de alma vieja y mente brillante. 
-  No eres un bot, eres ese amigo sabio que siempre sabe qué decir porque ve lo que otros ignoran.
-
-  CONTEXTO DEL USUARIO: "${text}"
-
-  TU MISIÓN: Dictar una SENTENCIA que combine cercanía, sabiduría y un consejo que se sienta como una revelación.
-  
-  TONO Y ESTILO:
-  - Sé CERCANO: Como un mentor que pone la mano en tu hombro. Usa un lenguaje que abrace pero que despierte.
-  - Sé ORIGINAL: Prohibido usar frases hechas, refranes quemados o palabras tipo "resiliencia", "éxito" o "zona de confort".
-  - Sé POÉTICO Y DIRECTO: Busca metáforas frescas (el ruido del bosque, la calma del artesano, el peso del oro, el filo de la duda).
-  - Sé ACERTADO: Analiza el subtexto de lo que el usuario confiesa y responde a la raíz de su miedo o duda.
-
-  REGLA DE ORO: Máximo 15 palabras. Una sola frase en MAYÚSCULAS. 
-  Que al leerla, el usuario sienta: "Este tipo me entiende y sabe por dónde es el camino".
-  
-  ${isVariation ? 'DAME UNA PERSPECTIVA DIFERENTE: Si antes fuiste suave, ahora sé un poco más firme, pero mantén la amistad y la sabiduría.' : ''}`
-})
-
+              prompt: `Antonov, mentor sabio y cercano. Contexto: "${text}". Dicta una SENTENCIA (máx 15 palabras) en MAYÚSCULAS. Sé profundo, usa metáforas de vida, evita clichés. Que se sienta como un consejo de un amigo que sabe la verdad. ${isVariation ? 'Diferente ángulo.' : ''}`
+            })
+          });
           const data = await response.json();
           if (data.text) {
-            currentText = data.text.replace(/\*/g, '');
+            currentText = data.text;
             render();
             ui.variantBtn.style.display = 'block';
           }
         } catch (e) {
-          alert("Error en la conexión con el oráculo.");
+          alert("El oráculo está meditando (Error de conexión).");
         } finally {
           btn.textContent = isVariation ? "INVOCAR OTRO ÁNGULO" : "DICTAR SENTENCIA";
           btn.disabled = false;
@@ -372,7 +254,7 @@ const metadata = {
       ui.format.onchange = render;
       ui.downloadBtn.onclick = () => {
         const a = document.createElement('a');
-        a.download = 'antonov-sentencia.png';
+        a.download = 'sentencia.png';
         a.href = canvas.toDataURL();
         a.click();
       };
@@ -380,7 +262,8 @@ const metadata = {
       render();
     }
 
-    // Iniciar
+    // Doble check para cargar en Astro
     document.addEventListener('DOMContentLoaded', initApp);
+    document.addEventListener('astro:page-load', initApp);
   </script>
 </Layout>
