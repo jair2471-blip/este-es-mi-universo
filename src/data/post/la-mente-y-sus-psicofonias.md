@@ -4,7 +4,7 @@ description: "Por qué el cerebro humano crea voces, señales y presencias donde
 pubDate: 2026-02-07
 author: "El Universo de la Mente"
 excerpt: "Cuando muere un ídolo, el cerebro no busca pruebas del más allá: busca consuelo. Y en ese intento, es capaz de fabricar fantasmas perfectamente creíbles."
-image: ""
+image: "https://images.unsplash.com/photo-1623077495207-d1daf2aaa36e?q=80&w=1200&h=676&fit=crop&crop=center&auto=format&fm=avif"
 tags: ["mente", "percepción", "psicología", "sesgos cognitivos", "duelo"]
 slug: "el-fantasma-en-la-maquina"
 ---
