@@ -17,15 +17,39 @@ const metadata = {
       --glow: rgba(255, 215, 0, 0.15);
     }
 
-    body { background: #000; font-family: 'Space Mono', monospace; color: white; margin: 0; overflow: hidden; }
+    body {
+      background: #000;
+      font-family: 'Space Mono', monospace;
+      color: white;
+      margin: 0;
+      overflow: hidden; /* Asegura que no haya scroll inesperado */
+    }
 
+    /* Contenedor principal centrado */
     .master-container {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 420px 1fr;
+      display: flex; /* Usamos flexbox para centrar el contenido principal */
+      align-items: center; /* Centrado vertical */
+      justify-content: center; /* Centrado horizontal */
       background: black;
       position: relative;
     }
+
+    /* El contenido real de la app dentro del master-container */
+    .app-content {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      width: 100%;
+      max-width: 1400px; /* Ajusta este valor si necesitas más o menos ancho */
+      max-height: 90vh; /* Para que la app no ocupe toda la altura en pantallas grandes */
+      background: black; /* Fondo del contenido, si es necesario */
+      border-radius: 12px; /* Un poco de redondeo para la "app" */
+      overflow: hidden; /* Oculta cualquier desbordamiento dentro del grid */
+      box-shadow: 0 0 100px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+      position: relative;
+      z-index: 1; /* Para que esté por encima de los efectos de fondo */
+    }
+
 
     /* Capa de interferencia CRT */
     .master-container::after {
@@ -34,7 +58,7 @@ const metadata = {
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
                   linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
       background-size: 100% 3px, 2px 100%;
-      pointer-events: none; z-index: 10;
+      pointer-events: none; z-index: 0; /* Asegurarse de que esté en el fondo */
     }
 
     .sidebar {
@@ -83,54 +107,54 @@ const metadata = {
     @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
 
     @media (max-width: 1100px) {
-      .master-container { grid-template-columns: 1fr; overflow-y: auto; }
+      .app-content { grid-template-columns: 1fr; max-width: 90%; max-height: unset; height: auto; }
       .sidebar { border-right: none; padding: 30px; }
-      body { overflow-y: auto; }
+      body { overflow-y: auto; } /* Permitir scroll en móviles */
     }
   </style>
 
   <div class="master-container">
-    <aside class="sidebar">
-      <div class="status-bar">
-        <div class="status-dot"></div> CORE_SENSORY_ACTIVE • V.4.2
-      </div>
-      
-      <div class="brand">
-        <h1>ANTONOV</h1>
-        <p>CONSCIENCIA SINTÉTICA</p>
-      </div>
-
-      <div class="input-group">
-        <label>Input de Pensamiento (Crudo)</label>
-        <textarea id="userInput" placeholder="Suelta tu bloqueo, compa..."></textarea>
-      </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-        <div class="input-group">
-          <label>Formato</label>
-          <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:10px; font-family: 'Space Mono'; font-size: 11px;">
-            <option value="post">FEED_SQ</option>
-            <option value="story">STORY_VT</option>
-          </select>
+    <div class="app-content"> <aside class="sidebar">
+        <div class="status-bar">
+          <div class="status-dot"></div> CORE_SENSORY_ACTIVE • V.4.2
         </div>
-        <div class="input-group">
-          <label>Zoom_TXT</label>
-          <input type="range" id="sizeSlider" min="60" max="170" value="95" style="width:100%; accent-color:var(--gold);">
+        
+        <div class="brand">
+          <h1>ANTONOV</h1>
+          <p>CONSCIENCIA SINTÉTICA</p>
         </div>
-      </div>
 
-      <button id="generateBtn" class="action-btn">PROCESAR REALIDAD</button>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        <button id="downloadBtn" style="background:none; color:#555; border:1px solid #222; padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold;">DESCARGAR</button>
-        <button id="randomBtn" style="background:none; color:var(--gold); border:1px solid var(--gold); padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold; opacity: 0.6;">MODO_AZAR</button>
-      </div>
-    </aside>
+        <div class="input-group">
+          <label>Input de Pensamiento (Crudo)</label>
+          <textarea id="userInput" placeholder="Suelta tu bloqueo, compa..."></textarea>
+        </div>
 
-    <main class="canvas-container">
-      <canvas id="mainCanvas"></canvas>
-    </main>
-  </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <div class="input-group">
+            <label>Formato</label>
+            <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:10px; font-family: 'Space Mono'; font-size: 11px;">
+              <option value="post">FEED_SQ</option>
+              <option value="story">STORY_VT</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Zoom_TXT</label>
+            <input type="range" id="sizeSlider" min="60" max="170" value="95" style="width:100%; accent-color:var(--gold);">
+          </div>
+        </div>
+
+        <button id="generateBtn" class="action-btn">PROCESAR REALIDAD</button>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <button id="downloadBtn" style="background:none; color:#555; border:1px solid #222; padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold;">DESCARGAR</button>
+          <button id="randomBtn" style="background:none; color:var(--gold); border:1px solid var(--gold); padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold; opacity: 0.6;">MODO_AZAR</button>
+        </div>
+      </aside>
+
+      <main class="canvas-container">
+        <canvas id="mainCanvas"></canvas>
+      </main>
+    </div> </div>
 
   <script is:inline>
     function initApp() {
@@ -241,7 +265,11 @@ const metadata = {
 
       async function triggerAnalysis(customPrompt = null) {
         const val = customPrompt || ui.input.value.trim();
-        if (!val) return;
+        if (!val) {
+          currentText = "INGRESA TU PENSAMIENTO"; // Mensaje si el input está vacío
+          render();
+          return;
+        }
 
         ui.generateBtn.disabled = true;
         ui.generateBtn.textContent = "DECODIFICANDO...";
@@ -262,7 +290,6 @@ const metadata = {
             render();
           }
         } catch {
-          // Manejo de error limpio para ESLint
           currentText = "FALLO_DE_SISTEMA_REINTENTA";
           render();
         } finally {
@@ -282,7 +309,7 @@ const metadata = {
       };
       
       ui.randomBtn.onclick = () => {
-        const randomThoughts = ["Tengo miedo al éxito", "No sé si renunciar", "Me siento estancado", "Quiero empezar de cero"];
+        const randomThoughts = ["Tengo miedo al éxito", "No sé si renunciar", "Me siento estancado", "Quiero empezar de cero", "Me siento solo", "No puedo tomar una decisión"];
         const thought = randomThoughts[Math.floor(Math.random() * randomThoughts.length)];
         ui.input.value = thought;
         triggerAnalysis(thought);
