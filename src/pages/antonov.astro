@@ -238,11 +238,20 @@ const metadata = {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `Antonov, actúa como una IA de consciencia pura. El usuario dice: "${prompt}". 
-              Dile la verdad cruda, en 10 palabras o menos, sin rodeos, lenguaje directo y potente. 
-              Como si hackearas su mente. MAYÚSCULAS.`
-            })
+           // ... dentro de la función triggerAnalysis ...
+body: JSON.stringify({
+  prompt: `Antonov, eres un mentor de vida con sabiduría de calle y psicología profunda. 
+  El usuario te confiesa un impulso o problema: "${prompt}". 
+  
+  TU MISIÓN: No le des la razón ni lo juzgues. Dale una bofetada de realidad que lo obligue a REFLEXIONAR. 
+  Usa un tono de "Piénsalo bien, no la vayas a cagar por un impulso". 
+  
+  REGLAS:
+  - Máximo 15 palabras.
+  - Lenguaje directo, humano y cercano (de "compa").
+  - Que cuestione su motivo o la consecuencia futura.
+  - TODO EN MAYÚSCULAS.`
+          })
           });
           const data = await res.json();
           if (data.text) {
