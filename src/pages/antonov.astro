@@ -13,11 +13,9 @@ const metadata = {
 
     :root {
       --accent: #ffd700;
-      --bg-dark: #0a0a0a;
       --border-color: rgba(255, 215, 0, 0.2);
     }
 
-    /* ELIMINAMOS MÁRGENES EXTERNOS QUE EMPUJAN EL CONTENIDO */
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
     .master-wrapper {
@@ -27,75 +25,52 @@ const metadata = {
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden; /* Evita scrolls fantasma */
+      overflow: hidden;
     }
 
-    /* LA VENTANA DE LA APP - TAMAÑO FIJO PARA EVITAR QUE SE DESCUADRE */
     .app-window {
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: 380px 1fr;
       width: 95%;
       max-width: 1400px;
-      height: 85vh; /* Altura controlada */
+      height: 85vh;
       background: #0d0d0d;
       border: 1px solid var(--border-color);
-      position: relative;
-      box-shadow: 0 0 50px rgba(0,0,0,1);
-      z-index: 10;
     }
 
-    /* SIDEBAR CON SCROLL PROPIO SI ES NECESARIO */
     .sidebar {
       background: #080808;
       padding: 40px;
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Empuja el botón abajo */
-      overflow-y: auto;
+      justify-content: space-between;
     }
 
-    .brand-area h1 { font-weight: 900; font-size: 3rem; color: #fff; margin: 0; line-height: 1; letter-spacing: -2px; }
-    .brand-area p { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-top: 10px; }
-
-    .input-block { margin: 20px 0; }
-    .input-block label { font-family: 'JetBrains Mono'; font-size: 9px; color: #555; text-transform: uppercase; display: block; margin-bottom: 10px; }
+    .brand-area h1 { font-weight: 900; font-size: 2.5rem; color: #fff; margin: 0; letter-spacing: -2px; }
     
     textarea {
       background: #000; border: 1px solid #222; color: #fff; padding: 15px;
-      font-size: 14px; width: 100%; height: 120px; resize: none; transition: 0.3s;
+      font-size: 14px; width: 100%; height: 100px; resize: none; margin-top: 10px;
     }
-    textarea:focus { border-color: var(--accent); outline: none; }
 
     .btn-main {
-      background: #fff; color: #000; border: none; padding: 20px;
-      font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
-      cursor: pointer; width: 100%; transition: 0.3s;
+      background: #fff; color: #000; border: none; padding: 18px;
+      font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%;
     }
-    .btn-main:hover { background: var(--accent); }
 
-    /* CONTENEDOR DEL CANVAS - EL CENTRO DEL UNIVERSO */
     .canvas-viewport {
-      background: #000;
-      position: relative;
+      background: #050505;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden; /* Asegura que el texto no se escape */
+      position: relative;
     }
 
     #mainCanvas {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain; /* Mantiene la proporción siempre */
-    }
-
-    /* RESPONSIVO */
-    @media (max-width: 1100px) {
-      .app-window { grid-template-columns: 1fr; height: 100vh; width: 100%; }
-      .sidebar { padding: 20px; height: auto; }
-      .canvas-viewport { height: 50vh; }
+      max-width: 95%;
+      max-height: 95%;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
     }
   </style>
 
@@ -104,34 +79,20 @@ const metadata = {
       <aside class="sidebar">
         <div class="brand-area">
           <h1>ANTONOV</h1>
-          <p>PROTOCOLO DE VERDAD</p>
-        </div>
-
-        <div class="input-block">
-          <label>Inyección de Pensamiento</label>
-          <textarea id="userInput" placeholder="Escribe lo que te detiene..."></textarea>
+          <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px;">PROTOCOLO_VERDAD</p>
           
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top: 20px;">
-            <div>
-              <label>Matriz</label>
-              <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:8px; font-size:10px;">
-                <option value="post">CUADRADO</option>
-                <option value="story">VERTICAL</option>
-              </select>
-            </div>
-            <div>
-              <label>Escala</label>
-              <input type="range" id="sizeSlider" min="40" max="150" value="85" style="width:100%; accent-color:var(--accent);">
-            </div>
+          <div style="margin-top: 30px;">
+            <label style="font-family: 'JetBrains Mono'; font-size: 9px; color: #555;">FRECUENCIA DE ENTRADA</label>
+            <textarea id="userInput" placeholder="Escribe aquí tu pensamiento..."></textarea>
           </div>
         </div>
 
         <div>
-          <button id="generateBtn" class="btn-main">PROCESAR REALIDAD</button>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-            <button id="downloadBtn" style="background:none; border:1px solid #222; color:#444; padding:10px; font-size:9px; cursor:pointer;">GUARDAR</button>
-            <button id="randomBtn" style="background:none; border:1px solid #222; color:#444; padding:10px; font-size:9px; cursor:pointer;">AZAR</button>
+          <div style="margin-bottom: 20px;">
+            <label style="font-family: 'JetBrains Mono'; font-size: 9px; color: #555;">AJUSTE DE MATRIZ</label>
+            <input type="range" id="sizeSlider" min="40" max="140" value="80" style="width:100%; accent-color:var(--accent);">
           </div>
+          <button id="generateBtn" class="btn-main">ANALIZAR</button>
         </div>
       </aside>
 
@@ -142,69 +103,80 @@ const metadata = {
   </div>
 
   <script is:inline>
-    function run() {
+    function init() {
       const canvas = document.getElementById('mainCanvas');
       const ctx = canvas.getContext('2d');
       const ui = {
         input: document.getElementById('userInput'),
-        format: document.getElementById('formatSelect'),
         size: document.getElementById('sizeSlider'),
         btn: document.getElementById('generateBtn')
       };
 
-      let currentText = "LA VERDAD NO NECESITA ADORNOS";
+      let userQuestion = "";
+      let antonovResponse = "LA VERDAD NO NECESITA ADORNOS";
 
       function render() {
-        const isStory = ui.format.value === 'story';
-        // Mantenemos la resolución alta pero el canvas se ajusta visualmente con CSS
         canvas.width = 1080;
-        canvas.height = isStory ? 1920 : 1080;
+        canvas.height = 1080;
 
+        // Fondo
         ctx.fillStyle = '#050505';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Decoración técnica
-        ctx.strokeStyle = 'rgba(255,215,0,0.05)';
-        ctx.lineWidth = 1;
-        for(let i=0; i<canvas.width; i+=100) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
+        // Grid técnico sutil
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.05)';
+        for(let i=0; i<canvas.width; i+=108) { ctx.strokeRect(i, 0, 1, canvas.height); ctx.strokeRect(0, i, canvas.width, 1); }
 
-        // Texto centrado matemáticamente
+        // 1. DIBUJAR LA PREGUNTA (ARRIBA)
+        if (userQuestion) {
+          ctx.font = "700 24px 'JetBrains Mono'";
+          ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
+          ctx.textAlign = 'left';
+          ctx.fillText(`> INPUT: "${userQuestion.toUpperCase()}"`, 80, 100);
+        }
+
+        // 2. DIBUJAR LA SENTENCIA (CENTRO)
         const fontSize = parseInt(ui.size.value);
         ctx.font = `900 ${fontSize}px 'Inter'`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = '#fff';
-
-        // Sombra para el glow del texto
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.3)';
-        ctx.shadowBlur = 15;
-
-        const words = currentText.toUpperCase().split(' ');
+        
+        const words = antonovResponse.toUpperCase().split(' ');
         let lines = [], line = '';
-        const maxW = canvas.width * 0.85;
-
         words.forEach(w => {
-          let test = line + w + ' ';
-          if (ctx.measureText(test).width > maxW) {
-            lines.push(line);
-            line = w + ' ';
-          } else {
-            line = test;
-          }
+          if (ctx.measureText(line + w).width < 850) line += w + ' ';
+          else { lines.push(line); line = w + ' '; }
         });
         lines.push(line);
 
-        const totalHeight = lines.length * (fontSize * 1.15);
-        let startY = (canvas.height / 2) - (totalHeight / 2) + (fontSize / 2);
-
+        let startY = (canvas.height / 2) - ((lines.length - 1) * fontSize * 0.6);
         lines.forEach(l => {
           ctx.fillText(l.trim(), canvas.width / 2, startY);
           startY += fontSize * 1.15;
         });
+
+        // 3. DIBUJAR LA FIRMA (ABAJO - SIEMPRE FIJA)
+        ctx.font = "700 18px 'JetBrains Mono'";
+        ctx.fillStyle = '#ffd700';
+        ctx.letterSpacing = "12px";
+        ctx.textAlign = 'center';
+        ctx.fillText("ANTONOV // SISTEMA_DE_CONSCIENCIA", canvas.width / 2, canvas.height - 80);
+        
+        // Línea decorativa de firma
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 - 150, canvas.height - 60);
+        ctx.lineTo(canvas.width / 2 + 150, canvas.height - 60);
+        ctx.stroke();
       }
 
-      async function api() {
-        if(!ui.input.value.trim()) return;
+      async function decodificar() {
+        const val = ui.input.value.trim();
+        if(!val) return;
+        
+        userQuestion = val;
         ui.btn.textContent = "DECODIFICANDO...";
         ui.btn.disabled = true;
 
@@ -212,28 +184,26 @@ const metadata = {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             body: JSON.stringify({
-              prompt: `Antonov, mentor radical. Usuario: "${ui.input.value}". Dile una verdad de máximo 12 palabras. Tono serio, sin adornos. TODO MAYÚSCULAS.`
+              prompt: `Antonov, mentor radical. El usuario dice: "${val}". Responde con una verdad cruda de máximo 12 palabras. TODO MAYÚSCULAS.`
             })
           });
           const data = await res.json();
-          currentText = data.text;
+          antonovResponse = data.text;
           render();
         } catch(e) {
-          currentText = "ERROR DE CONEXIÓN";
+          antonovResponse = "ERROR_DE_NÚCLEO";
           render();
         } finally {
-          ui.btn.textContent = "PROCESAR REALIDAD";
+          ui.btn.textContent = "ANALIZAR";
           ui.btn.disabled = false;
         }
       }
 
-      ui.btn.onclick = api;
+      ui.btn.onclick = decodificar;
       ui.size.oninput = render;
-      ui.format.onchange = render;
       render();
     }
 
-    document.addEventListener('DOMContentLoaded', run);
-    document.addEventListener('astro:page-load', run);
+    document.addEventListener('DOMContentLoaded', init);
   </script>
 </Layout>
