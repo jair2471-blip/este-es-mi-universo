@@ -17,144 +17,141 @@ const metadata = {
       --glow: rgba(255, 215, 0, 0.15);
     }
 
-    body {
-      background: #000;
-      font-family: 'Space Mono', monospace;
-      color: white;
-      margin: 0;
-      overflow: hidden; /* Asegura que no haya scroll inesperado */
-    }
+    /* FORZAMOS QUE EL CONTENEDOR DE LA PÁGINA NO ESTORBE */
+    :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
 
-    /* Contenedor principal centrado */
-    .master-container {
-      min-height: 100vh;
-      display: flex; /* Usamos flexbox para centrar el contenido principal */
-      align-items: center; /* Centrado vertical */
-      justify-content: center; /* Centrado horizontal */
-      background: black;
-      position: relative;
-    }
-
-    /* El contenido real de la app dentro del master-container */
-    .app-content {
-      display: grid;
-      grid-template-columns: 420px 1fr;
+    .master-wrapper {
       width: 100%;
-      max-width: 1400px; /* Ajusta este valor si necesitas más o menos ancho */
-      max-height: 90vh; /* Para que la app no ocupe toda la altura en pantallas grandes */
-      background: black; /* Fondo del contenido, si es necesario */
-      border-radius: 12px; /* Un poco de redondeo para la "app" */
-      overflow: hidden; /* Oculta cualquier desbordamiento dentro del grid */
-      box-shadow: 0 0 100px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
+      min-height: 100vh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
       position: relative;
-      z-index: 1; /* Para que esté por encima de los efectos de fondo */
+      overflow: hidden;
     }
 
-
-    /* Capa de interferencia CRT */
-    .master-container::after {
-      content: " ";
+    /* Capa de interferencia CRT - Movida al fondo para no bloquear clicks */
+    .crt-overlay {
       position: absolute; top: 0; left: 0; bottom: 0; right: 0;
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
                   linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
       background-size: 100% 3px, 2px 100%;
-      pointer-events: none; z-index: 0; /* Asegurarse de que esté en el fondo */
+      pointer-events: none; z-index: 5;
+    }
+
+    .app-content {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      width: 100%;
+      max-width: 1300px;
+      min-height: 800px;
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 50px 150px rgba(0, 0, 0, 0.9);
     }
 
     .sidebar {
-      padding: 50px 35px;
+      padding: 45px;
       border-right: 1px solid rgba(255, 215, 0, 0.1);
-      display: flex; flex-direction: column; gap: 35px;
-      background: rgba(8, 8, 8, 0.9);
-      backdrop-filter: blur(15px);
-      z-index: 20;
+      display: flex; flex-direction: column; gap: 30px;
+      background: #080808;
     }
 
     .status-bar { font-size: 9px; color: var(--gold); letter-spacing: 2px; display: flex; align-items: center; gap: 8px; font-weight: bold; }
-    .status-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s infinite; }
+    .status-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s infinite; }
 
-    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 4.5rem; line-height: 0.8; margin: 0; color: #fff; }
-    .brand p { font-size: 10px; letter-spacing: 4px; color: var(--gold); margin-top: 8px; font-weight: bold; opacity: 0.8; }
+    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 4.2rem; line-height: 0.8; margin: 0; color: #fff; letter-spacing: -1px; }
+    .brand p { font-size: 10px; letter-spacing: 4px; color: var(--gold); margin-top: 10px; font-weight: bold; }
 
-    .input-group label { font-size: 9px; text-transform: uppercase; color: #666; margin-bottom: 12px; display: block; letter-spacing: 1px; }
+    .input-group label { font-size: 9px; text-transform: uppercase; color: #555; margin-bottom: 10px; display: block; letter-spacing: 1px; }
     
     textarea {
-      background: #000; border: 1px solid #222; border-radius: 8px;
-      color: #fff; padding: 18px; font-size: 14px; resize: none; width: 100%; height: 130px;
-      transition: 0.4s; font-family: 'Space Mono', monospace;
+      background: #000; border: 1px solid #222; border-radius: 12px;
+      color: #fff; padding: 18px; font-size: 14px; resize: none; width: 100%; height: 140px;
+      transition: 0.3s; font-family: 'Space Mono', monospace;
     }
-    textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 15px var(--glow); }
+    textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px var(--glow); }
 
     .action-btn {
-      background: #fff; color: black; border: none; padding: 20px;
+      background: #fff; color: #000; border: none; padding: 22px;
       font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-      transition: 0.3s; clip-path: polygon(0 0, 100% 0, 100% 75%, 88% 100%, 0 100%);
+      transition: 0.3s; clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
     }
     .action-btn:hover { background: var(--gold); transform: translateY(-2px); }
-    .action-btn:disabled { opacity: 0.5; cursor: wait; }
 
     .canvas-container {
+      background: #000;
       display: flex; align-items: center; justify-content: center;
-      padding: 30px; background: #000; position: relative;
+      padding: 40px; position: relative;
     }
 
     #mainCanvas {
-      max-width: 95%; max-height: 88vh;
-      box-shadow: 0 0 80px rgba(0, 0, 0, 1);
-      background: #000; border: 1px solid rgba(255, 215, 0, 0.05);
+      max-width: 100%; max-height: 100%;
+      box-shadow: 0 0 60px rgba(0,0,0,0.5);
     }
 
-    @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
+    /* MÓVIL */
     @media (max-width: 1100px) {
-      .app-content { grid-template-columns: 1fr; max-width: 90%; max-height: unset; height: auto; }
-      .sidebar { border-right: none; padding: 30px; }
-      body { overflow-y: auto; } /* Permitir scroll en móviles */
+      .master-wrapper { padding: 0; }
+      .app-content { grid-template-columns: 1fr; border-radius: 0; border: none; min-height: 100vh; }
+      .sidebar { padding: 30px; }
     }
   </style>
 
-  <div class="master-container">
-    <div class="app-content"> <aside class="sidebar">
+  <div class="master-wrapper">
+    <div class="crt-overlay"></div>
+    
+    <div class="app-content">
+      <aside class="sidebar">
         <div class="status-bar">
-          <div class="status-dot"></div> CORE_SENSORY_ACTIVE • V.4.2
+          <div class="status-dot"></div> CORE_ACTIVE • V.4.3
         </div>
         
         <div class="brand">
           <h1>ANTONOV</h1>
-          <p>CONSCIENCIA SINTÉTICA</p>
+          <p>SISTEMA DE CONSCIENCIA</p>
         </div>
 
         <div class="input-group">
-          <label>Input de Pensamiento (Crudo)</label>
-          <textarea id="userInput" placeholder="Suelta tu bloqueo, compa..."></textarea>
+          <label>Frecuencia de pensamiento</label>
+          <textarea id="userInput" placeholder="Habla con franqueza, líder..."></textarea>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
           <div class="input-group">
-            <label>Formato</label>
-            <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:10px; font-family: 'Space Mono'; font-size: 11px;">
+            <label>Aspecto</label>
+            <select id="formatSelect" style="width:100%; background:#000; color:#fff; border:1px solid #333; padding:12px; border-radius:8px; font-size:11px;">
               <option value="post">FEED_SQ</option>
               <option value="story">STORY_VT</option>
             </select>
           </div>
           <div class="input-group">
-            <label>Zoom_TXT</label>
-            <input type="range" id="sizeSlider" min="60" max="170" value="95" style="width:100%; accent-color:var(--gold);">
+            <label>Zoom</label>
+            <input type="range" id="sizeSlider" min="60" max="180" value="95" style="width:100%; accent-color:var(--gold);">
           </div>
         </div>
 
-        <button id="generateBtn" class="action-btn">PROCESAR REALIDAD</button>
-        
+        <button id="generateBtn" class="action-btn">ANALIZAR REALIDAD</button>
+
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <button id="downloadBtn" style="background:none; color:#555; border:1px solid #222; padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold;">DESCARGAR</button>
-          <button id="randomBtn" style="background:none; color:var(--gold); border:1px solid var(--gold); padding:12px; cursor:pointer; font-size:10px; letter-spacing:1px; font-weight:bold; opacity: 0.6;">MODO_AZAR</button>
+          <button id="downloadBtn" style="background:#0a0a0a; color:#fff; border:1px solid #222; padding:12px; border-radius:8px; cursor:pointer; font-size:10px; font-weight:bold;">GUARDAR</button>
+          <button id="randomBtn" style="background:none; color:var(--gold); border:1px solid var(--gold); padding:12px; border-radius:8px; cursor:pointer; font-size:10px; font-weight:bold; opacity:0.7;">MODO_AZAR</button>
         </div>
       </aside>
 
       <main class="canvas-container">
         <canvas id="mainCanvas"></canvas>
       </main>
-    </div> </div>
+    </div>
+  </div>
 
   <script is:inline>
     function initApp() {
@@ -171,39 +168,29 @@ const metadata = {
         randomBtn: document.getElementById('randomBtn')
       };
 
-      let currentText = "CONFIESA TU INTENCIÓN PARA DECODIFICAR LA VERDAD";
-      
-      // Función de ruido analógico para el look "que no existe"
+      let currentText = "SUELTA TU BLOQUEO PARA DECODIFICAR LA VERDAD";
+
       function applyGrain() {
-        const w = canvas.width;
-        const h = canvas.height;
+        const w = canvas.width, h = canvas.height;
         const imageData = ctx.getImageData(0, 0, w, h);
         const data = imageData.data;
         for (let i = 0; i < data.length; i += 4) {
-          const noise = (Math.random() - 0.5) * 18;
-          data[i] += noise;
-          data[i+1] += noise;
-          data[i+2] += noise;
+          const noise = (Math.random() - 0.5) * 15;
+          data[i] += noise; data[i+1] += noise; data[i+2] += noise;
         }
         ctx.putImageData(imageData, 0, 0);
       }
 
       function wrapText(context, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' ');
-        const lines = [];
+        const words = text.split(' '), lines = [];
         let currentLine = '';
-
         words.forEach(word => {
           const testLine = currentLine + word + ' ';
           if (context.measureText(testLine).width > maxWidth) {
-            lines.push(currentLine);
-            currentLine = word + ' ';
-          } else {
-            currentLine = testLine;
-          }
+            lines.push(currentLine); currentLine = word + ' ';
+          } else currentLine = testLine;
         });
         lines.push(currentLine);
-
         let startY = y - ((lines.length - 1) * lineHeight) / 2;
         lines.forEach(line => {
           context.fillText(line.trim(), x, startY);
@@ -213,89 +200,49 @@ const metadata = {
 
       function render() {
         const isStory = ui.format.value === 'story';
-        const w = 1080;
-        const h = isStory ? 1920 : 1080;
+        const w = 1080, h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
-        // Fondo y Atmósfera
-        ctx.fillStyle = '#050505';
-        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
+        const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w);
+        grad.addColorStop(0, '#0f0f0f'); grad.addColorStop(1, '#000');
+        ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
 
-        const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w*0.9);
-        grad.addColorStop(0, '#0f0f0f');
-        grad.addColorStop(1, '#000000');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.05)';
+        for(let i=0; i<w; i+=80) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
+        for(let j=0; j<h; j+=80) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
 
-        // Grid Técnico
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.04)';
-        ctx.lineWidth = 1;
-        for(let i=0; i<w; i+=60) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
-        for(let j=0; j<h; j+=60) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
-
-        // Texto Principal (Sentencia)
         const fontSize = parseInt(ui.size.value);
         ctx.font = `900 ${fontSize}px 'Inter'`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // Efecto de aberración sutil
-        ctx.shadowColor = 'rgba(255, 0, 0, 0.4)';
-        ctx.shadowOffsetX = 3;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.shadowColor = 'rgba(255, 0, 0, 0.5)'; ctx.shadowOffsetX = 4;
         ctx.fillStyle = '#fff';
-        
-        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.88, fontSize * 0.98);
+        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.85, fontSize * 1.1);
 
-        // UI Branding
-        ctx.shadowOffsetX = 0;
-        ctx.font = "700 14px 'Space Mono'";
-        ctx.fillStyle = "#ffd700";
-        ctx.letterSpacing = "8px";
-        ctx.fillText("• ANALYTICAL_CONSCIOUSNESS •", w/2, 100);
-        
-        // Marcadores de esquina
-        ctx.strokeStyle = "#ffd700";
-        ctx.lineWidth = 3;
-        const offset = 60;
-        ctx.strokeRect(offset, offset, 30, 30);
-        ctx.strokeRect(w-offset-30, h-offset-30, 30, 30);
+        ctx.shadowOffsetX = 0; ctx.font = "700 15px 'Space Mono'"; ctx.fillStyle = "#ffd700"; ctx.letterSpacing = "10px";
+        ctx.fillText("ANTONOV_PRO • CONSCIENCIA_SINTÉTICA", w/2, h - 80);
 
         applyGrain();
       }
 
-      async function triggerAnalysis(customPrompt = null) {
-        const val = customPrompt || ui.input.value.trim();
-        if (!val) {
-          currentText = "INGRESA TU PENSAMIENTO"; // Mensaje si el input está vacío
-          render();
-          return;
-        }
-
-        ui.generateBtn.disabled = true;
-        ui.generateBtn.textContent = "DECODIFICANDO...";
-
+      async function triggerAnalysis(custom) {
+        const val = custom || ui.input.value.trim();
+        if (!val) return;
+        ui.generateBtn.disabled = true; ui.generateBtn.textContent = "DECODIFICANDO...";
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: `Antonov, eres un mentor experto en psicología del comportamiento. El usuario dice: "${val}". 
-              Dile una verdad que lo haga frenar y REFLEXIONAR sobre su motivo real. 
-              Tono de "compa" sabio, directo y crudo. Máximo 12 palabras. TODO MAYÚSCULAS.`
+              prompt: `Antonov, actúa como un mentor de alto impacto. El usuario dice: "${val}". 
+              Dile una verdad incómoda que lo obligue a reflexionar sobre su motivo real. 
+              Sencillo, crudo, de compa. Máximo 12 palabras. TODO MAYÚSCULAS.`
             })
           });
           const data = await res.json();
-          if (data.text) {
-            currentText = data.text;
-            render();
-          }
-        } catch {
-          currentText = "FALLO_DE_SISTEMA_REINTENTA";
-          render();
-        } finally {
-          ui.generateBtn.disabled = false;
-          ui.generateBtn.textContent = "PROCESAR REALIDAD";
-        }
+          if (data.text) { currentText = data.text; render(); }
+        } catch { currentText = "ERROR_LOG_REINTENTA"; render();
+        } finally { ui.generateBtn.disabled = false; ui.generateBtn.textContent = "ANALIZAR REALIDAD"; }
       }
 
       ui.generateBtn.onclick = () => triggerAnalysis();
@@ -303,18 +250,14 @@ const metadata = {
       ui.format.onchange = render;
       ui.downloadBtn.onclick = () => {
         const link = document.createElement('a');
-        link.download = `ANTONOV_LOG_${Date.now()}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        link.download = `ANTONOV_${Date.now()}.png`;
+        link.href = canvas.toDataURL(); link.click();
       };
-      
       ui.randomBtn.onclick = () => {
-        const randomThoughts = ["Tengo miedo al éxito", "No sé si renunciar", "Me siento estancado", "Quiero empezar de cero", "Me siento solo", "No puedo tomar una decisión"];
-        const thought = randomThoughts[Math.floor(Math.random() * randomThoughts.length)];
-        ui.input.value = thought;
-        triggerAnalysis(thought);
+        const t = ["Tengo miedo", "Quiero renunciar", "No soy feliz", "Dudo de todo"];
+        const select = t[Math.floor(Math.random()*t.length)];
+        ui.input.value = select; triggerAnalysis(select);
       };
-
       render();
     }
 
