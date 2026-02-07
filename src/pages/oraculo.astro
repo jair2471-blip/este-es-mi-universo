@@ -2,7 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="ORÁCULO DE HIERRO | Sentencia de la Calle">
+<Layout
+  metadata={{
+    title: 'ORÁCULO DE HIERRO | Orientación Clara para Volver',
+    description: 'Una herramienta directa, humana y respetuosa para recuperar el rumbo cuando fallas.',
+  }}
+>
   <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4 md:p-8 selection:bg-yellow-600">
     <div class="max-w-2xl w-full">
 
@@ -13,15 +18,14 @@ import Layout from '../layouts/Layout.astro';
         </h1>
         <div class="h-1 w-24 bg-yellow-600 mx-auto mt-6"></div>
         <p class="text-zinc-600 tracking-[0.6em] text-[10px] md:text-xs font-bold uppercase pt-3">
-          Justicia Final // E.U.L.M
+          Orientación clara // E.U.L.M
         </p>
       </div>
 
       <!-- ZONA DE CONSULTA -->
       <div class="space-y-6 md:space-y-8">
-
         <p class="text-center text-zinc-500 text-xs uppercase tracking-widest font-bold">
-          ESCRIBA EN QUÉ FALLÓ HOY
+          ESCRIBE EN QUÉ FALLASTE HOY
         </p>
 
         <div class="bg-zinc-950 border border-zinc-900 p-6 md:p-8 rounded-sm">
@@ -30,16 +34,16 @@ import Layout from '../layouts/Layout.astro';
             class="w-full bg-transparent text-white outline-none text-xl md:text-2xl placeholder:text-zinc-700 text-center uppercase font-bold resize-none min-h-[80px]"
             placeholder="EJEMPLOS:
 NO ENTRENÉ
-PROCRASTINÉ TODO EL DÍA
+PROCRASTINÉ
 ROMPÍ EL HÁBITO
-NO HICE NADA"
+ME RENDÍ"
             rows="3"></textarea>
         </div>
 
         <button
           id="btn-consultar"
           class="w-full border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-black font-black py-5 uppercase italic tracking-[0.25em] transition-all active:scale-[0.98]">
-          DÍGAME CÓMO VOLVER
+          ORIENTARME
         </button>
 
         <!-- RESULTADO -->
@@ -49,11 +53,17 @@ NO HICE NADA"
             <div class="absolute bottom-4 right-4 text-6xl text-zinc-900 font-serif">"</div>
             <p
               id="respuesta-texto"
-              class="text-4xl md:text-5xl font-black uppercase italic text-center leading-tight">
+              class="text-3xl md:text-4xl font-black uppercase italic text-center leading-tight">
             </p>
           </div>
         </div>
+      </div>
 
+      <!-- FOOTER -->
+      <div class="text-center mt-20 opacity-40">
+        <p class="text-zinc-700 text-[9px] uppercase tracking-widest">
+          La claridad también es disciplina
+        </p>
       </div>
     </div>
   </div>
@@ -67,64 +77,56 @@ NO HICE NADA"
 
   if (!btn || !input || !resBox || !resText) {
     console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
-    return;
-  }
+  } else {
+    btn.addEventListener('click', async () => {
+      const consulta = input.value.trim();
+      if (!consulta) {
+        input.focus();
+        return;
+      }
 
-  btn.addEventListener('click', async () => {
-    const consulta = input.value.trim();
-    if (!consulta) {
-      input.focus();
-      return;
-    }
+      const textoOriginal = btn.innerText;
+      btn.innerText = 'PENSANDO...';
+      btn.disabled = true;
 
-    const textoOriginal = btn.innerText;
-    btn.innerText = 'DICTANDO SENTENCIA...';
-    btn.disabled = true;
+      try {
+        const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: `
+El usuario falló en algo hoy: "${consulta}"
 
-    try {
-      const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: `
-CONTEXTO:
-El usuario admite EN QUÉ FALLÓ HOY: "${consulta}".
-
-OBJETIVO:
-EVITAR QUE ABANDONE.
-
-REGLAS:
-- UNA sola frase
-- Máximo 12 palabras
-- TODO en MAYÚSCULAS
-- Debe mencionar MAÑANA, VOLVER o DISCIPLINA
-
-DICTE SENTENCIA:
+Da orientación breve, humana y accionable.
+Una sola frase.
+Máximo 14 palabras.
+Todo en MAYÚSCULAS.
+Debe invitar a volver mañana sin culpa ni dureza innecesaria.
 `
-        })
-      });
+          })
+        });
 
-      const data = await r.json();
-      const frase = data.response || data.text || 'DISCIPLINA. MAÑANA SE VUELVE.';
+        const data = await r.json();
+        const frase = data.response || data.text || 'MAÑANA ES UNA NUEVA DECISIÓN.';
 
-      resText.innerText = frase;
-      resBox.classList.remove('hidden');
-      resBox.scrollIntoView({ behavior: 'smooth' });
+        resText.innerText = frase;
+        resBox.classList.remove('hidden');
+        resBox.scrollIntoView({ behavior: 'smooth' });
 
-    } catch (e) {
-      console.error(e);
-      resText.innerText = 'ERROR DE CONEXIÓN.';
-      resBox.classList.remove('hidden');
-    } finally {
-      btn.innerText = textoOriginal;
-      btn.disabled = false;
-    }
-  });
+      } catch (e) {
+        resText.innerText = 'HUBO UN ERROR. RESPIRA Y VUELVE A INTENTAR.';
+        resBox.classList.remove('hidden');
+      } finally {
+        btn.innerText = textoOriginal;
+        btn.disabled = false;
+      }
+    });
 
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      btn.click();
-    }
-  });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+  }
 </script>
