@@ -85,24 +85,17 @@ NO HICE NADA"
   <canvas id="hidden-canvas" style="display:none;"></canvas>
 </Layout>
 
-<script lang="ts" is:inline>
-  const btn = document.getElementById('btn-consultar') as HTMLButtonElement | null;
-  const input = document.getElementById('consulta-input') as HTMLTextAreaElement | null;
-  const resBox = document.getElementById('resultado-seccion') as HTMLDivElement | null;
-  const resText = document.getElementById('respuesta-texto') as HTMLParagraphElement | null;
+<script is:inline>
+ const btn = document.getElementById('btn-consultar');
+const input = document.getElementById('consulta-input');
+const resBox = document.getElementById('resultado-seccion');
+const resText = document.getElementById('respuesta-texto');
 
-  // Si algo no existe, salimos. Astro queda tranquilo.
-  if (!btn || !input || !resBox || !resText) {
-    console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
-  } else {
+if (!btn || !input || !resBox || !resText) {
+  console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
+  return;
+}
 
-    btn.addEventListener('click', async () => {
-      const consulta = input.value.trim();
-
-      if (!consulta) {
-        input.focus();
-        return;
-      }
 
       const textoOriginal = btn.innerText;
       btn.innerText = 'DICTANDO SENTENCIA...';
