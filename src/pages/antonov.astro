@@ -172,32 +172,37 @@ const metadata = {
         ctx.stroke();
       }
 
-      async function decodificar() {
-        const val = ui.input.value.trim();
-        if(!val) return;
-        
-        userQuestion = val;
-        ui.btn.textContent = "DECODIFICANDO...";
-        ui.btn.disabled = true;
+     async function decodificar() {
+  const val = ui.input.value.trim();
+  if (!val) return;
 
-        try {
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            body: JSON.stringify({
-              prompt: `Antonov, mentor radical. El usuario dice: "${val}". Responde con una verdad cruda de máximo 12 palabras. TODO MAYÚSCULAS.`
-            })
-          });
-          const data = await res.json();
-          antonovResponse = data.text;
-          render();
-        } catch(e) {
-          antonovResponse = "ERROR_DE_NÚCLEO";
-          render();
-        } finally {
-          ui.btn.textContent = "ANALIZAR";
-          ui.btn.disabled = false;
-        }
-      }
+  userQuestion = val;
+  ui.btn.textContent = "DECODIFICANDO...";
+  ui.btn.disabled = true;
+
+  try {
+    const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        prompt: `Antonov, mentor radical. El usuario dice: "${val}". Responde con una verdad cruda de máximo 12 palabras. TODO MAYÚSCULAS.`
+      })
+    });
+
+    if (!res.ok) throw new Error('Respuesta inválida');
+
+    const data = await res.json();
+    antonovResponse = data.text || "SILENCIO_SIGNIFICATIVO";
+  } catch (e) {
+    antonovResponse = "ERROR_DE_NÚCLEO";
+  } finally {
+    render();
+    ui.btn.textContent = "ANALIZAR";
+    ui.btn.disabled = false;
+  }
+}
 
       ui.btn.onclick = decodificar;
       ui.size.oninput = render;
