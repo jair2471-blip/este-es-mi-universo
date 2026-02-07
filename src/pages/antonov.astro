@@ -3,7 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
   title: 'ANTONOV | EL NÚCLEO',
-  description: 'Desfragmentación de consciencia y mentoría radical.',
+  description: 'Sistema de decodificación de realidad.',
 };
 ---
 
@@ -14,299 +14,226 @@ const metadata = {
     :root {
       --accent: #ffd700;
       --bg-dark: #0a0a0a;
-      --border-color: rgba(255, 215, 0, 0.15);
+      --border-color: rgba(255, 215, 0, 0.2);
     }
 
-    /* FORZAMOS EL CENTRADO TOTAL SIN QUE PAREZCA ALIENÍGENA */
-    :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
+    /* ELIMINAMOS MÁRGENES EXTERNOS QUE EMPUJAN EL CONTENIDO */
+    :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
-    .master-container {
-      width: 100%;
-      min-height: 100vh;
+    .master-wrapper {
+      width: 100vw;
+      height: 100vh;
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      font-family: 'Inter', sans-serif;
+      position: relative;
+      overflow: hidden; /* Evita scrolls fantasma */
     }
 
-    .app-core {
+    /* LA VENTANA DE LA APP - TAMAÑO FIJO PARA EVITAR QUE SE DESCUADRE */
+    .app-window {
       display: grid;
       grid-template-columns: 400px 1fr;
-      width: 100%;
-      max-width: 1300px;
-      height: 85vh;
+      width: 95%;
+      max-width: 1400px;
+      height: 85vh; /* Altura controlada */
       background: #0d0d0d;
       border: 1px solid var(--border-color);
-      border-radius: 4px; /* Menos redondeo, más industrial */
-      overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+      position: relative;
+      box-shadow: 0 0 50px rgba(0,0,0,1);
+      z-index: 10;
     }
 
-    /* SIDEBAR: EL PANEL DE CONTROL */
+    /* SIDEBAR CON SCROLL PROPIO SI ES NECESARIO */
     .sidebar {
       background: #080808;
-      padding: 50px 40px;
+      padding: 40px;
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      justify-content: space-between; /* Empuja el botón abajo */
+      overflow-y: auto;
     }
 
-    .brand-box h1 {
-      font-weight: 900;
-      font-size: 3.5rem;
-      letter-spacing: -3px;
-      margin: 0;
-      color: #fff;
-      line-height: 0.8;
-    }
+    .brand-area h1 { font-weight: 900; font-size: 3rem; color: #fff; margin: 0; line-height: 1; letter-spacing: -2px; }
+    .brand-area p { color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; margin-top: 10px; }
 
-    .brand-box p {
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 5px;
-      margin-top: 15px;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
-
-    .input-section label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 9px;
-      color: #444;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-      display: block;
-    }
-
+    .input-block { margin: 20px 0; }
+    .input-block label { font-family: 'JetBrains Mono'; font-size: 9px; color: #555; text-transform: uppercase; display: block; margin-bottom: 10px; }
+    
     textarea {
-      background: #000;
-      border: 1px solid #222;
-      color: #fff;
-      padding: 20px;
-      font-size: 14px;
-      width: 100%;
-      height: 160px;
-      resize: none;
-      font-family: 'Inter', sans-serif;
-      transition: 0.3s;
+      background: #000; border: 1px solid #222; color: #fff; padding: 15px;
+      font-size: 14px; width: 100%; height: 120px; resize: none; transition: 0.3s;
     }
+    textarea:focus { border-color: var(--accent); outline: none; }
 
-    textarea:focus {
-      border-color: var(--accent);
-      outline: none;
+    .btn-main {
+      background: #fff; color: #000; border: none; padding: 20px;
+      font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+      cursor: pointer; width: 100%; transition: 0.3s;
     }
+    .btn-main:hover { background: var(--accent); }
 
-    .main-btn {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 20px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 13px;
-    }
-
-    .main-btn:hover {
-      background: var(--accent);
-    }
-
-    .secondary-btns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .secondary-btns button {
-      background: none;
-      border: 1px solid #222;
-      color: #666;
-      padding: 12px;
-      font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .secondary-btns button:hover {
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* EL VISUALIZADOR: DONDE OCURRE LA MAGIA */
-    .display-area {
+    /* CONTENEDOR DEL CANVAS - EL CENTRO DEL UNIVERSO */
+    .canvas-viewport {
       background: #000;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px;
+      overflow: hidden; /* Asegura que el texto no se escape */
     }
 
-    canvas {
-      max-width: 100%;
-      max-height: 100%;
+    #mainCanvas {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain; /* Mantiene la proporción siempre */
     }
 
-    /* EFECTO DE PROCESAMIENTO (GLITCH SUTIL) */
-    .processing {
-      animation: pulse-bg 0.5s infinite alternate;
-    }
-
-    @keyframes pulse-bg {
-      from { opacity: 1; }
-      to { opacity: 0.7; }
-    }
-
+    /* RESPONSIVO */
     @media (max-width: 1100px) {
-      .app-core { grid-template-columns: 1fr; height: auto; border-radius: 0; }
-      .sidebar { padding: 30px; }
-      .master-container { padding: 0; }
+      .app-window { grid-template-columns: 1fr; height: 100vh; width: 100%; }
+      .sidebar { padding: 20px; height: auto; }
+      .canvas-viewport { height: 50vh; }
     }
   </style>
 
-  <div class="master-container">
-    <div class="app-core">
+  <div class="master-wrapper">
+    <div class="app-window">
       <aside class="sidebar">
-        <div class="brand-box">
+        <div class="brand-area">
           <h1>ANTONOV</h1>
-          <p>Protocolo de Verdad</p>
+          <p>PROTOCOLO DE VERDAD</p>
         </div>
 
-        <div class="input-section">
+        <div class="input-block">
           <label>Inyección de Pensamiento</label>
           <textarea id="userInput" placeholder="Escribe lo que te detiene..."></textarea>
+          
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top: 20px;">
+            <div>
+              <label>Matriz</label>
+              <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:8px; font-size:10px;">
+                <option value="post">CUADRADO</option>
+                <option value="story">VERTICAL</option>
+              </select>
+            </div>
+            <div>
+              <label>Escala</label>
+              <input type="range" id="sizeSlider" min="40" max="150" value="85" style="width:100%; accent-color:var(--accent);">
+            </div>
+          </div>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div class="input-section">
-                <label>Matriz</label>
-                <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:10px; font-size:11px;">
-                  <option value="post">1080x1080</option>
-                  <option value="story">1080x1920</option>
-                </select>
-            </div>
-            <div class="input-section">
-                <label>Escala</label>
-                <input type="range" id="sizeSlider" min="50" max="150" value="90" style="width:100%; accent-color:var(--accent);">
-            </div>
-        </div>
-
-        <button id="generateBtn" class="main-btn">PROCESAR REALIDAD</button>
-
-        <div class="secondary-btns">
-          <button id="downloadBtn">EXPORTAR .PNG</button>
-          <button id="randomBtn">MODO AZAR</button>
+        <div>
+          <button id="generateBtn" class="btn-main">PROCESAR REALIDAD</button>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+            <button id="downloadBtn" style="background:none; border:1px solid #222; color:#444; padding:10px; font-size:9px; cursor:pointer;">GUARDAR</button>
+            <button id="randomBtn" style="background:none; border:1px solid #222; color:#444; padding:10px; font-size:9px; cursor:pointer;">AZAR</button>
+          </div>
         </div>
       </aside>
 
-      <main class="display-area" id="displayArea">
+      <main class="canvas-viewport">
         <canvas id="mainCanvas"></canvas>
       </main>
     </div>
   </div>
 
   <script is:inline>
-    function startAntonov() {
+    function run() {
       const canvas = document.getElementById('mainCanvas');
       const ctx = canvas.getContext('2d');
       const ui = {
         input: document.getElementById('userInput'),
         format: document.getElementById('formatSelect'),
         size: document.getElementById('sizeSlider'),
-        btn: document.getElementById('generateBtn'),
-        display: document.getElementById('displayArea')
+        btn: document.getElementById('generateBtn')
       };
 
-      let text = "LA VERDAD NO NECESITA ADORNOS";
+      let currentText = "LA VERDAD NO NECESITA ADORNOS";
 
-      function draw() {
+      function render() {
         const isStory = ui.format.value === 'story';
-        const w = 1080, h = isStory ? 1920 : 1080;
-        canvas.width = w; canvas.height = h;
+        // Mantenemos la resolución alta pero el canvas se ajusta visualmente con CSS
+        canvas.width = 1080;
+        canvas.height = isStory ? 1920 : 1080;
 
-        // Fondo profundo
         ctx.fillStyle = '#050505';
-        ctx.fillRect(0, 0, w, h);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Grid sutilísimo
-        ctx.strokeStyle = 'rgba(255,215,0,0.03)';
+        // Decoración técnica
+        ctx.strokeStyle = 'rgba(255,215,0,0.05)';
         ctx.lineWidth = 1;
-        for(let i=0; i<w; i+=90) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
-        for(let j=0; j<h; j+=90) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
+        for(let i=0; i<canvas.width; i+=100) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,canvas.height); ctx.stroke(); }
 
-        // Texto
+        // Texto centrado matemáticamente
         const fontSize = parseInt(ui.size.value);
         ctx.font = `900 ${fontSize}px 'Inter'`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = '#fff';
 
-        // Sombra de impacto
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.2)';
-        ctx.shadowBlur = 20;
+        // Sombra para el glow del texto
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.3)';
+        ctx.shadowBlur = 15;
 
-        const words = text.toUpperCase().split(' ');
+        const words = currentText.toUpperCase().split(' ');
         let lines = [], line = '';
+        const maxW = canvas.width * 0.85;
+
         words.forEach(w => {
-          if(ctx.measureText(line + w).width < 900) line += w + ' ';
-          else { lines.push(line); line = w + ' '; }
+          let test = line + w + ' ';
+          if (ctx.measureText(test).width > maxW) {
+            lines.push(line);
+            line = w + ' ';
+          } else {
+            line = test;
+          }
         });
         lines.push(line);
 
-        lines.forEach((l, i) => {
-          ctx.fillText(l.trim(), w/2, (h/2) - ((lines.length-1)*fontSize/2) + (i*fontSize*1.1));
-        });
+        const totalHeight = lines.length * (fontSize * 1.15);
+        let startY = (canvas.height / 2) - (totalHeight / 2) + (fontSize / 2);
 
-        // Branding en el canvas
-        ctx.shadowBlur = 0;
-        ctx.font = "700 15px 'JetBrains Mono'";
-        ctx.fillStyle = '#ffd700';
-        ctx.letterSpacing = "10px";
-        ctx.fillText("ANTONOV // SISTEMA DE CLARIDAD", w/2, h - 100);
+        lines.forEach(l => {
+          ctx.fillText(l.trim(), canvas.width / 2, startY);
+          startY += fontSize * 1.15;
+        });
       }
 
-      async function process() {
+      async function api() {
         if(!ui.input.value.trim()) return;
-        ui.btn.disabled = true;
         ui.btn.textContent = "DECODIFICANDO...";
-        ui.display.classList.add('processing');
+        ui.btn.disabled = true;
 
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             body: JSON.stringify({
-              prompt: `Antonov, mentor radical. Usuario: "${ui.input.value}". 
-              Dile una verdad corta (máx 12 palabras) que lo obligue a pensar bien antes de quejarse. 
-              Tono serio, crudo, imponente. TODO MAYÚSCULAS.`
+              prompt: `Antonov, mentor radical. Usuario: "${ui.input.value}". Dile una verdad de máximo 12 palabras. Tono serio, sin adornos. TODO MAYÚSCULAS.`
             })
           });
           const data = await res.json();
-          text = data.text;
-          draw();
-        } catch(e) { 
-          text = "ERROR DE CONEXIÓN"; 
-          draw();
+          currentText = data.text;
+          render();
+        } catch(e) {
+          currentText = "ERROR DE CONEXIÓN";
+          render();
         } finally {
-          ui.btn.disabled = false;
           ui.btn.textContent = "PROCESAR REALIDAD";
-          ui.display.classList.remove('processing');
+          ui.btn.disabled = false;
         }
       }
 
-      ui.btn.onclick = process;
-      ui.format.onchange = draw;
-      ui.size.oninput = draw;
-      draw();
+      ui.btn.onclick = api;
+      ui.size.oninput = render;
+      ui.format.onchange = render;
+      render();
     }
 
-    document.addEventListener('DOMContentLoaded', startAntonov);
-    document.addEventListener('astro:page-load', startAntonov);
+    document.addEventListener('DOMContentLoaded', run);
+    document.addEventListener('astro:page-load', run);
   </script>
 </Layout>
