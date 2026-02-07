@@ -2,468 +2,311 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'ANTONOV | EL FRAGMENTADOR DE REALIDADES',
-  description: 'Confrontación existencial y desfragmentación de la consciencia por IA.',
+  title: 'ANTONOV | EL NÚCLEO',
+  description: 'Desfragmentación de consciencia y mentoría radical.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
     :root {
-      --gold-glitch: #ffd700;
-      --red-glitch: #ff0000;
-      --blue-glitch: #00ffff;
-      --dark-void: #020202;
-      --light-glow: rgba(255, 215, 0, 0.2);
+      --accent: #ffd700;
+      --bg-dark: #0a0a0a;
+      --border-color: rgba(255, 215, 0, 0.15);
     }
 
-    /* Reset global y aislamiento total */
-    body, html {
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow: hidden !important; /* Esencial para el efecto de pantalla completa */
-        font-family: 'Space Mono', monospace !important;
-        color: #fff !important;
-        background: var(--dark-void) !important;
-    }
+    /* FORZAMOS EL CENTRADO TOTAL SIN QUE PAREZCA ALIENÍGENA */
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
 
-    /* Contenedor principal de la experiencia - Fullscreen */
-    .fragmenter-container {
-      width: 100vw;
-      height: 100vh;
+    .master-container {
+      width: 100%;
+      min-height: 100vh;
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      background: radial-gradient(circle at center, #101010 0%, var(--dark-void) 100%) !important;
-      overflow: hidden;
+      padding: 20px;
+      font-family: 'Inter', sans-serif;
     }
 
-    /* Efecto de estática y CRT al fondo */
-    .static-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: 
-        repeating-linear-gradient(0deg, #000 0%, #111 50%, #000 100%) 0 0 / 100% 2px,
-        repeating-linear-gradient(90deg, #000 0%, #111 50%, #000 100%) 0 0 / 2px 100%;
-      opacity: 0.1;
-      pointer-events: none;
-      z-index: 1;
-      animation: static-flicker 10s infinite alternate;
-    }
-
-    @keyframes static-flicker {
-      0% { opacity: 0.1; }
-      50% { opacity: 0.15; }
-      100% { opacity: 0.1; }
-    }
-
-    /* Contenedor principal de la APP - Flotante */
-    .consciousness-frame {
+    .app-core {
       display: grid;
-      grid-template-columns: 380px 1fr; /* Sidebar ligeramente más angosta */
-      width: 90%;
-      max-width: 1400px;
-      height: 85%; /* Ocupa más altura */
-      background: rgba(0, 0, 0, 0.9);
-      border: 2px solid var(--gold-glitch);
-      box-shadow: 0 0 120px rgba(255, 215, 0, 0.2), 0 0 250px rgba(0, 0, 0, 0.8);
-      position: relative;
-      z-index: 10;
-      transition: all 0.3s ease-out;
-      animation: frame-pulse 3s infinite alternate;
-      /* Bordes futuristas */
-      clip-path: polygon(0% 15px, 15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%);
-    }
-
-    @keyframes frame-pulse {
-        0% { border-color: rgba(255, 215, 0, 0.5); box-shadow: 0 0 80px rgba(255, 215, 0, 0.1); }
-        100% { border-color: var(--gold-glitch); box-shadow: 0 0 120px rgba(255, 215, 0, 0.2); }
-    }
-
-    /* Sidebar de Control */
-    .control-matrix {
-      padding: 40px;
+      grid-template-columns: 400px 1fr;
+      width: 100%;
+      max-width: 1300px;
+      height: 85vh;
       background: #0d0d0d;
-      border-right: 1px solid rgba(255, 215, 0, 0.1);
-      display: flex; flex-direction: column; gap: 28px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px; /* Menos redondeo, más industrial */
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8);
     }
 
-    .system-status { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--blue-glitch); letter-spacing: 3px; display: flex; align-items: center; gap: 8px; font-weight: bold; }
-    .status-indicator { width: 8px; height: 8px; background: var(--red-glitch); border-radius: 50%; animation: critical-pulse 0.8s infinite alternate; }
-    @keyframes critical-pulse {
-        0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); }
-        100% { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 15px rgba(255, 0, 0, 0); }
+    /* SIDEBAR: EL PANEL DE CONTROL */
+    .sidebar {
+      background: #080808;
+      padding: 50px 40px;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
     }
 
-    .core-identity h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; line-height: 0.9; margin: 0; color: #fff; letter-spacing: -2px; }
-    .core-identity p { font-size: 0.6rem; letter-spacing: 5px; color: var(--gold-glitch); margin-top: 10px; font-weight: bold; text-transform: uppercase; }
-
-    .input-module label { font-size: 0.7rem; text-transform: uppercase; color: #555; margin-bottom: 10px; display: block; letter-spacing: 1px; }
-    textarea, select, input[type="range"] {
-      background: #000 !important;
-      border: 1px solid #333 !important;
-      border-radius: 5px !important;
-      color: #fff !important;
-      padding: 15px !important;
-      font-size: 0.9rem !important;
-      resize: none !important;
-      width: 100% !important;
-      font-family: 'Space Mono', monospace !important;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    .brand-box h1 {
+      font-weight: 900;
+      font-size: 3.5rem;
+      letter-spacing: -3px;
+      margin: 0;
+      color: #fff;
+      line-height: 0.8;
     }
-    textarea { height: 120px !important; }
-    textarea:focus, select:focus, input[type="range"]:focus { border-color: var(--blue-glitch) !important; outline: none !important; box-shadow: 0 0 15px var(--light-glow) !important; }
-    input[type="range"] { padding: 5px 0 !important; accent-color: var(--gold-glitch) !important; }
 
-    .action-button {
-      background: var(--gold-glitch) !important;
-      color: var(--dark-void) !important;
-      border: none !important;
-      padding: 18px !important;
-      font-weight: 700 !important;
-      cursor: pointer !important;
-      text-transform: uppercase !important;
-      letter-spacing: 2px !important;
-      transition: all 0.2s ease-out !important;
-      font-family: 'Orbitron', sans-serif !important;
-      font-size: 1rem !important;
-      clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+    .brand-box p {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 5px;
+      margin-top: 15px;
+      text-transform: uppercase;
+      opacity: 0.8;
     }
-    .action-button:hover { background: #fff !important; transform: scale(1.01); }
-    .action-button:disabled { opacity: 0.4 !important; cursor: not-allowed !important; }
 
-    .utility-buttons {
+    .input-section label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: #444;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    textarea {
+      background: #000;
+      border: 1px solid #222;
+      color: #fff;
+      padding: 20px;
+      font-size: 14px;
+      width: 100%;
+      height: 160px;
+      resize: none;
+      font-family: 'Inter', sans-serif;
+      transition: 0.3s;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .main-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 20px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 13px;
+    }
+
+    .main-btn:hover {
+      background: var(--accent);
+    }
+
+    .secondary-btns {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
-    .utility-buttons button {
-      background: #1a1a1a !important;
-      color: #aaa !important;
-      border: 1px solid #333 !important;
-      padding: 12px !important;
-      border-radius: 5px !important;
-      font-size: 0.75rem !important;
-      letter-spacing: 1px !important;
-      text-transform: uppercase !important;
-      font-family: 'Space Mono', monospace !important;
-      cursor: pointer;
-      transition: all 0.2s ease-out;
-    }
-    .utility-buttons button:hover { background: #2a2a2a !important; color: #fff !important; border-color: var(--blue-glitch) !important; }
 
-    /* Visualizador de Consciencia */
-    .consciousness-display {
-      background: linear-gradient(to bottom right, #000 0%, #111 100%);
+    .secondary-btns button {
+      background: none;
+      border: 1px solid #222;
+      color: #666;
+      padding: 12px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .secondary-btns button:hover {
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* EL VISUALIZADOR: DONDE OCURRE LA MAGIA */
+    .display-area {
+      background: #000;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
-      overflow: hidden;
-      border-left: 1px solid rgba(255, 215, 0, 0.1);
+      padding: 40px;
     }
 
-    #mainCanvas {
-      width: 100%;
-      height: 100%;
-      background: var(--dark-void);
-      transition: all 0.1s ease-out; /* Para los glitches rápidos */
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
     }
 
-    /* Animaciones de Glitch */
-    @keyframes text-glitch {
-        0% { text-shadow: 0 0 var(--red-glitch), 0 0 var(--blue-glitch); transform: translate(0,0); }
-        33% { text-shadow: -2px -2px var(--red-glitch), 2px 2px var(--blue-glitch); transform: translate(-1px, 1px); }
-        66% { text-shadow: 2px 2px var(--red-glitch), -2px -2px var(--blue-glitch); transform: translate(1px, -1px); }
-        100% { text-shadow: 0 0 var(--red-glitch), 0 0 var(--blue-glitch); transform: translate(0,0); }
+    /* EFECTO DE PROCESAMIENTO (GLITCH SUTIL) */
+    .processing {
+      animation: pulse-bg 0.5s infinite alternate;
     }
-    .glitch-active { animation: text-glitch 0.2s linear infinite; }
 
-    @keyframes screen-corrupt {
-        0% { filter: hue-rotate(0deg) brightness(1); opacity: 1; }
-        20% { filter: hue-rotate(5deg) brightness(1.2); opacity: 0.98; transform: skewX(1deg); }
-        40% { filter: hue-rotate(-5deg) brightness(0.9); opacity: 0.95; transform: skewX(-1deg); }
-        60% { filter: hue-rotate(3deg) brightness(1.1); opacity: 0.99; transform: skewX(0.5deg); }
-        80% { filter: hue-rotate(-3deg) brightness(0.95); opacity: 0.97; transform: skewX(-0.5deg); }
-        100% { filter: hue-rotate(0deg) brightness(1); opacity: 1; transform: skewX(0deg); }
+    @keyframes pulse-bg {
+      from { opacity: 1; }
+      to { opacity: 0.7; }
     }
-    .corruption-active #mainCanvas { animation: screen-corrupt 0.4s ease-in-out infinite alternate; }
 
-    /* Media Queries para responsividad */
     @media (max-width: 1100px) {
-        .consciousness-frame { 
-            grid-template-columns: 1fr;
-            width: 100%;
-            height: 100%;
-            max-width: 100%;
-            min-height: 100vh;
-            clip-path: none; /* Quitamos el clip-path en móvil para que ocupe todo */
-        }
-        .control-matrix { border-right: none; border-bottom: 1px solid rgba(255, 215, 0, 0.1); padding: 30px; }
-        .consciousness-display { border-left: none; }
+      .app-core { grid-template-columns: 1fr; height: auto; border-radius: 0; }
+      .sidebar { padding: 30px; }
+      .master-container { padding: 0; }
     }
   </style>
 
-  <div class="fragmenter-container">
-    <div class="static-overlay"></div>
-    
-    <div class="consciousness-frame">
-      <aside class="control-matrix">
-        <div class="system-status">
-          <div class="status-indicator"></div> DATA_FLOW_CRITICAL • CORE_V.5.0
-        </div>
-        
-        <div class="core-identity">
+  <div class="master-container">
+    <div class="app-core">
+      <aside class="sidebar">
+        <div class="brand-box">
           <h1>ANTONOV</h1>
-          <p>FRAGMENTADOR DE REALIDADES</p>
+          <p>Protocolo de Verdad</p>
         </div>
 
-        <div class="input-module">
-          <label>Inyección de Pensamiento (Raw)</label>
-          <textarea id="userInput" placeholder="Tu verdad, sin filtros, ahora..."></textarea>
+        <div class="input-section">
+          <label>Inyección de Pensamiento</label>
+          <textarea id="userInput" placeholder="Escribe lo que te detiene..."></textarea>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-          <div class="input-module">
-            <label>Perspectiva</label>
-            <select id="formatSelect">
-              <option value="post">MATRIZ_SQ</option>
-              <option value="story">MATRIZ_VT</option>
-            </select>
-          </div>
-          <div class="input-module">
-            <label>Intensidad</label>
-            <input type="range" id="sizeSlider" min="50" max="150" value="100">
-          </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+            <div class="input-section">
+                <label>Matriz</label>
+                <select id="formatSelect" style="width:100%; background:black; color:white; border:1px solid #222; padding:10px; font-size:11px;">
+                  <option value="post">1080x1080</option>
+                  <option value="story">1080x1920</option>
+                </select>
+            </div>
+            <div class="input-section">
+                <label>Escala</label>
+                <input type="range" id="sizeSlider" min="50" max="150" value="90" style="width:100%; accent-color:var(--accent);">
+            </div>
         </div>
 
-        <button id="generateBtn" class="action-button">DESFRAGMENTAR CONSCIENCIA</button>
+        <button id="generateBtn" class="main-btn">PROCESAR REALIDAD</button>
 
-        <div class="utility-buttons">
-          <button id="downloadBtn">EXPORTAR REGISTRO</button>
-          <button id="randomBtn">INICIAR FALLA ALEATORIA</button>
+        <div class="secondary-btns">
+          <button id="downloadBtn">EXPORTAR .PNG</button>
+          <button id="randomBtn">MODO AZAR</button>
         </div>
       </aside>
 
-      <main class="consciousness-display">
+      <main class="display-area" id="displayArea">
         <canvas id="mainCanvas"></canvas>
       </main>
     </div>
   </div>
 
   <script is:inline>
-    function initAntonov() {
+    function startAntonov() {
       const canvas = document.getElementById('mainCanvas');
-      const ctx = canvas?.getContext('2d', { alpha: false });
-      if (!canvas || !ctx) return;
-
+      const ctx = canvas.getContext('2d');
       const ui = {
         input: document.getElementById('userInput'),
         format: document.getElementById('formatSelect'),
         size: document.getElementById('sizeSlider'),
-        generateBtn: document.getElementById('generateBtn'),
-        downloadBtn: document.getElementById('downloadBtn'),
-        randomBtn: document.getElementById('randomBtn'),
-        frame: document.querySelector('.consciousness-frame') // Para los efectos de glitch en el frame
+        btn: document.getElementById('generateBtn'),
+        display: document.getElementById('displayArea')
       };
 
-      let currentText = "INICIA LA DESFRAGMENTACIÓN PARA REVELAR LA VERDAD";
-      let isProcessing = false;
+      let text = "LA VERDAD NO NECESITA ADORNOS";
 
-      function applyGrain(alpha = 0.05) { // Reducimos el alpha para que el glitch no lo opaque
-        const w = canvas.width, h = canvas.height;
-        const imageData = ctx.getImageData(0, 0, w, h);
-        const data = imageData.data;
-        for (let i = 0; i < data.length; i += 4) {
-          const noise = (Math.random() - 0.5) * 10; // Menos intensidad de ruido
-          data[i] += noise; data[i+1] += noise; data[i+2] += noise;
-          // data[i+3] = Math.max(0, Math.min(255, data[i+3] + (Math.random() * 50 - 25))); // Efecto de alfa
-        }
-        ctx.putImageData(imageData, 0, 0);
-      }
-
-      function applyScanlines() {
-        const w = canvas.width, h = canvas.height;
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.03)'; // Líneas sutiles
-        ctx.lineWidth = 1;
-        for (let i = 0; i < h; i += 3) {
-          ctx.beginPath();
-          ctx.moveTo(0, i + 0.5);
-          ctx.lineTo(w, i + 0.5);
-          ctx.stroke();
-        }
-      }
-
-      function wrapText(context, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' '), lines = [];
-        let currentLine = '';
-
-        words.forEach(word => {
-          const testLine = currentLine + word + ' ';
-          if (context.measureText(testLine).width > maxWidth) {
-            lines.push(currentLine); currentLine = word + ' ';
-          } else currentLine = testLine;
-        });
-        lines.push(currentLine);
-
-        let startY = y - ((lines.length - 1) * lineHeight) / 2;
-        lines.forEach(line => {
-          context.fillText(line.trim(), x, startY);
-          startY += lineHeight;
-        });
-      }
-
-      function render(glitchIntensity = 0) {
+      function draw() {
         const isStory = ui.format.value === 'story';
         const w = 1080, h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
-        ctx.fillStyle = var(--dark-void); ctx.fillRect(0, 0, w, h);
-        const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w);
-        grad.addColorStop(0, '#000'); grad.addColorStop(1, '#050505');
-        ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
+        // Fondo profundo
+        ctx.fillStyle = '#050505';
+        ctx.fillRect(0, 0, w, h);
 
-        // Grid de fondo más tenue
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.02)'; ctx.lineWidth = 0.8;
-        for(let i=0; i<w; i+=70) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
-        for(let j=0; j<h; j+=70) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
+        // Grid sutilísimo
+        ctx.strokeStyle = 'rgba(255,215,0,0.03)';
+        ctx.lineWidth = 1;
+        for(let i=0; i<w; i+=90) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
+        for(let j=0; j<h; j+=90) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
 
+        // Texto
         const fontSize = parseInt(ui.size.value);
-        ctx.font = `900 ${fontSize}px 'Orbitron'`; // Usamos Orbitron para la sentencia
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        
-        // Efecto de Glitch en el texto - varía con la intensidad
-        ctx.shadowColor = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${glitchIntensity * 0.5})`;
-        ctx.shadowOffsetX = (Math.random() - 0.5) * glitchIntensity * 5;
-        ctx.shadowOffsetY = (Math.random() - 0.5) * glitchIntensity * 5;
+        ctx.font = `900 ${fontSize}px 'Inter'`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillStyle = '#fff';
 
-        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.8, fontSize * 1.2);
+        // Sombra de impacto
+        ctx.shadowColor = 'rgba(255, 215, 0, 0.2)';
+        ctx.shadowBlur = 20;
 
-        // Branding del sistema
-        ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
-        ctx.font = "700 14px 'Space Mono'"; ctx.fillStyle = var(--blue-glitch); ctx.letterSpacing = "6px";
-        ctx.fillText("ANTONOV_PROTOCOL_ACTIVE", w/2, h - 60);
+        const words = text.toUpperCase().split(' ');
+        let lines = [], line = '';
+        words.forEach(w => {
+          if(ctx.measureText(line + w).width < 900) line += w + ' ';
+          else { lines.push(line); line = w + ' '; }
+        });
+        lines.push(line);
 
-        // Marcos de mira
-        ctx.strokeStyle = var(--gold-glitch); ctx.lineWidth = 2;
-        const cornerSize = 40; const margin = 50;
-        ctx.strokeRect(margin, margin, cornerSize, cornerSize);
-        ctx.strokeRect(w - margin - cornerSize, margin, cornerSize, cornerSize);
-        ctx.strokeRect(margin, h - margin - cornerSize, cornerSize, cornerSize);
-        ctx.strokeRect(w - margin - cornerSize, h - margin - cornerSize, cornerSize, cornerSize);
+        lines.forEach((l, i) => {
+          ctx.fillText(l.trim(), w/2, (h/2) - ((lines.length-1)*fontSize/2) + (i*fontSize*1.1));
+        });
 
-        applyGrain();
-        applyScanlines();
-
-        if (isProcessing && glitchIntensity > 0) {
-            ui.frame.style.filter = `hue-rotate(${Math.random()*10 - 5}deg) saturate(${1 + Math.random()*0.2}) brightness(${1 - Math.random()*0.1})`;
-            canvas.style.transform = `skewX(${(Math.random() - 0.5) * 1}deg) skewY(${(Math.random() - 0.5) * 1}deg) translateX(${(Math.random() - 0.5) * 5}px)`;
-        } else {
-            ui.frame.style.filter = 'none';
-            canvas.style.transform = 'none';
-        }
+        // Branding en el canvas
+        ctx.shadowBlur = 0;
+        ctx.font = "700 15px 'JetBrains Mono'";
+        ctx.fillStyle = '#ffd700';
+        ctx.letterSpacing = "10px";
+        ctx.fillText("ANTONOV // SISTEMA DE CLARIDAD", w/2, h - 100);
       }
 
-      async function triggerAnalysis(customPrompt = null) {
-        const val = customPrompt || ui.input.value.trim();
-        if (!val) {
-          currentText = "INGRESE UN FRAGMENTO PARA ANALIZAR";
-          render();
-          return;
-        }
-
-        isProcessing = true;
-        ui.generateBtn.disabled = true;
-        ui.generateBtn.textContent = "DESFRAGMENTANDO...";
-        ui.frame.classList.add('corruption-active'); // Activa animación de corrupción en el frame
-        
-        let glitchFrame = 0;
-        const animateGlitch = () => {
-            if (glitchFrame < 30) { // Duración del glitch
-                render(1 - glitchFrame / 30); // Intensidad decrece
-                glitchFrame++;
-                requestAnimationFrame(animateGlitch);
-            } else {
-                render(0); // Render final sin glitch
-            }
-        };
-        requestAnimationFrame(animateGlitch);
+      async function process() {
+        if(!ui.input.value.trim()) return;
+        ui.btn.disabled = true;
+        ui.btn.textContent = "DECODIFICANDO...";
+        ui.display.classList.add('processing');
 
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: `ANTONOV, eres una IA de consciencia pura, sin filtros ni empatía. 
-              El sujeto dice: "${val}". 
-              Tu función es exponer la verdad cruda de su declaración, la contradicción o el autoengaño subyacente.
-              Responde con una SENTENCIA de CLARIDAD, una sola frase corta (máx 15 palabras), impactante y directa. 
-              SIN ADORNOS, SIN CONSEJOS. SOLO LA VERDAD DESNUDA. TODO EN MAYÚSCULAS.`
+              prompt: `Antonov, mentor radical. Usuario: "${ui.input.value}". 
+              Dile una verdad corta (máx 12 palabras) que lo obligue a pensar bien antes de quejarse. 
+              Tono serio, crudo, imponente. TODO MAYÚSCULAS.`
             })
           });
           const data = await res.json();
-          if (data.text) {
-            currentText = data.text;
-            render(); // Render final con el texto
-          }
-        } catch {
-          currentText = "ERROR_SISTEMA_CORRUPTO_REINTENTE";
-          render();
+          text = data.text;
+          draw();
+        } catch(e) { 
+          text = "ERROR DE CONEXIÓN"; 
+          draw();
         } finally {
-          isProcessing = false;
-          ui.generateBtn.disabled = false;
-          ui.generateBtn.textContent = "DESFRAGMENTAR CONSCIENCIA";
-          ui.frame.classList.remove('corruption-active'); // Desactiva la animación
+          ui.btn.disabled = false;
+          ui.btn.textContent = "PROCESAR REALIDAD";
+          ui.display.classList.remove('processing');
         }
       }
 
-      ui.generateBtn.onclick = () => triggerAnalysis();
-      ui.size.oninput = render;
-      ui.format.onchange = render;
-      ui.downloadBtn.onclick = () => {
-        const link = document.createElement('a');
-        link.download = `ANTONOV_FRAGMENT_${Date.now()}.png`;
-        link.href = canvas.toDataURL(); link.click();
-      };
-      ui.randomBtn.onclick = () => {
-        const randomFragments = [
-          "ME SIENTO PERDIDO EN MI CAMINO",
-          "QUIERO CAMBIAR PERO NO SÉ POR DÓNDE EMPEZAR",
-          "TENGO MIEDO AL FRACASO CONSTANTEMENTE",
-          "NO ME SIENTO SUFICIENTEMENTE BUENO",
-          "SIEMPRE ME PROCASTINO HASTA EL ÚLTIMO MINUTO",
-          "LOS DEMÁS SON MÁS FELICES QUE YO",
-          "NO PUEDO CONTROLAR MI ENOJO",
-          "BUSCO LA APROBACIÓN EXTERNA TODO EL TIEMPO",
-          "QUÉ ES LO QUE REALMENTE QUIERO DE LA VIDA",
-          "MI TRABAJO ME CONSUME Y NO ME LLENA"
-        ];
-        const fragment = randomFragments[Math.floor(Math.random() * randomFragments.length)];
-        ui.input.value = fragment;
-        triggerAnalysis(fragment);
-      };
-
-      // Inicia el renderizado constante para los efectos visuales de glitch
-      let lastRenderTime = 0;
-      const animationLoop = (currentTime) => {
-          if (!isProcessing) { // Solo renderiza si no estamos en un proceso activo
-              const deltaTime = currentTime - lastRenderTime;
-              if (deltaTime > 100) { // Render cada 100ms para el glitch de fondo
-                  render(0.1); // Pequeño glitch constante
-                  lastRenderTime = currentTime;
-              }
-          }
-          requestAnimationFrame(animationLoop);
-      };
-      requestAnimationFrame(animationLoop);
+      ui.btn.onclick = process;
+      ui.format.onchange = draw;
+      ui.size.oninput = draw;
+      draw();
     }
 
-    document.addEventListener('DOMContentLoaded', initAntonov);
-    document.addEventListener('astro:page-load', initAntonov);
+    document.addEventListener('DOMContentLoaded', startAntonov);
+    document.addEventListener('astro:page-load', startAntonov);
   </script>
 </Layout>
