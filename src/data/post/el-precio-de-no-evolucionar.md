@@ -4,7 +4,7 @@ description: "La superación personal no es motivación ni frases bonitas: es in
 pubDate: 2026-02-07
 author: "El Universo de la Mente"
 excerpt: "Nadie va a decirte que necesitas cambiar. La incomodidad del estancamiento solo la sientes tú. Este texto no inspira: confronta."
-image: https://images.unsplash.com/photo-1474204075013-fafcfee9bfd7?q=80&w=1200&h=670&fit=crop&crop=center&auto=format&fm=avif
+image: https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=1200&h=670&fit=crop&crop=center&auto=format&fm=avif
 tags: ["superación personal", "disciplina", "crecimiento personal", "mentalidad", "incomodidad", "evolución"]
 slug: "el-precio-de-no-evolucionar"
 ---
