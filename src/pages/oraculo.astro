@@ -4,7 +4,6 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="ORÁCULO DE HIERRO | Sentencia de la Calle">
   <div class="min-h-screen bg-[#050505] text-white font-sans flex flex-col items-center justify-center p-4 md:p-8 selection:bg-yellow-600">
-    
     <div class="max-w-2xl w-full">
 
       <!-- HEADER -->
@@ -45,7 +44,6 @@ NO HICE NADA"
 
         <!-- RESULTADO -->
         <div id="resultado-seccion" class="hidden space-y-10 pt-10">
-
           <div class="bg-zinc-950 border-2 border-yellow-600 p-10 rounded-sm relative overflow-hidden">
             <div class="absolute top-4 left-4 text-6xl text-zinc-900 font-serif">"</div>
             <div class="absolute bottom-4 right-4 text-6xl text-zinc-900 font-serif">"</div>
@@ -54,109 +52,79 @@ NO HICE NADA"
               class="text-4xl md:text-5xl font-black uppercase italic text-center leading-tight">
             </p>
           </div>
-
-          <!-- ACCIONES -->
-          <div class="space-y-4">
-            <button
-              id="btn-compartir-nativa"
-              class="w-full bg-yellow-600 text-black font-black py-5 uppercase tracking-[0.3em]">
-              📜 COMPARTIR DICTAMEN
-            </button>
-
-            <div class="grid grid-cols-4 gap-2 pt-4 border-t border-zinc-900">
-              <button data-format="post" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">POST</button>
-              <button data-format="story" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">STORY</button>
-              <button data-format="fb" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">FB</button>
-              <button data-format="tw" class="btn-download border border-zinc-800 p-4 text-[10px] uppercase">TW</button>
-            </div>
-          </div>
         </div>
-      </div>
 
-      <!-- FOOTER -->
-      <div class="text-center mt-20 opacity-40">
-        <p class="text-zinc-700 text-[9px] uppercase tracking-widest">
-          La sentencia es inapelable
-        </p>
       </div>
     </div>
   </div>
-
-  <canvas id="hidden-canvas" style="display:none;"></canvas>
 </Layout>
 
 <script is:inline>
- const btn = document.getElementById('btn-consultar');
-const input = document.getElementById('consulta-input');
-const resBox = document.getElementById('resultado-seccion');
-const resText = document.getElementById('respuesta-texto');
+  const btn = document.getElementById('btn-consultar');
+  const input = document.getElementById('consulta-input');
+  const resBox = document.getElementById('resultado-seccion');
+  const resText = document.getElementById('respuesta-texto');
 
-if (!btn || !input || !resBox || !resText) {
-  console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
-  return;
-}
+  if (!btn || !input || !resBox || !resText) {
+    console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
+    return;
+  }
 
+  btn.addEventListener('click', async () => {
+    const consulta = input.value.trim();
+    if (!consulta) {
+      input.focus();
+      return;
+    }
 
-      const textoOriginal = btn.innerText;
-      btn.innerText = 'DICTANDO SENTENCIA...';
-      btn.disabled = true;
+    const textoOriginal = btn.innerText;
+    btn.innerText = 'DICTANDO SENTENCIA...';
+    btn.disabled = true;
 
-      try {
-        const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: `
+    try {
+      const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt: `
 CONTEXTO:
 El usuario admite EN QUÉ FALLÓ HOY: "${consulta}".
-No busca consuelo. Busca dirección.
 
-TU PERSONALIDAD:
-Autoridad serena. Lenguaje elegante y firme.
-Hablas como un líder que espera excelencia.
+OBJETIVO:
+EVITAR QUE ABANDONE.
 
-OBJETIVO ÚNICO:
-EVITAR QUE EL USUARIO ABANDONE.
-Convertir el error de hoy en una decisión clara de volver mañana.
-
-REGLAS OBLIGATORIAS:
+REGLAS:
 - UNA sola frase
 - Máximo 12 palabras
 - TODO en MAYÚSCULAS
 - Debe mencionar MAÑANA, VOLVER o DISCIPLINA
-- Acción clara, sin metáforas complejas
-
-USUARIO: ${consulta}
 
 DICTE SENTENCIA:
 `
-          })
-        });
+        })
+      });
 
-        const data = await r.json();
-        const frase = data.response || data.text || 'EL SILENCIO ES LA RESPUESTA.';
+      const data = await r.json();
+      const frase = data.response || data.text || 'DISCIPLINA. MAÑANA SE VUELVE.';
 
-        resText.innerText = frase;
-        resBox.classList.remove('hidden');
-        resBox.scrollIntoView({ behavior: 'smooth' });
+      resText.innerText = frase;
+      resBox.classList.remove('hidden');
+      resBox.scrollIntoView({ behavior: 'smooth' });
 
-      } catch (error) {
-        console.error(error);
-        resText.innerText = 'ERROR EN LA CONEXIÓN. INTENTA DE NUEVO.';
-        resBox.classList.remove('hidden');
-      } finally {
-        btn.innerText = textoOriginal;
-        btn.disabled = false;
-      }
-    });
+    } catch (e) {
+      console.error(e);
+      resText.innerText = 'ERROR DE CONEXIÓN.';
+      resBox.classList.remove('hidden');
+    } finally {
+      btn.innerText = textoOriginal;
+      btn.disabled = false;
+    }
+  });
 
-    input.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        btn.click();
-      }
-    });
-
-  }
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      btn.click();
+    }
+  });
 </script>
-
