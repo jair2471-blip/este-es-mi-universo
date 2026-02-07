@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; // Quitamos useRef
-import { Sparkles, Orbit, Rocket, Star, Atom, Moon, Sun, Brain, X } from 'lucide-react'; 
+import { Orbit, Rocket, Star, Atom, Moon, Sun, Brain, X } from 'lucide-react';
 // Quitamos Zap, Globe, Radio, Send, Download que no se usaban
 
 const SABIDURIA_COSMICA = {
