@@ -3,12 +3,18 @@ import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
   title: 'ANTONOV | EL NÚCLEO',
+  description: 'Sistema de decodificación de realidad.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+      --accent: #ffd700;
+      --border-color: #333;
+    }
 
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
@@ -19,86 +25,93 @@ const metadata = {
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       color: white;
       font-family: 'Inter', sans-serif;
     }
 
     .app-container {
       display: grid;
-      grid-template-columns: 350px 1fr;
-      width: 90%;
-      max-width: 1200px;
-      height: 80vh;
-      border: 1px solid #333;
+      grid-template-columns: 380px 1fr;
+      width: 95%;
+      max-width: 1300px;
+      height: 85vh;
       background: #000;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 0 50px rgba(0,0,0,1);
     }
 
     .sidebar {
-      padding: 30px;
-      border-right: 1px solid #333;
+      background: #080808;
+      padding: 35px;
+      border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      justify-content: space-between;
     }
+
+    .brand-area h1 { font-weight: 900; font-size: 2.8rem; color: #fff; margin: 0; letter-spacing: -2px; line-height: 1; }
+    
+    .input-group { margin-top: 30px; }
+    .input-group label { font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px; text-transform: uppercase; }
+
+    textarea {
+      background: #111; border: 1px solid #333; color: #fff; padding: 15px;
+      font-size: 14px; width: 100%; height: 120px; resize: none; 
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-main {
+      background: #fff; color: #000; border: none; padding: 20px;
+      font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%;
+      transition: 0.3s; font-family: 'Inter';
+    }
+    .btn-main:hover { background: var(--accent); }
 
     .canvas-area {
       background: #080808;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 30px;
       overflow: hidden;
     }
 
     #mainCanvas {
-      background: #000;
       max-width: 100%;
       max-height: 100%;
-      height: auto;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1/1;
       border: 1px solid #222;
+      background: #000;
     }
 
-    textarea {
-      width: 100%;
-      height: 100px;
-      background: #111;
-      border: 1px solid #444;
-      color: white;
-      padding: 10px;
-      font-family: 'JetBrains Mono', monospace;
+    @media (max-width: 1100px) {
+      .app-container { grid-template-columns: 1fr; height: auto; overflow-y: auto; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .canvas-area { height: 60vh; }
     }
-
-    .btn {
-      background: white;
-      color: black;
-      padding: 15px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    .btn:hover { background: #ffd700; }
   </style>
 
   <div class="master-wrapper">
     <div class="app-container">
       <aside class="sidebar">
-        <h2 style="margin:0; font-size: 2rem;">ANTONOV</h2>
-        <p style="font-size: 0.7rem; color: #ffd700; letter-spacing: 2px;">V.6.0_STABLE</p>
-        
-        <div style="margin-top: 20px;">
-          <label style="font-size: 0.6rem; color: #666; display:block; margin-bottom:5px;">PENSAMIENTO</label>
-          <textarea id="userInput" placeholder="Escribe aquí..."></textarea>
+        <div class="brand-area">
+          <h1>ANTONOV</h1>
+          <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; margin: 10px 0 0 0;">V.6.0_PROTOCOLO</p>
+          
+          <div class="input-group">
+            <label>Inyección de Pensamiento</label>
+            <textarea id="userInput" placeholder="¿Qué quieres procesar?"></textarea>
+          </div>
         </div>
 
-        <div style="margin-top: 10px;">
-          <label style="font-size: 0.6rem; color: #666; display:block; margin-bottom:5px;">ZOOM TEXTO</label>
-          <input type="range" id="sizeSlider" min="40" max="120" value="70" style="width:100%;">
+        <div>
+          <div style="margin-bottom: 25px;">
+            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px;">ZOOM DE RESPUESTA</label>
+            <input type="range" id="sizeSlider" min="40" max="140" value="85" style="width:100%; accent-color:var(--accent);">
+          </div>
+          <button id="generateBtn" class="btn-main">Analizar Realidad</button>
         </div>
-
-        <button id="generateBtn" class="btn">ANALIZAR</button>
       </aside>
 
       <main class="canvas-area">
@@ -108,7 +121,6 @@ const metadata = {
   </div>
 
   <script is:inline>
-    // USAMOS UNA FUNCIÓN DE AUTO-EJECUCIÓN PARA ASEGURARNOS QUE CORRE
     (function() {
       const init = () => {
         const canvas = document.getElementById('mainCanvas');
@@ -119,87 +131,95 @@ const metadata = {
 
         if (!canvas || !ctx) return;
 
-        let text = "SISTEMA LISTO PARA DECODIFICAR";
-        let question = "";
+        let userQuestion = "";
+        let antonovResponse = "SISTEMA LISTO PARA DECODIFICAR";
 
-        const draw = () => {
-          // Resolución fija para que no se vea borroso
-          canvas.width = 1000;
-          canvas.height = 1000;
+        const render = () => {
+          canvas.width = 1080;
+          canvas.height = 1080;
 
           // Fondo
           ctx.fillStyle = '#000000';
-          ctx.fillRect(0, 0, 1000, 1000);
+          ctx.fillRect(0, 0, 1080, 1080);
 
           // Grid
           ctx.strokeStyle = '#111';
-          for(let i=0; i<1000; i+=100) {
-            ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,1000); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(1000,i); ctx.stroke();
+          ctx.lineWidth = 1;
+          for(let i=0; i<=1080; i+=108) {
+            ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,1080); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(1080,i); ctx.stroke();
           }
 
-          // Pregunta arriba
-          if(question) {
-            ctx.font = "bold 20px 'JetBrains Mono'";
-            ctx.fillStyle = "#ffd700";
+          // 1. INPUT (ARRIBA)
+          if(userQuestion) {
+            ctx.font = "700 24px 'JetBrains Mono'";
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
             ctx.textAlign = "left";
-            ctx.fillText("> " + question.toUpperCase(), 50, 70);
+            ctx.fillText("> INPUT: " + userQuestion.toUpperCase(), 80, 100);
           }
 
-          // Respuesta centro
+          // 2. SENTENCIA (CENTRO)
           const fontSize = parseInt(slider.value);
           ctx.font = `900 ${fontSize}px 'Inter'`;
           ctx.fillStyle = "white";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
 
-          // Ajuste de líneas simple
-          const words = text.toUpperCase().split(' ');
+          const words = antonovResponse.toUpperCase().split(' ');
           let lines = [], line = '';
           words.forEach(w => {
-            if(ctx.measureText(line + w).width < 800) line += w + ' ';
+            if(ctx.measureText(line + w).width < 850) line += w + ' ';
             else { lines.push(line); line = w + ' '; }
           });
           lines.push(line);
 
-          lines.forEach((l, i) => {
-            ctx.fillText(l.trim(), 500, 500 - ((lines.length-1) * fontSize/2) + (i * fontSize * 1.2));
+          let startY = 540 - ((lines.length - 1) * fontSize * 0.6);
+          lines.forEach(l => {
+            ctx.fillText(l.trim(), 540, startY);
+            startY += fontSize * 1.15;
           });
 
-          // Firma fija
-          ctx.font = "bold 20px 'JetBrains Mono'";
+          // 3. FIRMA (ABAJO)
+          ctx.font = "700 20px 'JetBrains Mono'";
           ctx.fillStyle = "#ffd700";
           ctx.textAlign = "center";
-          ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 500, 930);
+          ctx.letterSpacing = "10px";
+          ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 540, 950);
+          
+          ctx.strokeStyle = '#ffd700';
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(390, 975); ctx.lineTo(690, 975); ctx.stroke();
         };
 
         btn.onclick = async () => {
           const val = input.value.trim();
           if(!val) return;
           
-          btn.innerText = "PENSANDO...";
-          question = val;
+          btn.innerText = "DECODIFICANDO...";
+          btn.disabled = true;
+          userQuestion = val;
 
           try {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
-              body: JSON.stringify({ prompt: `Antonov, mentor. Usuario dice: "${val}". Responde verdad cruda max 12 palabras. TODO MAYÚSCULAS.` })
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ prompt: `Antonov, mentor radical. El usuario dice: "${val}". Responde verdad cruda max 12 palabras. TODO MAYÚSCULAS.` })
             });
             const data = await res.json();
-            text = data.text;
+            antonovResponse = data.text || "SILENCIO_SISTEMA";
           } catch(e) {
-            text = "ERROR DE CONEXIÓN";
+            antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
           } finally {
-            btn.innerText = "ANALIZAR";
-            draw();
+            btn.innerText = "ANALIZAR REALIDAD";
+            btn.disabled = false;
+            render();
           }
         };
 
-        slider.oninput = draw;
-        draw();
+        slider.oninput = render;
+        render();
       };
 
-      // Correr al cargar y al navegar en Astro
       window.onload = init;
       document.addEventListener('astro:page-load', init);
     })();
