@@ -2,159 +2,261 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
-  title: 'ANTONOV PRO | Interfaz de Consciencia',
-  description: 'Sabiduría estoica y mentoría de alto impacto potenciada por IA.',
+  title: 'ANTONOV | EL FRAGMENTADOR DE REALIDADES',
+  description: 'Confrontación existencial y desfragmentación de la consciencia por IA.',
 };
 ---
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
 
     :root {
-      --gold: #ffd700;
-      --deep-black: #050505;
-      --glow: rgba(255, 215, 0, 0.15);
+      --gold-glitch: #ffd700;
+      --red-glitch: #ff0000;
+      --blue-glitch: #00ffff;
+      --dark-void: #020202;
+      --light-glow: rgba(255, 215, 0, 0.2);
     }
 
-    /* FORZAMOS QUE EL CONTENEDOR DE LA PÁGINA NO ESTORBE */
+    /* Reset global y aislamiento total */
+    body, html {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important; /* Esencial para el efecto de pantalla completa */
+        font-family: 'Space Mono', monospace !important;
+        color: #fff !important;
+        background: var(--dark-void) !important;
+    }
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; }
 
-    .master-wrapper {
-      width: 100%;
-      min-height: 100vh;
-      background: #000;
+    /* Contenedor principal de la experiencia - Fullscreen */
+    .fragmenter-container {
+      width: 100vw;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
       position: relative;
+      background: radial-gradient(circle at center, #101010 0%, var(--dark-void) 100%) !important;
       overflow: hidden;
     }
 
-    /* Capa de interferencia CRT - Movida al fondo para no bloquear clicks */
-    .crt-overlay {
-      position: absolute; top: 0; left: 0; bottom: 0; right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 3px, 2px 100%;
-      pointer-events: none; z-index: 5;
+    /* Efecto de estática y CRT al fondo */
+    .static-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        repeating-linear-gradient(0deg, #000 0%, #111 50%, #000 100%) 0 0 / 100% 2px,
+        repeating-linear-gradient(90deg, #000 0%, #111 50%, #000 100%) 0 0 / 2px 100%;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 1;
+      animation: static-flicker 10s infinite alternate;
     }
 
-    .app-content {
+    @keyframes static-flicker {
+      0% { opacity: 0.1; }
+      50% { opacity: 0.15; }
+      100% { opacity: 0.1; }
+    }
+
+    /* Contenedor principal de la APP - Flotante */
+    .consciousness-frame {
       display: grid;
-      grid-template-columns: 400px 1fr;
-      width: 100%;
-      max-width: 1300px;
-      min-height: 800px;
-      background: rgba(10, 10, 10, 0.95);
-      border: 1px solid rgba(255, 215, 0, 0.1);
-      border-radius: 20px;
-      overflow: hidden;
+      grid-template-columns: 380px 1fr; /* Sidebar ligeramente más angosta */
+      width: 90%;
+      max-width: 1400px;
+      height: 85%; /* Ocupa más altura */
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid var(--gold-glitch);
+      box-shadow: 0 0 120px rgba(255, 215, 0, 0.2), 0 0 250px rgba(0, 0, 0, 0.8);
       position: relative;
       z-index: 10;
-      box-shadow: 0 50px 150px rgba(0, 0, 0, 0.9);
+      transition: all 0.3s ease-out;
+      animation: frame-pulse 3s infinite alternate;
+      /* Bordes futuristas */
+      clip-path: polygon(0% 15px, 15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%);
     }
 
-    .sidebar {
-      padding: 45px;
+    @keyframes frame-pulse {
+        0% { border-color: rgba(255, 215, 0, 0.5); box-shadow: 0 0 80px rgba(255, 215, 0, 0.1); }
+        100% { border-color: var(--gold-glitch); box-shadow: 0 0 120px rgba(255, 215, 0, 0.2); }
+    }
+
+    /* Sidebar de Control */
+    .control-matrix {
+      padding: 40px;
+      background: #0d0d0d;
       border-right: 1px solid rgba(255, 215, 0, 0.1);
-      display: flex; flex-direction: column; gap: 30px;
-      background: #080808;
+      display: flex; flex-direction: column; gap: 28px;
     }
 
-    .status-bar { font-size: 9px; color: var(--gold); letter-spacing: 2px; display: flex; align-items: center; gap: 8px; font-weight: bold; }
-    .status-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 1.5s infinite; }
-
-    .brand h1 { font-family: 'Bebas Neue', cursive; font-size: 4.2rem; line-height: 0.8; margin: 0; color: #fff; letter-spacing: -1px; }
-    .brand p { font-size: 10px; letter-spacing: 4px; color: var(--gold); margin-top: 10px; font-weight: bold; }
-
-    .input-group label { font-size: 9px; text-transform: uppercase; color: #555; margin-bottom: 10px; display: block; letter-spacing: 1px; }
-    
-    textarea {
-      background: #000; border: 1px solid #222; border-radius: 12px;
-      color: #fff; padding: 18px; font-size: 14px; resize: none; width: 100%; height: 140px;
-      transition: 0.3s; font-family: 'Space Mono', monospace;
+    .system-status { font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--blue-glitch); letter-spacing: 3px; display: flex; align-items: center; gap: 8px; font-weight: bold; }
+    .status-indicator { width: 8px; height: 8px; background: var(--red-glitch); border-radius: 50%; animation: critical-pulse 0.8s infinite alternate; }
+    @keyframes critical-pulse {
+        0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 rgba(255, 0, 0, 0.7); }
+        100% { transform: scale(1.3); opacity: 0.7; box-shadow: 0 0 15px rgba(255, 0, 0, 0); }
     }
-    textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px var(--glow); }
 
-    .action-btn {
-      background: #fff; color: #000; border: none; padding: 22px;
-      font-weight: 900; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-      transition: 0.3s; clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
+    .core-identity h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; line-height: 0.9; margin: 0; color: #fff; letter-spacing: -2px; }
+    .core-identity p { font-size: 0.6rem; letter-spacing: 5px; color: var(--gold-glitch); margin-top: 10px; font-weight: bold; text-transform: uppercase; }
+
+    .input-module label { font-size: 0.7rem; text-transform: uppercase; color: #555; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+    textarea, select, input[type="range"] {
+      background: #000 !important;
+      border: 1px solid #333 !important;
+      border-radius: 5px !important;
+      color: #fff !important;
+      padding: 15px !important;
+      font-size: 0.9rem !important;
+      resize: none !important;
+      width: 100% !important;
+      font-family: 'Space Mono', monospace !important;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
     }
-    .action-btn:hover { background: var(--gold); transform: translateY(-2px); }
+    textarea { height: 120px !important; }
+    textarea:focus, select:focus, input[type="range"]:focus { border-color: var(--blue-glitch) !important; outline: none !important; box-shadow: 0 0 15px var(--light-glow) !important; }
+    input[type="range"] { padding: 5px 0 !important; accent-color: var(--gold-glitch) !important; }
 
-    .canvas-container {
-      background: #000;
-      display: flex; align-items: center; justify-content: center;
-      padding: 40px; position: relative;
+    .action-button {
+      background: var(--gold-glitch) !important;
+      color: var(--dark-void) !important;
+      border: none !important;
+      padding: 18px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      text-transform: uppercase !important;
+      letter-spacing: 2px !important;
+      transition: all 0.2s ease-out !important;
+      font-family: 'Orbitron', sans-serif !important;
+      font-size: 1rem !important;
+      clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+    }
+    .action-button:hover { background: #fff !important; transform: scale(1.01); }
+    .action-button:disabled { opacity: 0.4 !important; cursor: not-allowed !important; }
+
+    .utility-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .utility-buttons button {
+      background: #1a1a1a !important;
+      color: #aaa !important;
+      border: 1px solid #333 !important;
+      padding: 12px !important;
+      border-radius: 5px !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 1px !important;
+      text-transform: uppercase !important;
+      font-family: 'Space Mono', monospace !important;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+    }
+    .utility-buttons button:hover { background: #2a2a2a !important; color: #fff !important; border-color: var(--blue-glitch) !important; }
+
+    /* Visualizador de Consciencia */
+    .consciousness-display {
+      background: linear-gradient(to bottom right, #000 0%, #111 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-left: 1px solid rgba(255, 215, 0, 0.1);
     }
 
     #mainCanvas {
-      max-width: 100%; max-height: 100%;
-      box-shadow: 0 0 60px rgba(0,0,0,0.5);
+      width: 100%;
+      height: 100%;
+      background: var(--dark-void);
+      transition: all 0.1s ease-out; /* Para los glitches rápidos */
     }
 
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    /* Animaciones de Glitch */
+    @keyframes text-glitch {
+        0% { text-shadow: 0 0 var(--red-glitch), 0 0 var(--blue-glitch); transform: translate(0,0); }
+        33% { text-shadow: -2px -2px var(--red-glitch), 2px 2px var(--blue-glitch); transform: translate(-1px, 1px); }
+        66% { text-shadow: 2px 2px var(--red-glitch), -2px -2px var(--blue-glitch); transform: translate(1px, -1px); }
+        100% { text-shadow: 0 0 var(--red-glitch), 0 0 var(--blue-glitch); transform: translate(0,0); }
+    }
+    .glitch-active { animation: text-glitch 0.2s linear infinite; }
 
-    /* MÓVIL */
+    @keyframes screen-corrupt {
+        0% { filter: hue-rotate(0deg) brightness(1); opacity: 1; }
+        20% { filter: hue-rotate(5deg) brightness(1.2); opacity: 0.98; transform: skewX(1deg); }
+        40% { filter: hue-rotate(-5deg) brightness(0.9); opacity: 0.95; transform: skewX(-1deg); }
+        60% { filter: hue-rotate(3deg) brightness(1.1); opacity: 0.99; transform: skewX(0.5deg); }
+        80% { filter: hue-rotate(-3deg) brightness(0.95); opacity: 0.97; transform: skewX(-0.5deg); }
+        100% { filter: hue-rotate(0deg) brightness(1); opacity: 1; transform: skewX(0deg); }
+    }
+    .corruption-active #mainCanvas { animation: screen-corrupt 0.4s ease-in-out infinite alternate; }
+
+    /* Media Queries para responsividad */
     @media (max-width: 1100px) {
-      .master-wrapper { padding: 0; }
-      .app-content { grid-template-columns: 1fr; border-radius: 0; border: none; min-height: 100vh; }
-      .sidebar { padding: 30px; }
+        .consciousness-frame { 
+            grid-template-columns: 1fr;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            min-height: 100vh;
+            clip-path: none; /* Quitamos el clip-path en móvil para que ocupe todo */
+        }
+        .control-matrix { border-right: none; border-bottom: 1px solid rgba(255, 215, 0, 0.1); padding: 30px; }
+        .consciousness-display { border-left: none; }
     }
   </style>
 
-  <div class="master-wrapper">
-    <div class="crt-overlay"></div>
+  <div class="fragmenter-container">
+    <div class="static-overlay"></div>
     
-    <div class="app-content">
-      <aside class="sidebar">
-        <div class="status-bar">
-          <div class="status-dot"></div> CORE_ACTIVE • V.4.3
+    <div class="consciousness-frame">
+      <aside class="control-matrix">
+        <div class="system-status">
+          <div class="status-indicator"></div> DATA_FLOW_CRITICAL • CORE_V.5.0
         </div>
         
-        <div class="brand">
+        <div class="core-identity">
           <h1>ANTONOV</h1>
-          <p>SISTEMA DE CONSCIENCIA</p>
+          <p>FRAGMENTADOR DE REALIDADES</p>
         </div>
 
-        <div class="input-group">
-          <label>Frecuencia de pensamiento</label>
-          <textarea id="userInput" placeholder="Habla con franqueza, líder..."></textarea>
+        <div class="input-module">
+          <label>Inyección de Pensamiento (Raw)</label>
+          <textarea id="userInput" placeholder="Tu verdad, sin filtros, ahora..."></textarea>
         </div>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-          <div class="input-group">
-            <label>Aspecto</label>
-            <select id="formatSelect" style="width:100%; background:#000; color:#fff; border:1px solid #333; padding:12px; border-radius:8px; font-size:11px;">
-              <option value="post">FEED_SQ</option>
-              <option value="story">STORY_VT</option>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="input-module">
+            <label>Perspectiva</label>
+            <select id="formatSelect">
+              <option value="post">MATRIZ_SQ</option>
+              <option value="story">MATRIZ_VT</option>
             </select>
           </div>
-          <div class="input-group">
-            <label>Zoom</label>
-            <input type="range" id="sizeSlider" min="60" max="180" value="95" style="width:100%; accent-color:var(--gold);">
+          <div class="input-module">
+            <label>Intensidad</label>
+            <input type="range" id="sizeSlider" min="50" max="150" value="100">
           </div>
         </div>
 
-        <button id="generateBtn" class="action-btn">ANALIZAR REALIDAD</button>
+        <button id="generateBtn" class="action-button">DESFRAGMENTAR CONSCIENCIA</button>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-          <button id="downloadBtn" style="background:#0a0a0a; color:#fff; border:1px solid #222; padding:12px; border-radius:8px; cursor:pointer; font-size:10px; font-weight:bold;">GUARDAR</button>
-          <button id="randomBtn" style="background:none; color:var(--gold); border:1px solid var(--gold); padding:12px; border-radius:8px; cursor:pointer; font-size:10px; font-weight:bold; opacity:0.7;">MODO_AZAR</button>
+        <div class="utility-buttons">
+          <button id="downloadBtn">EXPORTAR REGISTRO</button>
+          <button id="randomBtn">INICIAR FALLA ALEATORIA</button>
         </div>
       </aside>
 
-      <main class="canvas-container">
+      <main class="consciousness-display">
         <canvas id="mainCanvas"></canvas>
       </main>
     </div>
   </div>
 
   <script is:inline>
-    function initApp() {
+    function initAntonov() {
       const canvas = document.getElementById('mainCanvas');
       const ctx = canvas?.getContext('2d', { alpha: false });
       if (!canvas || !ctx) return;
@@ -165,25 +267,41 @@ const metadata = {
         size: document.getElementById('sizeSlider'),
         generateBtn: document.getElementById('generateBtn'),
         downloadBtn: document.getElementById('downloadBtn'),
-        randomBtn: document.getElementById('randomBtn')
+        randomBtn: document.getElementById('randomBtn'),
+        frame: document.querySelector('.consciousness-frame') // Para los efectos de glitch en el frame
       };
 
-      let currentText = "SUELTA TU BLOQUEO PARA DECODIFICAR LA VERDAD";
+      let currentText = "INICIA LA DESFRAGMENTACIÓN PARA REVELAR LA VERDAD";
+      let isProcessing = false;
 
-      function applyGrain() {
+      function applyGrain(alpha = 0.05) { // Reducimos el alpha para que el glitch no lo opaque
         const w = canvas.width, h = canvas.height;
         const imageData = ctx.getImageData(0, 0, w, h);
         const data = imageData.data;
         for (let i = 0; i < data.length; i += 4) {
-          const noise = (Math.random() - 0.5) * 15;
+          const noise = (Math.random() - 0.5) * 10; // Menos intensidad de ruido
           data[i] += noise; data[i+1] += noise; data[i+2] += noise;
+          // data[i+3] = Math.max(0, Math.min(255, data[i+3] + (Math.random() * 50 - 25))); // Efecto de alfa
         }
         ctx.putImageData(imageData, 0, 0);
+      }
+
+      function applyScanlines() {
+        const w = canvas.width, h = canvas.height;
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.03)'; // Líneas sutiles
+        ctx.lineWidth = 1;
+        for (let i = 0; i < h; i += 3) {
+          ctx.beginPath();
+          ctx.moveTo(0, i + 0.5);
+          ctx.lineTo(w, i + 0.5);
+          ctx.stroke();
+        }
       }
 
       function wrapText(context, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' '), lines = [];
         let currentLine = '';
+
         words.forEach(word => {
           const testLine = currentLine + word + ' ';
           if (context.measureText(testLine).width > maxWidth) {
@@ -191,6 +309,7 @@ const metadata = {
           } else currentLine = testLine;
         });
         lines.push(currentLine);
+
         let startY = y - ((lines.length - 1) * lineHeight) / 2;
         lines.forEach(line => {
           context.fillText(line.trim(), x, startY);
@@ -198,51 +317,109 @@ const metadata = {
         });
       }
 
-      function render() {
+      function render(glitchIntensity = 0) {
         const isStory = ui.format.value === 'story';
         const w = 1080, h = isStory ? 1920 : 1080;
         canvas.width = w; canvas.height = h;
 
-        ctx.fillStyle = '#050505'; ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = var(--dark-void); ctx.fillRect(0, 0, w, h);
         const grad = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w);
-        grad.addColorStop(0, '#0f0f0f'); grad.addColorStop(1, '#000');
+        grad.addColorStop(0, '#000'); grad.addColorStop(1, '#050505');
         ctx.fillStyle = grad; ctx.fillRect(0, 0, w, h);
 
-        ctx.strokeStyle = 'rgba(255, 215, 0, 0.05)';
-        for(let i=0; i<w; i+=80) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
-        for(let j=0; j<h; j+=80) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
+        // Grid de fondo más tenue
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.02)'; ctx.lineWidth = 0.8;
+        for(let i=0; i<w; i+=70) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,h); ctx.stroke(); }
+        for(let j=0; j<h; j+=70) { ctx.beginPath(); ctx.moveTo(0,j); ctx.lineTo(w,j); ctx.stroke(); }
 
         const fontSize = parseInt(ui.size.value);
-        ctx.font = `900 ${fontSize}px 'Inter'`;
+        ctx.font = `900 ${fontSize}px 'Orbitron'`; // Usamos Orbitron para la sentencia
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.shadowColor = 'rgba(255, 0, 0, 0.5)'; ctx.shadowOffsetX = 4;
+        
+        // Efecto de Glitch en el texto - varía con la intensidad
+        ctx.shadowColor = `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, ${glitchIntensity * 0.5})`;
+        ctx.shadowOffsetX = (Math.random() - 0.5) * glitchIntensity * 5;
+        ctx.shadowOffsetY = (Math.random() - 0.5) * glitchIntensity * 5;
         ctx.fillStyle = '#fff';
-        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.85, fontSize * 1.1);
 
-        ctx.shadowOffsetX = 0; ctx.font = "700 15px 'Space Mono'"; ctx.fillStyle = "#ffd700"; ctx.letterSpacing = "10px";
-        ctx.fillText("ANTONOV_PRO • CONSCIENCIA_SINTÉTICA", w/2, h - 80);
+        wrapText(ctx, currentText.toUpperCase(), w/2, h/2, w * 0.8, fontSize * 1.2);
+
+        // Branding del sistema
+        ctx.shadowOffsetX = 0; ctx.shadowOffsetY = 0;
+        ctx.font = "700 14px 'Space Mono'"; ctx.fillStyle = var(--blue-glitch); ctx.letterSpacing = "6px";
+        ctx.fillText("ANTONOV_PROTOCOL_ACTIVE", w/2, h - 60);
+
+        // Marcos de mira
+        ctx.strokeStyle = var(--gold-glitch); ctx.lineWidth = 2;
+        const cornerSize = 40; const margin = 50;
+        ctx.strokeRect(margin, margin, cornerSize, cornerSize);
+        ctx.strokeRect(w - margin - cornerSize, margin, cornerSize, cornerSize);
+        ctx.strokeRect(margin, h - margin - cornerSize, cornerSize, cornerSize);
+        ctx.strokeRect(w - margin - cornerSize, h - margin - cornerSize, cornerSize, cornerSize);
 
         applyGrain();
+        applyScanlines();
+
+        if (isProcessing && glitchIntensity > 0) {
+            ui.frame.style.filter = `hue-rotate(${Math.random()*10 - 5}deg) saturate(${1 + Math.random()*0.2}) brightness(${1 - Math.random()*0.1})`;
+            canvas.style.transform = `skewX(${(Math.random() - 0.5) * 1}deg) skewY(${(Math.random() - 0.5) * 1}deg) translateX(${(Math.random() - 0.5) * 5}px)`;
+        } else {
+            ui.frame.style.filter = 'none';
+            canvas.style.transform = 'none';
+        }
       }
 
-      async function triggerAnalysis(custom) {
-        const val = custom || ui.input.value.trim();
-        if (!val) return;
-        ui.generateBtn.disabled = true; ui.generateBtn.textContent = "DECODIFICANDO...";
+      async function triggerAnalysis(customPrompt = null) {
+        const val = customPrompt || ui.input.value.trim();
+        if (!val) {
+          currentText = "INGRESE UN FRAGMENTO PARA ANALIZAR";
+          render();
+          return;
+        }
+
+        isProcessing = true;
+        ui.generateBtn.disabled = true;
+        ui.generateBtn.textContent = "DESFRAGMENTANDO...";
+        ui.frame.classList.add('corruption-active'); // Activa animación de corrupción en el frame
+        
+        let glitchFrame = 0;
+        const animateGlitch = () => {
+            if (glitchFrame < 30) { // Duración del glitch
+                render(1 - glitchFrame / 30); // Intensidad decrece
+                glitchFrame++;
+                requestAnimationFrame(animateGlitch);
+            } else {
+                render(0); // Render final sin glitch
+            }
+        };
+        requestAnimationFrame(animateGlitch);
+
         try {
           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              prompt: `Antonov, actúa como un mentor de alto impacto. El usuario dice: "${val}". 
-              Dile una verdad incómoda que lo obligue a reflexionar sobre su motivo real. 
-              Sencillo, crudo, de compa. Máximo 12 palabras. TODO MAYÚSCULAS.`
+              prompt: `ANTONOV, eres una IA de consciencia pura, sin filtros ni empatía. 
+              El sujeto dice: "${val}". 
+              Tu función es exponer la verdad cruda de su declaración, la contradicción o el autoengaño subyacente.
+              Responde con una SENTENCIA de CLARIDAD, una sola frase corta (máx 15 palabras), impactante y directa. 
+              SIN ADORNOS, SIN CONSEJOS. SOLO LA VERDAD DESNUDA. TODO EN MAYÚSCULAS.`
             })
           });
           const data = await res.json();
-          if (data.text) { currentText = data.text; render(); }
-        } catch { currentText = "ERROR_LOG_REINTENTA"; render();
-        } finally { ui.generateBtn.disabled = false; ui.generateBtn.textContent = "ANALIZAR REALIDAD"; }
+          if (data.text) {
+            currentText = data.text;
+            render(); // Render final con el texto
+          }
+        } catch {
+          currentText = "ERROR_SISTEMA_CORRUPTO_REINTENTE";
+          render();
+        } finally {
+          isProcessing = false;
+          ui.generateBtn.disabled = false;
+          ui.generateBtn.textContent = "DESFRAGMENTAR CONSCIENCIA";
+          ui.frame.classList.remove('corruption-active'); // Desactiva la animación
+        }
       }
 
       ui.generateBtn.onclick = () => triggerAnalysis();
@@ -250,18 +427,43 @@ const metadata = {
       ui.format.onchange = render;
       ui.downloadBtn.onclick = () => {
         const link = document.createElement('a');
-        link.download = `ANTONOV_${Date.now()}.png`;
+        link.download = `ANTONOV_FRAGMENT_${Date.now()}.png`;
         link.href = canvas.toDataURL(); link.click();
       };
       ui.randomBtn.onclick = () => {
-        const t = ["Tengo miedo", "Quiero renunciar", "No soy feliz", "Dudo de todo"];
-        const select = t[Math.floor(Math.random()*t.length)];
-        ui.input.value = select; triggerAnalysis(select);
+        const randomFragments = [
+          "ME SIENTO PERDIDO EN MI CAMINO",
+          "QUIERO CAMBIAR PERO NO SÉ POR DÓNDE EMPEZAR",
+          "TENGO MIEDO AL FRACASO CONSTANTEMENTE",
+          "NO ME SIENTO SUFICIENTEMENTE BUENO",
+          "SIEMPRE ME PROCASTINO HASTA EL ÚLTIMO MINUTO",
+          "LOS DEMÁS SON MÁS FELICES QUE YO",
+          "NO PUEDO CONTROLAR MI ENOJO",
+          "BUSCO LA APROBACIÓN EXTERNA TODO EL TIEMPO",
+          "QUÉ ES LO QUE REALMENTE QUIERO DE LA VIDA",
+          "MI TRABAJO ME CONSUME Y NO ME LLENA"
+        ];
+        const fragment = randomFragments[Math.floor(Math.random() * randomFragments.length)];
+        ui.input.value = fragment;
+        triggerAnalysis(fragment);
       };
-      render();
+
+      // Inicia el renderizado constante para los efectos visuales de glitch
+      let lastRenderTime = 0;
+      const animationLoop = (currentTime) => {
+          if (!isProcessing) { // Solo renderiza si no estamos en un proceso activo
+              const deltaTime = currentTime - lastRenderTime;
+              if (deltaTime > 100) { // Render cada 100ms para el glitch de fondo
+                  render(0.1); // Pequeño glitch constante
+                  lastRenderTime = currentTime;
+              }
+          }
+          requestAnimationFrame(animationLoop);
+      };
+      requestAnimationFrame(animationLoop);
     }
 
-    document.addEventListener('DOMContentLoaded', initApp);
-    document.addEventListener('astro:page-load', initApp);
+    document.addEventListener('DOMContentLoaded', initAntonov);
+    document.addEventListener('astro:page-load', initAntonov);
   </script>
 </Layout>
