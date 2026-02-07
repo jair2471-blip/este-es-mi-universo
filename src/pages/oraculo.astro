@@ -85,35 +85,35 @@ NO HICE NADA"
   <canvas id="hidden-canvas" style="display:none;"></canvas>
 </Layout>
 
-<script>
-  // 1. Referencias correctas a los elementos del HTML
-  const btn = document.getElementById('btn-consultar');
-  const input = document.getElementById('consulta-input');
-  const resBox = document.getElementById('resultado-seccion'); // El contenedor que está hidden
-  const resText = document.getElementById('respuesta-texto'); // El párrafo <p> donde va el texto
+<script lang="ts">
+  const btn = document.getElementById('btn-consultar') as HTMLButtonElement | null;
+  const input = document.getElementById('consulta-input') as HTMLTextAreaElement | null;
+  const resBox = document.getElementById('resultado-seccion') as HTMLDivElement | null;
+  const resText = document.getElementById('respuesta-texto') as HTMLParagraphElement | null;
 
-  // 2. Función principal
-  btn.addEventListener('click', async () => {
-    const consulta = input.value.trim();
-    
-    // Si no escribió nada, no hacemos nada
-    if (!consulta) {
-      input.focus();
-      return;
-    }
+  // Si algo no existe, salimos. Astro queda tranquilo.
+  if (!btn || !input || !resBox || !resText) {
+    console.error('ELEMENTOS DEL ORÁCULO NO ENCONTRADOS');
+  } else {
 
-    // Cambiar estado del botón (Loading)
-    const textoOriginal = btn.innerText;
-    btn.innerText = 'DICTANDO SENTENCIA...';
-    btn.disabled = true;
+    btn.addEventListener('click', async () => {
+      const consulta = input.value.trim();
 
-    try {
-      // 3. Llamada a la API (Limpia)
-      const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: `
+      if (!consulta) {
+        input.focus();
+        return;
+      }
+
+      const textoOriginal = btn.innerText;
+      btn.innerText = 'DICTANDO SENTENCIA...';
+      btn.disabled = true;
+
+      try {
+        const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: `
 CONTEXTO:
 El usuario admite EN QUÉ FALLÓ HOY: "${consulta}".
 No busca consuelo. Busca dirección.
@@ -135,38 +135,35 @@ REGLAS OBLIGATORIAS:
 
 USUARIO: ${consulta}
 
-DICTE SENTENCIA:`
-        })
-      });
+DICTE SENTENCIA:
+`
+          })
+        });
 
-      const data = await r.json();
+        const data = await r.json();
+        const frase = data.response || data.text || 'EL SILENCIO ES LA RESPUESTA.';
 
-      // 4. Mostrar el resultado
-      // Aseguramos que lea 'response' o 'text' según venga de tu API
-      const frase = data.response || data.text || 'EL SILENCIO ES LA RESPUESTA.';
-      
-      resText.innerText = frase;
-      resBox.classList.remove('hidden');
-      
-      // Scroll suave hacia la respuesta
-      resBox.scrollIntoView({ behavior: 'smooth' });
+        resText.innerText = frase;
+        resBox.classList.remove('hidden');
+        resBox.scrollIntoView({ behavior: 'smooth' });
 
-    } catch (error) {
-      console.error(error);
-      resText.innerText = 'ERROR EN LA CONEXIÓN. INTENTA DE NUEVO.';
-      resBox.classList.remove('hidden');
-    } finally {
-      // 5. Restaurar el botón pase lo que pase
-      btn.innerText = textoOriginal;
-      btn.disabled = false;
-    }
-  });
+      } catch (error) {
+        console.error(error);
+        resText.innerText = 'ERROR EN LA CONEXIÓN. INTENTA DE NUEVO.';
+        resBox.classList.remove('hidden');
+      } finally {
+        btn.innerText = textoOriginal;
+        btn.disabled = false;
+      }
+    });
 
-  // Permitir enviar con Enter
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      btn.click();
-    }
-  });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        btn.click();
+      }
+    });
+
+  }
 </script>
+
