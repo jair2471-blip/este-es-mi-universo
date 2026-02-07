@@ -203,7 +203,15 @@ const metadata = {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt: `Antonov, mentor radical. El usuario dice: "${val}". Responde verdad cruda max 12 palabras. TODO MAYÚSCULAS.` })
+              body: JSON.stringify({
+  prompt: `Antonov no aconseja: esclarece.
+El usuario dice: "${val}".
+Analiza lo que está ocurriendo internamente.
+No des órdenes ni soluciones.
+Respuesta breve, firme y respetuosa, máximo 12 palabras.
+TODO EN MAYÚSCULAS.`
+})
+
             });
             const data = await res.json();
             antonovResponse = data.text || "SILENCIO_SISTEMA";
