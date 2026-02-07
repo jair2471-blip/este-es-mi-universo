@@ -79,7 +79,6 @@ const ReelGenerator = () => {
     intense: { name: 'Intenso', freq: 660, pattern: 'intense' }
   };
 
-  // Generate particles
   useEffect(() => {
     const newParticles = Array.from({ length: 50 }, (_, i) => ({
       id: i,
@@ -92,7 +91,6 @@ const ReelGenerator = () => {
     setParticles(newParticles);
   }, []);
 
-  // Audio system
   const playMusic = () => {
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
@@ -115,7 +113,6 @@ const ReelGenerator = () => {
     osc.frequency.value = track.freq;
     gainNode.gain.value = 0.1;
     
-    // Pattern
     if (track.pattern === 'epic') {
       osc.frequency.setValueAtTime(track.freq, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(track.freq * 1.5, ctx.currentTime + 0.5);
@@ -134,7 +131,6 @@ const ReelGenerator = () => {
     setIsMusicPlaying(false);
   };
 
-  // Animation loop
   useEffect(() => {
     let interval;
     if (isPlaying) {
@@ -145,7 +141,6 @@ const ReelGenerator = () => {
     return () => clearInterval(interval);
   }, [isPlaying]);
 
-  // Canvas animation
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -192,89 +187,74 @@ const ReelGenerator = () => {
     const scheme = colorSchemes[config.colorScheme];
     
     switch (config.animation) {
-      case 'quantum':
+      case 'quantum': {
         const quantum = Math.sin(progress * Math.PI * 4);
         return {
           transform: `scale(${1 + quantum * 0.1}) translateY(${quantum * 10}px)`,
           opacity: 0.8 + Math.abs(quantum) * 0.2,
           textShadow: `0 0 ${20 + quantum * 10}px ${scheme.accent}, 0 0 ${40 + quantum * 20}px ${scheme.secondary}`
         };
-      case 'pulse':
+      }
+      case 'pulse': {
         const pulse = Math.abs(Math.sin(progress * Math.PI * 3));
         return {
           transform: `scale(${1 + pulse * 0.15})`,
           opacity: 0.7 + pulse * 0.3,
           textShadow: `0 0 ${30 * pulse}px ${scheme.accent}`
         };
-      case 'matrix':
+      }
+      case 'matrix': {
         return {
           transform: `translateX(${Math.sin(progress * Math.PI * 2) * 20}px)`,
           opacity: 0.8 + Math.random() * 0.2,
           textShadow: `0 0 20px ${scheme.accent}, 0 0 40px ${scheme.secondary}`
         };
-      case 'waves':
+      }
+      case 'waves': {
         const wave = Math.sin(progress * Math.PI * 2);
         return {
           transform: `translateY(${wave * 15}px) rotateZ(${wave * 2}deg)`,
           opacity: 0.8,
           textShadow: `0 0 25px ${scheme.accent}`
         };
-      case 'explosion':
+      }
+      case 'explosion': {
         const expand = progress < 0.5 ? progress * 2 : 2 - progress * 2;
         return {
           transform: `scale(${1 + expand * 0.3})`,
           opacity: 1 - expand * 0.3,
           textShadow: `0 0 ${50 * expand}px ${scheme.accent}, 0 0 ${100 * expand}px ${scheme.secondary}`
         };
+      }
       default:
         return {};
     }
   };
 
   const getFontSize = () => {
-    // Auto-adjust based on text length
     if (config.fontSize === 'auto') {
       const textLength = config.text.length;
       const subtitleLength = config.subtitle.length;
-      
       let mainSize, subSize;
       
-      // Dynamic scaling for main text
-      if (textLength <= 15) {
-        mainSize = '3.5rem';
-      } else if (textLength <= 25) {
-        mainSize = '2.8rem';
-      } else if (textLength <= 40) {
-        mainSize = '2.2rem';
-      } else if (textLength <= 60) {
-        mainSize = '1.8rem';
-      } else {
-        mainSize = '1.5rem';
-      }
+      if (textLength <= 15) mainSize = '3.5rem';
+      else if (textLength <= 25) mainSize = '2.8rem';
+      else if (textLength <= 40) mainSize = '2.2rem';
+      else if (textLength <= 60) mainSize = '1.8rem';
+      else mainSize = '1.5rem';
       
-      // Dynamic scaling for subtitle
-      if (subtitleLength <= 20) {
-        subSize = '1.5rem';
-      } else if (subtitleLength <= 40) {
-        subSize = '1.2rem';
-      } else if (subtitleLength <= 60) {
-        subSize = '1rem';
-      } else {
-        subSize = '0.9rem';
-      }
+      if (subtitleLength <= 20) subSize = '1.5rem';
+      else if (subtitleLength <= 40) subSize = '1.2rem';
+      else if (subtitleLength <= 60) subSize = '1rem';
+      else subSize = '0.9rem';
       
       return { main: mainSize, sub: subSize };
     }
     
-    // Manual mode - use custom sizes
     if (config.fontSize === 'custom') {
-      return { 
-        main: `${config.textSize}px`, 
-        sub: `${config.subtitleSize}px` 
-      };
+      return { main: `${config.textSize}px`, sub: `${config.subtitleSize}px` };
     }
     
-    // Preset sizes
     switch (config.fontSize) {
       case 'small': return { main: '1.8rem', sub: '1rem' };
       case 'medium': return { main: '2.5rem', sub: '1.2rem' };
@@ -291,18 +271,15 @@ const ReelGenerator = () => {
     setIsRecording(true);
     setRecordProgress(0);
 
-    // Create video canvas
     const videoCanvas = document.createElement('canvas');
     videoCanvas.width = 1080;
     videoCanvas.height = 1920;
     const ctx = videoCanvas.getContext('2d');
-    
     const scheme = colorSchemes[config.colorScheme];
-    const duration = config.videoDuration * 1000; // Convert to milliseconds
+    const duration = config.videoDuration * 1000; 
     const fps = 30;
     const totalFrames = (duration / 1000) * fps;
     
-    // Setup MediaRecorder
     const stream = videoCanvas.captureStream(fps);
     const mediaRecorder = new MediaRecorder(stream, {
       mimeType: 'video/webm;codecs=vp9',
@@ -311,9 +288,7 @@ const ReelGenerator = () => {
     
     const chunks = [];
     mediaRecorder.ondataavailable = (e) => {
-      if (e.data.size > 0) {
-        chunks.push(e.data);
-      }
+      if (e.data.size > 0) chunks.push(e.data);
     };
     
     mediaRecorder.onstop = () => {
@@ -332,7 +307,6 @@ const ReelGenerator = () => {
     
     mediaRecorder.start();
     
-    // Render animation frames
     let frame = 0;
     const renderFrame = () => {
       if (frame >= totalFrames) {
@@ -343,11 +317,9 @@ const ReelGenerator = () => {
       const progress = frame / totalFrames;
       setRecordProgress(Math.round(progress * 100));
       
-      // Clear canvas
       ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, videoCanvas.width, videoCanvas.height);
       
-      // Background gradient
       const gradient = ctx.createRadialGradient(540, 960, 0, 540, 960, 1200);
       gradient.addColorStop(0, scheme.accent + '40');
       gradient.addColorStop(0.5, '#00000080');
@@ -355,65 +327,59 @@ const ReelGenerator = () => {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, videoCanvas.width, videoCanvas.height);
       
-      // Draw particles
       for (let i = 0; i < 50; i++) {
         const particleProgress = (progress + i * 0.02) % 1;
         const x = (Math.sin(particleProgress * Math.PI * 2 + i) * 0.3 + 0.5) * videoCanvas.width;
         const y = particleProgress * videoCanvas.height;
         const size = 3 + Math.sin(progress * Math.PI * 4 + i) * 2;
-        
         ctx.beginPath();
         ctx.arc(x, y, size, 0, Math.PI * 2);
         ctx.fillStyle = scheme.accent + '80';
         ctx.fill();
       }
       
-      // Calculate animation effect
       let transform = { scale: 1, translateY: 0, opacity: 1, blur: 20 };
       const animProgress = (progress * 2) % 1;
       
       switch (config.animation) {
-        case 'quantum':
+        case 'quantum': {
           const quantum = Math.sin(animProgress * Math.PI * 4);
           transform.scale = 1 + quantum * 0.1;
           transform.translateY = quantum * 30;
           transform.blur = 20 + Math.abs(quantum) * 20;
           break;
-        case 'pulse':
+        }
+        case 'pulse': {
           const pulse = Math.abs(Math.sin(animProgress * Math.PI * 3));
           transform.scale = 1 + pulse * 0.15;
           transform.blur = 30 * pulse + 20;
           break;
+        }
         case 'matrix':
           transform.translateY = Math.sin(animProgress * Math.PI * 2) * 50;
           break;
         case 'waves':
-          const wave = Math.sin(animProgress * Math.PI * 2);
-          transform.translateY = wave * 40;
+          transform.translateY = Math.sin(animProgress * Math.PI * 2) * 40;
           break;
-        case 'explosion':
+        case 'explosion': {
           const expand = animProgress < 0.5 ? animProgress * 2 : 2 - animProgress * 2;
           transform.scale = 1 + expand * 0.3;
           transform.opacity = 1 - expand * 0.2;
           transform.blur = 50 * expand + 20;
           break;
+        }
       }
       
-      // Apply transformations
       ctx.save();
       ctx.translate(videoCanvas.width / 2, videoCanvas.height / 2);
       ctx.scale(transform.scale, transform.scale);
       ctx.translate(0, transform.translateY);
       ctx.globalAlpha = transform.opacity;
       
-      // Main text
-      // Main text - calculate font size based on mode
       let mainFontSize, subFontSize;
-      
       if (config.fontSize === 'auto') {
         const textLength = config.text.length;
         const subtitleLength = config.subtitle.length;
-        
         if (textLength <= 15) mainFontSize = 120;
         else if (textLength <= 25) mainFontSize = 100;
         else if (textLength <= 40) mainFontSize = 80;
@@ -428,7 +394,6 @@ const ReelGenerator = () => {
         mainFontSize = config.textSize;
         subFontSize = config.subtitleSize;
       } else {
-        // Preset sizes
         const sizes = {
           small: { main: 70, sub: 40 },
           medium: { main: 100, sub: 50 },
@@ -446,31 +411,26 @@ const ReelGenerator = () => {
       ctx.shadowColor = scheme.accent;
       ctx.shadowBlur = transform.blur;
       
-      // Word wrap for main text - handle line breaks
       const maxWidth = videoCanvas.width * 0.85;
-      const textLines = config.text.split('\n'); // Split by line breaks first
+      const textLines = config.text.split('\n');
       let lines = [];
       
       textLines.forEach(textLine => {
         const words = textLine.split(' ');
-        let line = '';
-        
+        let currentLine = '';
         for (let word of words) {
-          const testLine = line + word + ' ';
+          const testLine = currentLine + word + ' ';
           const metrics = ctx.measureText(testLine);
-          if (metrics.width > maxWidth && line !== '') {
-            lines.push(line.trim());
-            line = word + ' ';
+          if (metrics.width > maxWidth && currentLine !== '') {
+            lines.push(currentLine.trim());
+            currentLine = word + ' ';
           } else {
-            line = testLine;
+            currentLine = testLine;
           }
         }
-        if (line.trim() !== '') {
-          lines.push(line.trim());
-        }
+        if (currentLine.trim() !== '') lines.push(currentLine.trim());
       });
       
-      // Draw wrapped main text
       const lineSpacing = mainFontSize * config.lineHeight;
       const totalHeight = lines.length * lineSpacing;
       let startY = -totalHeight / 2;
@@ -482,47 +442,38 @@ const ReelGenerator = () => {
         ctx.fillText(line, 0, startY + i * lineSpacing - 80);
       });
       
-      // Subtitle
       ctx.font = `bold ${subFontSize}px Arial`;
       ctx.shadowColor = scheme.accent;
       ctx.shadowBlur = transform.blur * 0.7;
       
-      // Word wrap for subtitle - handle line breaks
-      const subWords = config.subtitle.split('\n');
+      const subWordsLines = config.subtitle.split('\n');
       let subLines = [];
-      
-      subWords.forEach(subTextLine => {
+      subWordsLines.forEach(subTextLine => {
         const words = subTextLine.split(' ');
-        let subLine = '';
-        
+        let currentSubLine = '';
         for (let word of words) {
-          const testLine = subLine + word + ' ';
+          const testLine = currentSubLine + word + ' ';
           const metrics = ctx.measureText(testLine);
-          if (metrics.width > maxWidth && subLine !== '') {
-            subLines.push(subLine.trim());
-            subLine = word + ' ';
+          if (metrics.width > maxWidth && currentSubLine !== '') {
+            subLines.push(currentSubLine.trim());
+            currentSubLine = word + ' ';
           } else {
-            subLine = testLine;
+            currentSubLine = testLine;
           }
         }
-        if (subLine.trim() !== '') {
-          subLines.push(subLine.trim());
-        }
+        if (currentSubLine.trim() !== '') subLines.push(currentSubLine.trim());
       });
       
       const subLineSpacing = subFontSize * config.lineHeight;
       const subStartY = 100;
-      
       subLines.forEach((line, i) => {
         ctx.fillText(line, 0, subStartY + i * subLineSpacing);
       });
       
       ctx.restore();
-      
       frame++;
       requestAnimationFrame(renderFrame);
     };
-    
     renderFrame();
   };
 
@@ -531,13 +482,11 @@ const ReelGenerator = () => {
 
   return (
     <div className="min-h-screen bg-black p-4 md:p-8 overflow-hidden relative">
-      {/* Animated background */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0" style={{ background: currentScheme.bg }} />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-2 flex items-center justify-center gap-3"
               style={{
@@ -554,7 +503,6 @@ const ReelGenerator = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Preview Panel */}
           <div className="space-y-4">
             <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2 shadow-2xl"
                  style={{ borderColor: currentScheme.accent + '40' }}>
@@ -563,7 +511,6 @@ const ReelGenerator = () => {
                 Portal Dimensional
               </h2>
               
-              {/* Phone Frame */}
               <div className="mx-auto" style={{ maxWidth: '350px' }}>
                 <div className="bg-black rounded-3xl p-3 shadow-2xl border-2"
                      style={{ 
@@ -577,7 +524,6 @@ const ReelGenerator = () => {
                       background: currentScheme.bg
                     }}
                   >
-                    {/* Canvas for particles */}
                     <canvas 
                       ref={canvasRef}
                       width={315}
@@ -585,7 +531,6 @@ const ReelGenerator = () => {
                       className="absolute inset-0 w-full h-full"
                     />
 
-                    {/* Content */}
                     <div 
                       className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center"
                       style={getAnimationStyle()}
@@ -620,7 +565,6 @@ const ReelGenerator = () => {
                       </p>
                     </div>
 
-                    {/* Style Badge */}
                     <div className="absolute top-4 left-4 backdrop-blur-md rounded-full px-4 py-2 border-2"
                          style={{ 
                            backgroundColor: currentScheme.accent + '20',
@@ -632,7 +576,6 @@ const ReelGenerator = () => {
                       </span>
                     </div>
 
-                    {/* Music Indicator */}
                     {isMusicPlaying && (
                       <div className="absolute bottom-4 right-4 backdrop-blur-md rounded-full p-3 border-2 animate-pulse"
                            style={{ 
@@ -646,7 +589,6 @@ const ReelGenerator = () => {
                 </div>
               </div>
 
-              {/* Controls */}
               <div className="flex flex-wrap gap-3 mt-6 justify-center">
                 <button
                   onClick={() => {
@@ -708,9 +650,7 @@ const ReelGenerator = () => {
             </div>
           </div>
 
-          {/* Controls Panel */}
           <div className="space-y-4">
-            {/* Style Selection */}
             <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
                  style={{ borderColor: currentScheme.accent + '40' }}>
               <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -745,7 +685,6 @@ const ReelGenerator = () => {
               </div>
             </div>
 
-            {/* Text Content */}
             <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
                  style={{ borderColor: currentScheme.accent + '40' }}>
               <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -756,7 +695,6 @@ const ReelGenerator = () => {
                 <div>
                   <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide">
                     TEXTO PRINCIPAL
-                    <span className="text-xs opacity-70 ml-2">(Presiona Enter para nueva línea)</span>
                   </label>
                   <textarea
                     value={config.text}
@@ -767,13 +705,11 @@ const ReelGenerator = () => {
                       borderColor: currentScheme.accent + '60',
                       boxShadow: `0 0 10px ${currentScheme.accent}40`
                     }}
-                    placeholder="TU MENSAJE AQUÍ...&#10;Usa Enter para listas:&#10;• Punto 1&#10;• Punto 2&#10;• Punto 3"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide">
                     SUBTÍTULO
-                    <span className="text-xs opacity-70 ml-2">(También acepta múltiples líneas)</span>
                   </label>
                   <textarea
                     value={config.subtitle}
@@ -784,242 +720,13 @@ const ReelGenerator = () => {
                       borderColor: currentScheme.secondary + '60',
                       boxShadow: `0 0 10px ${currentScheme.secondary}40`
                     }}
-                    placeholder="Texto secundario...&#10;Puede tener varias líneas"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide">
-                    TAMAÑO DE TEXTO
-                  </label>
-                  <select
-                    value={config.fontSize}
-                    onChange={(e) => setConfig({ ...config, fontSize: e.target.value })}
-                    className="w-full bg-black/50 text-white px-4 py-3 rounded-xl outline-none border-2 font-bold"
-                    style={{ 
-                      borderColor: currentScheme.accent + '60'
-                    }}
-                  >
-                    <option value="auto">🤖 AUTO (Inteligente)</option>
-                    <option value="small">XS - Compacto</option>
-                    <option value="medium">M - Balanceado</option>
-                    <option value="large">L - Grande</option>
-                    <option value="xlarge">XL - Gigante</option>
-                    <option value="custom">⚙️ PERSONALIZADO</option>
-                  </select>
-                </div>
-
-                {config.fontSize === 'custom' && (
-                  <>
-                    <div>
-                      <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide flex items-center justify-between">
-                        <span>TAMAÑO PRINCIPAL</span>
-                        <span style={{ color: currentScheme.accent }}>{config.textSize}px</span>
-                      </label>
-                      <input
-                        type="range"
-                        min="30"
-                        max="200"
-                        value={config.textSize}
-                        onChange={(e) => setConfig({ ...config, textSize: parseInt(e.target.value) })}
-                        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-                        style={{
-                          background: `linear-gradient(to right, ${currentScheme.accent} 0%, ${currentScheme.accent} ${((config.textSize - 30) / 170) * 100}%, #333 ${((config.textSize - 30) / 170) * 100}%, #333 100%)`
-                        }}
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide flex items-center justify-between">
-                        <span>TAMAÑO SUBTÍTULO</span>
-                        <span style={{ color: currentScheme.secondary }}>{config.subtitleSize}px</span>
-                      </label>
-                      <input
-                        type="range"
-                        min="20"
-                        max="100"
-                        value={config.subtitleSize}
-                        onChange={(e) => setConfig({ ...config, subtitleSize: parseInt(e.target.value) })}
-                        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-                        style={{
-                          background: `linear-gradient(to right, ${currentScheme.secondary} 0%, ${currentScheme.secondary} ${((config.subtitleSize - 20) / 80) * 100}%, #333 ${((config.subtitleSize - 20) / 80) * 100}%, #333 100%)`
-                        }}
-                      />
-                    </div>
-                  </>
-                )}
-
-                <div>
-                  <label className="block text-sm font-bold text-gray-300 mb-2 tracking-wide flex items-center justify-between">
-                    <span>ESPACIADO DE LÍNEA</span>
-                    <span style={{ color: currentScheme.accent }}>{config.lineHeight}</span>
-                  </label>
-                  <input
-                    type="range"
-                    min="0.8"
-                    max="2"
-                    step="0.1"
-                    value={config.lineHeight}
-                    onChange={(e) => setConfig({ ...config, lineHeight: parseFloat(e.target.value) })}
-                    className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-                    style={{
-                      background: `linear-gradient(to right, ${currentScheme.accent} 0%, ${currentScheme.accent} ${((config.lineHeight - 0.8) / 1.2) * 100}%, #333 ${((config.lineHeight - 0.8) / 1.2) * 100}%, #333 100%)`
-                    }}
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>Compacto</span>
-                    <span>Espacioso</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Colors */}
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
-                 style={{ borderColor: currentScheme.accent + '40' }}>
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <Palette className="w-5 h-5" style={{ color: currentScheme.secondary }} />
-                Dimensión Cromática
-              </h3>
-              <div className="grid grid-cols-3 gap-3">
-                {Object.entries(colorSchemes).map(([key, value]) => (
-                  <button
-                    key={key}
-                    onClick={() => setConfig({ ...config, colorScheme: key })}
-                    className={`h-20 rounded-xl transition-all border-2 relative overflow-hidden ${
-                      config.colorScheme === key ? 'scale-105' : 'opacity-70 hover:opacity-100'
-                    }`}
-                    style={config.colorScheme === key ? {
-                      background: value.bg,
-                      borderColor: value.accent,
-                      boxShadow: `0 0 20px ${value.accent}80`
-                    } : {
-                      background: value.bg,
-                      borderColor: '#333333'
-                    }}
-                  >
-                    {config.colorScheme === key && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles className="w-6 h-6 text-white animate-pulse" />
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Animation */}
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
-                 style={{ borderColor: currentScheme.accent + '40' }}>
-              <h3 className="text-lg font-bold text-white mb-4">Efecto Dimensional</h3>
-              <select
-                value={config.animation}
-                onChange={(e) => setConfig({ ...config, animation: e.target.value })}
-                className="w-full bg-black/50 text-white px-4 py-3 rounded-xl outline-none border-2 font-bold"
-                style={{ 
-                  borderColor: currentScheme.accent + '60',
-                  boxShadow: `0 0 10px ${currentScheme.accent}40`
-                }}
-              >
-                {Object.entries(animations).map(([key, value]) => (
-                  <option key={key} value={key}>{value}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Music */}
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
-                 style={{ borderColor: currentScheme.secondary + '40' }}>
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                <Music className="w-5 h-5" style={{ color: currentScheme.secondary }} />
-                Frecuencia Sonora
-              </h3>
-              <select
-                value={config.musicTrack}
-                onChange={(e) => setConfig({ ...config, musicTrack: e.target.value })}
-                className="w-full bg-black/50 text-white px-4 py-3 rounded-xl outline-none border-2 font-bold"
-                style={{ 
-                  borderColor: currentScheme.secondary + '60',
-                  boxShadow: `0 0 10px ${currentScheme.secondary}40`
-                }}
-              >
-                {Object.entries(musicTracks).map(([key, value]) => (
-                  <option key={key} value={key}>{value.name} ({value.freq}Hz)</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Video Duration Control */}
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-6 border-2"
-                 style={{ borderColor: currentScheme.accent + '40' }}>
-              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2 justify-between">
-                <span className="flex items-center gap-2">
-                  <Play className="w-5 h-5" style={{ color: currentScheme.accent }} />
-                  Duración del Video
-                </span>
-                <span className="text-2xl" style={{ color: currentScheme.accent }}>
-                  {config.videoDuration}s
-                </span>
-              </h3>
-              <input
-                type="range"
-                min="3"
-                max="30"
-                step="1"
-                value={config.videoDuration}
-                onChange={(e) => setConfig({ ...config, videoDuration: parseInt(e.target.value) })}
-                className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-                style={{
-                  background: `linear-gradient(to right, ${currentScheme.accent} 0%, ${currentScheme.accent} ${((config.videoDuration - 3) / 27) * 100}%, #333 ${((config.videoDuration - 3) / 27) * 100}%, #333 100%)`
-                }}
-              />
-              <div className="flex justify-between text-xs text-gray-400 mt-2">
-                <span>3s (Rápido)</span>
-                <span>15s (Ideal)</span>
-                <span>30s (Largo)</span>
-              </div>
-              <div className="mt-3 text-sm text-gray-400 text-center">
-                ⚡ Recomendado: 5-10 segundos para reels
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
-        }
-        
-        input[type="range"] {
-          -webkit-appearance: none;
-          appearance: none;
-          height: 8px;
-          border-radius: 5px;
-          outline: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: white;
-          cursor: pointer;
-          box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        
-        input[type="range"]::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: white;
-          cursor: pointer;
-          border: none;
-          box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-      `}</style>
     </div>
   );
 };
