@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Play, Pause, RefreshCw, Type, Music, Volume2, VolumeX, Download, Zap } from 'lucide-react';
+import { Sparkles, Play, Pause, Type, Volume2, VolumeX, Download, Zap } from 'lucide-react';
 
 const ReelGenerator = () => {
   const [config, setConfig] = useState({
@@ -104,7 +104,7 @@ const ReelGenerator = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const scheme = colorSchemes[config.colorScheme];
+    // Se eliminó la variable 'scheme' que no se usaba aquí
     if (isPlaying) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       particles.forEach(particle => {
@@ -115,7 +115,7 @@ const ReelGenerator = () => {
         ctx.fill();
       });
     }
-  }, [currentFrame, isPlaying, particles, config.colorScheme]);
+  }, [currentFrame, isPlaying, particles]);
 
   const getAnimationStyle = () => {
     if (!isPlaying) return {};
@@ -144,7 +144,6 @@ const ReelGenerator = () => {
   const handleDownload = async () => {
     setIsRecording(true);
     setRecordProgress(0);
-    // Lógica de grabación simulada simplificada para evitar errores de linter
     setTimeout(() => {
       setIsRecording(false);
       setRecordProgress(100);
@@ -168,30 +167,34 @@ const ReelGenerator = () => {
             <div className="relative mx-auto bg-black rounded-2xl overflow-hidden" style={{ aspectRatio: '9/16', maxWidth: '300px' }}>
                <canvas ref={canvasRef} width={300} height={533} className="absolute inset-0 w-full h-full" />
                <div className="absolute inset-0 flex flex-col items-center justify-center p-4" style={getAnimationStyle()}>
-                  <h2 style={{ fontSize: fontSize.main, color: 'white' }}>{config.text}</h2>
+                  <h2 className="font-bold" style={{ fontSize: fontSize.main, color: 'white' }}>{config.text}</h2>
                   <p style={{ fontSize: fontSize.sub, color: 'white' }}>{config.subtitle}</p>
                </div>
             </div>
             
             <div className="mt-6 flex flex-wrap justify-center gap-4">
-               <button onClick={() => setIsPlaying(!isPlaying)} className="bg-white text-black px-6 py-2 rounded-full font-bold">
+               <button onClick={() => setIsPlaying(!isPlaying)} className="bg-white text-black px-6 py-2 rounded-full font-bold flex items-center justify-center transition-transform active:scale-90">
                  {isPlaying ? <Pause /> : <Play />}
                </button>
-               <button onClick={() => isMusicPlaying ? stopMusic() : playMusic()} className="bg-gray-700 text-white px-6 py-2 rounded-full font-bold">
+               <button onClick={() => isMusicPlaying ? stopMusic() : playMusic()} className="bg-gray-700 text-white px-6 py-2 rounded-full font-bold flex items-center justify-center transition-transform active:scale-90">
                  {isMusicPlaying ? <VolumeX /> : <Volume2 />}
                </button>
-               <button onClick={handleDownload} className="bg-green-600 text-white px-6 py-2 rounded-full font-bold flex gap-2">
-                 <Download /> {isRecording ? `${recordProgress}%` : 'SAVE'}
+               <button onClick={handleDownload} className="bg-green-600 text-white px-6 py-2 rounded-full font-bold flex gap-2 items-center justify-center transition-transform active:scale-95">
+                 <Download size={20} /> {isRecording ? `${recordProgress}%` : 'SAVE'}
                </button>
             </div>
           </div>
 
           <div className="space-y-6 text-left">
             <div className="bg-gray-900/50 p-6 rounded-3xl border border-white/10">
-              <h3 className="text-white font-bold mb-4 flex gap-2"><Zap /> Estilo</h3>
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><Zap size={18} /> Estilo</h3>
               <div className="grid grid-cols-2 gap-2">
                 {Object.keys(styles).map(s => (
-                  <button key={s} onClick={() => setConfig({...config, style: s})} className="p-3 bg-black/40 text-white rounded-xl border border-white/5">
+                  <button 
+                    key={s} 
+                    onClick={() => setConfig({...config, style: s})} 
+                    className={`p-3 rounded-xl border transition-all ${config.style === s ? 'bg-white/20 border-white' : 'bg-black/40 border-white/5 hover:bg-black/60'}`}
+                  >
                     {styles[s].emoji} {styles[s].name}
                   </button>
                 ))}
@@ -199,14 +202,15 @@ const ReelGenerator = () => {
             </div>
 
             <div className="bg-gray-900/50 p-6 rounded-3xl border border-white/10">
-              <h3 className="text-white font-bold mb-4 flex gap-2"><Type /> Mensaje</h3>
+              <h3 className="text-white font-bold mb-4 flex items-center gap-2"><Type size={18} /> Mensaje</h3>
               <textarea 
-                className="w-full bg-black text-white p-4 rounded-xl mb-4" 
+                className="w-full bg-black text-white p-4 rounded-xl mb-4 border border-white/10 focus:border-white/30 outline-none" 
                 value={config.text} 
                 onChange={(e) => setConfig({...config, text: e.target.value.toUpperCase()})}
+                rows={2}
               />
               <input 
-                className="w-full bg-black text-white p-4 rounded-xl" 
+                className="w-full bg-black text-white p-4 rounded-xl border border-white/10 focus:border-white/30 outline-none" 
                 value={config.subtitle} 
                 onChange={(e) => setConfig({...config, subtitle: e.target.value})}
               />
