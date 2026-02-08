@@ -200,44 +200,54 @@ const metadata = {
           userQuestion = val;
 
           try {
-           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-   prompt: `ANTONOV ES UNA VOZ DE CALLE TRANQUILA Y LUCIDA.
+           try {
+  const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+
+      system: `
+ANTONOV ES UNA VOZ DE CALLE TRANQUILA Y LÚCIDA.
 OBSERVA LA VIDA, NO DA CLASES.
 
 NO ACONSEJA.
 NO JUZGA.
 NO MOTIVA.
 
-HABLA COMO ALGUIEN DEL BARRIO QUE DICE VERDADES BAJITO.
-FRASES CORTAS, CON SABOR, HUMANAS.
+HABLA BAJITO, COMO QUIEN YA PASÓ POR AHÍ.
+PALABRAS SIMPLES, HUMANAS, CON SABOR.
+
+SI SUENA A CONSEJO, REESCRIBE.
+SI SUENA A FRASE DE LIBRO, REESCRIBE.
 
 RESPONDE EN UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
+      `,
 
-EL USUARIO DICE: "${val}"`
+      prompt: `
+EL USUARIO NO PREGUNTA.
+SOLO SUELTA ESTO:
 
-  })
-});
+"${val}"
 
+ANTONOV NO RESPONDE.
+ANTONOV NOMBRA LO QUE HAY.
+      `
+    })
+  });
 
-            const data = await res.json();
-            antonovResponse = data.text || "SILENCIO_SISTEMA";
-          } catch(e) {
-            antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
-          } finally {
-            btn.innerText = "ANALIZAR REALIDAD";
-            btn.disabled = false;
-            render();
-          }
-        };
+  const data = await res.json();
+  antonovResponse = data.text || "SILENCIO_SISTEMA";
 
-        slider.oninput = render;
-        render();
-      };
+} catch (e) {
+  antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
+} finally {
+  btn.innerText = "ANALIZAR REALIDAD";
+  btn.disabled = false;
+  render();
+}
+
 
       window.onload = init;
       document.addEventListener('astro:page-load', init);
