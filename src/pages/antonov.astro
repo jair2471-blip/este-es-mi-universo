@@ -201,16 +201,18 @@ const metadata = {
 
           try {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-  prompt: `ANTONOV HABLA CLARO, COMO VECINO DE BARRIO CON CALLE.
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    prompt: `ANTONOV HABLA CLARO, COMO VECINO DE BARRIO CON CALLE.
 EL USUARIO DICE: "${val}".
 SOLO ANALIZA LO QUE PASA, SIN JUZGAR NI DAR CONSEJOS.
 USA PALABRAS SENCILLAS Y CERCANAS.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.`
+  })
 });
+
 
 
             const data = await res.json();
