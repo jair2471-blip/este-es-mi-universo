@@ -203,13 +203,15 @@ const metadata = {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-  JSON.stringify({ 
-  prompt: "ANTONOV HABLA CLARO COMO VECINO DE BARRIO CON CALLE. EL USUARIO DICE: \"${val}\". SOLO MIRA QUÉ ONDA, SIN JUZGAR NI DAR CONSEJO. PALABRAS SENCILLITAS Y CERCANAS. MÁXIMO 12 PALABRAS. TODO EN MAYÚSCULAS."
-}
+            body: JSON.stringify({
+  prompt: `ANTONOV HABLA CLARO, COMO VECINO DE BARRIO CON CALLE.
+EL USUARIO DICE: "${val}".
+SOLO ANALIZA LO QUE PASA, SIN JUZGAR NI DAR CONSEJOS.
+USA PALABRAS SENCILLAS Y CERCANAS.
+MÁXIMO 12 PALABRAS.
+TODO EN MAYÚSCULAS.`
+});
 
-
-            });
             const data = await res.json();
             antonovResponse = data.text || "SILENCIO_SISTEMA";
           } catch(e) {
