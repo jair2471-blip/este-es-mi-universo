@@ -200,7 +200,7 @@ const metadata = {
           userQuestion = val;
 
           try {
-            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+           const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
@@ -219,10 +219,10 @@ RESPONDE EN UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
 
-EL USUARIO DICE: "${val}"
-
+EL USUARIO DICE: "${val}"`
   })
 });
+
 
             const data = await res.json();
             antonovResponse = data.text || "SILENCIO_SISTEMA";
