@@ -16,12 +16,7 @@ const metadata = {
       --border-color: #333;
     }
 
-    :global(main) {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
+    :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
     .master-wrapper {
       width: 100%;
@@ -55,14 +50,7 @@ const metadata = {
       justify-content: space-between;
     }
 
-    .brand-area h1 {
-      font-weight: 900;
-      font-size: 2.8rem;
-      color: #fff;
-      margin: 0;
-      letter-spacing: -2px;
-      line-height: 1;
-    }
+    .brand-area h1 { font-weight: 900; font-size: 2.8rem; color: #fff; margin: 0; letter-spacing: -2px; line-height: 1; }
 
     .states-grid {
       margin-top: 20px;
@@ -74,77 +62,27 @@ const metadata = {
       padding-right: 5px;
     }
 
-    .states-grid::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .states-grid::-webkit-scrollbar-track {
-      background: #111;
-    }
-
-    .states-grid::-webkit-scrollbar-thumb {
-      background: #333;
-      border-radius: 2px;
-    }
+    /* Scrollbar minimalista para la rejilla */
+    .states-grid::-webkit-scrollbar { width: 4px; }
+    .states-grid::-webkit-scrollbar-track { background: #111; }
+    .states-grid::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
 
     .state-btn {
-      background: #111;
-      border: 1px solid #222;
-      color: #aaa;
-      padding: 12px 8px;
-      font-size: 10px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'JetBrains Mono';
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      background: #111; border: 1px solid #222; color: #aaa; padding: 12px 8px;
+      font-size: 10px; text-transform: uppercase; cursor: pointer;
+      transition: all 0.2s; font-family: 'JetBrains Mono'; font-weight: 700;
     }
 
-    .state-btn:hover {
-      background: #1a1a1a;
-      border-color: #444;
-      color: #fff;
-    }
-
-    .state-btn.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-    }
-
-    .label-section {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #666;
-      display: block;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .state-btn:hover { background: #1a1a1a; color: #fff; border-color: #444; }
+    .state-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
     .btn-main {
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 20px;
-      font-weight: 900;
-      text-transform: uppercase;
-      cursor: pointer;
-      width: 100%;
-      transition: 0.3s;
-      font-family: 'Inter';
-      font-size: 13px;
+      background: #fff; color: #000; border: none; padding: 20px;
+      font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%;
+      font-family: 'Inter'; font-size: 13px;
     }
-
-    .btn-main:hover {
-      background: var(--accent);
-    }
-
-    .btn-main:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .btn-main:hover:not(:disabled) { background: var(--accent); }
+    .btn-main:disabled { opacity: 0.5; cursor: wait; }
 
     .canvas-area {
       background: #080808;
@@ -164,24 +102,9 @@ const metadata = {
     }
 
     @media (max-width: 1100px) {
-      .app-container {
-        grid-template-columns: 1fr;
-        height: auto;
-        overflow-y: auto;
-      }
-
-      .sidebar {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-      }
-
-      .canvas-area {
-        height: 60vh;
-      }
-
-      .states-grid {
-        max-height: 250px;
-      }
+      .app-container { grid-template-columns: 1fr; height: 100vh; overflow-y: auto; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .canvas-area { height: 60vh; }
     }
   </style>
 
@@ -193,17 +116,16 @@ const metadata = {
           <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; margin: 10px 0 0 0;">V.6.0_PROTOCOLO</p>
           
           <div style="margin-top: 25px;">
-            <label class="label-section">Selecciona Tu Estado</label>
+            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1px;">Selecciona Tu Estado</label>
             <div class="states-grid" id="statesGrid"></div>
           </div>
         </div>
 
         <div>
           <div style="margin-bottom: 20px;">
-            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px; text-transform: uppercase;">ZOOM DE RESPUESTA</label>
+            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px;">ZOOM DE RESPUESTA</label>
             <input type="range" id="sizeSlider" min="40" max="140" value="85" style="width:100%; accent-color:var(--accent);">
           </div>
-          
           <button id="generateBtn" class="btn-main">Traducir Estado</button>
         </div>
       </aside>
@@ -217,40 +139,20 @@ const metadata = {
   <script is:inline>
     (function() {
       const ESTADOS = [
-        'CANSANCIO',
-        'SOLEDAD',
-        'ANSIEDAD',
-        'DUDA',
-        'RUPTURA',
-        'DESEO',
-        'MIEDO',
-        'RABIA',
-        'VACÍO',
-        'NOSTALGIA',
-        'CONFUSIÓN',
-        'TRISTEZA',
-        'PÉRDIDA',
-        'HASTÍO',
-        'CULPA',
-        'ENVIDIA',
-        'DESAMOR',
-        'AGOBIO',
-        'BLOQUEO',
-        'INQUIETUD',
-        'ARREPENTIMIENTO',
-        'FRUSTRACIÓN',
-        'INSEGURIDAD',
-        'DESCONEXIÓN'
+        'CANSANCIO', 'SOLEDAD', 'ANSIEDAD', 'DUDA', 'RUPTURA', 'DESEO', 
+        'MIEDO', 'RABIA', 'VACÍO', 'NOSTALGIA', 'CONFUSIÓN', 'TRISTEZA', 
+        'PÉRDIDA', 'HASTÍO', 'CULPA', 'ENVIDIA', 'DESAMOR', 'AGOBIO', 
+        'BLOQUEO', 'INQUIETUD', 'ARREPENTIMIENTO', 'FRUSTRACIÓN', 
+        'INSEGURIDAD', 'DESCONEXIÓN'
       ];
 
-      const init = () => {
+      function init() {
         const canvas = document.getElementById('mainCanvas');
-        const ctx = canvas?.getContext('2d');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
         const btn = document.getElementById('generateBtn');
         const slider = document.getElementById('sizeSlider');
         const statesGrid = document.getElementById('statesGrid');
-
-        if (!canvas || !ctx || !statesGrid) return;
 
         let selectedState = "";
         let antonovResponse = "SELECCIONA UN ESTADO";
@@ -259,7 +161,6 @@ const metadata = {
           canvas.width = 1080;
           canvas.height = 1080;
 
-          // Fondo
           ctx.fillStyle = '#000000';
           ctx.fillRect(0, 0, 1080, 1080);
 
@@ -267,18 +168,11 @@ const metadata = {
           ctx.strokeStyle = '#111';
           ctx.lineWidth = 1;
           for(let i=0; i<=1080; i+=108) {
-            ctx.beginPath();
-            ctx.moveTo(i,0);
-            ctx.lineTo(i,1080);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(0,i);
-            ctx.lineTo(1080,i);
-            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,1080); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(1080,i); ctx.stroke();
           }
 
-          // 1. INPUT (ARRIBA)
+          // 1. INPUT
           if(selectedState) {
             ctx.font = "700 24px 'JetBrains Mono'";
             ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
@@ -286,7 +180,7 @@ const metadata = {
             ctx.fillText("> ESTADO: " + selectedState, 80, 100);
           }
 
-          // 2. SENTENCIA (CENTRO)
+          // 2. SENTENCIA
           const fontSize = parseInt(slider.value);
           ctx.font = `900 ${fontSize}px 'Inter'`;
           ctx.fillStyle = "white";
@@ -295,14 +189,9 @@ const metadata = {
 
           const words = antonovResponse.toUpperCase().split(' ');
           let lines = [], line = '';
-          
           words.forEach(w => {
-            if(ctx.measureText(line + w).width < 850) {
-              line += w + ' ';
-            } else {
-              lines.push(line);
-              line = w + ' ';
-            }
+            if(ctx.measureText(line + w).width < 850) line += w + ' ';
+            else { lines.push(line); line = w + ' '; }
           });
           lines.push(line);
 
@@ -312,46 +201,36 @@ const metadata = {
             startY += fontSize * 1.15;
           });
 
-          // 3. FIRMA (ABAJO)
+          // 3. FIRMA
           ctx.font = "700 20px 'JetBrains Mono'";
           ctx.fillStyle = "#ffd700";
           ctx.textAlign = "center";
           ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 540, 950);
-          
           ctx.strokeStyle = '#ffd700';
           ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(390, 975);
-          ctx.lineTo(690, 975);
-          ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(390, 975); ctx.lineTo(690, 975); ctx.stroke();
         };
 
-        // Crear botones de estados
+        // Limpiar y crear botones
+        statesGrid.innerHTML = '';
         ESTADOS.forEach(estado => {
-          const stateButton = document.createElement('button');
-          stateButton.className = 'state-btn';
-          stateButton.textContent = estado;
-          stateButton.onclick = () => {
-            document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
-            stateButton.classList.add('active');
+          const b = document.createElement('button');
+          b.className = 'state-btn';
+          b.textContent = estado;
+          b.onclick = () => {
+            document.querySelectorAll('.state-btn').forEach(btn => btn.classList.remove('active'));
+            b.classList.add('active');
             selectedState = estado;
             render();
           };
-          statesGrid.appendChild(stateButton);
+          statesGrid.appendChild(b);
         });
 
-        // Evento del slider
-        slider.oninput = () => {
-          render();
-        };
+        slider.oninput = render;
 
-        // Botón de traducir
         btn.onclick = async () => {
-          if(!selectedState) {
-            alert('Selecciona un estado primero');
-            return;
-          }
-
+          if(!selectedState) return alert('Selecciona un estado');
+          
           btn.textContent = "TRADUCIENDO...";
           btn.disabled = true;
 
@@ -360,55 +239,26 @@ const metadata = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ 
-                prompt: `ANTONOV ES UN TRADUCTOR DE ESTADOS HUMANOS.
-NO RESPONDE PREGUNTAS.
-NO DA CONSEJOS.
-NO JUZGA.
-NO MOTIVA.
-OBSERVA Y NOMBRA CON SABIDURÍA DE CALLE.
-
-LENGUAJE:
-- SIMPLE, CERCANO, DE CALLE TRANQUILA
-- SABIDURÍA ADQUIRIDA CON EXPERIENCIA
-- NO SUENA A LIBRO NI A COACH
-- NO SUENA A INTELIGENTE
-- SUENA A ALGUIEN QUE YA VIVIÓ
-
-UNA SOLA FRASE.
-MÁXIMO 12 PALABRAS.
-TODO EN MAYÚSCULAS.
-
-EL ESTADO ES: "${selectedState}"
-
-ANTONOV LO TRADUCE EN PALABRAS CON CALLE Y SABIDURÍA.`
+                prompt: `Responde como Antonov, sabio de calle. Traduce el estado "${selectedState}" en una verdad cruda de máximo 12 palabras. TODO MAYÚSCULAS.` 
               })
             });
-
             const data = await res.json();
-            antonovResponse = data.text || "SILENCIO_SISTEMA";
-            
+            antonovResponse = data.text || "SILENCIO";
           } catch (e) {
-            console.error('Error:', e);
-            antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
+            antonovResponse = "ERROR DE NÚCLEO";
           } finally {
-            btn.textContent = "TRADUCIR ESTADO";
+            btn.textContent = "Traducir Estado";
             btn.disabled = false;
             render();
           }
         };
 
-        // Renderizado inicial
         render();
-      };
-
-      // Inicializar cuando cargue
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
       }
-      
-      // Para Astro
+
+      // Ejecución segura
+      if (document.readyState === 'complete') init();
+      else window.addEventListener('load', init);
       document.addEventListener('astro:page-load', init);
     })();
   </script>
