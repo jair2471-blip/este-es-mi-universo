@@ -12,8 +12,9 @@ const metadata = {
 
     :root {
       --accent: #ffd700;
-      --bg-dark: #020202;
-      --card-bg: rgba(20, 20, 20, 0.6);
+      --bg-dark: #050505;
+      --sidebar-bg: #0a0a0a;
+      --border: rgba(255, 215, 0, 0.1);
     }
 
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
@@ -21,7 +22,7 @@ const metadata = {
     .master-wrapper {
       width: 100%;
       height: 100vh;
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -31,143 +32,153 @@ const metadata = {
 
     .app-container {
       display: grid;
-      grid-template-columns: 420px 1fr;
-      width: 98%;
-      max-width: 1600px;
-      height: 90vh;
+      grid-template-columns: 400px 1fr;
+      width: 100%;
+      height: 100vh;
       background: var(--bg-dark);
-      border: 1px solid #222;
-      box-shadow: 0 0 100px rgba(0,0,0,0.8);
-      border-radius: 4px;
       overflow: hidden;
     }
 
-    /* SIDEBAR SENSORIAL */
+    /* SIDEBAR MEJORADO */
     .sidebar {
-      background: linear-gradient(180deg, #080808 0%, #000 100%);
+      background: var(--sidebar-bg);
       padding: 40px;
-      border-right: 1px solid #222;
+      border-right: 1px solid #1a1a1a;
       display: flex;
       flex-direction: column;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      z-index: 10;
     }
 
-    .header-brand h1 { 
-      font-weight: 900; font-size: 3.2rem; margin: 0; letter-spacing: -3px; 
-      background: linear-gradient(to bottom, #fff, #666);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    .brand h1 { 
+      font-weight: 900; font-size: 2.5rem; margin: 0; letter-spacing: -2px; color: #fff;
     }
 
-    .states-container {
+    .tagline {
+      color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; 
+      letter-spacing: 4px; margin-top: 5px; opacity: 0.8;
+    }
+
+    .states-section {
+      margin: 40px 0;
       flex-grow: 1;
-      margin: 30px 0;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono'; font-size: 9px; color: #555; 
+      margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase;
     }
 
     .states-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
       overflow-y: auto;
-      padding-right: 10px;
-      mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      padding-right: 15px;
     }
 
-    /* Botones con Sensibilidad */
+    /* Botones con Sensibilidad Visual */
     .state-btn {
-      background: var(--card-bg);
-      border: 1px solid #333;
-      color: #777;
-      padding: 16px 10px;
-      font-size: 11px;
+      background: transparent;
+      border: 1px solid #222;
+      color: #666;
+      padding: 14px 10px;
+      font-size: 10px;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      transition: all 0.3s ease;
       font-family: 'JetBrains Mono';
-      font-weight: 500;
-      text-align: center;
-      letter-spacing: 1px;
+      text-align: left;
       border-radius: 2px;
     }
 
     .state-btn:hover {
-      border-color: var(--accent);
+      border-color: #444;
       color: #fff;
-      background: rgba(255, 215, 0, 0.05);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      background: #111;
     }
 
     .state-btn.active {
-      background: var(--accent);
+      background: #fff;
       color: #000;
-      border-color: var(--accent);
+      border-color: #fff;
       font-weight: 800;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
 
-    /* ÁREA DE ACCIÓN */
-    .action-zone {
-      border-top: 1px solid #222;
-      padding-top: 25px;
+    /* ACCIONES */
+    .controls {
+      padding-top: 20px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .slider-group { margin-bottom: 20px; }
+    
+    input[type=range] {
+      width: 100%;
+      height: 4px;
+      background: #222;
+      accent-color: var(--accent);
+      cursor: pointer;
     }
 
     .btn-main {
-      background: #fff; color: #000; border: none; padding: 22px;
+      background: #fff; color: #000; border: none; padding: 20px;
       font-weight: 900; text-transform: uppercase; cursor: pointer; width: 100%;
-      font-size: 14px; letter-spacing: 2px;
-      transition: 0.3s ease;
+      font-size: 13px; letter-spacing: 1px; transition: 0.2s;
     }
-    .btn-main:hover { background: var(--accent); transform: scale(1.02); }
+    .btn-main:hover:not(:disabled) { background: var(--accent); }
+    .btn-main:disabled { opacity: 0.3; cursor: wait; }
 
-    .canvas-viewport {
+    /* VIEWPORT DEL CANVAS */
+    .viewport {
       background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px;
+      padding: 60px;
       position: relative;
     }
 
     canvas {
-      box-shadow: 0 0 60px rgba(0,0,0,0.5);
-      border: 1px solid #111;
       max-width: 100%;
-      height: auto;
+      max-height: 100%;
+      box-shadow: 0 0 100px rgba(0,0,0,0.8);
     }
 
-    /* Custom Scrollbar */
-    .states-grid::-webkit-scrollbar { width: 3px; }
-    .states-grid::-webkit-scrollbar-thumb { background: #444; }
+    /* Scrollbar minimalista */
+    .states-grid::-webkit-scrollbar { width: 2px; }
+    .states-grid::-webkit-scrollbar-thumb { background: #333; }
   </style>
 
   <div class="master-wrapper">
     <div class="app-container">
       <aside class="sidebar">
-        <div class="header-brand">
+        <div class="brand">
           <h1>ANTONOV</h1>
-          <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 4px; margin-top: 5px;">DECODIFICADOR SENSORIAL</p>
+          <p class="tagline">PROTOCOLO DE VERDAD</p>
         </div>
 
-        <div class="states-container">
-          <span style="font-family: 'JetBrains Mono'; font-size: 9px; color: #444; margin-bottom: 15px; letter-spacing: 2px;">IDENTIFICA TU NÚCLEO ACTUAL:</span>
+        <div class="states-section">
+          <span class="section-label">Selecciona tu núcleo:</span>
           <div class="states-grid" id="statesGrid"></div>
         </div>
 
-        <div class="action-zone">
-          <div style="margin-bottom: 20px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-              <label style="font-size: 9px; color: #666; font-family:'JetBrains Mono'">ESCALA_VISUAL</label>
-              <span id="zoomVal" style="font-size: 9px; color: var(--accent)">85px</span>
+        <div class="controls">
+          <div class="slider-group">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <label class="section-label" style="margin:0">Escala de Verdad</label>
+              <span id="zoomText" style="font-size: 9px; color: var(--accent)">85px</span>
             </div>
-            <input type="range" id="sizeSlider" min="50" max="150" value="85" style="width:100%; accent-color:var(--accent);">
+            <input type="range" id="sizeSlider" min="50" max="150" value="85">
           </div>
-          <button id="generateBtn" class="btn-main">Traducir Silencio</button>
+          <button id="generateBtn" class="btn-main">Analizar Realidad</button>
         </div>
       </aside>
 
-      <main class="canvas-viewport">
+      <main class="viewport">
         <canvas id="mainCanvas"></canvas>
       </main>
     </div>
@@ -183,41 +194,42 @@ const metadata = {
         'INSEGURIDAD', 'DESCONEXIÓN'
       ];
 
-      function init() {
+      function start() {
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas?.getContext('2d');
+        const grid = document.getElementById('statesGrid');
         const btn = document.getElementById('generateBtn');
         const slider = document.getElementById('sizeSlider');
-        const zoomVal = document.getElementById('zoomVal');
-        const grid = document.getElementById('statesGrid');
+        const zoomText = document.getElementById('zoomText');
 
-        let selectedState = "";
-        let response = "EL SILENCIO TAMBIÉN HABLA";
+        let activeState = "";
+        let response = "LA VERDAD NO NECESITA ADORNOS";
 
         const draw = () => {
           canvas.width = 1080;
           canvas.height = 1080;
           ctx.fillStyle = '#000';
-          ctx.fillRect(0,0,1080,1080);
+          ctx.fillRect(0, 0, 1080, 1080);
 
-          // Grid muy sutil
-          ctx.strokeStyle = '#0a0a0a';
-          for(let i=0; i<1080; i+=54) {
+          // Grid técnico de fondo
+          ctx.strokeStyle = '#080808';
+          ctx.lineWidth = 1;
+          for(let i=0; i<=1080; i+=54) {
             ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,1080); ctx.stroke();
             ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(1080,i); ctx.stroke();
           }
 
-          // Pregunta/Estado arriba
-          if(selectedState) {
-            ctx.font = "800 22px 'JetBrains Mono'";
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.4)';
+          // Estado seleccionado (Arriba)
+          if(activeState) {
+            ctx.font = "700 24px 'JetBrains Mono'";
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
             ctx.textAlign = "center";
-            ctx.fillText(`ANÁLISIS DE ESTADO: ${selectedState}`, 540, 100);
+            ctx.fillText("> ESTADO DETECTADO: " + activeState, 540, 120);
           }
 
-          // Texto Central
+          // Respuesta Central
           const size = parseInt(slider.value);
-          zoomVal.innerText = size + "px";
+          zoomText.innerText = size + "px";
           ctx.font = `900 ${size}px 'Inter'`;
           ctx.fillStyle = "#fff";
           ctx.textAlign = "center";
@@ -237,14 +249,18 @@ const metadata = {
             y += size * 1.15;
           });
 
-          // Firma fija abajo
-          ctx.font = "700 22px 'JetBrains Mono'";
+          // Firma base
+          ctx.font = "700 20px 'JetBrains Mono'";
           ctx.fillStyle = "#ffd700";
-          ctx.letterSpacing = "10px";
-          ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 540, 960);
+          ctx.textAlign = "center";
+          ctx.fillText("ANTONOV // SISTEMA DE CONSCIENCIA", 540, 960);
+          
+          ctx.strokeStyle = '#ffd700';
+          ctx.lineWidth = 2;
+          ctx.beginPath(); ctx.moveTo(400, 985); ctx.lineTo(680, 985); ctx.stroke();
         };
 
-        // Generar botones con efecto activo
+        // Poblar botones
         grid.innerHTML = '';
         ESTADOS.forEach(e => {
           const b = document.createElement('button');
@@ -253,7 +269,7 @@ const metadata = {
           b.onclick = () => {
             document.querySelectorAll('.state-btn').forEach(x => x.classList.remove('active'));
             b.classList.add('active');
-            selectedState = e;
+            activeState = e;
             draw();
           };
           grid.appendChild(b);
@@ -262,20 +278,20 @@ const metadata = {
         slider.oninput = draw;
 
         btn.onclick = async () => {
-          if(!selectedState) return;
-          btn.innerText = "EXTRAYENDO VERDAD...";
+          if(!activeState) return;
+          btn.innerText = "PROCESANDO REALIDAD...";
           btn.disabled = true;
 
           try {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
-              body: JSON.stringify({ prompt: `Antonov, sabio de calle. Traduce el estado "${selectedState}" en una frase cruda y real de max 12 palabras. TODO MAYÚSCULAS.` })
+              body: JSON.stringify({ prompt: `Antonov, mentor radical. Traduce "${activeState}" en una verdad cruda de máximo 10 palabras. TODO MAYÚSCULAS.` })
             });
             const data = await res.json();
             response = data.text;
           } catch { response = "ERROR DE CONEXIÓN"; }
           
-          btn.innerText = "Traducir Silencio";
+          btn.innerText = "Analizar Realidad";
           btn.disabled = false;
           draw();
         };
@@ -283,8 +299,8 @@ const metadata = {
         draw();
       }
 
-      document.addEventListener('astro:page-load', init);
-      window.onload = init;
+      document.addEventListener('astro:page-load', start);
+      window.onload = start;
     })();
   </script>
 </Layout>
