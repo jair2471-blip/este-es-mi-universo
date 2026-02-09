@@ -164,49 +164,68 @@ const ESTADOS = [
       let selectedState = '';
       let currentText = 'EL SILENCIO ES LA ÚNICA RESPUESTA';
 
-      function draw() {
-        const container = canvas.parentElement.getBoundingClientRect();
-        const size = Math.min(container.width, container.height * 1.0);  // cuadrado, llena lo que pueda
+     function draw() {
+  const container = canvas.parentElement.getBoundingClientRect();
+  // Hacemos el canvas cuadrado y lo más grande posible sin salirse
+  const size = Math.min(container.width, container.height);
 
-        canvas.width = size;
-        canvas.height = size;
+  canvas.width = size;
+  canvas.height = size;
 
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, size, size);
 
-        // Grano sutil
-        for (let i = 0; i < 300; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
-          ctx.fillRect(Math.random() * size, Math.random() * size, 1.5, 1.5);
-        }
+  // Grano muy sutil
+  for (let i = 0; i < 250; i++) {
+    ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.025 + 0.005})`;
+    ctx.fillRect(Math.random() * size, Math.random() * size, 1.2, 1.2);
+  }
 
-        if (selectedState) {
-          ctx.fillStyle = '#ffd700';
-          ctx.font = '700 28px "JetBrains Mono"';
-          ctx.fillText(`// ${selectedState}`, 60, 90);
-          ctx.fillRect(60, 105, 220, 2);
-        }
+  // Header (arriba izquierda con margen)
+  if (selectedState) {
+    ctx.fillStyle = '#ffd700';
+    ctx.font = '700 28px "JetBrains Mono", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(`// ${selectedState}`, 60, 80);
+    ctx.fillRect(60, 95, 220, 2);
+  }
 
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+  // Texto principal
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
 
-        let fontSize = parseInt(slider.value) || 90;
-        const words = currentText.toUpperCase().split(' ');
-        if (words.length > 5) fontSize *= 0.9;
-        ctx.font = `900 ${fontSize}px Inter`;
+  let fontSize = parseInt(slider.value) || 90;
+  const words = currentText.toUpperCase().split(' ');
+  
+  // Ajuste progresivo para frases largas (evita que se salga o descentre)
+  if (words.length >= 8) fontSize *= 0.82;
+  else if (words.length >= 6) fontSize *= 0.88;
+  else if (words.length <= 3) fontSize *= 1.05; // frases cortas más grandes
 
-        const lineHeight = fontSize * 0.95;
-        const totalH = words.length * lineHeight;
-        let y = size / 2 - totalH / 2 + lineHeight / 2;
+  fontSize = Math.min(fontSize, size * 0.15); // límite superior
 
-        ctx.shadowColor = 'rgba(255,215,0,0.4)';
-        ctx.shadowBlur = 35;
+  ctx.font = `900 ${fontSize}px 'Inter', sans-serif`;
 
-        words.forEach((word, i) => ctx.fillText(word, size / 2, y + i * lineHeight));
+  const lineHeight = fontSize * 0.98; // un poco más apretado para mejor look
+  const totalHeight = words.length * lineHeight;
 
-        ctx.shadowBlur = 0;
-      }
+  // Centro vertical preciso: mitad del canvas - mitad del bloque de texto
+  const centerY = size / 2;
+  let yStart = centerY - (totalHeight / 2) + (lineHeight / 2);
+
+  // Shadow dorada sutil
+  ctx.shadowColor = 'rgba(255, 215, 0, 0.35)';
+  ctx.shadowBlur = 30;
+  ctx.shadowOffsetY = 6;
+
+  words.forEach((word, index) => {
+    ctx.fillText(word, size / 2, yStart + index * lineHeight);
+  });
+
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+}
 
       buttons.forEach(btn => btn.onclick = () => {
         buttons.forEach(b => b.classList.remove('active'));
