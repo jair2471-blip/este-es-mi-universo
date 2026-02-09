@@ -1,6 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-const metadata = { title: 'ANTONOV | PROTOCOLO DE VERDAD' };
+const metadata = { title: 'ANTONOV | PROTOCOLO' };
+
 const ESTADOS = [
   'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
   'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
@@ -12,316 +13,255 @@ const ESTADOS = [
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-    /* Reset Maestro */
-    :global(body) { margin: 0; padding: 0; background: #000; overflow: hidden; height: 100vh; color: #fff; }
-    :global(main) { margin: 0 !important; padding: 0 !important; max-width: 100% !important; height: 100vh; }
-
-    .app-container {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      height: 100vh;
-      background: #000;
+    /* CONFIGURACIÓN DE NIVEL "AMIGO ANHELADO": CONTROL TOTAL DEL VIEWPORT */
+    :global(html, body) { 
+      margin: 0 !important; 
+      padding: 0 !important; 
+      overflow: hidden !important; 
+      background: #000 !important; 
     }
 
-    /* Sidebar con Estilo de Terminal */
+    /* MATAMOS CUALQUIER MARGEN DEL LAYOUT DE ASTRO */
+    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+
+    .antonov-master {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      height: 100vh;
+      width: 100vw;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* SIDEBAR: DISEÑO PERSONALIZADO */
     .sidebar {
-      background: #080808;
+      background: #050505;
       border-right: 1px solid #1a1a1a;
       display: flex;
       flex-direction: column;
-      z-index: 10;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+      height: 100vh;
     }
 
-    .header-section {
-      padding: 50px 40px;
+    .brand {
+      padding: 50px 30px;
       border-bottom: 1px solid #1a1a1a;
     }
 
-    h1 { font-size: 3rem; font-weight: 900; margin: 0; letter-spacing: -3px; line-height: 0.9; }
-    .protocol-tag { 
-      font-family: 'JetBrains Mono'; 
-      color: #ffd700; 
-      font-size: 11px; 
-      letter-spacing: 4px; 
-      margin-top: 10px;
-      display: block;
-      opacity: 0.8;
+    .brand h1 { 
+      font-size: 2.5rem; 
+      margin: 0; 
+      letter-spacing: -3px; 
+      color: #fff; 
+      text-transform: uppercase;
     }
 
-    .scroll-content {
+    .brand span {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #ffd700;
+      letter-spacing: 3px;
+    }
+
+    .menu-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 40px;
+      padding: 30px;
     }
 
-    .label-micro {
-      font-family: 'JetBrains Mono';
-      font-size: 9px;
-      color: #444;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .states-grid {
+    .grid-estados {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
     }
 
-    .state-btn {
-      background: #111;
+    .state-opt {
+      background: #0a0a0a;
       border: 1px solid #222;
-      color: #555;
-      padding: 15px 10px;
+      color: #444;
+      padding: 15px 5px;
       font-family: 'JetBrains Mono';
       font-size: 10px;
       cursor: pointer;
-      text-transform: uppercase;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: 0.3s;
     }
 
-    .state-btn:hover { border-color: #ffd700; color: #fff; background: #151515; }
-    .state-btn.active { background: #ffd700; color: #000; border-color: #ffd700; font-weight: 700; }
+    .state-opt:hover { border-color: #ffd700; color: #fff; }
+    .state-opt.active { background: #ffd700; color: #000; font-weight: bold; border-color: #ffd700; }
 
-    /* Controles Inferiores */
-    .footer-controls {
-      padding: 40px;
-      background: #050505;
+    /* PANEL DE CONTROL INFERIOR */
+    .config-panel {
+      padding: 30px;
+      background: #020202;
       border-top: 1px solid #1a1a1a;
     }
 
-    .slider-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
+    .control-group { margin-bottom: 20px; }
+    .control-group label { display: block; font-size: 9px; color: #666; margin-bottom: 10px; letter-spacing: 2px; }
 
     input[type="range"] { 
       width: 100%; 
       accent-color: #ffd700; 
+      background: #1a1a1a; 
       height: 4px; 
-      background: #222;
-      border-radius: 2px;
-      margin-bottom: 25px;
+      cursor: pointer;
     }
 
-    .action-btn {
+    .btn-action {
       width: 100%;
-      padding: 22px;
+      padding: 20px;
       font-weight: 900;
-      text-transform: uppercase;
       border: none;
       cursor: pointer;
-      font-size: 14px;
+      text-transform: uppercase;
       letter-spacing: 1px;
-      transition: all 0.3s;
-      margin-bottom: 10px;
+      transition: 0.3s;
     }
 
-    .btn-primary { background: #fff; color: #000; }
-    .btn-primary:hover { background: #ffd700; transform: translateY(-2px); }
-    .btn-secondary { background: transparent; color: #ffd700; border: 1px solid #ffd700; }
-    .btn-secondary:hover { background: rgba(255, 215, 0, 0.1); }
+    .btn-exec { background: #fff; color: #000; margin-bottom: 10px; }
+    .btn-exec:hover { background: #ffd700; transform: translateY(-2px); }
+    .btn-exec:disabled { opacity: 0.2; cursor: not-allowed; }
 
-    /* Área del Canvas (El Alma de la App) */
-    .viewer-area {
+    /* ÁREA CENTRAL: EL PODER DEL CANVAS */
+    .canvas-display {
       display: flex;
       align-items: center;
       justify-content: center;
       background: #000;
       padding: 60px;
-      perspective: 1000px;
-    }
-
-    .canvas-wrapper {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.05));
     }
 
     canvas {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      border: 1px solid #1a1a1a;
-      background: #000;
-    }
-
-    /* Scrollbar Personalizada */
-    .scroll-content::-webkit-scrollbar { width: 3px; }
-    .scroll-content::-webkit-scrollbar-thumb { background: #222; }
-
-    @media (max-width: 1100px) {
-      .app-container { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid #1a1a1a; height: 40vh; }
-      .viewer-area { padding: 20px; }
+      border: 1px solid #111;
+      box-shadow: 0 0 80px rgba(0,0,0,1);
     }
   </style>
 
-  <div class="app-container">
+  <div class="antonov-master">
     <aside class="sidebar">
-      <div class="header-section">
-        <h1>ANTONOV</h1>
-        <span class="protocol-tag">SISTEMA DE VERDAD v2.0</span>
+      <div class="brand">
+        <h1>Antonov</h1>
+        <span>SISTEMA DE VERDAD</span>
       </div>
 
-      <div class="scroll-content">
-        <span class="label-micro">01. Seleccionar Frecuencia Emocional</span>
-        <div class="states-grid">
-          {ESTADOS.map((estado) => (
-            <button class="state-btn" data-state={estado}>{estado}</button>
+      <div class="menu-scroll">
+        <div class="grid-estados">
+          {ESTADOS.map((e) => (
+            <button class="state-opt" data-val={e}>{e}</button>
           ))}
         </div>
       </div>
 
-      <div class="footer-controls">
-        <div class="slider-info">
-          <span class="label-micro" style="margin:0">Escala de Impacto</span>
-          <span id="sizeLabel" class="protocol-tag" style="margin:0; color:#fff">90PX</span>
+      <div class="config-panel">
+        <div class="control-group">
+          <label>TAMAÑO DEL IMPACTO</label>
+          <input type="range" id="size" min="40" max="200" value="90">
         </div>
-        <input type="range" id="rangeSlider" min="50" max="180" value="90">
-        
-        <button id="triggerBtn" class="action-btn btn-primary">Ejecutar Traducción</button>
-        <button id="saveBtn" class="action-btn btn-secondary">Exportar Evidencia</button>
+        <button id="run" class="btn-action btn-exec">Traducir Estado</button>
       </div>
     </aside>
 
-    <main class="viewer-area">
-      <div class="canvas-wrapper">
-        <canvas id="outputCanvas"></canvas>
-      </div>
+    <main class="canvas-display">
+      <canvas id="view"></canvas>
     </main>
   </div>
 
   <script is:inline>
+    // USAMOS EL PATRÓN DE CONFIGURACIÓN QUE TE GUSTÓ:
     (function() {
-      function bootstrap() {
-        const canvas = document.getElementById('outputCanvas');
-        const ctx = canvas?.getContext('2d');
-        const buttons = document.querySelectorAll('.state-btn');
-        const trigger = document.getElementById('triggerBtn');
-        const saver = document.getElementById('saveBtn');
-        const slider = document.getElementById('rangeSlider');
-        const sizeLabel = document.getElementById('sizeLabel');
+      const state = {
+        selected: '',
+        phrase: 'ESPERANDO SEÑAL...',
+        fontSize: 90
+      };
 
-        if (!canvas || !ctx) return;
+      function init() {
+        const cvs = document.getElementById('view');
+        const ctx = cvs.getContext('2d');
+        const opts = document.querySelectorAll('.state-opt');
+        const runBtn = document.getElementById('run');
+        const slider = document.getElementById('size');
 
-        let activeState = '';
-        let displayMessage = 'ESPERANDO SEÑAL...';
+        function update() {
+          // Resolución cuadrada perfecta para redes
+          cvs.width = 1080;
+          cvs.height = 1080;
 
-        function renderFrame() {
-          // Resolución Nativa para máxima nitidez
-          canvas.width = 1200;
-          canvas.height = 1200;
-
-          // Fondo Negro Profundo
+          // Fondo
           ctx.fillStyle = '#000';
-          ctx.fillRect(0, 0, 1200, 1200);
+          ctx.fillRect(0, 0, 1080, 1080);
 
-          // Ruido Digital Estético
-          for (let i = 0; i < 400; i++) {
-            ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.02})`;
-            ctx.fillRect(Math.random() * 1200, Math.random() * 1200, 1.5, 1.5);
-          }
-
-          // UI del Canvas (Metadatos)
-          if (activeState) {
+          // Decoración Brutalista (Status line)
+          if (state.selected) {
             ctx.fillStyle = '#ffd700';
-            ctx.font = '700 24px "JetBrains Mono", monospace';
-            ctx.textAlign = 'left';
-            ctx.fillText(`// STATUS: ${activeState}`, 80, 100);
-            
-            ctx.strokeStyle = '#ffd700';
-            ctx.lineWidth = 1;
-            ctx.globalAlpha = 0.3;
-            ctx.strokeRect(60, 60, 1080, 1080); // Marco interno
-            ctx.globalAlpha = 1.0;
+            ctx.font = '700 24px "JetBrains Mono"';
+            ctx.fillText(`// STATUS: ${state.selected}`, 80, 100);
+            ctx.fillRect(80, 120, 180, 2);
           }
 
-          // Tipografía Central
+          // Texto Central
           ctx.fillStyle = '#fff';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           
-          const size = parseInt(slider.value);
-          ctx.font = `900 ${size}px 'Inter', sans-serif`;
+          state.fontSize = parseInt(slider.value);
+          ctx.font = `900 ${state.fontSize}px Inter`;
 
-          const lines = displayMessage.toUpperCase().split(' ');
-          const step = size * 0.95;
-          const startY = 600 - ((lines.length - 1) * step) / 2;
+          const words = state.phrase.toUpperCase().split(' ');
+          const lineH = state.fontSize * 0.95;
+          let y = 540 - ((words.length - 1) * lineH) / 2;
 
-          // Glow de Poder
-          ctx.shadowColor = 'rgba(255, 215, 0, 0.25)';
-          ctx.shadowBlur = 40;
-
-          lines.forEach((line, i) => {
-            ctx.fillText(line, 600, startY + (i * step));
+          words.forEach(w => {
+            ctx.fillText(w, 540, y);
+            y += lineH;
           });
-
-          ctx.shadowBlur = 0;
         }
 
-        buttons.forEach(btn => {
+        opts.forEach(btn => {
           btn.onclick = () => {
-            buttons.forEach(b => b.classList.remove('active'));
+            opts.forEach(o => o.classList.remove('active'));
             btn.classList.add('active');
-            activeState = btn.dataset.state;
-            renderFrame();
+            state.selected = btn.dataset.val;
+            update();
           };
         });
 
-        slider.oninput = () => {
-          sizeLabel.textContent = `${slider.value}PX`;
-          renderFrame();
-        };
+        slider.oninput = update;
 
-        trigger.onclick = async () => {
-          if (!activeState) return;
-          trigger.disabled = true;
-          trigger.textContent = 'PROCESANDO VERDAD...';
+        runBtn.onclick = async () => {
+          if (!state.selected) return;
+          runBtn.disabled = true;
+          runBtn.innerText = 'PROCESANDO...';
 
           try {
-            const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                prompt: `ANTONOV ORÁCULO. ESTADO: ${activeState}. SENTENCIA BRUTALISTA DE MÁXIMO 7 PALABRAS. MAYÚSCULAS.`
+              body: JSON.stringify({ 
+                prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${state.selected}. MÁXIMO 6 PALABRAS.` 
               })
             });
-            const data = await response.json();
-            displayMessage = data.text || 'EL VACÍO RESPONDE';
+            const data = await res.json();
+            state.phrase = data.text || 'EL VACÍO RESPONDE';
           } catch {
-            displayMessage = 'ERROR DE ENLACE';
+            state.phrase = 'ERROR DE SISTEMA';
           }
 
-          trigger.disabled = false;
-          trigger.textContent = 'Ejecutar Traducción';
-          renderFrame();
+          runBtn.disabled = false;
+          runBtn.innerText = 'Traducir Estado';
+          update();
         };
 
-        saver.onclick = () => {
-          const raw = canvas.toDataURL('image/png');
-          const link = document.createElement('a');
-          link.download = `ANTONOV_${activeState || 'VERDAD'}.png`;
-          link.href = raw;
-          link.click();
-        };
-
-        // Esperar a que las fuentes carguen para el primer render
-        document.fonts.ready.then(renderFrame);
-        window.addEventListener('resize', renderFrame);
+        // Arreglo de fuentes y primer render
+        document.fonts.ready.then(update);
+        window.addEventListener('resize', update);
       }
 
-      // Inicialización Robusta
-      if (document.readyState === 'complete') bootstrap();
-      else window.addEventListener('load', bootstrap);
-      document.addEventListener('astro:after-swap', bootstrap);
+      // Evitamos el choque con Astro
+      if (document.readyState === 'complete') init();
+      else window.addEventListener('load', init);
+      document.addEventListener('astro:after-swap', init);
     })();
   </script>
 </Layout>
