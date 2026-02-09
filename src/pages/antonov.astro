@@ -145,106 +145,125 @@ const ESTADOS = [
   </div>
 
   <script is:inline>
-    function startAntonov() {
-      const canvas = document.getElementById('mainCanvas');
-      const ctx = canvas.getContext('2d');
-      const buttons = document.querySelectorAll('.btn-state');
-      const btnTraducir = document.getElementById('btn-traducir');
-      const slider = document.getElementById('slider');
-      const sizeVal = document.getElementById('sizeVal');
-
-      let selectedState = "";
-      let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
-
-      function draw() {
-        // Resolución 4K para que se vea premium
-        canvas.width = 1080;
-        canvas.height = 1080;
-        
-        // Fondo base
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, 1080, 1080);
-
-        // Grano de película (Candela visual)
-        for (let i = 0; i < 600; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.04})`;
-          ctx.fillRect(Math.random() * 1080, Math.random() * 1080, 2, 2);
-        }
-
-        // Header en el canvas
-        if (selectedState) {
-          ctx.fillStyle = "#ffd700";
-          ctx.font = "700 30px 'JetBrains Mono'";
-          ctx.textAlign = "left";
-          ctx.fillText(`// ANALIZANDO: ${selectedState}`, 80, 100);
-          ctx.fillRect(80, 115, 200, 2);
-        }
-
-        // FRASE DE IMPACTO
-        ctx.fillStyle = "#fff";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        
-        const fSize = parseInt(slider.value);
-        ctx.font = `900 ${fSize}px Inter`;
-        
-        const words = currentText.toUpperCase().split(' ');
-        const spacing = fSize * 0.92; // Interlineado brutalista
-        const totalH = words.length * spacing;
-        let startY = 540 - (totalH / 2) + (spacing / 2);
-
-        words.forEach((word, i) => {
-            // Sombra de impacto sutil
-            ctx.shadowColor = "rgba(255,255,255,0.1)";
-            ctx.shadowBlur = 20;
-            ctx.fillText(word, 540, startY + (i * spacing));
-        });
-      }
-
-      buttons.forEach(btn => {
-        btn.onclick = () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedState = btn.getAttribute('data-state');
-          draw();
-        };
-      });
-
-      slider.oninput = () => {
-        sizeVal.innerText = `${slider.value}PX`;
-        draw();
-      };
-
-      btnTraducir.onclick = async () => {
-        if(!selectedState) return;
-        btnTraducir.disabled = true;
-        btnTraducir.innerText = "EXTRAYENDO VERDAD...";
-        
-        try {
-          const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.` 
-            })
-          });
-          const d = await r.json();
-          currentText = d.text || "EL VACÍO NO RESPONDE";
-        } catch(e) {
-          currentText = "ERROR DE CONEXIÓN";
-        }
-        
-        btnTraducir.disabled = false;
-        btnTraducir.innerText = "TRADUCIR ESTADO";
-        draw();
-      };
-
-      // Inicializar
-      draw();
+  async function startAntonov() {
+    const canvas = document.getElementById('mainCanvas');
+    if (!canvas) {
+      console.error("No encontré el canvas, compa 😭");
+      return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error("getContext('2d') devolvió null. Revisa si el canvas está en el DOM.");
+      return;
     }
 
-    // Asegurar carga en cualquier condición de Astro
+    // Esperamos que las fuentes estén listas (súper importante para canvas)
+    await document.fonts.ready;
+
+    const buttons = document.querySelectorAll('.btn-state');
+    const btnTraducir = document.getElementById('btn-traducir');
+    const slider = document.getElementById('slider');
+    const sizeVal = document.getElementById('sizeVal');
+
+    let selectedState = "";
+    let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
+
+    function draw() {
+      canvas.width = 1080;
+      canvas.height = 1080;
+      
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, 1080, 1080);
+
+      // Grano (queda brutal)
+      for (let i = 0; i < 600; i++) {
+        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.04})`;
+        ctx.fillRect(Math.random() * 1080, Math.random() * 1080, 2, 2);
+      }
+
+      if (selectedState) {
+        ctx.fillStyle = "#ffd700";
+        ctx.font = "700 30px 'JetBrains Mono', monospace"; // fallback por si no carga
+        ctx.textAlign = "left";
+        ctx.fillText(`// ANALIZANDO: ${selectedState}`, 80, 100);
+        ctx.fillRect(80, 115, 200, 2);
+      }
+
+      ctx.fillStyle = "#fff";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const fSize = parseInt(slider.value) || 85;
+      ctx.font = `900 ${fSize}px 'Inter', sans-serif`; // fallback sans-serif
+
+      const words = currentText.toUpperCase().split(' ');
+      const spacing = fSize * 0.92;
+      const totalH = words.length * spacing;
+      let startY = 540 - (totalH / 2) + (spacing / 2);
+
+      words.forEach((word, i) => {
+        ctx.shadowColor = "rgba(255,255,255,0.15)";
+        ctx.shadowBlur = 25;
+        ctx.fillText(word, 540, startY + (i * spacing));
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.onclick = () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedState = btn.dataset.state;
+        draw();
+      };
+    });
+
+    slider.oninput = () => {
+      sizeVal.innerText = `${slider.value}PX`;
+      draw();
+    };
+
+    btnTraducir.onclick = async () => {
+      if (!selectedState) {
+        alert("Primero escoge un estado, parce");
+        return;
+      }
+      btnTraducir.disabled = true;
+      btnTraducir.innerText = "EXTRAYENDO VERDAD...";
+
+      try {
+        const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.`
+          })
+        });
+
+        if (!r.ok) throw new Error("El worker se puso mamón");
+
+        const d = await r.json();
+        currentText = d.text?.trim() || "EL VACÍO NO RESPONDE";
+      } catch (e) {
+        console.error(e);
+        currentText = "ERROR DE CONEXIÓN";
+      }
+
+      btnTraducir.disabled = false;
+      btnTraducir.innerText = "TRADUCIR ESTADO";
+      draw();
+    };
+
+    // Primer dibujo (con fuentes ya listas)
+    draw();
+  }
+
+  // Mejor timing en Astro
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    startAntonov();
+  } else {
     window.addEventListener('load', startAntonov);
-    document.addEventListener('astro:after-swap', startAntonov);
-  </script>
+  }
+  document.addEventListener('astro:after-swap', startAntonov);
+</script>
 </Layout>
