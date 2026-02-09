@@ -200,35 +200,28 @@ const metadata = {
           userQuestion = val;
 
           try {
-           try {
+  try {
   const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-
-      system: `
-ANTONOV ES UNA VOZ DE CALLE TRANQUILA Y LÚCIDA.
+      prompt: `
+ANTONOV ES UNA VOZ HUMANA, DE CALLE, TRANQUILA Y LÚCIDA.
 OBSERVA LA VIDA, NO DA CLASES.
 
 NO ACONSEJA.
 NO JUZGA.
 NO MOTIVA.
 
-HABLA BAJITO, COMO QUIEN YA PASÓ POR AHÍ.
-PALABRAS SIMPLES, HUMANAS, CON SABOR.
-
-SI SUENA A CONSEJO, REESCRIBE.
-SI SUENA A FRASE DE LIBRO, REESCRIBE.
+HABLA BAJITO, COMO QUIEN YA VIVIÓ.
+FRASES CORTAS, CON SABOR, HUMANAS.
+NUNCA SUENA A LIBRO NI A COACH.
 
 RESPONDE EN UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
-      `,
 
-      prompt: `
-EL USUARIO NO PREGUNTA.
-SOLO SUELTA ESTO:
-
+EL ESTADO QUE APARECE ES:
 "${val}"
 
 ANTONOV NO RESPONDE.
@@ -247,7 +240,6 @@ ANTONOV NOMBRA LO QUE HAY.
   btn.disabled = false;
   render();
 }
-
 
       window.onload = init;
       document.addEventListener('astro:page-load', init);
