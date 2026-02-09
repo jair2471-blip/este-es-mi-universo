@@ -64,29 +64,62 @@ const metadata = {
       line-height: 1;
     }
 
-    .input-group {
+    .states-grid {
       margin-top: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 5px;
     }
 
-    .input-group label {
+    .states-grid::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .states-grid::-webkit-scrollbar-track {
+      background: #111;
+    }
+
+    .states-grid::-webkit-scrollbar-thumb {
+      background: #333;
+    }
+
+    .state-btn {
+      background: #111;
+      border: 1px solid #222;
+      color: #aaa;
+      padding: 15px 10px;
+      font-size: 11px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'JetBrains Mono';
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .state-btn:hover {
+      background: #1a1a1a;
+      border-color: #333;
+      color: #fff;
+    }
+
+    .state-btn.active {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .label-section {
       font-family: 'JetBrains Mono';
       font-size: 10px;
       color: #666;
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       text-transform: uppercase;
-    }
-
-    textarea {
-      background: #111;
-      border: 1px solid #333;
-      color: #fff;
-      padding: 15px;
-      font-size: 14px;
-      width: 100%;
-      height: 120px;
-      resize: none;
-      font-family: 'Inter', sans-serif;
+      letter-spacing: 1px;
     }
 
     .btn-main {
@@ -100,6 +133,7 @@ const metadata = {
       width: 100%;
       transition: 0.3s;
       font-family: 'Inter';
+      margin-top: 20px;
     }
 
     .btn-main:hover {
@@ -153,9 +187,9 @@ const metadata = {
           <h1>ANTONOV</h1>
           <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; margin: 10px 0 0 0;">V.6.0_PROTOCOLO</p>
           
-          <div class="input-group">
-            <label>Inyección de Pensamiento</label>
-            <textarea id="userInput" placeholder="SUELTA UNA PALABRA, UNA FRASE, O UN ESTADO"></textarea>
+          <div style="margin-top: 30px;">
+            <label class="label-section">Selecciona Tu Estado</label>
+            <div class="states-grid" id="statesGrid"></div>
           </div>
         </div>
 
@@ -165,7 +199,7 @@ const metadata = {
             <input type="range" id="sizeSlider" min="40" max="140" value="85" style="width:100%; accent-color:var(--accent);">
           </div>
           
-          <button id="generateBtn" class="btn-main">Analizar Realidad</button>
+          <button id="generateBtn" class="btn-main">Traducir Estado</button>
         </div>
       </aside>
 
@@ -177,17 +211,57 @@ const metadata = {
 
   <script is:inline>
     (function() {
+      const ESTADOS = [
+        'CANSANCIO',
+        'SOLEDAD',
+        'ANSIEDAD',
+        'DUDA',
+        'RUPTURA',
+        'DESEO',
+        'MIEDO',
+        'RABIA',
+        'VACÍO',
+        'NOSTALGIA',
+        'CONFUSIÓN',
+        'TRISTEZA',
+        'PÉRDIDA',
+        'HASTÍO',
+        'CULPA',
+        'ENVIDIA',
+        'DESAMOR',
+        'AGOBIO',
+        'BLOQUEO',
+        'INQUIETUD',
+        'ARREPENTIMIENTO',
+        'FRUSTRACIÓN',
+        'INSEGURIDAD',
+        'DESCONEXIÓN'
+      ];
+
       const init = () => {
         const canvas = document.getElementById('mainCanvas');
         const ctx = canvas?.getContext('2d');
         const btn = document.getElementById('generateBtn');
-        const input = document.getElementById('userInput');
         const slider = document.getElementById('sizeSlider');
+        const statesGrid = document.getElementById('statesGrid');
 
-        if (!canvas || !ctx) return;
+        if (!canvas || !ctx || !statesGrid) return;
 
-        let userQuestion = "";
-        let antonovResponse = "SISTEMA LISTO PARA DECODIFICAR";
+        let selectedState = "";
+        let antonovResponse = "SELECCIONA UN ESTADO PARA TRADUCIR";
+
+        // Crear botones de estados
+        ESTADOS.forEach(estado => {
+          const btn = document.createElement('button');
+          btn.className = 'state-btn';
+          btn.textContent = estado;
+          btn.onclick = () => {
+            document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedState = estado;
+          };
+          statesGrid.appendChild(btn);
+        });
 
         const render = () => {
           canvas.width = 1080;
@@ -213,11 +287,11 @@ const metadata = {
           }
 
           // 1. INPUT (ARRIBA)
-          if(userQuestion) {
+          if(selectedState) {
             ctx.font = "700 24px 'JetBrains Mono'";
             ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
             ctx.textAlign = "left";
-            ctx.fillText("> INPUT: " + userQuestion.toUpperCase(), 80, 100);
+            ctx.fillText("> ESTADO: " + selectedState, 80, 100);
           }
 
           // 2. SENTENCIA (CENTRO)
@@ -261,12 +335,10 @@ const metadata = {
         };
 
         btn.onclick = async () => {
-          const val = input.value.trim();
-          if(!val) return;
+          if(!selectedState) return;
 
-          btn.innerText = "DECODIFICANDO...";
+          btn.innerText = "TRADUCIENDO...";
           btn.disabled = true;
-          userQuestion = val;
 
           try {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
@@ -278,18 +350,22 @@ NO RESPONDE PREGUNTAS.
 NO DA CONSEJOS.
 NO JUZGA.
 NO MOTIVA.
-OBSERVA Y NOMBRA.
-USA LENGUAJE SIMPLE, CERCANO, DE CALLE TRANQUILA.
-NO SUENA A LIBRO.
-NO SUENA A COACH.
-NO SUENA A INTELIGENTE.
+OBSERVA Y NOMBRA CON SABIDURÍA DE CALLE.
+
+LENGUAJE:
+- SIMPLE, CERCANO, DE CALLE TRANQUILA
+- SABIDURÍA ADQUIRIDA CON EXPERIENCIA
+- NO SUENA A LIBRO NI A COACH
+- NO SUENA A INTELIGENTE
+- SUENA A ALGUIEN QUE YA VIVIÓ
+
 UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
 
-EL USUARIO SOLO NOMBRA UN ESTADO: "${val}"
+EL ESTADO ES: "${selectedState}"
 
-ANTONOV LO PONE EN PALABRAS.`
+ANTONOV LO TRADUCE EN PALABRAS CON CALLE Y SABIDURÍA.`
               })
             });
 
@@ -299,7 +375,7 @@ ANTONOV LO PONE EN PALABRAS.`
           } catch (e) {
             antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
           } finally {
-            btn.innerText = "ANALIZAR REALIDAD";
+            btn.innerText = "TRADUCIR ESTADO";
             btn.disabled = false;
             render();
           }
