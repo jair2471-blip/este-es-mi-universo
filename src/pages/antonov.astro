@@ -13,7 +13,7 @@ const ESTADOS = [
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
     :global(body) { margin: 0; padding: 0; background: #000; overflow: hidden; height: 100vh; }
-    :global(main) { margin: 0 !important; padding: 0 !important; height: 100vh; max-width: 100% !important; }
+    :global(main) { margin: 0 !important; padding: 0 !important; height: 100vh; }
 
     .antonov-app {
       display: grid;
@@ -89,26 +89,28 @@ const ESTADOS = [
     .btn-download { background: #222; color: #ffd700; border: 1px solid #ffd700; }
 
     .canvas-area {
+      position: relative;
+      background: #000;
+      padding: 0;  /* quitamos padding para llenar todo */
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #000;
-      padding: 20px;  /* reducido para llenar más */
+      overflow: hidden;
     }
 
     canvas {
-      width: 100% !important;
-      max-width: none !important;  /* quita el límite para llenar todo */
-      height: auto;
-      max-height: 95vh;
-      border: none;  /* quita borde si quieres full inmersivo */
-      box-shadow: 0 0 100px rgba(0,0,0,0.8);
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: contain;
+      border: none;
     }
 
     @media (max-width: 900px) {
       .antonov-app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
       .sidebar { border-right: none; border-bottom: 1px solid #222; max-height: 50vh; }
-      .canvas-area { padding: 10px; }
+      .canvas-area { padding: 0; }
     }
   </style>
 
@@ -164,74 +166,66 @@ const ESTADOS = [
       let selectedState = '';
       let currentText = 'EL SILENCIO ES LA ÚNICA RESPUESTA';
 
-     function draw() {
-  const container = canvas.parentElement.getBoundingClientRect();
-  // Hacemos el canvas cuadrado y lo más grande posible sin salirse
-  const size = Math.min(container.width, container.height);
+      function draw() {
+        // Canvas ocupa TODO el contenedor (100% width/height)
+        const container = canvas.parentElement.getBoundingClientRect();
+        canvas.width = container.width;
+        canvas.height = container.height;
 
-  canvas.width = size;
-  canvas.height = size;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, size, size);
+        // Grano sutil
+        for (let i = 0; i < 300; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
+          ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1.5, 1.5);
+        }
 
-  // Grano muy sutil
-  for (let i = 0; i < 250; i++) {
-    ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.025 + 0.005})`;
-    ctx.fillRect(Math.random() * size, Math.random() * size, 1.2, 1.2);
-  }
+        // Header
+        if (selectedState) {
+          ctx.fillStyle = '#ffd700';
+          ctx.font = '700 28px "JetBrains Mono"';
+          ctx.fillText(`// ${selectedState}`, 60, 90);
+          ctx.fillRect(60, 105, 220, 2);
+        }
 
-  // Header (arriba izquierda con margen)
-  if (selectedState) {
-    ctx.fillStyle = '#ffd700';
-    ctx.font = '700 28px "JetBrains Mono", monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText(`// ${selectedState}`, 60, 80);
-    ctx.fillRect(60, 95, 220, 2);
-  }
+        // Texto central
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
-  // Texto principal
-  ctx.fillStyle = '#ffffff';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
+        let fontSize = parseInt(slider.value) || 90;
+        const words = currentText.toUpperCase().split(' ');
+        if (words.length >= 8) fontSize *= 0.8;
+        else if (words.length >= 5) fontSize *= 0.9;
 
-  let fontSize = parseInt(slider.value) || 90;
-  const words = currentText.toUpperCase().split(' ');
-  
-  // Ajuste progresivo para frases largas (evita que se salga o descentre)
-  if (words.length >= 8) fontSize *= 0.82;
-  else if (words.length >= 6) fontSize *= 0.88;
-  else if (words.length <= 3) fontSize *= 1.05; // frases cortas más grandes
+        fontSize = Math.min(fontSize, canvas.height * 0.12); // límite para no salirse
 
-  fontSize = Math.min(fontSize, size * 0.15); // límite superior
+        ctx.font = `900 ${fontSize}px 'Inter', sans-serif`;
 
-  ctx.font = `900 ${fontSize}px 'Inter', sans-serif`;
+        const lineHeight = fontSize * 0.95;
+        const totalHeight = words.length * lineHeight;
+        const centerY = canvas.height / 2;
 
-  const lineHeight = fontSize * 0.98; // un poco más apretado para mejor look
-  const totalHeight = words.length * lineHeight;
+        let y = centerY - (totalHeight / 2) + (lineHeight / 2);
 
-  // Centro vertical preciso: mitad del canvas - mitad del bloque de texto
-  const centerY = size / 2;
-  let yStart = centerY - (totalHeight / 2) + (lineHeight / 2);
+        ctx.shadowColor = 'rgba(255,215,0,0.4)';
+        ctx.shadowBlur = 40;
 
-  // Shadow dorada sutil
-  ctx.shadowColor = 'rgba(255, 215, 0, 0.35)';
-  ctx.shadowBlur = 30;
-  ctx.shadowOffsetY = 6;
+        words.forEach((word, i) => {
+          ctx.fillText(word, canvas.width / 2, y + i * lineHeight);
+        });
 
-  words.forEach((word, index) => {
-    ctx.fillText(word, size / 2, yStart + index * lineHeight);
-  });
+        ctx.shadowBlur = 0;
+      }
 
-  ctx.shadowColor = 'transparent';
-  ctx.shadowBlur = 0;
-}
-
-      buttons.forEach(btn => btn.onclick = () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedState = btn.dataset.state;
-        draw();
+      buttons.forEach(btn => {
+        btn.onclick = () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedState = btn.dataset.state;
+          draw();
+        };
       });
 
       slider.oninput = () => {
@@ -265,12 +259,12 @@ const ESTADOS = [
 
       btnDescargar.onclick = () => {
         const link = document.createElement('a');
-        link.download = `antonov-${selectedState || 'silencio'}.png`;
+        link.download = `antonov-${selectedState || 'verdad'}.png`;
         link.href = canvas.toDataURL();
         link.click();
       };
 
-      setTimeout(draw, 200); // delay para layout
+      setTimeout(draw, 300);
       window.addEventListener('resize', draw);
       draw();
     }
@@ -278,5 +272,6 @@ const ESTADOS = [
     if (document.readyState !== 'loading') startAntonov();
     document.addEventListener('DOMContentLoaded', startAntonov);
     window.addEventListener('load', startAntonov);
+    document.addEventListener('astro:after-swap', startAntonov);
   </script>
 </Layout>
