@@ -30,6 +30,7 @@ const metadata = {
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
       color: white;
       font-family: 'Inter', sans-serif;
     }
@@ -42,6 +43,7 @@ const metadata = {
       height: 85vh;
       background: #000;
       border: 1px solid var(--border-color);
+      box-shadow: 0 0 50px rgba(0,0,0,1);
     }
 
     .sidebar {
@@ -53,14 +55,38 @@ const metadata = {
       justify-content: space-between;
     }
 
+    .brand-area h1 {
+      font-weight: 900;
+      font-size: 2.8rem;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .input-group {
+      margin-top: 30px;
+    }
+
+    .input-group label {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #666;
+      display: block;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
     textarea {
       background: #111;
       border: 1px solid #333;
       color: #fff;
       padding: 15px;
+      font-size: 14px;
       width: 100%;
       height: 120px;
       resize: none;
+      font-family: 'Inter', sans-serif;
     }
 
     .btn-main {
@@ -69,8 +95,20 @@ const metadata = {
       border: none;
       padding: 20px;
       font-weight: 900;
+      text-transform: uppercase;
       cursor: pointer;
       width: 100%;
+      transition: 0.3s;
+      font-family: 'Inter';
+    }
+
+    .btn-main:hover {
+      background: var(--accent);
+    }
+
+    .btn-main:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .canvas-area {
@@ -79,31 +117,56 @@ const metadata = {
       align-items: center;
       justify-content: center;
       padding: 30px;
+      overflow: hidden;
     }
 
     #mainCanvas {
       max-width: 100%;
+      max-height: 100%;
       aspect-ratio: 1/1;
+      border: 1px solid #222;
       background: #000;
+    }
+
+    @media (max-width: 1100px) {
+      .app-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: auto;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .canvas-area {
+        height: 60vh;
+      }
     }
   </style>
 
   <div class="master-wrapper">
     <div class="app-container">
       <aside class="sidebar">
-        <div>
+        <div class="brand-area">
           <h1>ANTONOV</h1>
-          <p style="color: var(--accent); font-family: JetBrains Mono; font-size: 10px;">
-            PROTOCOLO DE VERDAD
-          </p>
-
-          <textarea
-            id="userInput"
-            placeholder="UNA PALABRA, UNA FRASE, O UN ESTADO"
-          ></textarea>
+          <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; margin: 10px 0 0 0;">V.6.0_PROTOCOLO</p>
+          
+          <div class="input-group">
+            <label>Inyección de Pensamiento</label>
+            <textarea id="userInput" placeholder="SUELTA UNA PALABRA, UNA FRASE, O UN ESTADO"></textarea>
+          </div>
         </div>
 
-        <button id="generateBtn" class="btn-main">ANALIZAR REALIDAD</button>
+        <div>
+          <div style="margin-bottom: 25px;">
+            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px;">ZOOM DE RESPUESTA</label>
+            <input type="range" id="sizeSlider" min="40" max="140" value="85" style="width:100%; accent-color:var(--accent);">
+          </div>
+          
+          <button id="generateBtn" class="btn-main">Analizar Realidad</button>
+        </div>
       </aside>
 
       <main class="canvas-area">
@@ -113,104 +176,141 @@ const metadata = {
   </div>
 
   <script is:inline>
-    function init() {
-      const canvas = document.getElementById('mainCanvas');
-      const ctx = canvas.getContext('2d');
-      const btn = document.getElementById('generateBtn');
-      const input = document.getElementById('userInput');
+    (function() {
+      const init = () => {
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas?.getContext('2d');
+        const btn = document.getElementById('generateBtn');
+        const input = document.getElementById('userInput');
+        const slider = document.getElementById('sizeSlider');
 
-      let estado = "";
-      let respuesta = "SISTEMA LISTO";
+        if (!canvas || !ctx) return;
 
-      function render() {
-        canvas.width = 1080;
-        canvas.height = 1080;
+        let userQuestion = "";
+        let antonovResponse = "SISTEMA LISTO PARA DECODIFICAR";
 
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, 1080, 1080);
+        const render = () => {
+          canvas.width = 1080;
+          canvas.height = 1080;
 
-        if (estado) {
-          ctx.font = "700 24px 'JetBrains Mono'";
-          ctx.fillStyle = "rgba(255,215,0,0.5)";
-          ctx.textAlign = "left";
-          ctx.fillText("> ESTADO: " + estado.toUpperCase(), 80, 100);
-        }
+          // Fondo
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, 1080, 1080);
 
-        ctx.font = "900 90px 'Inter'";
-        ctx.fillStyle = "#fff";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const words = respuesta.split(" ");
-        let lines = [];
-        let line = "";
-
-        words.forEach(w => {
-          if (ctx.measureText(line + w).width < 850) {
-            line += w + " ";
-          } else {
-            lines.push(line);
-            line = w + " ";
+          // Grid
+          ctx.strokeStyle = '#111';
+          ctx.lineWidth = 1;
+          for(let i=0; i<=1080; i+=108) {
+            ctx.beginPath();
+            ctx.moveTo(i,0);
+            ctx.lineTo(i,1080);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(0,i);
+            ctx.lineTo(1080,i);
+            ctx.stroke();
           }
-        });
-        lines.push(line);
 
-        let y = 540 - (lines.length * 45);
-        lines.forEach(l => {
-          ctx.fillText(l.trim(), 540, y);
-          y += 100;
-        });
+          // 1. INPUT (ARRIBA)
+          if(userQuestion) {
+            ctx.font = "700 24px 'JetBrains Mono'";
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
+            ctx.textAlign = "left";
+            ctx.fillText("> INPUT: " + userQuestion.toUpperCase(), 80, 100);
+          }
 
-        ctx.font = "700 18px 'JetBrains Mono'";
-        ctx.fillStyle = "#ffd700";
-        ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 540, 980);
-      }
+          // 2. SENTENCIA (CENTRO)
+          const fontSize = parseInt(slider.value);
+          ctx.font = `900 ${fontSize}px 'Inter'`;
+          ctx.fillStyle = "white";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
 
-      btn.onclick = async () => {
-        const val = input.value.trim();
-        if (!val) return;
+          const words = antonovResponse.toUpperCase().split(' ');
+          let lines = [], line = '';
+          
+          words.forEach(w => {
+            if(ctx.measureText(line + w).width < 850) {
+              line += w + ' ';
+            } else {
+              lines.push(line);
+              line = w + ' ';
+            }
+          });
+          lines.push(line);
 
-        btn.disabled = true;
-        btn.innerText = "DECODIFICANDO...";
-        estado = val;
+          let startY = 540 - ((lines.length - 1) * fontSize * 0.6);
+          lines.forEach(l => {
+            ctx.fillText(l.trim(), 540, startY);
+            startY += fontSize * 1.15;
+          });
 
-        try {
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `
-ANTONOV ES UNA VOZ DE CALLE TRANQUILA Y LÚCIDA.
-NO DA CONSEJOS. NO JUZGA. NO MOTIVA.
+          // 3. FIRMA (ABAJO)
+          ctx.font = "700 20px 'JetBrains Mono'";
+          ctx.fillStyle = "#ffd700";
+          ctx.textAlign = "center";
+          ctx.fillText("ANTONOV // PROTOCOLO DE VERDAD", 540, 950);
+          
+          ctx.strokeStyle = '#ffd700';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(390, 975);
+          ctx.lineTo(690, 975);
+          ctx.stroke();
+        };
 
+        btn.onclick = async () => {
+          const val = input.value.trim();
+          if(!val) return;
+
+          btn.innerText = "DECODIFICANDO...";
+          btn.disabled = true;
+          userQuestion = val;
+
+          try {
+            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                prompt: `ANTONOV ES UN TRADUCTOR DE ESTADOS HUMANOS.
+NO RESPONDE PREGUNTAS.
+NO DA CONSEJOS.
+NO JUZGA.
+NO MOTIVA.
 OBSERVA Y NOMBRA.
-
-FRASE ÚNICA.
+USA LENGUAJE SIMPLE, CERCANO, DE CALLE TRANQUILA.
+NO SUENA A LIBRO.
+NO SUENA A COACH.
+NO SUENA A INTELIGENTE.
+UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
 
-ESTADO:
-"${val}"
-              `
-            })
-          });
+EL USUARIO SOLO NOMBRA UN ESTADO: "${val}"
 
-          const data = await res.json();
-          respuesta = data.text || "SILENCIO";
+ANTONOV LO PONE EN PALABRAS.`
+              })
+            });
 
-        } catch (e) {
-          respuesta = "ERROR DEL SISTEMA";
-        } finally {
-          btn.disabled = false;
-          btn.innerText = "ANALIZAR REALIDAD";
-          render();
-        }
+            const data = await res.json();
+            antonovResponse = data.text || "SILENCIO_SISTEMA";
+            
+          } catch (e) {
+            antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
+          } finally {
+            btn.innerText = "ANALIZAR REALIDAD";
+            btn.disabled = false;
+            render();
+          }
+        };
+
+        // Renderizado inicial
+        render();
       };
 
-      render();
-    }
-
-    window.onload = init;
-    document.addEventListener('astro:page-load', init);
+      window.onload = init;
+      document.addEventListener('astro:page-load', init);
+    })();
   </script>
 </Layout>
