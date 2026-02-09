@@ -7,60 +7,164 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
- <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-  /* Eliminamos los estilos globales agresivos */
-  
-  .container {
-    display: grid;
-    grid-template-columns: 400px 1fr;
-    width: 100%;
-    height: 90vh; /* Ajustado para que no choque con headers del layout */
-    background: #000;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    border: 1px solid #222;
-    overflow: hidden; /* Mantiene el scroll solo dentro de la app */
-  }
+    /* Reset local para evitar que el Layout interfiera */
+    .antonov-app-wrapper {
+      --sidebar-width: 350px;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      width: 100%;
+      height: calc(100vh - 64px); /* Ajusta según el alto de tu Navbar */
+      background: #000;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
 
-  /* Si quieres que ocupe TODA la pantalla sin márgenes del Layout, 
-     lo ideal es usar un layout vacío o específico para apps. 
-     Pero si te obligan a usar PageLayout, usa esto: */
-  :global(.main-container) { /* O la clase que use tu layout */
-    max-width: none !important;
-    padding: 0 !important;
-  }
+    /* Forzamos al Layout a que no limite el ancho si es posible */
+    :global(main) {
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
 
-  .sidebar {
-    background: #0a0a0a;
-    border-right: 1px solid #222;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+    .sidebar {
+      background: #0a0a0a;
+      border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
 
-  /* ... resto de tus estilos igual ... */
+    .header {
+      padding: 30px;
+      border-bottom: 1px solid #222;
+    }
 
-  .canvas-area {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: #050505;
-    overflow: hidden;
-  }
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin: 0;
+      color: #fff;
+    }
 
-  canvas {
-    max-width: 100%;
-    max-height: 100%;
-    height: auto; /* Importante para mantener proporción */
-    border: 1px solid #222;
-    background: #000;
-  }
-</style>
+    .tag {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #ffd700;
+      letter-spacing: 2px;
+    }
 
-  <div class="container">
+    .states-wrapper {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 30px;
+    }
+
+    /* Scrollbar estilizada para la sidebar */
+    .states-wrapper::-webkit-scrollbar { width: 4px; }
+    .states-wrapper::-webkit-scrollbar-thumb { background: #333; }
+
+    .label {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #666;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-state {
+      background: #111;
+      border: 1px solid #222;
+      color: #888;
+      padding: 12px 8px;
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+
+    .btn-state:hover {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #444;
+    }
+
+    .btn-state.active {
+      background: #fff;
+      color: #000;
+      font-weight: 700;
+      border-color: #fff;
+    }
+
+    .controls {
+      padding: 30px;
+      border-top: 1px solid #222;
+      background: #0a0a0a;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .size-value {
+      font-family: 'JetBrains Mono';
+      font-size: 10px;
+      color: #ffd700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #ffd700;
+      margin-bottom: 20px;
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 18px;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: transform 0.1s active;
+    }
+
+    .btn-main:active { transform: scale(0.98); }
+    .btn-main:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .canvas-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: #000;
+      position: relative;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+      border: 1px solid #1a1a1a;
+    }
+  </style>
+
+  <div class="antonov-app-wrapper">
     <aside class="sidebar">
       <div class="header">
         <h1>ANTONOV</h1>
@@ -78,7 +182,7 @@ const metadata = {
             <span class="label">Tamaño</span>
             <span class="size-value" id="size">85px</span>
           </div>
-          <input type="range" id="slider" min="50" max="150" value="85">
+          <input type="range" id="slider" min="40" max="180" value="85">
         </div>
         <button class="btn-main" id="btn">Traducir Estado</button>
       </div>
@@ -90,6 +194,7 @@ const metadata = {
   </div>
 
   <script is:inline>
+    // Tu lógica de JS se mantiene igual, solo asegúrate de que esté dentro de DOMContentLoaded
     (function () {
       function init() {
         const ESTADOS = [
@@ -114,13 +219,17 @@ const metadata = {
           canvas.width = 1080;
           canvas.height = 1080;
 
+          // Fondo
           ctx.fillStyle = '#000';
           ctx.fillRect(0,0,1080,1080);
 
-          ctx.font = "700 24px 'JetBrains Mono'";
+          // Estado seleccionado (Arriba izquierda)
+          ctx.font = "700 28px 'JetBrains Mono'";
           ctx.fillStyle = '#ffd700';
-          if (selectedState) ctx.fillText('> ' + selectedState, 80, 120);
+          ctx.textAlign = 'left';
+          if (selectedState) ctx.fillText('> ' + selectedState, 80, 100);
 
+          // Texto Central
           const fontSize = Number(slider.value);
           ctx.font = `900 ${fontSize}px Inter`;
           ctx.fillStyle = '#fff';
@@ -142,13 +251,14 @@ const metadata = {
           });
           lines.push(line);
 
-          let y = 540 - (lines.length - 1) * fontSize * 0.6;
+          let y = 540 - ((lines.length - 1) * fontSize * 0.6);
           lines.forEach(l => {
             ctx.fillText(l.trim(), 540, y);
-            y += fontSize * 1.15;
+            y += fontSize * 1.1;
           });
         }
 
+        // Generar botones
         ESTADOS.forEach(e => {
           const b = document.createElement('button');
           b.className = 'btn-state';
@@ -169,7 +279,6 @@ const metadata = {
 
         btn.onclick = async () => {
           if (!selectedState) return;
-
           btn.disabled = true;
           btn.textContent = 'PROCESANDO...';
 
@@ -178,14 +287,9 @@ const metadata = {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                prompt: `ANTONOV OBSERVA SIN JUZGAR.
-UNA SOLA FRASE.
-MÁXIMO 12 PALABRAS.
-TODO EN MAYÚSCULAS.
-ESTADO: "${selectedState}"`
+                prompt: `ANTONOV OBSERVA SIN JUZGAR. UNA SOLA FRASE. MÁXIMO 12 PALABRAS. TODO EN MAYÚSCULAS. ESTADO: "${selectedState}"`
               })
             });
-
             const data = await res.json();
             responseText = data.text || 'SILENCIO';
           } catch {
@@ -199,8 +303,7 @@ ESTADO: "${selectedState}"`
 
         render();
       }
-
-      window.addEventListener('DOMContentLoaded', init);
+      init();
     })();
   </script>
 </Layout>
