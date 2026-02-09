@@ -10,173 +10,105 @@ const ESTADOS = [
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700;900&family=JetBrains+Mono:wght@500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-    :global(body) { margin: 0; padding: 0; background: #000; overflow: hidden; }
-    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; height: 100vh; }
+    :global(body) { margin: 0; padding: 0; background: #000; overflow: hidden; height: 100vh; }
+    :global(main) { margin: 0 !important; padding: 0 !important; height: 100vh; max-width: 100% !important; }
 
     .antonov-app {
       display: grid;
-      grid-template-columns: minmax(320px, 380px) 1fr;
+      grid-template-columns: 380px 1fr;
       height: 100vh;
       background: #000;
-      color: #f5f5f5;
       overflow: hidden;
     }
 
     .sidebar {
-      background: rgba(10,10,10,0.95);
-      backdrop-filter: blur(8px);
-      border-right: 1px solid rgba(255,215,0,0.08);
+      background: #0a0a0a;
+      border-right: 1px solid #222;
       display: flex;
       flex-direction: column;
-      padding: 0;
       overflow: hidden;
     }
 
-    .header-box {
-      padding: 48px 32px 32px;
-      border-bottom: 1px solid rgba(255,215,0,0.08);
-    }
-
-    h1 {
-      font-size: 3.2rem;
-      font-weight: 900;
-      letter-spacing: -3px;
-      margin: 0;
-      color: #fff;
-    }
-
-    .tag {
-      font-family: 'JetBrains Mono';
-      color: #ffd700;
-      font-size: 10px;
-      letter-spacing: 4px;
-      margin-top: 8px;
-      opacity: 0.7;
-    }
-
-    .states-container {
+    .sidebar-content {
       flex: 1;
       overflow-y: auto;
-      padding: 32px;
+      display: flex;
+      flex-direction: column;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .header-box {
+      padding: 40px 30px;
+      border-bottom: 1px solid #222;
     }
+
+    h1 { font-size: 2.8rem; font-weight: 900; margin: 0; letter-spacing: -2px; }
+    .tag { font-family: 'JetBrains Mono'; color: #ffd700; font-size: 10px; letter-spacing: 3px; }
+
+    .states-container { padding: 30px; padding-top: 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .btn-state {
-      background: rgba(30,30,30,0.8);
-      border: 1px solid rgba(255,215,0,0.1);
-      color: #aaa;
-      padding: 16px 12px;
+      background: #111;
+      border: 1px solid #222;
+      color: #666;
+      padding: 14px;
       font-family: 'JetBrains Mono';
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 10px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      border-radius: 4px;
+      transition: all 0.2s;
     }
 
-    .btn-state:hover {
-      border-color: #ffd700;
-      color: #ffd700;
-      background: rgba(255,215,0,0.05);
-    }
-
-    .btn-state.active {
-      background: #ffd700;
-      color: #000;
-      border-color: #ffd700;
-      font-weight: 700;
-      box-shadow: 0 0 20px rgba(255,215,0,0.3);
-    }
+    .btn-state:hover { border-color: #ffd700; color: #ffd700; }
+    .btn-state.active { background: #ffd700; color: #000; border-color: #ffd700; }
 
     .controls-box {
-      padding: 32px;
-      border-top: 1px solid rgba(255,215,0,0.08);
-      background: rgba(5,5,5,0.9);
+      padding: 30px;
+      border-top: 1px solid #222;
+      background: #050505;
     }
 
-    .size-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: #777;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      height: 5px;
-      background: rgba(255,215,0,0.1);
-      border-radius: 5px;
-      accent-color: #ffd700;
-      margin-bottom: 24px;
-    }
+    .size-label { display: flex; justify-content: space-between; font-size: 10px; color: #777; margin-bottom: 10px; }
+    input[type="range"] { width: 100%; accent-color: #ffd700; height: 5px; }
 
     .btn-main {
       width: 100%;
-      padding: 18px;
+      padding: 20px;
       background: #ffd700;
       color: #000;
       font-weight: 900;
       border: none;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(255,215,0,0.2);
+      margin: 10px 0;
+      border-radius: 4px;
     }
 
-    .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255,215,0,0.35);
-    }
-
-    .btn-download {
-      background: transparent;
-      border: 1px solid #ffd700;
-      color: #ffd700;
-      margin-top: 12px;
-    }
-
-    .btn-download:hover {
-      background: #ffd700;
-      color: #000;
-    }
+    .btn-download { background: #222; color: #ffd700; border: 1px solid #ffd700; }
 
     .canvas-area {
       display: flex;
       align-items: center;
       justify-content: center;
       background: #000;
-      padding: 40px;
+      padding: 20px;  /* reducido para llenar más */
     }
 
     canvas {
-      width: 100%;
-      max-width: 950px;
+      width: 100% !important;
+      max-width: none !important;  /* quita el límite para llenar todo */
       height: auto;
-      max-height: 90vh;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 20px 80px rgba(0,0,0,0.8), inset 0 0 60px rgba(255,215,0,0.03);
+      max-height: 95vh;
+      border: none;  /* quita borde si quieres full inmersivo */
+      box-shadow: 0 0 100px rgba(0,0,0,0.8);
     }
 
-    @media (max-width: 950px) {
-      .antonov-app { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid rgba(255,215,0,0.08); }
-      .states-container { padding: 24px; }
-      .controls-box { padding: 24px; }
-      .canvas-area { padding: 20px; }
+    @media (max-width: 900px) {
+      .antonov-app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid #222; max-height: 50vh; }
+      .canvas-area { padding: 10px; }
     }
   </style>
 
@@ -189,9 +121,7 @@ const ESTADOS = [
         </div>
 
         <div class="states-container">
-          <p style="font-size: 10px; color: #666; margin-bottom: 20px; letter-spacing: 2px;">
-            ESTADO ACTUAL
-          </p>
+          <p style="font-size: 10px; color: #555; margin-bottom: 15px;">ESTADO ACTUAL</p>
           <div class="grid">
             {ESTADOS.map((e) => (
               <button class="btn-state" data-state={e}>{e}</button>
@@ -217,13 +147,13 @@ const ESTADOS = [
   </div>
 
   <script is:inline>
-    async function initAntonov() {
+    async function startAntonov() {
       const canvas = document.getElementById('mainCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      await document.fonts.ready.catch(() => {});
+      await document.fonts.ready;
 
       const buttons = document.querySelectorAll('.btn-state');
       const btnTraducir = document.getElementById('btn-traducir');
@@ -235,8 +165,8 @@ const ESTADOS = [
       let currentText = 'EL SILENCIO ES LA ÚNICA RESPUESTA';
 
       function draw() {
-        const rect = canvas.getBoundingClientRect();
-        const size = Math.min(rect.width * 0.96, rect.height * 0.9, 1000);
+        const container = canvas.parentElement.getBoundingClientRect();
+        const size = Math.min(container.width, container.height * 1.0);  // cuadrado, llena lo que pueda
 
         canvas.width = size;
         canvas.height = size;
@@ -244,68 +174,54 @@ const ESTADOS = [
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, size, size);
 
-        // Grano muy sutil
-        ctx.globalAlpha = 0.4;
-        for (let i = 0; i < 180; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.015})`;
-          ctx.fillRect(Math.random() * size, Math.random() * size, 1, 1);
+        // Grano sutil
+        for (let i = 0; i < 300; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
+          ctx.fillRect(Math.random() * size, Math.random() * size, 1.5, 1.5);
         }
-        ctx.globalAlpha = 1;
 
-        // Header
         if (selectedState) {
           ctx.fillStyle = '#ffd700';
-          ctx.font = '700 26px "JetBrains Mono", monospace';
-          ctx.textAlign = 'left';
-          ctx.fillText(`// ${selectedState}`, 50, 80);
-          ctx.fillRect(50, 95, 200, 2);
+          ctx.font = '700 28px "JetBrains Mono"';
+          ctx.fillText(`// ${selectedState}`, 60, 90);
+          ctx.fillRect(60, 105, 220, 2);
         }
 
-        // Texto central
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#fff';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
         let fontSize = parseInt(slider.value) || 90;
-        fontSize = Math.min(fontSize, size * 0.14);
-
         const words = currentText.toUpperCase().split(' ');
-        if (words.length > 6) fontSize *= 0.85;
-        if (words.length > 9) fontSize *= 0.75;
+        if (words.length > 5) fontSize *= 0.9;
+        ctx.font = `900 ${fontSize}px Inter`;
 
-        ctx.font = `900 ${fontSize}px Inter, sans-serif`;
+        const lineHeight = fontSize * 0.95;
+        const totalH = words.length * lineHeight;
+        let y = size / 2 - totalH / 2 + lineHeight / 2;
 
-        const lineHeight = fontSize * 0.94;
-        const totalHeight = words.length * lineHeight;
-        let y = size / 2 - totalHeight / 2 + lineHeight / 2;
+        ctx.shadowColor = 'rgba(255,215,0,0.4)';
+        ctx.shadowBlur = 35;
 
-        ctx.shadowColor = 'rgba(255,215,0,0.35)';
-        ctx.shadowBlur = 30;
-        ctx.shadowOffsetY = 4;
-
-        words.forEach((word, i) => {
-          ctx.fillText(word, size / 2, y + i * lineHeight);
-        });
+        words.forEach((word, i) => ctx.fillText(word, size / 2, y + i * lineHeight));
 
         ctx.shadowBlur = 0;
       }
 
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedState = btn.dataset.state;
-          draw();
-        });
-      });
-
-      slider.addEventListener('input', () => {
-        sizeVal.textContent = `${slider.value} PX`;
+      buttons.forEach(btn => btn.onclick = () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedState = btn.dataset.state;
         draw();
       });
 
-      btnTraducir.addEventListener('click', async () => {
-        if (!selectedState) return alert('Selecciona un estado primero');
+      slider.oninput = () => {
+        sizeVal.textContent = `${slider.value} PX`;
+        draw();
+      };
+
+      btnTraducir.onclick = async () => {
+        if (!selectedState) return;
         btnTraducir.disabled = true;
         btnTraducir.textContent = 'EXTRAYENDO...';
 
@@ -318,7 +234,7 @@ const ESTADOS = [
             })
           });
           const data = await res.json();
-          currentText = data.text?.trim() || 'SIN RESPUESTA';
+          currentText = data.text?.trim() || 'NO RESPUESTA';
         } catch {
           currentText = 'ERROR';
         }
@@ -326,25 +242,22 @@ const ESTADOS = [
         btnTraducir.disabled = false;
         btnTraducir.textContent = 'TRADUCIR ESTADO';
         draw();
-      });
+      };
 
-      btnDescargar.addEventListener('click', () => {
+      btnDescargar.onclick = () => {
         const link = document.createElement('a');
-        link.download = `antonov_${selectedState || 'verdad'}.png`;
-        link.href = canvas.toDataURL('image/png');
+        link.download = `antonov-${selectedState || 'silencio'}.png`;
+        link.href = canvas.toDataURL();
         link.click();
-      });
+      };
 
-      // Lanzar dibujo con delay para que el layout se asiente
-      setTimeout(draw, 100);
+      setTimeout(draw, 200); // delay para layout
       window.addEventListener('resize', draw);
       draw();
     }
 
-    // Intentos múltiples de inicio
-    if (document.readyState !== 'loading') initAntonov();
-    document.addEventListener('DOMContentLoaded', initAntonov);
-    window.addEventListener('load', initAntonov);
-    document.addEventListener('astro:after-swap', initAntonov);
+    if (document.readyState !== 'loading') startAntonov();
+    document.addEventListener('DOMContentLoaded', startAntonov);
+    window.addEventListener('load', startAntonov);
   </script>
 </Layout>
