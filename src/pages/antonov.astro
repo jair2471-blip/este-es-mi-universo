@@ -7,155 +7,58 @@ const metadata = {
 ---
 
 <Layout metadata={metadata}>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Eliminamos los estilos globales agresivos */
+  
+  .container {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    width: 100%;
+    height: 90vh; /* Ajustado para que no choque con headers del layout */
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    border: 1px solid #222;
+    overflow: hidden; /* Mantiene el scroll solo dentro de la app */
+  }
 
-    :global(main) {
-      width: 100% !important;
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
+  /* Si quieres que ocupe TODA la pantalla sin márgenes del Layout, 
+     lo ideal es usar un layout vacío o específico para apps. 
+     Pero si te obligan a usar PageLayout, usa esto: */
+  :global(.main-container) { /* O la clase que use tu layout */
+    max-width: none !important;
+    padding: 0 !important;
+  }
 
-    body {
-      background: #000;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      overflow: hidden;
-    }
+  .sidebar {
+    background: #0a0a0a;
+    border-right: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
 
-    .container {
-      display: grid;
-      grid-template-columns: 400px 1fr;
-      width: 100vw;
-      height: 100vh;
-    }
+  /* ... resto de tus estilos igual ... */
 
-    .sidebar {
-      background: #0a0a0a;
-      border-right: 1px solid #222;
-      display: flex;
-      flex-direction: column;
-    }
+  .canvas-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #050505;
+    overflow: hidden;
+  }
 
-    .header {
-      padding: 40px;
-      border-bottom: 1px solid #222;
-    }
-
-    h1 {
-      font-size: 3rem;
-      font-weight: 900;
-    }
-
-    .tag {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #ffd700;
-      letter-spacing: 2px;
-    }
-
-    .states-wrapper {
-      flex: 1;
-      overflow-y: auto;
-      padding: 30px 40px;
-    }
-
-    .label {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #666;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: block;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .btn-state {
-      background: #111;
-      border: 1px solid #222;
-      color: #888;
-      padding: 14px 10px;
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: 0.2s;
-    }
-
-    .btn-state:hover {
-      background: #1a1a1a;
-      color: #fff;
-    }
-
-    .btn-state.active {
-      background: #fff;
-      color: #000;
-      font-weight: 700;
-    }
-
-    .controls {
-      padding: 30px 40px;
-      border-top: 1px solid #222;
-    }
-
-    .slider-box {
-      margin-bottom: 20px;
-    }
-
-    .slider-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .size-value {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #ffd700;
-    }
-
-    input[type="range"] {
-      width: 100%;
-    }
-
-    .btn-main {
-      width: 100%;
-      padding: 20px;
-      background: #fff;
-      color: #000;
-      border: none;
-      font-weight: 900;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    .btn-main:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .canvas-area {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 60px;
-    }
-
-    canvas {
-      max-width: 100%;
-      max-height: 100%;
-      border: 1px solid #222;
-    }
-  </style>
+  canvas {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto; /* Importante para mantener proporción */
+    border: 1px solid #222;
+    background: #000;
+  }
+</style>
 
   <div class="container">
     <aside class="sidebar">
