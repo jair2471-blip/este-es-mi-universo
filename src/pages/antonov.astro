@@ -1,22 +1,22 @@
 ---
+import Layout from '~/layouts/PageLayout.astro';
+
 const metadata = {
   title: 'ANTONOV',
 };
 ---
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{metadata.title}</title>
+<Layout metadata={metadata}>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :global(main) {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
 
     body {
@@ -29,8 +29,8 @@ const metadata = {
     .container {
       display: grid;
       grid-template-columns: 400px 1fr;
-      height: 100vh;
       width: 100vw;
+      height: 100vh;
     }
 
     .sidebar {
@@ -38,20 +38,16 @@ const metadata = {
       border-right: 1px solid #222;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
     }
 
     .header {
       padding: 40px;
       border-bottom: 1px solid #222;
-      flex-shrink: 0;
     }
 
     h1 {
       font-size: 3rem;
       font-weight: 900;
-      margin-bottom: 5px;
     }
 
     .tag {
@@ -61,18 +57,10 @@ const metadata = {
       letter-spacing: 2px;
     }
 
-    .states-area {
+    .states-wrapper {
       flex: 1;
       overflow-y: auto;
       padding: 30px 40px;
-    }
-
-    .states-area::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .states-area::-webkit-scrollbar-thumb {
-      background: #333;
     }
 
     .label {
@@ -80,8 +68,9 @@ const metadata = {
       font-size: 10px;
       color: #666;
       margin-bottom: 15px;
-      display: block;
       text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
     }
 
     .grid {
@@ -94,12 +83,12 @@ const metadata = {
       background: #111;
       border: 1px solid #222;
       color: #888;
-      padding: 14px;
+      padding: 14px 10px;
       font-family: 'JetBrains Mono';
       font-size: 10px;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all 0.2s;
+      transition: 0.2s;
     }
 
     .btn-state:hover {
@@ -116,21 +105,19 @@ const metadata = {
     .controls {
       padding: 30px 40px;
       border-top: 1px solid #222;
-      background: #0a0a0a;
-      flex-shrink: 0;
     }
 
     .slider-box {
       margin-bottom: 20px;
     }
 
-    .slider-top {
+    .slider-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .size-val {
+    .size-value {
       font-family: 'JetBrains Mono';
       font-size: 10px;
       color: #ffd700;
@@ -138,20 +125,6 @@ const metadata = {
 
     input[type="range"] {
       width: 100%;
-      height: 2px;
-      background: #222;
-      outline: none;
-      cursor: pointer;
-      -webkit-appearance: none;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      background: #ffd700;
-      cursor: pointer;
-      border-radius: 50%;
     }
 
     .btn-main {
@@ -160,24 +133,17 @@ const metadata = {
       background: #fff;
       color: #000;
       border: none;
-      font-size: 13px;
       font-weight: 900;
       cursor: pointer;
       text-transform: uppercase;
-      transition: background 0.3s;
-    }
-
-    .btn-main:hover:not(:disabled) {
-      background: #ffd700;
     }
 
     .btn-main:disabled {
       opacity: 0.4;
-      cursor: wait;
+      cursor: not-allowed;
     }
 
     .canvas-area {
-      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -189,204 +155,149 @@ const metadata = {
       max-height: 100%;
       border: 1px solid #222;
     }
-
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-        grid-template-rows: 50vh 1fr;
-      }
-      .sidebar {
-        height: 50vh;
-      }
-      .canvas-area {
-        padding: 20px;
-      }
-    }
   </style>
-</head>
-<body>
+
   <div class="container">
-    <div class="sidebar">
+    <aside class="sidebar">
       <div class="header">
         <h1>ANTONOV</h1>
-        <div class="tag">PROTOCOLO DE VERDAD</div>
+        <span class="tag">PROTOCOLO DE VERDAD</span>
       </div>
 
-      <div class="states-area">
-        <div class="label">Selecciona tu estado:</div>
+      <div class="states-wrapper">
+        <span class="label">Selecciona un estado</span>
         <div class="grid" id="grid"></div>
       </div>
 
       <div class="controls">
         <div class="slider-box">
-          <div class="slider-top">
-            <span class="label" style="margin: 0;">Tamaño</span>
-            <span class="size-val" id="sizeVal">85px</span>
+          <div class="slider-header">
+            <span class="label">Tamaño</span>
+            <span class="size-value" id="size">85px</span>
           </div>
           <input type="range" id="slider" min="50" max="150" value="85">
         </div>
-        <button class="btn-main" id="btn">TRADUCIR ESTADO</button>
+        <button class="btn-main" id="btn">Traducir Estado</button>
       </div>
-    </div>
+    </aside>
 
     <div class="canvas-area">
       <canvas id="canvas"></canvas>
     </div>
   </div>
 
-  <script>
-    const ESTADOS = [
-      'CANSANCIO', 'SOLEDAD', 'ANSIEDAD', 'DUDA', 'RUPTURA', 'DESEO',
-      'MIEDO', 'RABIA', 'VACÍO', 'NOSTALGIA', 'CONFUSIÓN', 'TRISTEZA',
-      'PÉRDIDA', 'HASTÍO', 'CULPA', 'ENVIDIA', 'DESAMOR', 'AGOBIO',
-      'BLOQUEO', 'INQUIETUD', 'ARREPENTIMIENTO', 'FRUSTRACIÓN',
-      'INSEGURIDAD', 'DESCONEXIÓN'
-    ];
+  <script is:inline>
+    (function () {
+      function init() {
+        const ESTADOS = [
+          'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
+          'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
+          'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
+        ];
 
-    let estado = '';
-    let texto = 'SELECCIONA UN ESTADO';
+        let selectedState = '';
+        let responseText = 'SELECCIONA UN ESTADO';
 
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const grid = document.getElementById('grid');
-    const btn = document.getElementById('btn');
-    const slider = document.getElementById('slider');
-    const sizeVal = document.getElementById('sizeVal');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas?.getContext('2d');
+        const grid = document.getElementById('grid');
+        const btn = document.getElementById('btn');
+        const slider = document.getElementById('slider');
+        const sizeDisplay = document.getElementById('size');
 
-    function dibujar() {
-      canvas.width = 1080;
-      canvas.height = 1080;
+        if (!canvas || !ctx) return;
 
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, 1080, 1080);
+        function render() {
+          canvas.width = 1080;
+          canvas.height = 1080;
 
-      ctx.strokeStyle = '#0a0a0a';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 1080; i += 54) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, 1080);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(1080, i);
-        ctx.stroke();
-      }
+          ctx.fillStyle = '#000';
+          ctx.fillRect(0,0,1080,1080);
 
-      if (estado) {
-        ctx.font = "700 24px 'JetBrains Mono'";
-        ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
-        ctx.textAlign = 'center';
-        ctx.fillText('> ' + estado, 540, 120);
-      }
+          ctx.font = "700 24px 'JetBrains Mono'";
+          ctx.fillStyle = '#ffd700';
+          if (selectedState) ctx.fillText('> ' + selectedState, 80, 120);
 
-      const size = parseInt(slider.value);
-      ctx.font = size + "px 'Inter'";
-      ctx.fontWeight = '900';
-      ctx.fillStyle = '#fff';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+          const fontSize = Number(slider.value);
+          ctx.font = `900 ${fontSize}px Inter`;
+          ctx.fillStyle = '#fff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
 
-      const palabras = texto.toUpperCase().split(' ');
-      const lineas = [];
-      let linea = '';
+          const words = responseText.split(' ');
+          let lines = [];
+          let line = '';
 
-      palabras.forEach(p => {
-        const test = linea + p + ' ';
-        if (ctx.measureText(test).width > 900) {
-          lineas.push(linea.trim());
-          linea = p + ' ';
-        } else {
-          linea = test;
+          words.forEach(w => {
+            const test = line + w + ' ';
+            if (ctx.measureText(test).width > 900) {
+              lines.push(line);
+              line = w + ' ';
+            } else {
+              line = test;
+            }
+          });
+          lines.push(line);
+
+          let y = 540 - (lines.length - 1) * fontSize * 0.6;
+          lines.forEach(l => {
+            ctx.fillText(l.trim(), 540, y);
+            y += fontSize * 1.15;
+          });
         }
-      });
-      lineas.push(linea.trim());
 
-      let y = 540 - ((lineas.length - 1) * size * 0.6);
-      lineas.forEach(l => {
-        ctx.fillText(l, 540, y);
-        y += size * 1.15;
-      });
+        ESTADOS.forEach(e => {
+          const b = document.createElement('button');
+          b.className = 'btn-state';
+          b.textContent = e;
+          b.onclick = () => {
+            document.querySelectorAll('.btn-state').forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            selectedState = e;
+            render();
+          };
+          grid.appendChild(b);
+        });
 
-      ctx.font = "700 20px 'JetBrains Mono'";
-      ctx.fillStyle = '#ffd700';
-      ctx.fillText('ANTONOV // PROTOCOLO DE VERDAD', 540, 960);
+        slider.oninput = () => {
+          sizeDisplay.textContent = slider.value + 'px';
+          render();
+        };
 
-      ctx.strokeStyle = '#ffd700';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(400, 985);
-      ctx.lineTo(680, 985);
-      ctx.stroke();
-    }
+        btn.onclick = async () => {
+          if (!selectedState) return;
 
-    ESTADOS.forEach(e => {
-      const b = document.createElement('button');
-      b.className = 'btn-state';
-      b.textContent = e;
-      b.onclick = () => {
-        document.querySelectorAll('.btn-state').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        estado = e;
-        dibujar();
-      };
-      grid.appendChild(b);
-    });
+          btn.disabled = true;
+          btn.textContent = 'PROCESANDO...';
 
-    slider.oninput = () => {
-      sizeVal.textContent = slider.value + 'px';
-      dibujar();
-    };
-
-    btn.onclick = async () => {
-      if (!estado) {
-        alert('Selecciona un estado primero');
-        return;
-      }
-
-      btn.textContent = 'PROCESANDO...';
-      btn.disabled = true;
-
-      try {
-        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: `ANTONOV ES UN TRADUCTOR DE ESTADOS HUMANOS.
-NO RESPONDE PREGUNTAS.
-NO DA CONSEJOS.
-NO JUZGA.
-NO MOTIVA.
-OBSERVA Y NOMBRA CON SABIDURÍA DE CALLE.
-
-LENGUAJE:
-- SIMPLE, CERCANO, DE CALLE TRANQUILA
-- SABIDURÍA ADQUIRIDA CON EXPERIENCIA
-- NO SUENA A LIBRO NI A COACH
-- SUENA A ALGUIEN QUE YA VIVIÓ
-
+          try {
+            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                prompt: `ANTONOV OBSERVA SIN JUZGAR.
 UNA SOLA FRASE.
 MÁXIMO 12 PALABRAS.
 TODO EN MAYÚSCULAS.
+ESTADO: "${selectedState}"`
+              })
+            });
 
-EL ESTADO ES: "${estado}"
+            const data = await res.json();
+            responseText = data.text || 'SILENCIO';
+          } catch {
+            responseText = 'ERROR DE CONEXIÓN';
+          }
 
-ANTONOV LO TRADUCE.`
-          })
-        });
+          btn.disabled = false;
+          btn.textContent = 'TRADUCIR ESTADO';
+          render();
+        };
 
-        const data = await res.json();
-        texto = data.text || 'ERROR';
-      } catch (e) {
-        texto = 'ERROR DE CONEXIÓN';
+        render();
       }
 
-      btn.textContent = 'TRADUCIR ESTADO';
-      btn.disabled = false;
-      dibujar();
-    };
-
-    dibujar();
+      window.addEventListener('DOMContentLoaded', init);
+    })();
   </script>
-</body>
-</html>
+</Layout>
