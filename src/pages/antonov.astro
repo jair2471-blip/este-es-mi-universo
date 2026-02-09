@@ -1,323 +1,186 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-const metadata = {
-  title: 'ANTONOV',
-};
+const metadata = { title: 'ANTONOV' };
+
+const ESTADOS = [
+  'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
+  'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
+  'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
+];
 ---
 
 <Layout metadata={metadata}>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
 
-    /* Reset local para evitar que el Layout interfiera */
-    .antonov-app-wrapper {
-      --sidebar-width: 350px;
+    .antonov-app {
       display: grid;
-      grid-template-columns: var(--sidebar-width) 1fr;
-      width: 100%;
-      height: calc(100vh - 64px); /* Ajusta según el alto de tu Navbar */
+      grid-template-columns: 350px 1fr;
       background: #000;
-      overflow: hidden;
+      color: #fff;
+      min-height: 100vh;
       font-family: 'Inter', sans-serif;
     }
 
-    /* Forzamos al Layout a que no limite el ancho si es posible */
-    :global(main) {
-      max-width: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
+    /* Forzar que el layout de Astro no nos encierre */
+    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
 
     .sidebar {
       background: #0a0a0a;
       border-right: 1px solid #222;
+      padding: 30px;
       display: flex;
       flex-direction: column;
-      z-index: 10;
+      gap: 20px;
     }
 
-    .header {
-      padding: 30px;
-      border-bottom: 1px solid #222;
-    }
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 900;
-      margin: 0;
-      color: #fff;
-    }
-
-    .tag {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #ffd700;
-      letter-spacing: 2px;
-    }
-
-    .states-wrapper {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px 30px;
-    }
-
-    /* Scrollbar estilizada para la sidebar */
-    .states-wrapper::-webkit-scrollbar { width: 4px; }
-    .states-wrapper::-webkit-scrollbar-thumb { background: #333; }
-
-    .label {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #666;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      display: block;
-    }
+    h1 { font-size: 2.5rem; font-weight: 900; margin: 0; }
+    .tag { font-family: 'JetBrains Mono'; color: #ffd700; font-size: 10px; letter-spacing: 2px; }
 
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 10px;
     }
 
     .btn-state {
       background: #111;
       border: 1px solid #222;
       color: #888;
-      padding: 12px 8px;
+      padding: 12px;
       font-family: 'JetBrains Mono';
       font-size: 10px;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all 0.2s ease;
     }
 
-    .btn-state:hover {
-      background: #1a1a1a;
-      color: #fff;
-      border-color: #444;
-    }
+    .btn-state.active { background: #fff; color: #000; border-color: #fff; font-weight: bold; }
 
-    .btn-state.active {
-      background: #fff;
-      color: #000;
-      font-weight: 700;
-      border-color: #fff;
-    }
-
-    .controls {
-      padding: 30px;
-      border-top: 1px solid #222;
-      background: #0a0a0a;
-    }
-
-    .slider-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .size-value {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #ffd700;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: #ffd700;
-      margin-bottom: 20px;
-    }
-
-    .btn-main {
-      width: 100%;
-      padding: 18px;
-      background: #fff;
-      color: #000;
-      border: none;
-      font-weight: 900;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      transition: transform 0.1s active;
-    }
-
-    .btn-main:active { transform: scale(0.98); }
-    .btn-main:disabled { opacity: 0.3; cursor: not-allowed; }
-
-    .canvas-area {
+    .canvas-container {
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #050505;
       padding: 40px;
-      background: #000;
-      position: relative;
     }
 
     canvas {
       max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      box-shadow: 0 0 50px rgba(0,0,0,0.5);
-      border: 1px solid #1a1a1a;
+      max-height: 80vh;
+      border: 1px solid #222;
+      background: #000;
+    }
+
+    .controls { border-top: 1px solid #222; padding-top: 20px; }
+    .btn-main {
+      width: 100%;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      font-weight: 900;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
     }
   </style>
 
-  <div class="antonov-app-wrapper">
+  <div class="antonov-app">
     <aside class="sidebar">
-      <div class="header">
+      <div>
         <h1>ANTONOV</h1>
-        <span class="tag">PROTOCOLO DE VERDAD</span>
+        <div class="tag">PROTOCOLO DE VERDAD</div>
       </div>
 
-      <div class="states-wrapper">
-        <span class="label">Selecciona un estado</span>
-        <div class="grid" id="grid"></div>
+      <div class="states-section">
+        <p style="font-size: 10px; color: #666; margin-bottom: 10px;">SELECCIONA UN ESTADO</p>
+        <div class="grid">
+          {ESTADOS.map((estado) => (
+            <button class="btn-state" data-state={estado}>{estado}</button>
+          ))}
+        </div>
       </div>
 
       <div class="controls">
-        <div class="slider-box">
-          <div class="slider-header">
-            <span class="label">Tamaño</span>
-            <span class="size-value" id="size">85px</span>
-          </div>
-          <input type="range" id="slider" min="40" max="180" value="85">
-        </div>
-        <button class="btn-main" id="btn">Traducir Estado</button>
+        <input type="range" id="slider" min="40" max="150" value="85" style="width: 100%;">
+        <button id="btn-traducir" class="btn-main">TRADUCIR ESTADO</button>
       </div>
     </aside>
 
-    <div class="canvas-area">
-      <canvas id="canvas"></canvas>
-    </div>
+    <main class="canvas-container">
+      <canvas id="mainCanvas"></canvas>
+    </main>
   </div>
 
- <script is:inline>
-  // Usamos una función autoejecutable para no ensuciar el scope global
-  (function () {
-    const runAntonov = () => {
-      const ESTADOS = [
-        'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
-        'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
-        'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
-      ];
-
-      // Referencias a elementos
-      const grid = document.getElementById('grid');
-      const canvas = document.getElementById('canvas');
-      const btnTranslate = document.getElementById('btn');
-      const slider = document.getElementById('slider');
-      const sizeDisplay = document.getElementById('size');
-
-      // Si no encuentra el grid, salimos para no dar error
-      if (!grid) return;
-
-      let selectedState = '';
-      let responseText = 'SELECCIONA UN ESTADO';
+  <script is:inline>
+    function initApp() {
+      const canvas = document.getElementById('mainCanvas');
       const ctx = canvas.getContext('2d');
+      const buttons = document.querySelectorAll('.btn-state');
+      const btnTraducir = document.getElementById('btn-traducir');
+      const slider = document.getElementById('slider');
 
-      function render() {
+      let selectedState = "";
+      let currentText = "SELECCIONA UN ESTADO";
+
+      function draw() {
         canvas.width = 1080;
         canvas.height = 1080;
-
-        // Fondo negro sólido
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = "black";
         ctx.fillRect(0, 0, 1080, 1080);
 
-        // Render del estado arriba
-        ctx.font = "700 28px 'JetBrains Mono'";
-        ctx.fillStyle = '#ffd700';
-        ctx.textAlign = 'left';
-        if (selectedState) ctx.fillText('> ' + selectedState, 80, 100);
+        // Estado arriba
+        ctx.fillStyle = "#ffd700";
+        ctx.font = "700 30px 'JetBrains Mono'";
+        if (selectedState) ctx.fillText(`> ${selectedState}`, 80, 100);
 
-        // Render de la frase central
-        const fontSize = Number(slider.value);
+        // Texto central
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        const fontSize = slider.value;
         ctx.font = `900 ${fontSize}px Inter`;
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-
-        const words = responseText.split(' ');
-        let lines = [];
-        let line = '';
-
-        words.forEach(w => {
-          const test = line + w + ' ';
-          if (ctx.measureText(test).width > 900) {
-            lines.push(line);
-            line = w + ' ';
-          } else {
-            line = test;
-          }
-        });
-        lines.push(line);
-
-        let y = 540 - ((lines.length - 1) * fontSize * 0.6);
-        lines.forEach(l => {
-          ctx.fillText(l.trim(), 540, y);
-          y += fontSize * 1.1;
+        
+        // Wrap simple
+        const words = currentText.split(' ');
+        let y = 540;
+        words.forEach((word, i) => {
+            ctx.fillText(word, 540, y + (i * fontSize));
         });
       }
 
-      // LIMPIAR EL GRID ANTES DE EMPEZAR (Evita duplicados)
-      grid.innerHTML = '';
-
-      // CREAR LOS BOTONES
-      ESTADOS.forEach(e => {
-        const b = document.createElement('button');
-        b.className = 'btn-state';
-        b.type = 'button'; // Evita que se comporte como submit
-        b.textContent = e;
-        
-        b.addEventListener('click', () => {
-          document.querySelectorAll('.btn-state').forEach(x => x.classList.remove('active'));
-          b.classList.add('active');
-          selectedState = e;
-          render();
-        });
-        
-        grid.appendChild(b);
+      buttons.forEach(btn => {
+        btn.onclick = () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedState = btn.getAttribute('data-state');
+          draw();
+        };
       });
 
-      // Eventos de controles
-      slider.oninput = () => {
-        sizeDisplay.textContent = slider.value + 'px';
-        render();
-      };
+      slider.oninput = draw;
 
-      btnTranslate.onclick = async () => {
-        if (!selectedState) return;
-        btnTranslate.disabled = true;
-        btnTranslate.textContent = 'PROCESANDO...';
-
+      btnTraducir.onclick = async () => {
+        if(!selectedState) return;
+        btnTraducir.innerText = "PROCESANDO...";
         try {
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          const r = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `ANTONOV OBSERVA SIN JUZGAR. UNA SOLA FRASE. MÁXIMO 12 PALABRAS. TODO EN MAYÚSCULAS. ESTADO: "${selectedState}"`
-            })
+            body: JSON.stringify({ prompt: `ESTADO: ${selectedState}. UNA FRASE CORTA.` })
           });
-          const data = await res.json();
-          responseText = data.text || 'SILENCIO';
-        } catch (err) {
-          responseText = 'ERROR DE CONEXIÓN';
+          const d = await r.json();
+          currentText = d.text || "ERROR";
+        } catch(e) {
+          currentText = "SIN CONEXIÓN";
         }
-
-        btnTranslate.disabled = false;
-        btnTranslate.textContent = 'TRADUCIR ESTADO';
-        render();
+        btnTraducir.innerText = "TRADUCIR ESTADO";
+        draw();
       };
 
-      // Primera ejecución
-      render();
-    };
+      draw();
+    }
 
-    // ESTO ES LO MÁS IMPORTANTE:
-    // Escucha tanto el DOM normal como las transiciones de Astro (View Transitions)
-    document.addEventListener('DOMContentLoaded', runAntonov);
-    document.addEventListener('astro:page-load', runAntonov);
-  })();
-</script>
+    // Ejecutar al cargar
+    window.onload = initApp;
+    document.addEventListener('astro:after-swap', initApp);
+  </script>
 </Layout>
