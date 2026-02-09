@@ -10,87 +10,148 @@ const ESTADOS = [
 
 <Layout metadata={metadata}>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700;900&family=JetBrains+Mono:wght@500;700&display=swap');
 
-    :global(body) { margin: 0; padding: 0; overflow: hidden; background: #000; }
-    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    :global(body) { margin: 0; padding: 0; background: #000; overflow: hidden; }
+    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; height: 100vh; }
 
     .antonov-app {
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: minmax(320px, 380px) 1fr;
       height: 100vh;
       background: #000;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
+      color: #f5f5f5;
       overflow: hidden;
     }
 
     .sidebar {
-      background: #0a0a0a;
-      border-right: 1px solid #1a1a1a;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      border-right: 1px solid rgba(255,215,0,0.08);
       display: flex;
       flex-direction: column;
+      padding: 0;
       overflow: hidden;
     }
 
-    .sidebar-content {
+    .header-box {
+      padding: 48px 32px 32px;
+      border-bottom: 1px solid rgba(255,215,0,0.08);
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 900;
+      letter-spacing: -3px;
+      margin: 0;
+      color: #fff;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono';
+      color: #ffd700;
+      font-size: 10px;
+      letter-spacing: 4px;
+      margin-top: 8px;
+      opacity: 0.7;
+    }
+
+    .states-container {
       flex: 1;
       overflow-y: auto;
-      display: flex;
-      flex-direction: column;
+      padding: 32px;
     }
 
-    .header-box {
-      padding: 32px 24px;
-      border-bottom: 1px solid #222;
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-
-    h1 { font-size: 2.5rem; font-weight: 900; margin: 0; letter-spacing: -1px; }
-    .tag { font-family: 'JetBrains Mono'; color: #ffd700; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; }
-
-    .states-container { padding: 24px; padding-bottom: 0; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     .btn-state {
-      background: #111;
-      border: 1px solid #222;
-      color: #666;
-      padding: 12px 8px;
+      background: rgba(30,30,30,0.8);
+      border: 1px solid rgba(255,215,0,0.1);
+      color: #aaa;
+      padding: 16px 12px;
       font-family: 'JetBrains Mono';
-      font-size: 9px;
+      font-size: 11px;
+      font-weight: 500;
       cursor: pointer;
       text-transform: uppercase;
-      transition: all 0.2s;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 4px;
     }
 
-    .btn-state:hover { border-color: #ffd700; color: #ffd700; }
-    .btn-state.active { background: #ffd700; color: #000; border-color: #ffd700; font-weight: bold; }
+    .btn-state:hover {
+      border-color: #ffd700;
+      color: #ffd700;
+      background: rgba(255,215,0,0.05);
+    }
+
+    .btn-state.active {
+      background: #ffd700;
+      color: #000;
+      border-color: #ffd700;
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(255,215,0,0.3);
+    }
 
     .controls-box {
-      padding: 24px;
-      border-top: 1px solid #222;
-      background: #050505;
+      padding: 32px;
+      border-top: 1px solid rgba(255,215,0,0.08);
+      background: rgba(5,5,5,0.9);
+    }
+
+    .size-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #777;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 5px;
+      background: rgba(255,215,0,0.1);
+      border-radius: 5px;
+      accent-color: #ffd700;
+      margin-bottom: 24px;
     }
 
     .btn-main {
       width: 100%;
-      padding: 16px;
-      background: #fff;
+      padding: 18px;
+      background: #ffd700;
       color: #000;
       font-weight: 900;
       border: none;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      margin-bottom: 10px;
+      letter-spacing: 2px;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255,215,0,0.2);
     }
 
-    .btn-main:hover { background: #ffd700; transform: translateY(-1px); }
-    .btn-main:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,215,0,0.35);
+    }
 
-    .btn-download { background: #222; color: #ffd700; border: 1px solid #ffd700; }
-    .btn-download:hover { background: #ffd700; color: #000; }
+    .btn-download {
+      background: transparent;
+      border: 1px solid #ffd700;
+      color: #ffd700;
+      margin-top: 12px;
+    }
+
+    .btn-download:hover {
+      background: #ffd700;
+      color: #000;
+    }
 
     .canvas-area {
       display: flex;
@@ -102,17 +163,19 @@ const ESTADOS = [
 
     canvas {
       width: 100%;
-      max-width: 900px;
+      max-width: 950px;
       height: auto;
-      max-height: 85vh;
-      border: 1px solid #222;
-      box-shadow: 0 0 40px rgba(0,0,0,0.9);
+      max-height: 90vh;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8), inset 0 0 60px rgba(255,215,0,0.03);
     }
 
-    @media (max-width: 900px) {
-      .antonov-app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid #222; }
-      .sidebar-content { max-height: 45vh; }
+    @media (max-width: 950px) {
+      .antonov-app { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid rgba(255,215,0,0.08); }
+      .states-container { padding: 24px; }
+      .controls-box { padding: 24px; }
       .canvas-area { padding: 20px; }
     }
   </style>
@@ -126,7 +189,9 @@ const ESTADOS = [
         </div>
 
         <div class="states-container">
-          <p style="font-size: 9px; color: #555; margin-bottom: 16px; letter-spacing: 1.5px;">ESTADO ACTUAL</p>
+          <p style="font-size: 10px; color: #666; margin-bottom: 20px; letter-spacing: 2px;">
+            ESTADO ACTUAL
+          </p>
           <div class="grid">
             {ESTADOS.map((e) => (
               <button class="btn-state" data-state={e}>{e}</button>
@@ -135,11 +200,11 @@ const ESTADOS = [
         </div>
 
         <div class="controls-box">
-          <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:9px;">
-            <span style="color:#555">TAMAÑO</span>
-            <span id="sizeVal">90PX</span>
+          <div class="size-label">
+            <span>TAMAÑO</span>
+            <span id="sizeVal">90 PX</span>
           </div>
-          <input type="range" id="slider" min="50" max="200" value="90" style="width:100%; accent-color:#ffd700;" />
+          <input type="range" id="slider" min="50" max="180" value="90" />
           <button id="btn-traducir" class="btn-main">TRADUCIR ESTADO</button>
           <button id="btn-descargar" class="btn-main btn-download">DESCARGAR</button>
         </div>
@@ -152,11 +217,13 @@ const ESTADOS = [
   </div>
 
   <script is:inline>
-    function startAntonov() {
+    async function initAntonov() {
       const canvas = document.getElementById('mainCanvas');
-      if (!canvas) return console.error('Canvas perdido');
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      if (!ctx) return console.error('Contexto 2D muerto');
+      if (!ctx) return;
+
+      await document.fonts.ready.catch(() => {});
 
       const buttons = document.querySelectorAll('.btn-state');
       const btnTraducir = document.getElementById('btn-traducir');
@@ -168,9 +235,8 @@ const ESTADOS = [
       let currentText = 'EL SILENCIO ES LA ÚNICA RESPUESTA';
 
       function draw() {
-        // Forzamos redraw completo cada vez
         const rect = canvas.getBoundingClientRect();
-        const size = Math.min(rect.width * 0.92, rect.height * 0.92, 1000);
+        const size = Math.min(rect.width * 0.96, rect.height * 0.9, 1000);
 
         canvas.width = size;
         canvas.height = size;
@@ -178,39 +244,44 @@ const ESTADOS = [
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, size, size);
 
-        // Grano mínimo
-        for (let i = 0; i < 200; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.02})`;
-          ctx.fillRect(Math.random()*size, Math.random()*size, 1, 1);
+        // Grano muy sutil
+        ctx.globalAlpha = 0.4;
+        for (let i = 0; i < 180; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.015})`;
+          ctx.fillRect(Math.random() * size, Math.random() * size, 1, 1);
         }
+        ctx.globalAlpha = 1;
 
         // Header
         if (selectedState) {
           ctx.fillStyle = '#ffd700';
-          ctx.font = 'bold 22px "JetBrains Mono", monospace';
+          ctx.font = '700 26px "JetBrains Mono", monospace';
           ctx.textAlign = 'left';
-          ctx.fillText(`// ${selectedState}`, 40, 60);
-          ctx.fillRect(40, 70, 160, 2);
+          ctx.fillText(`// ${selectedState}`, 50, 80);
+          ctx.fillRect(50, 95, 200, 2);
         }
 
-        // Texto principal
-        ctx.fillStyle = '#fff';
+        // Texto central
+        ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
         let fontSize = parseInt(slider.value) || 90;
-        fontSize = Math.min(fontSize, size * 0.12); // límite superior para no salirse
-        if (currentText.split(' ').length > 6) fontSize *= 0.85;
+        fontSize = Math.min(fontSize, size * 0.14);
+
+        const words = currentText.toUpperCase().split(' ');
+        if (words.length > 6) fontSize *= 0.85;
+        if (words.length > 9) fontSize *= 0.75;
 
         ctx.font = `900 ${fontSize}px Inter, sans-serif`;
 
-        const words = currentText.toUpperCase().split(' ');
-        const lineHeight = fontSize * 0.95;
-        const totalH = words.length * lineHeight;
-        let y = size / 2 - totalH / 2 + lineHeight / 2;
+        const lineHeight = fontSize * 0.94;
+        const totalHeight = words.length * lineHeight;
+        let y = size / 2 - totalHeight / 2 + lineHeight / 2;
 
-        ctx.shadowColor = 'rgba(255,215,0,0.3)';
-        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(255,215,0,0.35)';
+        ctx.shadowBlur = 30;
+        ctx.shadowOffsetY = 4;
 
         words.forEach((word, i) => {
           ctx.fillText(word, size / 2, y + i * lineHeight);
@@ -219,7 +290,6 @@ const ESTADOS = [
         ctx.shadowBlur = 0;
       }
 
-      // Eventos
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           buttons.forEach(b => b.classList.remove('active'));
@@ -230,12 +300,12 @@ const ESTADOS = [
       });
 
       slider.addEventListener('input', () => {
-        sizeVal.textContent = `${slider.value}PX`;
+        sizeVal.textContent = `${slider.value} PX`;
         draw();
       });
 
       btnTraducir.addEventListener('click', async () => {
-        if (!selectedState) return;
+        if (!selectedState) return alert('Selecciona un estado primero');
         btnTraducir.disabled = true;
         btnTraducir.textContent = 'EXTRAYENDO...';
 
@@ -248,7 +318,7 @@ const ESTADOS = [
             })
           });
           const data = await res.json();
-          currentText = data.text?.trim() || 'NO HAY RESPUESTA';
+          currentText = data.text?.trim() || 'SIN RESPUESTA';
         } catch {
           currentText = 'ERROR';
         }
@@ -259,25 +329,22 @@ const ESTADOS = [
       });
 
       btnDescargar.addEventListener('click', () => {
-        const a = document.createElement('a');
-        a.download = `antonov-${selectedState || 'silencio'}.png`;
-        a.href = canvas.toDataURL();
-        a.click();
+        const link = document.createElement('a');
+        link.download = `antonov_${selectedState || 'verdad'}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
       });
 
-      // Dibujar inicial + resize seguro
-      setTimeout(draw, 300); // pequeño delay para que el DOM se asiente
+      // Lanzar dibujo con delay para que el layout se asiente
+      setTimeout(draw, 100);
       window.addEventListener('resize', draw);
-      draw(); // doble por si acaso
+      draw();
     }
 
-    // Lanzar cuando esté listo (múltiples intentos)
-    if (document.readyState !== 'loading') {
-      startAntonov();
-    } else {
-      document.addEventListener('DOMContentLoaded', startAntonov);
-    }
-    window.addEventListener('load', startAntonov);
-    document.addEventListener('astro:after-swap', startAntonov);
+    // Intentos múltiples de inicio
+    if (document.readyState !== 'loading') initAntonov();
+    document.addEventListener('DOMContentLoaded', initAntonov);
+    window.addEventListener('load', initAntonov);
+    document.addEventListener('astro:after-swap', initAntonov);
   </script>
 </Layout>
