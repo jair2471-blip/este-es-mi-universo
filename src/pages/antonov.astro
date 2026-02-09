@@ -193,117 +193,131 @@ const metadata = {
     </div>
   </div>
 
-  <script is:inline>
-    // Tu lógica de JS se mantiene igual, solo asegúrate de que esté dentro de DOMContentLoaded
-    (function () {
-      function init() {
-        const ESTADOS = [
-          'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
-          'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
-          'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
-        ];
+ <script is:inline>
+  // Usamos una función autoejecutable para no ensuciar el scope global
+  (function () {
+    const runAntonov = () => {
+      const ESTADOS = [
+        'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
+        'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
+        'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
+      ];
 
-        let selectedState = '';
-        let responseText = 'SELECCIONA UN ESTADO';
+      // Referencias a elementos
+      const grid = document.getElementById('grid');
+      const canvas = document.getElementById('canvas');
+      const btnTranslate = document.getElementById('btn');
+      const slider = document.getElementById('slider');
+      const sizeDisplay = document.getElementById('size');
 
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas?.getContext('2d');
-        const grid = document.getElementById('grid');
-        const btn = document.getElementById('btn');
-        const slider = document.getElementById('slider');
-        const sizeDisplay = document.getElementById('size');
+      // Si no encuentra el grid, salimos para no dar error
+      if (!grid) return;
 
-        if (!canvas || !ctx) return;
+      let selectedState = '';
+      let responseText = 'SELECCIONA UN ESTADO';
+      const ctx = canvas.getContext('2d');
 
-        function render() {
-          canvas.width = 1080;
-          canvas.height = 1080;
+      function render() {
+        canvas.width = 1080;
+        canvas.height = 1080;
 
-          // Fondo
-          ctx.fillStyle = '#000';
-          ctx.fillRect(0,0,1080,1080);
+        // Fondo negro sólido
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, 1080, 1080);
 
-          // Estado seleccionado (Arriba izquierda)
-          ctx.font = "700 28px 'JetBrains Mono'";
-          ctx.fillStyle = '#ffd700';
-          ctx.textAlign = 'left';
-          if (selectedState) ctx.fillText('> ' + selectedState, 80, 100);
+        // Render del estado arriba
+        ctx.font = "700 28px 'JetBrains Mono'";
+        ctx.fillStyle = '#ffd700';
+        ctx.textAlign = 'left';
+        if (selectedState) ctx.fillText('> ' + selectedState, 80, 100);
 
-          // Texto Central
-          const fontSize = Number(slider.value);
-          ctx.font = `900 ${fontSize}px Inter`;
-          ctx.fillStyle = '#fff';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
+        // Render de la frase central
+        const fontSize = Number(slider.value);
+        ctx.font = `900 ${fontSize}px Inter`;
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
 
-          const words = responseText.split(' ');
-          let lines = [];
-          let line = '';
+        const words = responseText.split(' ');
+        let lines = [];
+        let line = '';
 
-          words.forEach(w => {
-            const test = line + w + ' ';
-            if (ctx.measureText(test).width > 900) {
-              lines.push(line);
-              line = w + ' ';
-            } else {
-              line = test;
-            }
+        words.forEach(w => {
+          const test = line + w + ' ';
+          if (ctx.measureText(test).width > 900) {
+            lines.push(line);
+            line = w + ' ';
+          } else {
+            line = test;
+          }
+        });
+        lines.push(line);
+
+        let y = 540 - ((lines.length - 1) * fontSize * 0.6);
+        lines.forEach(l => {
+          ctx.fillText(l.trim(), 540, y);
+          y += fontSize * 1.1;
+        });
+      }
+
+      // LIMPIAR EL GRID ANTES DE EMPEZAR (Evita duplicados)
+      grid.innerHTML = '';
+
+      // CREAR LOS BOTONES
+      ESTADOS.forEach(e => {
+        const b = document.createElement('button');
+        b.className = 'btn-state';
+        b.type = 'button'; // Evita que se comporte como submit
+        b.textContent = e;
+        
+        b.addEventListener('click', () => {
+          document.querySelectorAll('.btn-state').forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          selectedState = e;
+          render();
+        });
+        
+        grid.appendChild(b);
+      });
+
+      // Eventos de controles
+      slider.oninput = () => {
+        sizeDisplay.textContent = slider.value + 'px';
+        render();
+      };
+
+      btnTranslate.onclick = async () => {
+        if (!selectedState) return;
+        btnTranslate.disabled = true;
+        btnTranslate.textContent = 'PROCESANDO...';
+
+        try {
+          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: `ANTONOV OBSERVA SIN JUZGAR. UNA SOLA FRASE. MÁXIMO 12 PALABRAS. TODO EN MAYÚSCULAS. ESTADO: "${selectedState}"`
+            })
           });
-          lines.push(line);
-
-          let y = 540 - ((lines.length - 1) * fontSize * 0.6);
-          lines.forEach(l => {
-            ctx.fillText(l.trim(), 540, y);
-            y += fontSize * 1.1;
-          });
+          const data = await res.json();
+          responseText = data.text || 'SILENCIO';
+        } catch (err) {
+          responseText = 'ERROR DE CONEXIÓN';
         }
 
-        // Generar botones
-        ESTADOS.forEach(e => {
-          const b = document.createElement('button');
-          b.className = 'btn-state';
-          b.textContent = e;
-          b.onclick = () => {
-            document.querySelectorAll('.btn-state').forEach(x => x.classList.remove('active'));
-            b.classList.add('active');
-            selectedState = e;
-            render();
-          };
-          grid.appendChild(b);
-        });
-
-        slider.oninput = () => {
-          sizeDisplay.textContent = slider.value + 'px';
-          render();
-        };
-
-        btn.onclick = async () => {
-          if (!selectedState) return;
-          btn.disabled = true;
-          btn.textContent = 'PROCESANDO...';
-
-          try {
-            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                prompt: `ANTONOV OBSERVA SIN JUZGAR. UNA SOLA FRASE. MÁXIMO 12 PALABRAS. TODO EN MAYÚSCULAS. ESTADO: "${selectedState}"`
-              })
-            });
-            const data = await res.json();
-            responseText = data.text || 'SILENCIO';
-          } catch {
-            responseText = 'ERROR DE CONEXIÓN';
-          }
-
-          btn.disabled = false;
-          btn.textContent = 'TRADUCIR ESTADO';
-          render();
-        };
-
+        btnTranslate.disabled = false;
+        btnTranslate.textContent = 'TRADUCIR ESTADO';
         render();
-      }
-      init();
-    })();
-  </script>
+      };
+
+      // Primera ejecución
+      render();
+    };
+
+    // ESTO ES LO MÁS IMPORTANTE:
+    // Escucha tanto el DOM normal como las transiciones de Astro (View Transitions)
+    document.addEventListener('DOMContentLoaded', runAntonov);
+    document.addEventListener('astro:page-load', runAntonov);
+  })();
+</script>
 </Layout>
