@@ -203,125 +203,136 @@ const ESTADOS = [
   </div>
 
   <script is:inline>
-    async function startAntonov() {
-      const canvas = document.getElementById('mainCanvas');
-      if (!canvas) return console.error("Canvas no encontrado");
+  async function startAntonov() {
+    const canvas = document.getElementById('mainCanvas');
+    if (!canvas) return console.error("Canvas no encontrado");
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return console.error("Contexto 2D falló");
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return console.error("Contexto 2D falló");
 
-      await document.fonts.ready;
+    await document.fonts.ready;
 
-      const buttons = document.querySelectorAll('.btn-state');
-      const btnTraducir = document.getElementById('btn-traducir');
-      const slider = document.getElementById('slider');
-      const sizeVal = document.getElementById('sizeVal');
+    const buttons = document.querySelectorAll('.btn-state');
+    const btnTraducir = document.getElementById('btn-traducir');
+    const slider = document.getElementById('slider');
+    const sizeVal = document.getElementById('sizeVal');
 
-      let selectedState = "";
-      let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
+    let selectedState = "";
+    let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
 
-      function draw() {
-        const container = canvas.parentElement;
-        const size = Math.min(container.clientWidth * 0.92, container.clientHeight * 0.88, 1080);
+    function draw() {
+      const container = canvas.parentElement;
+      // Tamaño más elegante: deja breathing room
+      const padding = Math.max(40, container.clientWidth * 0.04);
+      const size = Math.min(
+        container.clientWidth - padding * 2,
+        container.clientHeight * 0.92,
+        1100
+      );
 
-        canvas.width = size;
-        canvas.height = size;
+      canvas.width = size;
+      canvas.height = size;
 
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, size, size);
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, size, size);
 
-        // Grano sutil premium
-        for (let i = 0; i < 350; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.025 + 0.008})`;
-          ctx.fillRect(Math.random() * size, Math.random() * size, 1.2, 1.2);
-        }
-
-        if (selectedState) {
-          ctx.fillStyle = "#ffd700";
-          ctx.font = "700 22px 'JetBrains Mono', monospace";
-          ctx.textAlign = "left";
-          ctx.fillText(`// ${selectedState}`, 50, 70);
-          ctx.fillRect(50, 82, 160, 1.5);
-        }
-
-        ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const baseSize = parseInt(slider.value) || 90;
-        const fontSize = Math.max(36, baseSize * (size / 1080));
-        ctx.font = `900 ${fontSize}px 'Inter', system-ui, sans-serif`;
-
-        const words = currentText.toUpperCase().split(' ');
-        const lineHeight = fontSize * 0.94;
-        const totalHeight = words.length * lineHeight;
-        let y = (size - totalHeight) / 2 + (lineHeight / 2);
-
-        ctx.shadowColor = "rgba(255, 215, 0, 0.18)";
-        ctx.shadowBlur = 28;
-        ctx.shadowOffsetY = 3;
-
-        words.forEach((word, i) => {
-          ctx.fillText(word, size / 2, y + i * lineHeight);
-        });
-
-        ctx.shadowColor = "transparent";
-        ctx.shadowBlur = 0;
+      // Grano ultra sutil (menos partículas, más clase)
+      for (let i = 0; i < 280; i++) {
+        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.018 + 0.005})`;
+        ctx.fillRect(Math.random() * size, Math.random() * size, 1, 1);
       }
 
-      buttons.forEach(btn => {
-        btn.onclick = () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          selectedState = btn.dataset.state;
-          draw();
-        };
+      // Header con más espacio
+      if (selectedState) {
+        ctx.fillStyle = "#ffd700";
+        ctx.font = "700 24px 'JetBrains Mono', monospace";
+        ctx.textAlign = "left";
+        ctx.fillText(`// ${selectedState}`, padding + 20, padding + 50);
+        ctx.fillRect(padding + 20, padding + 65, 180, 2);
+      }
+
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const baseSize = parseInt(slider.value) || 90;
+      let fontSize = Math.max(42, baseSize * (size / 1080));
+
+      // Ajuste dinámico si la frase es muy larga
+      const words = currentText.toUpperCase().split(' ');
+      if (words.length > 6) fontSize *= 0.92; // reduce un poco para frases largas
+
+      ctx.font = `900 ${fontSize}px 'Inter', system-ui, sans-serif`;
+
+      const lineHeight = fontSize * 0.96; // más elegante y espaciado
+      const totalHeight = words.length * lineHeight;
+      let y = (size - totalHeight) / 2 + (lineHeight / 2);
+
+      // Shadow refinada: más sutil, dorada leve
+      ctx.shadowColor = "rgba(255, 215, 0, 0.22)";
+      ctx.shadowBlur = 22;
+      ctx.shadowOffsetY = 5;
+      ctx.shadowOffsetX = 0;
+
+      words.forEach((word, i) => {
+        ctx.fillText(word, size / 2, y + i * lineHeight);
       });
 
-      slider.oninput = () => {
-        sizeVal.innerText = `${slider.value}PX`;
+      // Limpiar shadow
+      ctx.shadowColor = "transparent";
+      ctx.shadowBlur = 0;
+    }
+
+    buttons.forEach(btn => {
+      btn.onclick = () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedState = btn.dataset.state;
         draw();
       };
+    });
 
-      btnTraducir.onclick = async () => {
-        if (!selectedState) return;
-        btnTraducir.disabled = true;
-        btnTraducir.innerText = "EXTRAYENDO...";
-
-        try {
-          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.`
-            })
-          });
-
-          const data = await res.json();
-          currentText = data.text?.trim() || "NO HAY RESPUESTA";
-        } catch (err) {
-          currentText = "CONEXIÓN FALLIDA";
-          console.error(err);
-        }
-
-        btnTraducir.disabled = false;
-        btnTraducir.innerText = "TRADUCIR ESTADO";
-        draw();
-      };
-
-      // Dibujar inicial
+    slider.oninput = () => {
+      sizeVal.innerText = `${slider.value}PX`;
       draw();
+    };
 
-      // Redibujar cuando cambia tamaño de ventana
-      window.addEventListener('resize', draw);
-    }
+    btnTraducir.onclick = async () => {
+      if (!selectedState) return;
+      btnTraducir.disabled = true;
+      btnTraducir.innerText = "EXTRAYENDO...";
 
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      startAntonov();
-    } else {
-      window.addEventListener('load', startAntonov);
-    }
+      try {
+        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.`
+          })
+        });
 
-    document.addEventListener('astro:after-swap', startAntonov);
-  </script>
+        const data = await res.json();
+        currentText = data.text?.trim() || "NO HAY RESPUESTA";
+      } catch (err) {
+        currentText = "CONEXIÓN FALLIDA";
+        console.error(err);
+      }
+
+      btnTraducir.disabled = false;
+      btnTraducir.innerText = "TRADUCIR ESTADO";
+      draw();
+    };
+
+    draw();
+    window.addEventListener('resize', draw);
+  }
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    startAntonov();
+  } else {
+    window.addEventListener('load', startAntonov);
+  }
+
+  document.addEventListener('astro:after-swap', startAntonov);
+</script>
 </Layout>
