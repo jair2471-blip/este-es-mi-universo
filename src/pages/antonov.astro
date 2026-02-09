@@ -30,6 +30,14 @@ const ESTADOS = [
       border-right: 1px solid #1a1a1a;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
 
     .header-box {
@@ -53,9 +61,8 @@ const ESTADOS = [
     }
 
     .states-container {
-      flex: 1;
-      overflow-y: auto;
       padding: 28px;
+      padding-bottom: 0;
     }
 
     .grid {
@@ -96,7 +103,7 @@ const ESTADOS = [
 
     .btn-main {
       width: 100%;
-      padding: 20px;
+      padding: 18px;
       background: #fff;
       color: #000;
       font-weight: 900;
@@ -106,6 +113,7 @@ const ESTADOS = [
       letter-spacing: 1.2px;
       transition: all 0.3s ease;
       border-radius: 0;
+      margin-bottom: 12px;
     }
 
     .btn-main:hover {
@@ -116,6 +124,17 @@ const ESTADOS = [
     .btn-main:disabled {
       opacity: 0.25;
       cursor: not-allowed;
+    }
+
+    .btn-download {
+      background: #222 !important;
+      color: #ffd700 !important;
+      border: 1px solid #ffd700 !important;
+    }
+
+    .btn-download:hover {
+      background: #ffd700 !important;
+      color: #000 !important;
     }
 
     .canvas-area {
@@ -139,61 +158,60 @@ const ESTADOS = [
       border-radius: 3px;
     }
 
-    .states-container::-webkit-scrollbar {
-      width: 3px;
-    }
-
-    .states-container::-webkit-scrollbar-thumb {
-      background: #222;
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      accent-color: #ffd700;
     }
 
     @media (max-width: 900px) {
       .antonov-app {
         grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
       }
       .sidebar {
-        max-height: 45vh;
+        height: auto;
         border-right: none;
         border-bottom: 1px solid #222;
       }
+      .sidebar-content {
+        max-height: 50vh;
+        overflow-y: auto;
+      }
       .canvas-area {
-        padding: 15px;
+        padding: 15px 10px;
       }
     }
   </style>
 
   <div class="antonov-app">
     <aside class="sidebar">
-      <div class="header-box">
-        <h1>ANTONOV</h1>
-        <div class="tag">PROTOCOLO DE VERDAD</div>
-      </div>
-
-      <div class="states-container">
-        <p style="font-size: 9px; color: #555; margin-bottom: 18px; letter-spacing: 1.5px;">
-          ESTADO ACTUAL
-        </p>
-        <div class="grid">
-          {ESTADOS.map((e) => (
-            <button class="btn-state" data-state={e}>{e}</button>
-          ))}
+      <div class="sidebar-content">
+        <div class="header-box">
+          <h1>ANTONOV</h1>
+          <div class="tag">PROTOCOLO DE VERDAD</div>
         </div>
-      </div>
 
-      <div class="controls-box">
-        <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:9px;">
-          <span class="tag" style="color:#555">TAMAÑO</span>
-          <span id="sizeVal" class="tag">90PX</span>
+        <div class="states-container">
+          <p style="font-size: 9px; color: #555; margin-bottom: 18px; letter-spacing: 1.5px;">
+            ESTADO ACTUAL
+          </p>
+          <div class="grid">
+            {ESTADOS.map((e) => (
+              <button class="btn-state" data-state={e}>{e}</button>
+            ))}
+          </div>
         </div>
-        <input
-          type="range"
-          id="slider"
-          min="40"
-          max="220"
-          value="90"
-          style="width:100%; accent-color:#ffd700; height:4px;"
-        />
-        <button id="btn-traducir" class="btn-main">TRADUCIR ESTADO</button>
+
+        <div class="controls-box">
+          <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:9px;">
+            <span class="tag" style="color:#555">TAMAÑO</span>
+            <span id="sizeVal" class="tag">90PX</span>
+          </div>
+          <input type="range" id="slider" min="40" max="220" value="90" />
+          <button id="btn-traducir" class="btn-main">TRADUCIR ESTADO</button>
+          <button id="btn-descargar" class="btn-main btn-download">DESCARGAR IMAGEN</button>
+        </div>
       </div>
     </aside>
 
@@ -203,136 +221,133 @@ const ESTADOS = [
   </div>
 
   <script is:inline>
-  async function startAntonov() {
-    const canvas = document.getElementById('mainCanvas');
-    if (!canvas) return console.error("Canvas no encontrado");
+    async function startAntonov() {
+      const canvas = document.getElementById('mainCanvas');
+      if (!canvas) return console.error("Canvas no encontrado");
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return console.error("Contexto 2D falló");
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return console.error("Contexto 2D falló");
 
-    await document.fonts.ready;
+      await document.fonts.ready;
 
-    const buttons = document.querySelectorAll('.btn-state');
-    const btnTraducir = document.getElementById('btn-traducir');
-    const slider = document.getElementById('slider');
-    const sizeVal = document.getElementById('sizeVal');
+      const buttons = document.querySelectorAll('.btn-state');
+      const btnTraducir = document.getElementById('btn-traducir');
+      const btnDescargar = document.getElementById('btn-descargar');
+      const slider = document.getElementById('slider');
+      const sizeVal = document.getElementById('sizeVal');
 
-    let selectedState = "";
-    let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
+      let selectedState = "";
+      let currentText = "EL SILENCIO ES LA ÚNICA RESPUESTA";
 
-    function draw() {
-      const container = canvas.parentElement;
-      // Tamaño más elegante: deja breathing room
-      const padding = Math.max(40, container.clientWidth * 0.04);
-      const size = Math.min(
-        container.clientWidth - padding * 2,
-        container.clientHeight * 0.92,
-        1100
-      );
+      function draw() {
+        const container = canvas.parentElement;
+        const padding = Math.max(40, container.clientWidth * 0.04);
+        const size = Math.min(container.clientWidth - padding * 2, container.clientHeight * 0.92, 1100);
 
-      canvas.width = size;
-      canvas.height = size;
+        canvas.width = size;
+        canvas.height = size;
 
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, size, size);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, size, size);
 
-      // Grano ultra sutil (menos partículas, más clase)
-      for (let i = 0; i < 280; i++) {
-        ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.018 + 0.005})`;
-        ctx.fillRect(Math.random() * size, Math.random() * size, 1, 1);
-      }
+        for (let i = 0; i < 280; i++) {
+          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.018 + 0.005})`;
+          ctx.fillRect(Math.random() * size, Math.random() * size, 1, 1);
+        }
 
-      // Header con más espacio
-      if (selectedState) {
-        ctx.fillStyle = "#ffd700";
-        ctx.font = "700 24px 'JetBrains Mono', monospace";
-        ctx.textAlign = "left";
-        ctx.fillText(`// ${selectedState}`, padding + 20, padding + 50);
-        ctx.fillRect(padding + 20, padding + 65, 180, 2);
-      }
+        if (selectedState) {
+          ctx.fillStyle = "#ffd700";
+          ctx.font = "700 24px 'JetBrains Mono', monospace";
+          ctx.textAlign = "left";
+          ctx.fillText(`// ${selectedState}`, padding + 20, padding + 50);
+          ctx.fillRect(padding + 20, padding + 65, 180, 2);
+        }
 
-      ctx.fillStyle = "#ffffff";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
 
-      const baseSize = parseInt(slider.value) || 90;
-      let fontSize = Math.max(42, baseSize * (size / 1080));
+        const baseSize = parseInt(slider.value) || 90;
+        let fontSize = Math.max(42, baseSize * (size / 1080));
+        if (currentText.split(' ').length > 6) fontSize *= 0.92;
 
-      // Ajuste dinámico si la frase es muy larga
-      const words = currentText.toUpperCase().split(' ');
-      if (words.length > 6) fontSize *= 0.92; // reduce un poco para frases largas
+        ctx.font = `900 ${fontSize}px 'Inter', system-ui, sans-serif`;
 
-      ctx.font = `900 ${fontSize}px 'Inter', system-ui, sans-serif`;
+        const words = currentText.toUpperCase().split(' ');
+        const lineHeight = fontSize * 0.96;
+        const totalHeight = words.length * lineHeight;
+        let y = (size - totalHeight) / 2 + (lineHeight / 2);
 
-      const lineHeight = fontSize * 0.96; // más elegante y espaciado
-      const totalHeight = words.length * lineHeight;
-      let y = (size - totalHeight) / 2 + (lineHeight / 2);
+        ctx.shadowColor = "rgba(255, 215, 0, 0.22)";
+        ctx.shadowBlur = 22;
+        ctx.shadowOffsetY = 5;
 
-      // Shadow refinada: más sutil, dorada leve
-      ctx.shadowColor = "rgba(255, 215, 0, 0.22)";
-      ctx.shadowBlur = 22;
-      ctx.shadowOffsetY = 5;
-      ctx.shadowOffsetX = 0;
-
-      words.forEach((word, i) => {
-        ctx.fillText(word, size / 2, y + i * lineHeight);
-      });
-
-      // Limpiar shadow
-      ctx.shadowColor = "transparent";
-      ctx.shadowBlur = 0;
-    }
-
-    buttons.forEach(btn => {
-      btn.onclick = () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedState = btn.dataset.state;
-        draw();
-      };
-    });
-
-    slider.oninput = () => {
-      sizeVal.innerText = `${slider.value}PX`;
-      draw();
-    };
-
-    btnTraducir.onclick = async () => {
-      if (!selectedState) return;
-      btnTraducir.disabled = true;
-      btnTraducir.innerText = "EXTRAYENDO...";
-
-      try {
-        const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.`
-          })
+        words.forEach((word, i) => {
+          ctx.fillText(word, size / 2, y + i * lineHeight);
         });
 
-        const data = await res.json();
-        currentText = data.text?.trim() || "NO HAY RESPUESTA";
-      } catch (err) {
-        currentText = "CONEXIÓN FALLIDA";
-        console.error(err);
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
       }
 
-      btnTraducir.disabled = false;
-      btnTraducir.innerText = "TRADUCIR ESTADO";
+      buttons.forEach(btn => {
+        btn.onclick = () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedState = btn.dataset.state;
+          draw();
+        };
+      });
+
+      slider.oninput = () => {
+        sizeVal.innerText = `${slider.value}PX`;
+        draw();
+      };
+
+      btnTraducir.onclick = async () => {
+        if (!selectedState) return;
+        btnTraducir.disabled = true;
+        btnTraducir.innerText = "EXTRAYENDO...";
+
+        try {
+          const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${selectedState}. ESCRIBE UNA SENTENCIA DE MÁXIMO 8 PALABRAS QUE SEA UN GOLPE DE REALIDAD. SIN PIEDAD. TODO MAYÚSCULAS.`
+            })
+          });
+
+          const data = await res.json();
+          currentText = data.text?.trim() || "NO HAY RESPUESTA";
+        } catch (err) {
+          currentText = "CONEXIÓN FALLIDA";
+        }
+
+        btnTraducir.disabled = false;
+        btnTraducir.innerText = "TRADUCIR ESTADO";
+        draw();
+      };
+
+      if (btnDescargar) {
+        btnDescargar.onclick = () => {
+          const link = document.createElement('a');
+          link.download = `antonov-${selectedState.toLowerCase() || 'verdad'}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+        };
+      }
+
       draw();
-    };
+      window.addEventListener('resize', draw);
+    }
 
-    draw();
-    window.addEventListener('resize', draw);
-  }
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      startAntonov();
+    } else {
+      window.addEventListener('load', startAntonov);
+    }
 
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    startAntonov();
-  } else {
-    window.addEventListener('load', startAntonov);
-  }
-
-  document.addEventListener('astro:after-swap', startAntonov);
-</script>
+    document.addEventListener('astro:after-swap', startAntonov);
+  </script>
 </Layout>
