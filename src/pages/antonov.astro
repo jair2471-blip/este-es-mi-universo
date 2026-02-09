@@ -65,11 +65,11 @@ const metadata = {
     }
 
     .states-grid {
-      margin-top: 30px;
+      margin-top: 20px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      max-height: 400px;
+      gap: 8px;
+      max-height: 350px;
       overflow-y: auto;
       padding-right: 5px;
     }
@@ -84,14 +84,15 @@ const metadata = {
 
     .states-grid::-webkit-scrollbar-thumb {
       background: #333;
+      border-radius: 2px;
     }
 
     .state-btn {
       background: #111;
       border: 1px solid #222;
       color: #aaa;
-      padding: 15px 10px;
-      font-size: 11px;
+      padding: 12px 8px;
+      font-size: 10px;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s;
@@ -102,7 +103,7 @@ const metadata = {
 
     .state-btn:hover {
       background: #1a1a1a;
-      border-color: #333;
+      border-color: #444;
       color: #fff;
     }
 
@@ -133,7 +134,7 @@ const metadata = {
       width: 100%;
       transition: 0.3s;
       font-family: 'Inter';
-      margin-top: 20px;
+      font-size: 13px;
     }
 
     .btn-main:hover {
@@ -177,6 +178,10 @@ const metadata = {
       .canvas-area {
         height: 60vh;
       }
+
+      .states-grid {
+        max-height: 250px;
+      }
     }
   </style>
 
@@ -187,15 +192,15 @@ const metadata = {
           <h1>ANTONOV</h1>
           <p style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 3px; margin: 10px 0 0 0;">V.6.0_PROTOCOLO</p>
           
-          <div style="margin-top: 30px;">
+          <div style="margin-top: 25px;">
             <label class="label-section">Selecciona Tu Estado</label>
             <div class="states-grid" id="statesGrid"></div>
           </div>
         </div>
 
         <div>
-          <div style="margin-bottom: 25px;">
-            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px;">ZOOM DE RESPUESTA</label>
+          <div style="margin-bottom: 20px;">
+            <label style="font-family: 'JetBrains Mono'; font-size: 10px; color: #666; display: block; margin-bottom: 8px; text-transform: uppercase;">ZOOM DE RESPUESTA</label>
             <input type="range" id="sizeSlider" min="40" max="140" value="85" style="width:100%; accent-color:var(--accent);">
           </div>
           
@@ -248,20 +253,7 @@ const metadata = {
         if (!canvas || !ctx || !statesGrid) return;
 
         let selectedState = "";
-        let antonovResponse = "SELECCIONA UN ESTADO PARA TRADUCIR";
-
-        // Crear botones de estados
-        ESTADOS.forEach(estado => {
-          const btn = document.createElement('button');
-          btn.className = 'state-btn';
-          btn.textContent = estado;
-          btn.onclick = () => {
-            document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            selectedState = estado;
-          };
-          statesGrid.appendChild(btn);
-        });
+        let antonovResponse = "SELECCIONA UN ESTADO";
 
         const render = () => {
           canvas.width = 1080;
@@ -334,10 +326,33 @@ const metadata = {
           ctx.stroke();
         };
 
-        btn.onclick = async () => {
-          if(!selectedState) return;
+        // Crear botones de estados
+        ESTADOS.forEach(estado => {
+          const stateButton = document.createElement('button');
+          stateButton.className = 'state-btn';
+          stateButton.textContent = estado;
+          stateButton.onclick = () => {
+            document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+            stateButton.classList.add('active');
+            selectedState = estado;
+            render();
+          };
+          statesGrid.appendChild(stateButton);
+        });
 
-          btn.innerText = "TRADUCIENDO...";
+        // Evento del slider
+        slider.oninput = () => {
+          render();
+        };
+
+        // Botón de traducir
+        btn.onclick = async () => {
+          if(!selectedState) {
+            alert('Selecciona un estado primero');
+            return;
+          }
+
+          btn.textContent = "TRADUCIENDO...";
           btn.disabled = true;
 
           try {
@@ -373,9 +388,10 @@ ANTONOV LO TRADUCE EN PALABRAS CON CALLE Y SABIDURÍA.`
             antonovResponse = data.text || "SILENCIO_SISTEMA";
             
           } catch (e) {
+            console.error('Error:', e);
             antonovResponse = "ERROR_CONEXIÓN_NÚCLEO";
           } finally {
-            btn.innerText = "TRADUCIR ESTADO";
+            btn.textContent = "TRADUCIR ESTADO";
             btn.disabled = false;
             render();
           }
@@ -385,7 +401,14 @@ ANTONOV LO TRADUCE EN PALABRAS CON CALLE Y SABIDURÍA.`
         render();
       };
 
-      window.onload = init;
+      // Inicializar cuando cargue
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+      
+      // Para Astro
       document.addEventListener('astro:page-load', init);
     })();
   </script>
