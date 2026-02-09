@@ -12,10 +12,11 @@ const metadata = {
 
     :root {
       --gold: #ffd700;
-      --gold-glow: rgba(255, 215, 0, 0.3);
-      --dark: #000000;
-      --gray-panel: #0a0a0a;
-      --border-color: #1a1a1a;
+      --gold-dim: rgba(255, 215, 0, 0.1);
+      --bg-side: #080808;
+      --bg-main: #020202;
+      --border: #1a1a1a;
+      --text-muted: #555;
     }
 
     :global(main) { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
@@ -24,94 +25,114 @@ const metadata = {
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-columns: 450px 1fr; /* Sidebar un poco más ancho */
-      background: var(--dark);
+      grid-template-columns: 420px 1fr;
+      background: var(--bg-main);
       color: white;
+      font-family: 'Inter', sans-serif;
       overflow: hidden;
     }
 
-    /* SIDEBAR */
+    /* --- SIDEBAR SENSORIAL --- */
     .sidebar {
-      background: var(--gray-panel);
-      border-right: 1px solid var(--border-color);
+      background: var(--bg-side);
+      border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      box-shadow: 10px 0 50px rgba(0,0,0,1);
+      box-shadow: 20px 0 50px rgba(0,0,0,0.5);
       z-index: 10;
     }
 
     .brand {
-      padding: 60px 45px 30px;
-      border-bottom: 1px solid var(--border-color);
+      padding: 50px 40px 30px;
+      border-bottom: 1px solid var(--border);
     }
 
     .brand h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       font-weight: 900;
-      letter-spacing: -4px;
-      line-height: 0.8;
-      background: linear-gradient(to bottom, #fff 30%, #444 100%);
+      letter-spacing: -3px;
+      line-height: 0.9;
+      background: linear-gradient(180deg, #fff 0%, #444 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .brand-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
+    .brand span {
+      font-family: 'JetBrains Mono';
+      font-size: 9px;
       color: var(--gold);
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      margin-top: 15px;
       display: block;
+      margin-top: 10px;
     }
 
-    .states-container {
+    /* Contenedor de Estados con Scroll elegante */
+    .states-area {
       flex: 1;
-      padding: 40px 45px;
+      padding: 30px 40px;
       overflow-y: auto;
+    }
+
+    .states-area::-webkit-scrollbar { width: 2px; }
+    .states-area::-webkit-scrollbar-thumb { background: #222; }
+
+    .grid-label {
+      font-family: 'JetBrains Mono';
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      display: block;
+      letter-spacing: 2px;
     }
 
     .states-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
     }
 
+    /* BOTONES CON SENSIBILIDAD */
     .state-btn {
       background: transparent;
-      border: 1px solid #222;
-      color: #555;
-      padding: 15px 10px;
-      font-family: 'JetBrains Mono', monospace;
+      border: 1px solid #1a1a1a;
+      color: var(--text-muted);
+      padding: 14px 10px;
+      font-family: 'JetBrains Mono';
       font-size: 10px;
-      text-transform: uppercase;
+      text-align: left;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
     }
 
-    .state-btn:hover { color: #fff; border-color: #555; background: #111; }
-    
+    .state-btn:hover {
+      border-color: #444;
+      color: #fff;
+      background: #111;
+    }
+
     .state-btn.active {
       background: #fff;
       color: #000;
       border-color: #fff;
-      font-weight: 700;
+      font-weight: 800;
       box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
 
-    /* CONTROLES */
-    .controls {
-      padding: 40px 45px;
+    /* CONTROLES INFERIORES */
+    .bottom-panel {
+      padding: 30px 40px;
       background: #050505;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border);
     }
 
-    .slider-header {
+    .slider-info {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       font-family: 'JetBrains Mono';
-      font-size: 10px;
+      font-size: 9px;
       color: #444;
     }
 
@@ -120,30 +141,34 @@ const metadata = {
       height: 2px;
       background: #222;
       accent-color: var(--gold);
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+      cursor: pointer;
     }
 
-    .btn-main {
+    .btn-action {
       width: 100%;
-      padding: 25px;
+      padding: 22px;
       background: white;
       color: black;
       border: none;
       font-weight: 900;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 2px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.2s;
     }
 
-    .btn-main:hover:not(:disabled) {
+    .btn-action:hover:not(:disabled) {
       background: var(--gold);
-      transform: translateY(-2px);
     }
 
-    .btn-main:disabled { opacity: 0.2; cursor: wait; }
+    .btn-action:disabled {
+      opacity: 0.2;
+      cursor: wait;
+    }
 
-    /* VIEWPORT */
+    /* --- VIEWPORT DEL CANVAS --- */
     .viewport {
       display: flex;
       align-items: center;
@@ -152,17 +177,22 @@ const metadata = {
       background: radial-gradient(circle at center, #111 0%, #000 100%);
     }
 
-    canvas {
-      max-width: 100%;
-      max-height: 100%;
+    .canvas-container {
+      position: relative;
+      box-shadow: 0 0 100px rgba(0,0,0,0.8);
       border: 1px solid #111;
-      box-shadow: 0 0 100px rgba(0,0,0,0.5);
+    }
+
+    canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 85vh;
     }
 
     @media (max-width: 1100px) {
-      .master-wrapper { grid-template-columns: 1fr; height: auto; }
-      .sidebar { height: auto; border-right: none; }
-      .viewport { height: 70vh; }
+      .master-wrapper { grid-template-columns: 1fr; }
+      .sidebar { height: auto; }
+      .viewport { padding: 20px; }
     }
   </style>
 
@@ -170,26 +200,28 @@ const metadata = {
     <aside class="sidebar">
       <div class="brand">
         <h1>ANTONOV</h1>
-        <span class="brand-tag">NÚCLEO_DE_REALIDAD_v.6.0</span>
+        <span>PROTOCOLO_DE_VERDAD_v6</span>
       </div>
 
-      <div class="states-container">
-        <p style="font-size: 9px; color: #444; margin-bottom: 20px; font-family: 'JetBrains Mono';">IDENTIFICA TU NÚCLEO ACTUAL:</p>
+      <div class="states-area">
+        <span class="grid-label">SELECCIONA TU NÚCLEO ACTUAL:</span>
         <div class="states-grid" id="statesGrid"></div>
       </div>
 
-      <div class="controls">
-        <div class="slider-header">
+      <div class="bottom-panel">
+        <div class="slider-info">
           <span>ESCALA_VISUAL</span>
-          <span id="zoomVal" style="color: var(--gold)">85px</span>
+          <span id="valDisplay" style="color: var(--gold)">85px</span>
         </div>
-        <input type="range" id="sizeSlider" min="50" max="150" value="85">
-        <button id="translateBtn" class="btn-main">Analizar Realidad</button>
+        <input type="range" id="sizeSlider" min="40" max="160" value="85">
+        <button id="mainBtn" class="btn-action">Traducir Silencio</button>
       </div>
     </aside>
 
     <main class="viewport">
-      <canvas id="mainCanvas"></canvas>
+      <div class="canvas-container">
+        <canvas id="mainCanvas"></canvas>
+      </div>
     </main>
   </div>
 
@@ -203,40 +235,43 @@ const metadata = {
         'INSEGURIDAD', 'DESCONEXIÓN'
       ];
 
-      let selectedState = '';
-      let currentText = 'EL SILENCIO TAMBIÉN HABLA';
-
-      function init() {
+      function start() {
         const canvas = document.getElementById('mainCanvas');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         const grid = document.getElementById('statesGrid');
-        const btn = document.getElementById('translateBtn');
+        const btn = document.getElementById('mainBtn');
         const slider = document.getElementById('sizeSlider');
-        const zoomText = document.getElementById('zoomVal');
+        const display = document.getElementById('valDisplay');
 
-        const render = () => {
+        let currentText = "EL SILENCIO TAMBIÉN HABLA";
+        let activeState = "";
+
+        const draw = () => {
           canvas.width = 1080;
           canvas.height = 1080;
           ctx.fillStyle = '#000';
           ctx.fillRect(0, 0, 1080, 1080);
 
-          // Grid técnico
-          ctx.strokeStyle = '#0a0a0a';
+          // Grid técnico de fondo (Sensibilidad Visual)
+          ctx.strokeStyle = '#080808';
+          ctx.lineWidth = 1;
           for(let i=0; i<=1080; i+=54) {
-            ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,1080); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(1080,i); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 1080); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(1080, i); ctx.stroke();
           }
 
-          if(selectedState) {
+          // Dibujar Estado superior
+          if(activeState) {
             ctx.font = "700 24px 'JetBrains Mono'";
-            ctx.fillStyle = 'rgba(255, 215, 0, 0.4)';
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.5)';
             ctx.textAlign = 'center';
-            ctx.fillText(`ANÁLISIS_ESTADO: ${selectedState}`, 540, 120);
+            ctx.fillText(`DETECTADO: ${activeState}`, 540, 120);
           }
 
+          // Texto Central
           const size = parseInt(slider.value);
-          zoomText.innerText = size + 'px';
+          display.innerText = size + "px";
           ctx.font = `900 ${size}px 'Inter'`;
           ctx.fillStyle = '#fff';
           ctx.textAlign = 'center';
@@ -256,11 +291,13 @@ const metadata = {
             y += size * 1.15;
           });
 
+          // Firma inferior
           ctx.font = "700 20px 'JetBrains Mono'";
           ctx.fillStyle = '#ffd700';
           ctx.fillText('ANTONOV // PROTOCOLO DE VERDAD', 540, 960);
         };
 
+        // Generar botones de estado
         grid.innerHTML = '';
         ESTADOS.forEach(e => {
           const b = document.createElement('button');
@@ -269,43 +306,41 @@ const metadata = {
           b.onclick = () => {
             document.querySelectorAll('.state-btn').forEach(x => x.classList.remove('active'));
             b.classList.add('active');
-            selectedState = e;
-            render();
+            activeState = e;
+            draw();
           };
           grid.appendChild(b);
         });
 
-        slider.oninput = render;
+        slider.oninput = draw;
 
         btn.onclick = async () => {
-          if(!selectedState) return alert('Selecciona un núcleo');
-          btn.innerText = 'PROCESANDO...';
+          if(!activeState) return;
+          btn.innerText = "PROCESANDO...";
           btn.disabled = true;
 
           try {
             const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ prompt: `ANTONOV, sabio de calle. Traduce "${selectedState}" en una verdad cruda de máximo 12 palabras. TODO MAYÚSCULAS.` })
+              body: JSON.stringify({ prompt: `ANTONOV, sabio callejero. Traduce el estado "${activeState}" en una frase de máximo 10 palabras con mucha fuerza. TODO MAYÚSCULAS.` })
             });
             const data = await res.json();
-            currentText = data.text || 'EL NÚCLEO NO RESPONDE';
+            currentText = data.text || "EL SISTEMA NO RESPONDE";
           } catch (e) {
-            currentText = 'ERROR DE CONEXIÓN AL NÚCLEO';
+            currentText = "ERROR DE CONEXIÓN";
           } finally {
-            btn.innerText = 'Analizar Realidad';
+            btn.innerText = "Traducir Silencio";
             btn.disabled = false;
-            render();
+            draw();
           }
         };
 
-        render();
+        draw();
       }
 
-      // Asegurar que corra en Astro con View Transitions
-      document.addEventListener('astro:page-load', init);
-      if (document.readyState === 'complete') init();
-      else window.addEventListener('load', init);
+      document.addEventListener('astro:page-load', start);
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start);
     })();
   </script>
 </Layout>
