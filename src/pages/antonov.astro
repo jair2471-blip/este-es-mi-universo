@@ -166,51 +166,70 @@ const ESTADOS = [
       let selectedState = '';
       let currentText = 'EL SILENCIO ES LA ÚNICA RESPUESTA';
 
-      function draw() {
-        // Canvas ocupa TODO el contenedor (100% width/height)
-        const container = canvas.parentElement.getBoundingClientRect();
-        canvas.width = container.width;
-        canvas.height = container.height;
+     function draw() {
+  const container = canvas.parentElement.getBoundingClientRect();
+  canvas.width = container.width;
+  canvas.height = container.height;
 
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Grano sutil
-        for (let i = 0; i < 300; i++) {
-          ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.03})`;
-          ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1.5, 1.5);
-        }
+  // Grano sutil y premium
+  for (let i = 0; i < 250; i++) {
+    ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.02 + 0.005})`;
+    ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1.2, 1.2);
+  }
 
-        // Header
-        if (selectedState) {
-          ctx.fillStyle = '#ffd700';
-          ctx.font = '700 28px "JetBrains Mono"';
-          ctx.fillText(`// ${selectedState}`, 60, 90);
-          ctx.fillRect(60, 105, 220, 2);
-        }
+  // Header con glow sutil
+  if (selectedState) {
+    ctx.fillStyle = '#ffd700';
+    ctx.font = '700 28px "JetBrains Mono", monospace';
+    ctx.shadowColor = '#ffd700';
+    ctx.shadowBlur = 10;
+    ctx.fillText(`// ${selectedState}`, 60, 90);
+    ctx.shadowBlur = 0;
+    ctx.fillRect(60, 105, 220, 2);
+  }
 
-        // Texto central
-        ctx.fillStyle = '#fff';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+  // Texto principal - centrado y organizado
+  ctx.fillStyle = '#ffffff';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
 
-        let fontSize = parseInt(slider.value) || 90;
-        const words = currentText.toUpperCase().split(' ');
-        if (words.length >= 8) fontSize *= 0.8;
-        else if (words.length >= 5) fontSize *= 0.9;
+  let fontSize = parseInt(slider.value) || 90;
+  const words = currentText.toUpperCase().split(' ');
 
-        fontSize = Math.min(fontSize, canvas.height * 0.12); // límite para no salirse
+  // Ajuste inteligente por longitud
+  const wordCount = words.length;
+  if (wordCount >= 10) fontSize *= 0.70;     // frases muy largas
+  else if (wordCount >= 7) fontSize *= 0.80;
+  else if (wordCount >= 5) fontSize *= 0.90;
+  else fontSize *= 1.05;                     // frases cortas más grandes
 
-        ctx.font = `900 ${fontSize}px 'Inter', sans-serif`;
+  // Límite máximo para no salirse nunca
+  fontSize = Math.min(fontSize, canvas.height * 0.11);
 
-        const lineHeight = fontSize * 0.95;
-        const totalHeight = words.length * lineHeight;
-        const centerY = canvas.height / 2;
+  ctx.font = `900 ${fontSize}px 'Inter', sans-serif`;
 
-        let y = centerY - (totalHeight / 2) + (lineHeight / 2);
+  const lineHeight = fontSize * 1.05;  // más espacio entre líneas para que respire y se vea organizado
+  const totalHeight = words.length * lineHeight;
 
-        ctx.shadowColor = 'rgba(255,215,0,0.4)';
-        ctx.shadowBlur = 40;
+  // Centro vertical preciso
+  const centerY = canvas.height / 2;
+  let yStart = centerY - (totalHeight / 2) + (lineHeight / 2);
+
+  // Glow dorado elegante
+  ctx.shadowColor = 'rgba(255, 215, 0, 0.35)';
+  ctx.shadowBlur = 45;
+  ctx.shadowOffsetY = 8;
+
+  words.forEach((word, index) => {
+    ctx.fillText(word, canvas.width / 2, yStart + index * lineHeight);
+  });
+
+  ctx.shadowBlur = 0;
+  ctx.shadowColor = 'transparent';
+}
 
         words.forEach((word, i) => {
           ctx.fillText(word, canvas.width / 2, y + i * lineHeight);
