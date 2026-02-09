@@ -142,15 +142,16 @@ const ESTADOS = [
       align-items: center;
       justify-content: center;
       background: #000;
-      padding: 20px;
+      padding: 30px;
       position: relative;
+      overflow: hidden;
     }
 
     canvas {
-      width: 92%;
+      width: 100%;
       max-width: 1000px;
       height: auto;
-      max-height: 92vh;
+      max-height: 90vh;
       border: 1px solid #1a1a1a;
       box-shadow: 
         0 10px 50px rgba(0,0,0,0.95),
@@ -179,7 +180,7 @@ const ESTADOS = [
         overflow-y: auto;
       }
       .canvas-area {
-        padding: 15px 10px;
+        padding: 20px 15px;
       }
     }
   </style>
@@ -241,8 +242,16 @@ const ESTADOS = [
 
       function draw() {
         const container = canvas.parentElement;
-        const padding = Math.max(40, container.clientWidth * 0.04);
-        const size = Math.min(container.clientWidth - padding * 2, container.clientHeight * 0.92, 1100);
+        
+        // Padding más generoso para centrar y respirar
+        const sidePadding = Math.max(60, container.clientWidth * 0.08);
+        const verticalPadding = Math.max(40, container.clientHeight * 0.06);
+        
+        const size = Math.min(
+          container.clientWidth - sidePadding * 2,
+          container.clientHeight - verticalPadding * 2,
+          1100
+        );
 
         canvas.width = size;
         canvas.height = size;
@@ -259,8 +268,8 @@ const ESTADOS = [
           ctx.fillStyle = "#ffd700";
           ctx.font = "700 24px 'JetBrains Mono', monospace";
           ctx.textAlign = "left";
-          ctx.fillText(`// ${selectedState}`, padding + 20, padding + 50);
-          ctx.fillRect(padding + 20, padding + 65, 180, 2);
+          ctx.fillText(`// ${selectedState}`, sidePadding + 20, verticalPadding + 50);
+          ctx.fillRect(sidePadding + 20, verticalPadding + 65, 180, 2);
         }
 
         ctx.fillStyle = "#ffffff";
@@ -269,7 +278,10 @@ const ESTADOS = [
 
         const baseSize = parseInt(slider.value) || 90;
         let fontSize = Math.max(42, baseSize * (size / 1080));
-        if (currentText.split(' ').length > 6) fontSize *= 0.92;
+
+        const wordCount = currentText.split(' ').length;
+        if (wordCount > 5) fontSize *= 0.88;
+        if (wordCount > 8) fontSize *= 0.80;
 
         ctx.font = `900 ${fontSize}px 'Inter', system-ui, sans-serif`;
 
