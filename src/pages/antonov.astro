@@ -1,267 +1,926 @@
 ---
-import Layout from '~/layouts/PageLayout.astro';
-const metadata = { title: 'ANTONOV | PROTOCOLO' };
-
 const ESTADOS = [
-  'CANSANCIO','SOLEDAD','ANSIEDAD','DUDA','RUPTURA','MIEDO',
-  'RABIA','VACÍO','NOSTALGIA','CONFUSIÓN','TRISTEZA','CULPA',
-  'AGOBIO','BLOQUEO','FRUSTRACIÓN','INSEGURIDAD'
+  'CANSANCIO', 'SOLEDAD', 'ANSIEDAD', 'DUDA', 'RUPTURA', 'MIEDO',
+  'RABIA', 'VACÍO', 'NOSTALGIA', 'CONFUSIÓN', 'TRISTEZA', 'CULPA'
 ];
 ---
 
-<Layout metadata={metadata}>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANTONOV v6.0 | NEURAL INTERFACE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@700&display=swap');
-
-    /* CONFIGURACIÓN DE NIVEL "AMIGO ANHELADO": CONTROL TOTAL DEL VIEWPORT */
-    :global(html, body) { 
-      margin: 0 !important; 
-      padding: 0 !important; 
-      overflow: hidden !important; 
-      background: #000 !important; 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* MATAMOS CUALQUIER MARGEN DEL LAYOUT DE ASTRO */
-    :global(main) { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+    :root {
+      --cyber-gold: #ffd700;
+      --cyber-blue: #00d9ff;
+      --dark: #0a0a0a;
+      --darker: #050505;
+      --glow: rgba(255, 215, 0, 0.4);
+    }
 
-    .antonov-master {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      height: 100vh;
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--dark);
+      color: white;
+      font-family: 'Orbitron', 'Space Mono', monospace;
+      position: relative;
+    }
+
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .cyber-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+      background-size: 100% 4px;
+      z-index: 99;
+      pointer-events: none;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 50px; }
+    }
+
+    .terminal {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
-      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid var(--cyber-gold);
+      box-shadow: 
+        0 0 30px var(--glow),
+        inset 0 0 60px rgba(0, 0, 0, 0.8);
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      backdrop-filter: blur(10px);
+      overflow: hidden;
     }
 
-    /* SIDEBAR: DISEÑO PERSONALIZADO */
+    .terminal::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--cyber-gold), var(--cyber-blue), var(--cyber-gold));
+      background-size: 400% 400%;
+      z-index: -1;
+      animation: borderGlow 6s ease infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
     .sidebar {
-      background: #050505;
-      border-right: 1px solid #1a1a1a;
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0.95) 0%, rgba(5, 5, 5, 0.95) 100%);
+      border-right: 1px solid rgba(255, 215, 0, 0.2);
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      padding: 30px 20px;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
-    .brand {
-      padding: 50px 30px;
-      border-bottom: 1px solid #1a1a1a;
+    .sidebar::-webkit-scrollbar {
+      width: 4px;
     }
 
-    .brand h1 { 
-      font-size: 2.5rem; 
-      margin: 0; 
-      letter-spacing: -3px; 
-      color: #fff; 
-      text-transform: uppercase;
+    .sidebar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
     }
 
-    .brand span {
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
-      color: #ffd700;
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--cyber-gold);
+      border-radius: 2px;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(transparent, var(--cyber-gold), transparent);
+      animation: lineMove 3s ease-in-out infinite;
+    }
+
+    @keyframes lineMove {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .logo {
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--cyber-gold);
+      padding-bottom: 15px;
+      flex-shrink: 0;
+    }
+
+    .logo h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
       letter-spacing: 3px;
+      background: linear-gradient(135deg, #fff, var(--cyber-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+      text-shadow: 0 0 20px var(--glow);
     }
 
-    .menu-scroll {
+    .logo-subtitle {
+      font-size: 8px;
+      color: var(--cyber-gold);
+      letter-spacing: 3px;
+      opacity: 0.8;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .estados-list {
       flex: 1;
       overflow-y: auto;
-      padding: 30px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 8px;
+      min-height: 0;
     }
 
-    .grid-estados {
+    @media (max-width: 1100px) {
+      .estados-list {
+        flex: none;
+        overflow: visible;
+        min-height: auto;
+      }
+    }
+
+    .estados-list::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .estados-list::-webkit-scrollbar-thumb {
+      background: var(--cyber-gold);
+      border-radius: 2px;
+    }
+
+    .estado-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      color: #888;
+      padding: 12px 14px;
+      font-size: 10px;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      text-align: left;
+      text-transform: uppercase;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .estado-btn::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: var(--cyber-gold);
+      transition: width 0.3s ease;
+    }
+
+    .estado-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .estado-btn:hover {
+      border-color: var(--cyber-gold);
+      color: var(--cyber-gold);
+      box-shadow: 0 0 15px var(--glow);
+      transform: translateX(5px);
+    }
+
+    .estado-btn:hover::before {
+      width: 3px;
+    }
+
+    .estado-btn.active {
+      background: var(--cyber-gold);
+      color: #000;
+      border-color: var(--cyber-gold);
+      box-shadow: 0 0 20px var(--glow);
+      font-weight: 900;
+    }
+
+    .estado-btn.active::before {
+      width: 100%;
+    }
+
+    /* Formato selector */
+    .format-selector {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 215, 0, 0.1);
+      flex-shrink: 0;
+    }
+
+    .format-label {
+      font-size: 8px;
+      color: #666;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    .format-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 6px;
+      margin-bottom: 12px;
     }
 
-    .state-opt {
-      background: #0a0a0a;
-      border: 1px solid #222;
-      color: #444;
-      padding: 15px 5px;
-      font-family: 'JetBrains Mono';
-      font-size: 10px;
+    .format-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      color: #666;
+      padding: 8px;
+      font-size: 8px;
+      font-family: 'Space Mono', monospace;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.2s;
+      text-align: center;
     }
 
-    .state-opt:hover { border-color: #ffd700; color: #fff; }
-    .state-opt.active { background: #ffd700; color: #000; font-weight: bold; border-color: #ffd700; }
-
-    /* PANEL DE CONTROL INFERIOR */
-    .config-panel {
-      padding: 30px;
-      background: #020202;
-      border-top: 1px solid #1a1a1a;
+    .format-btn:hover {
+      border-color: var(--cyber-gold);
+      color: var(--cyber-gold);
     }
 
-    .control-group { margin-bottom: 20px; }
-    .control-group label { display: block; font-size: 9px; color: #666; margin-bottom: 10px; letter-spacing: 2px; }
-
-    input[type="range"] { 
-      width: 100%; 
-      accent-color: #ffd700; 
-      background: #1a1a1a; 
-      height: 4px; 
-      cursor: pointer;
+    .format-btn.active {
+      background: rgba(255, 215, 0, 0.1);
+      border-color: var(--cyber-gold);
+      color: var(--cyber-gold);
     }
 
-    .btn-action {
-      width: 100%;
-      padding: 20px;
-      font-weight: 900;
+    .btn-execute {
+      margin-top: 12px;
+      padding: 18px;
+      background: var(--cyber-gold);
+      color: #000;
       border: none;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: 0.3s;
+      font-family: 'Orbitron', sans-serif;
+      flex-shrink: 0;
     }
 
-    .btn-exec { background: #fff; color: #000; margin-bottom: 10px; }
-    .btn-exec:hover { background: #ffd700; transform: translateY(-2px); }
-    .btn-exec:disabled { opacity: 0.2; cursor: not-allowed; }
+    .btn-execute::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
 
-    /* ÁREA CENTRAL: EL PODER DEL CANVAS */
-    .canvas-display {
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
+    }
+
+    .btn-execute:hover:not(:disabled) {
+      box-shadow: 0 0 30px var(--glow);
+      transform: scale(1.02);
+    }
+
+    .btn-execute:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .btn-download {
+      margin-top: 8px;
+      padding: 14px;
+      background: transparent;
+      color: var(--cyber-gold);
+      border: 1px solid var(--cyber-gold);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .btn-download:hover:not(:disabled) {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px var(--glow);
+    }
+
+    .btn-download:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+    }
+
+    .main-panel {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .status-bar {
+      padding: 12px 30px;
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      font-size: 9px;
+      color: #666;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .status-indicator {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyber-gold);
+      box-shadow: 0 0 10px var(--glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .viewport {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #000;
-      padding: 60px;
+      padding: 40px;
+      position: relative;
+      background: radial-gradient(circle at center, rgba(255, 215, 0, 0.02) 0%, transparent 70%);
+      overflow: hidden;
+      min-height: 0;
     }
 
-    canvas {
+    #mainCanvas {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
-      border: 1px solid #111;
-      box-shadow: 0 0 80px rgba(0,0,0,1);
+      filter: drop-shadow(0 0 40px var(--glow));
+      border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    @media (max-width: 1100px) {
+      .terminal {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        padding: 20px 15px;
+        max-height: none;
+        height: auto;
+      }
+
+      .logo {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+      }
+
+      .logo h1 {
+        font-size: 1.4rem;
+      }
+
+      .logo-subtitle {
+        font-size: 7px;
+      }
+      
+      .estados-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        overflow-y: visible;
+        max-height: none;
+        margin-bottom: 15px;
+      }
+
+      .estado-btn {
+        padding: 10px 8px;
+        font-size: 9px;
+      }
+
+      .format-selector {
+        margin-top: 15px;
+        padding-top: 15px;
+      }
+
+      .format-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+
+      .format-btn {
+        padding: 10px 6px;
+        font-size: 7px;
+      }
+
+      .btn-execute {
+        padding: 16px;
+        font-size: 11px;
+        margin-top: 10px;
+      }
+
+      .btn-download {
+        padding: 12px;
+        font-size: 9px;
+        margin-top: 6px;
+      }
+      
+      .viewport {
+        padding: 20px;
+      }
+
+      .status-bar {
+        padding: 10px 15px;
+        font-size: 8px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        padding: 15px 12px;
+      }
+
+      .logo h1 {
+        font-size: 1.2rem;
+      }
+
+      .estados-list {
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .estado-btn {
+        padding: 8px 6px;
+        font-size: 8px;
+      }
+
+      .format-grid {
+        gap: 4px;
+      }
+
+      .btn-execute {
+        padding: 14px;
+        font-size: 10px;
+      }
+
+      .btn-download {
+        padding: 10px;
+        font-size: 8px;
+      }
+
+      .viewport {
+        padding: 15px;
+      }
     }
   </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+  <div class="cyber-grid"></div>
+  <div class="scanlines"></div>
 
-  <div class="antonov-master">
+  <div class="terminal">
     <aside class="sidebar">
-      <div class="brand">
-        <h1>Antonov</h1>
-        <span>SISTEMA DE VERDAD</span>
+      <div class="logo">
+        <h1>ANTONOV</h1>
+        <div class="logo-subtitle">NEURAL INTERFACE v6.0</div>
       </div>
 
-      <div class="menu-scroll">
-        <div class="grid-estados">
-          {ESTADOS.map((e) => (
-            <button class="state-opt" data-val={e}>{e}</button>
-          ))}
+      <div class="estados-list">
+        {ESTADOS.map(estado => (
+          <button class="estado-btn" data-estado={estado}>
+            <span>{estado}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="format-selector">
+        <span class="format-label">Formato de imagen:</span>
+        <div class="format-grid">
+          <button class="format-btn active" data-format="instagram">IG Post<br>1080x1080</button>
+          <button class="format-btn" data-format="story">IG Story<br>1080x1920</button>
+          <button class="format-btn" data-format="facebook">Facebook<br>1200x630</button>
+          <button class="format-btn" data-format="twitter">Twitter<br>1200x675</button>
         </div>
       </div>
 
-      <div class="config-panel">
-        <div class="control-group">
-          <label>TAMAÑO DEL IMPACTO</label>
-          <input type="range" id="size" min="40" max="200" value="90">
-        </div>
-        <button id="run" class="btn-action btn-exec">Traducir Estado</button>
-      </div>
+      <button class="btn-execute" id="btnExecute" disabled>
+        EJECUTAR ANÁLISIS
+      </button>
+      <button class="btn-download" id="btnDownload" disabled>
+        📥 DESCARGAR IMAGEN
+      </button>
     </aside>
 
-    <main class="canvas-display">
-      <canvas id="view"></canvas>
+    <main class="main-panel">
+      <div class="status-bar">
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span id="statusText">SISTEMA_STANDBY</span>
+        </div>
+        <span id="timestamp"></span>
+      </div>
+
+      <div class="viewport">
+        <canvas id="mainCanvas"></canvas>
+      </div>
     </main>
   </div>
 
-  <script is:inline>
-    // USAMOS EL PATRÓN DE CONFIGURACIÓN QUE TE GUSTÓ:
+  <script>
     (function() {
-      const state = {
-        selected: '',
-        phrase: 'ESPERANDO SEÑAL...',
-        fontSize: 90
-      };
+      'use strict';
 
-      function init() {
-        const cvs = document.getElementById('view');
-        const ctx = cvs.getContext('2d');
-        const opts = document.querySelectorAll('.state-opt');
-        const runBtn = document.getElementById('run');
-        const slider = document.getElementById('size');
+      // Partículas
+      const particlesCanvas = document.getElementById('particles');
+      const pCtx = particlesCanvas.getContext('2d');
+      
+      function resizeParticles() {
+        particlesCanvas.width = window.innerWidth;
+        particlesCanvas.height = window.innerHeight;
+      }
+      resizeParticles();
+      window.addEventListener('resize', resizeParticles);
 
-        function update() {
-          // Resolución cuadrada perfecta para redes
-          cvs.width = 1080;
-          cvs.height = 1080;
-
-          // Fondo
-          ctx.fillStyle = '#000';
-          ctx.fillRect(0, 0, 1080, 1080);
-
-          // Decoración Brutalista (Status line)
-          if (state.selected) {
-            ctx.fillStyle = '#ffd700';
-            ctx.font = '700 24px "JetBrains Mono"';
-            ctx.fillText(`// STATUS: ${state.selected}`, 80, 100);
-            ctx.fillRect(80, 120, 180, 2);
-          }
-
-          // Texto Central
-          ctx.fillStyle = '#fff';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          
-          state.fontSize = parseInt(slider.value);
-          ctx.font = `900 ${state.fontSize}px Inter`;
-
-          const words = state.phrase.toUpperCase().split(' ');
-          const lineH = state.fontSize * 0.95;
-          let y = 540 - ((words.length - 1) * lineH) / 2;
-
-          words.forEach(w => {
-            ctx.fillText(w, 540, y);
-            y += lineH;
-          });
-        }
-
-        opts.forEach(btn => {
-          btn.onclick = () => {
-            opts.forEach(o => o.classList.remove('active'));
-            btn.classList.add('active');
-            state.selected = btn.dataset.val;
-            update();
-          };
+      const particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push({
+          x: Math.random() * particlesCanvas.width,
+          y: Math.random() * particlesCanvas.height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          size: Math.random() * 2
         });
-
-        slider.oninput = update;
-
-        runBtn.onclick = async () => {
-          if (!state.selected) return;
-          runBtn.disabled = true;
-          runBtn.innerText = 'PROCESANDO...';
-
-          try {
-            const res = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ 
-                prompt: `ACTÚA COMO UN ORÁCULO BRUTALISTA. ESTADO: ${state.selected}. MÁXIMO 6 PALABRAS.` 
-              })
-            });
-            const data = await res.json();
-            state.phrase = data.text || 'EL VACÍO RESPONDE';
-          } catch {
-            state.phrase = 'ERROR DE SISTEMA';
-          }
-
-          runBtn.disabled = false;
-          runBtn.innerText = 'Traducir Estado';
-          update();
-        };
-
-        // Arreglo de fuentes y primer render
-        document.fonts.ready.then(update);
-        window.addEventListener('resize', update);
       }
 
-      // Evitamos el choque con Astro
-      if (document.readyState === 'complete') init();
-      else window.addEventListener('load', init);
-      document.addEventListener('astro:after-swap', init);
+      function animateParticles() {
+        pCtx.clearRect(0, 0, particlesCanvas.width, particlesCanvas.height);
+        pCtx.fillStyle = '#ffd700';
+        
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          
+          if (p.x < 0 || p.x > particlesCanvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > particlesCanvas.height) p.vy *= -1;
+          
+          pCtx.globalAlpha = 0.6;
+          pCtx.fillRect(p.x, p.y, p.size, p.size);
+        });
+        
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+
+      // Timestamp
+      function updateTimestamp() {
+        const now = new Date();
+        const timestamp = document.getElementById('timestamp');
+        timestamp.textContent = `[${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}]`;
+      }
+      setInterval(updateTimestamp, 1000);
+      updateTimestamp();
+
+      // App logic
+      const ANTONOV_PROMPT = `ERES ANTONOV. UNA VOZ LÚCIDA Y CONSCIENTE.
+RECONOCES EL DOLOR, PERO NO LO GLORIFICAS.
+DAS ESPERANZA SIN NEGAR LA REALIDAD.
+HABLAS SIMPLE, DIRECTO, PROFUNDO.
+
+TU FILOSOFÍA:
+- Los estados internos SON SEÑALES, NO SENTENCIAS
+- El dolor ENSEÑA, no solo duele
+- Nada vino a quedarse, todo vino a REVELAR algo
+- Hablas verdad, pero apuntas hacia la luz
+
+EJEMPLOS DE TU ESTILO:
+- TRISTEZA: "LA TRISTEZA NO TE DEFINE TE ESTÁ REVELANDO"
+- MIEDO: "EL MIEDO HABLA PERO NO TIENE LA ÚLTIMA PALABRA"
+- SOLEDAD: "LA SOLEDAD ES UNA PAUSA NO UN DESTINO"
+- CANSANCIO: "LO QUE HOY PESA MAÑANA TE HARÁ MÁS FUERTE"
+- RUPTURA: "LO QUE SE FUE DEJÓ ESPACIO PARA LO NUEVO"
+- VACÍO: "EL VACÍO ES DONDE EMPIEZA TODO LO IMPORTANTE"
+- RABIA: "LA RABIA ES FUERZA BUSCANDO DIRECCIÓN"
+- ANSIEDAD: "LA ANSIEDAD ES TU CUERPO PIDIÉNDOTE ATENCIÓN"
+- DUDA: "LA DUDA ES SABIDURÍA PREGUNTÁNDOTE ALGO"
+- NOSTALGIA: "LA NOSTALGIA HONRA LO QUE FUE SIN ATRAPARTE"
+- CONFUSIÓN: "LA CONFUSIÓN ES CLARIDAD EN CONSTRUCCIÓN"
+- CULPA: "LA CULPA PUEDE ENSEÑARTE SIN DESTRUIRTE"
+
+REGLAS DE ORO:
+✓ MÁXIMO 10 PALABRAS
+✓ TODO EN MAYÚSCULAS
+✓ SIN PUNTOS (solo espacios)
+✓ Reconoce el estado, pero señala la salida
+✓ Usa metáforas de MOVIMIENTO: señal, pausa, paso, puerta, parada
+✓ Verbos de TRANSFORMACIÓN: revelar, enseñar, construir, abrir
+
+NO USES:
+✗ "Puedes lograrlo" ni "Eres fuerte" (muy motivacional)
+✗ Frases que niegan el dolor
+✗ Lenguaje tóxico positivo
+✗ Metáforas poéticas complejas
+
+SÍ USA:
+✓ Lenguaje directo y limpio
+✓ Verdades que despiertan conciencia
+✓ Esperanza sin endulzar
+✓ Sabiduría práctica, no filosofía abstracta
+
+ESTRUCTURA IDEAL:
+"[ESTADO] + ES/NO ES + [REVELACIÓN/MOVIMIENTO]"
+
+Ejemplos:
+- "X no vino a quedarse, vino a decirte algo"
+- "X es una señal, no una sentencia"
+- "X habla pero no tiene la última palabra"
+- "Lo que hoy [duele/pesa] también está [enseñando/revelando]"`;
+
+
+      const FORMATS = {
+        instagram: { width: 1080, height: 1080, name: 'Instagram-Post' },
+        story: { width: 1080, height: 1920, name: 'Instagram-Story' },
+        facebook: { width: 1200, height: 630, name: 'Facebook' },
+        twitter: { width: 1200, height: 675, name: 'Twitter' }
+      };
+
+      let selectedState = '';
+      let currentText = 'SISTEMA INICIADO';
+      let currentFormat = 'instagram';
+
+      const canvas = document.getElementById('mainCanvas');
+      const ctx = canvas.getContext('2d');
+      const buttons = document.querySelectorAll('.estado-btn');
+      const formatButtons = document.querySelectorAll('.format-btn');
+      const btnExecute = document.getElementById('btnExecute');
+      const btnDownload = document.getElementById('btnDownload');
+      const statusText = document.getElementById('statusText');
+
+      // Render canvas
+      function renderCanvas() {
+        const format = FORMATS[currentFormat];
+        const w = format.width;
+        const h = format.height;
+        canvas.width = w;
+        canvas.height = h;
+
+        // Fondo con gradiente
+        const gradient = ctx.createLinearGradient(0, 0, 0, h);
+        gradient.addColorStop(0, '#000000');
+        gradient.addColorStop(0.5, '#0a0a0a');
+        gradient.addColorStop(1, '#000000');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, w, h);
+
+        // Grid sutil
+        ctx.strokeStyle = 'rgba(255, 215, 0, 0.05)';
+        ctx.lineWidth = 1;
+        const gridSize = Math.min(w, h) / 20;
+        for (let i = 0; i <= w; i += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i, h);
+          ctx.stroke();
+        }
+        for (let i = 0; i <= h; i += gridSize) {
+          ctx.beginPath();
+          ctx.moveTo(0, i);
+          ctx.lineTo(w, i);
+          ctx.stroke();
+        }
+
+        // Estado arriba
+        if (selectedState) {
+          const stateSize = Math.max(w, h) * 0.025;
+          ctx.font = `700 ${stateSize}px 'Space Mono'`;
+          ctx.fillStyle = 'rgba(255, 215, 0, 0.6)';
+          ctx.textAlign = 'center';
+          ctx.fillText(`> ${selectedState}`, w / 2, h * 0.12);
+        }
+
+        // Texto principal
+        const baseFontSize = Math.min(w, h) * 0.08;
+        ctx.font = `900 ${baseFontSize}px 'Orbitron'`;
+        ctx.fillStyle = '#ffd700';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        // Glow
+        ctx.shadowColor = '#ffd700';
+        ctx.shadowBlur = baseFontSize * 0.4;
+
+        const words = currentText.toUpperCase().split(' ');
+        const lines = [];
+        let line = '';
+        const maxWidth = w * 0.85;
+
+        words.forEach(word => {
+          const test = line + word + ' ';
+          if (ctx.measureText(test).width > maxWidth) {
+            lines.push(line.trim());
+            line = word + ' ';
+          } else {
+            line = test;
+          }
+        });
+        lines.push(line.trim());
+
+        const lineHeight = baseFontSize * 1.15;
+        let startY = (h / 2) - ((lines.length - 1) * lineHeight / 2);
+
+        lines.forEach(l => {
+          ctx.fillText(l, w / 2, startY);
+          startY += lineHeight;
+        });
+
+        ctx.shadowBlur = 0;
+
+        // Firma
+        const signSize = Math.max(w, h) * 0.022;
+        ctx.font = `700 ${signSize}px 'Space Mono'`;
+        ctx.fillStyle = '#ffd700';
+        ctx.fillText('ANTONOV // NEURAL INTERFACE', w / 2, h * 0.88);
+
+        // Línea
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(w * 0.35, h * 0.91);
+        ctx.lineTo(w * 0.65, h * 0.91);
+        ctx.stroke();
+      }
+
+      // Botones de estado
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedState = btn.dataset.estado;
+          btnExecute.disabled = false;
+          statusText.textContent = `ESTADO_CARGADO: ${selectedState}`;
+          renderCanvas();
+        });
+      });
+
+      // Botones de formato
+      formatButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          formatButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFormat = btn.dataset.format;
+          renderCanvas();
+        });
+      });
+
+      // Ejecutar
+      btnExecute.addEventListener('click', async function() {
+        if (!selectedState) return;
+
+        btnExecute.textContent = 'PROCESANDO...';
+        btnExecute.disabled = true;
+        btnDownload.disabled = true;
+        statusText.textContent = 'ACCEDIENDO_MATRIZ_NEURAL...';
+
+        try {
+          const response = await fetch('https://mis-frases.poderparatriunfar.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              prompt: `${ANTONOV_PROMPT}
+
+EL ESTADO ES: "${selectedState}"
+
+ANTONOV LO TRADUCE.`
+            })
+          });
+
+          const data = await response.json();
+          currentText = data.text || 'SILENCIO';
+          statusText.textContent = 'ANÁLISIS_COMPLETO';
+          btnDownload.disabled = false;
+        } catch (error) {
+          currentText = 'ERROR DE CONEXIÓN';
+          statusText.textContent = 'ERROR_SISTEMA';
+        } finally {
+          btnExecute.textContent = 'EJECUTAR ANÁLISIS';
+          btnExecute.disabled = false;
+          renderCanvas();
+        }
+      });
+
+      // Descargar
+      btnDownload.addEventListener('click', function() {
+        const format = FORMATS[currentFormat];
+        const link = document.createElement('a');
+        const fileName = `antonov-${selectedState.toLowerCase()}-${format.name}-${Date.now()}.png`;
+        link.download = fileName;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        statusText.textContent = `IMAGEN_DESCARGADA: ${format.name}`;
+      });
+
+      // Init
+      renderCanvas();
+      document.fonts.ready.then(renderCanvas);
+      window.addEventListener('resize', renderCanvas);
     })();
   </script>
-</Layout>
+</body>
+</html>
