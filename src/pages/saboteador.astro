@@ -1,0 +1,142 @@
+---
+const sabotajes = [
+  {
+    tema: "hogar",
+    texto: "Si quieres destruir tu hogar, deja que el orgullo gane cada discusión.",
+    remate: "El amor no sobrevive donde nadie quiere perder."
+  },
+  {
+    tema: "relación",
+    texto: "¿Quieres perder a alguien que te ama? Hazlo sentir pequeño cada vez que te hable.",
+    remate: "El desprecio es más silencioso que el odio, pero más letal."
+  },
+  {
+    tema: "autoestima",
+    texto: "Si quieres apagar tu brillo, compárate todos los días con vidas editadas.",
+    remate: "Nadie florece midiéndose con filtros."
+  },
+  {
+    tema: "matrimonio",
+    texto: "Si quieres romper tu matrimonio, guarda silencio cuando algo te duele.",
+    remate: "Lo que no se habla, se pudre."
+  },
+  {
+    tema: "paz mental",
+    texto: "Si quieres arruinar tu paz, intenta agradar a todo el mundo.",
+    remate: "La aprobación es una jaula elegante."
+  }
+];
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Modo Incómodo</title>
+    <style>
+      body {
+        margin: 0;
+        background: #0f0f0f;
+        color: #f2f2f2;
+        font-family: system-ui, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      .card {
+        max-width: 600px;
+        padding: 40px;
+      }
+
+      h1 {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        color: #888;
+      }
+
+      .frase {
+        font-size: 1.5rem;
+        margin: 30px 0;
+        line-height: 1.6;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.4s ease;
+      }
+
+      .frase.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .remate {
+        font-size: 1rem;
+        color: #999;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+      }
+
+      .remate.visible {
+        opacity: 1;
+      }
+
+      button {
+        margin-top: 30px;
+        padding: 12px 24px;
+        background: white;
+        color: black;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s ease;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <h1>MODO INCÓMODO</h1>
+
+      <div id="frase" class="frase"></div>
+      <div id="remate" class="remate"></div>
+
+      <button onclick="generar()">Dame un golpe de realidad</button>
+    </div>
+
+    <script>
+      const sabotajes = JSON.parse(`${
+        JSON.stringify(sabotajes)
+      }`);
+
+      function generar() {
+        const fraseEl = document.getElementById("frase");
+        const remateEl = document.getElementById("remate");
+
+        fraseEl.classList.remove("visible");
+        remateEl.classList.remove("visible");
+
+        setTimeout(() => {
+          const random = sabotajes[Math.floor(Math.random() * sabotajes.length)];
+
+          fraseEl.textContent = random.texto;
+          remateEl.textContent = random.remate;
+
+          fraseEl.classList.add("visible");
+
+          setTimeout(() => {
+            remateEl.classList.add("visible");
+          }, 600);
+
+        }, 200);
+      }
+
+      generar();
+    </script>
+  </body>
+</html>
