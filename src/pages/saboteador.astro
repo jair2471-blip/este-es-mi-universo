@@ -3,797 +3,302 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modo Incómodo - Verdades que Arden</title>
+  <title>Modo Incómodo - Hero Image</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0f 100%);
-      color: #f2f2f2;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      min-height: 100vh;
+      background: #0a0a0a;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden;
-      position: relative;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
     }
-
-    /* Efecto de partículas de fondo */
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 50%, rgba(255, 0, 50, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-      animation: pulse 8s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-    }
-
     .container {
-      max-width: 700px;
       width: 90%;
-      padding: 40px;
-      position: relative;
-      z-index: 1;
+      max-width: 1200px;
     }
-
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .logo {
-      font-size: 0.75rem;
-      letter-spacing: 6px;
-      color: #666;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      opacity: 0;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .tagline {
-      font-size: 0.9rem;
-      color: #888;
-      font-style: italic;
-      margin-top: 8px;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.3s forwards;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin: 20px 0;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.6s forwards;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #ff1744;
-      display: block;
-    }
-
-    .stat-label {
-      font-size: 0.7rem;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-top: 5px;
-    }
-
-    .card {
-      background: rgba(20, 20, 20, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 50px 40px;
-      box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    svg {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-      transition: left 0.5s;
+      height: auto;
     }
-
-    .card:hover::before {
-      left: 100%;
-    }
-
-    .categoria-badge {
-      display: inline-block;
-      padding: 6px 16px;
-      background: rgba(255, 23, 68, 0.15);
-      border: 1px solid rgba(255, 23, 68, 0.3);
-      border-radius: 20px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #ff1744;
-      margin-bottom: 30px;
-      font-weight: 600;
-      opacity: 0;
-      animation: slideIn 0.6s ease forwards;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .frase {
-      font-size: 1.75rem;
-      line-height: 1.6;
-      min-height: 140px;
-      font-weight: 500;
-      margin: 30px 0;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .frase.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .remate {
-      font-size: 1.1rem;
-      color: #ff1744;
-      font-weight: 600;
-      margin-top: 25px;
-      min-height: 50px;
-      font-style: italic;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s;
-      position: relative;
-      padding-left: 20px;
-    }
-
-    .remate::before {
-      content: '"';
-      position: absolute;
-      left: 0;
-      top: -5px;
-      font-size: 2rem;
-      opacity: 0.3;
-    }
-
-    .remate.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .controls {
-      display: flex;
-      gap: 15px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-      justify-content: center;
+      text-align: center;
+      margin-top: 30px;
     }
-
     button {
-      padding: 16px 32px;
-      background: linear-gradient(135deg, #ff1744 0%, #c41230 100%);
+      padding: 12px 24px;
+      background: #ff1744;
       color: white;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 10px 30px rgba(255, 23, 68, 0.3);
-      position: relative;
-      overflow: hidden;
-      flex: 1;
-      min-width: 200px;
+      font-weight: bold;
+      margin: 0 10px;
     }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: translate(-50%, -50%);
-      transition: width 0.6s, height 0.6s;
-    }
-
-    button:hover::before {
-      width: 300px;
-      height: 300px;
-    }
-
     button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(255, 23, 68, 0.5);
-    }
-
-    button:active {
-      transform: translateY(-1px);
-    }
-
-    button span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      min-width: auto;
-      flex: 0;
-      padding: 16px 24px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    }
-
-    .categorias {
-      display: flex;
-      gap: 10px;
-      margin: 30px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-      opacity: 0;
-      animation: fadeIn 1s ease 0.9s forwards;
-    }
-
-    .cat-btn {
-      padding: 10px 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      color: #888;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .cat-btn:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .cat-btn.active {
-      background: rgba(255, 23, 68, 0.2);
-      border-color: #ff1744;
-      color: #ff1744;
-    }
-
-    .favorito-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 10px;
-      min-width: auto;
-      box-shadow: none;
-      opacity: 0.5;
-    }
-
-    .favorito-btn:hover {
-      opacity: 1;
-      transform: scale(1.2);
-      box-shadow: none;
-    }
-
-    .favorito-btn.active {
-      opacity: 1;
-    }
-
-    .favoritos-panel {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 400px;
-      height: 100vh;
-      background: rgba(10, 10, 10, 0.98);
-      backdrop-filter: blur(20px);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 30px;
-      overflow-y: auto;
-      transition: right 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 1000;
-      box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8);
-    }
-
-    .favoritos-panel.open {
-      right: 0;
-    }
-
-    .favoritos-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .favoritos-header h2 {
-      font-size: 1.5rem;
-      color: #ff1744;
-    }
-
-    .close-btn {
-      background: none;
-      color: #fff;
-      font-size: 1.5rem;
-      padding: 5px 10px;
-      min-width: auto;
-      box-shadow: none;
-    }
-
-    .favorito-item {
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 10px;
-      margin-bottom: 15px;
-      border-left: 3px solid #ff1744;
-    }
-
-    .favorito-item p {
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .favorito-item small {
-      color: #888;
-      font-size: 0.8rem;
-      font-style: italic;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: #666;
-    }
-
-    .empty-state-icon {
-      font-size: 4rem;
-      margin-bottom: 20px;
-      opacity: 0.3;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 20px;
-      }
-      
-      .card {
-        padding: 30px 25px;
-      }
-      
-      .frase {
-        font-size: 1.4rem;
-        min-height: 100px;
-      }
-      
-      .remate {
-        font-size: 1rem;
-      }
-      
-      button {
-        min-width: 100%;
-      }
-
-      .favoritos-panel {
-        width: 100%;
-        right: -100%;
-      }
-
-      .stats {
-        gap: 20px;
-      }
-
-      .stat-number {
-        font-size: 1.4rem;
-      }
-    }
-
-    /* Animación de shake para el botón */
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    .shake {
-      animation: shake 0.5s ease;
+      background: #c41230;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <div class="logo">MODO INCÓMODO</div>
-      <div class="tagline">Verdades que arden, pero salvan</div>
-      <div class="stats">
-        <div class="stat">
-          <span class="stat-number" id="contador">0</span>
-          <span class="stat-label">Golpes</span>
-        </div>
-        <div class="stat">
-          <span class="stat-number" id="favCount">0</span>
-          <span class="stat-label">Favoritos</span>
-        </div>
-      </div>
+    <svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+      <!-- Definiciones -->
+      <defs>
+        <!-- Gradiente principal rojo ardiente -->
+        <linearGradient id="fireGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#ff1744;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#f50057;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#c41230;stop-opacity:1" />
+        </linearGradient>
+        
+        <!-- Gradiente de fondo oscuro -->
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#1a0a0f;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#0f0f0f;stop-opacity:1" />
+        </linearGradient>
+        
+        <!-- Gradiente brillante para texto -->
+        <linearGradient id="textGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ff1744;stop-opacity:1" />
+        </linearGradient>
+        
+        <!-- Filtro de brillo -->
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        
+        <!-- Filtro de sombra -->
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.5"/>
+        </filter>
+        
+        <!-- Patrón de partículas -->
+        <pattern id="particles" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="1" fill="#ff1744" opacity="0.3">
+            <animate attributeName="opacity" values="0.1;0.5;0.1" dur="3s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="50" cy="30" r="1.5" fill="#ff1744" opacity="0.2">
+            <animate attributeName="opacity" values="0.2;0.6;0.2" dur="4s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="80" cy="60" r="1" fill="#f50057" opacity="0.3">
+            <animate attributeName="opacity" values="0.1;0.4;0.1" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="30" cy="80" r="1.2" fill="#ff1744" opacity="0.25">
+            <animate attributeName="opacity" values="0.15;0.5;0.15" dur="2.8s" repeatCount="indefinite"/>
+          </circle>
+        </pattern>
+      </defs>
+      
+      <!-- Fondo -->
+      <rect width="1200" height="600" fill="url(#bgGradient)"/>
+      
+      <!-- Partículas de fondo -->
+      <rect width="1200" height="600" fill="url(#particles)"/>
+      
+      <!-- Círculos decorativos con animación -->
+      <circle cx="200" cy="150" r="150" fill="none" stroke="#ff1744" stroke-width="1" opacity="0.1">
+        <animate attributeName="r" values="150;160;150" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.1;0.2;0.1" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      
+      <circle cx="1000" cy="450" r="120" fill="none" stroke="#f50057" stroke-width="1" opacity="0.15">
+        <animate attributeName="r" values="120;130;120" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.15;0.25;0.15" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      
+      <!-- Líneas decorativas animadas -->
+      <line x1="100" y1="200" x2="300" y2="200" stroke="#ff1744" stroke-width="2" opacity="0.3">
+        <animate attributeName="x2" values="300;320;300" dur="2s" repeatCount="indefinite"/>
+      </line>
+      
+      <line x1="900" y1="400" x2="1100" y2="400" stroke="#ff1744" stroke-width="2" opacity="0.3">
+        <animate attributeName="x2" values="1100;1120;1100" dur="2.5s" repeatCount="indefinite"/>
+      </line>
+      
+      <!-- Elemento central: Llama estilizada -->
+      <g id="flame" transform="translate(600, 200)">
+        <!-- Llama principal -->
+        <path d="M 0,-80 Q -30,-40 -20,0 Q -30,40 0,80 Q 30,40 20,0 Q 30,-40 0,-80 Z" 
+              fill="url(#fireGradient)" 
+              opacity="0.3"
+              filter="url(#glow)">
+          <animateTransform
+            attributeName="transform"
+            type="scale"
+            values="1,1;1.1,0.9;1,1"
+            dur="2s"
+            repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Llama interior -->
+        <path d="M 0,-50 Q -20,-25 -10,0 Q -20,25 0,50 Q 20,25 10,0 Q 20,-25 0,-50 Z" 
+              fill="#ffffff" 
+              opacity="0.4"
+              filter="url(#glow)">
+          <animateTransform
+            attributeName="transform"
+            type="scale"
+            values="1,1;0.9,1.1;1,1"
+            dur="1.8s"
+            repeatCount="indefinite"/>
+        </path>
+        
+        <!-- Núcleo brillante -->
+        <circle cx="0" cy="0" r="15" fill="#ffffff" opacity="0.8" filter="url(#glow)">
+          <animate attributeName="r" values="15;18;15" dur="1.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.8;1;0.8" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      
+      <!-- Texto principal "MODO INCÓMODO" -->
+      <g id="mainText" filter="url(#shadow)">
+        <text x="600" y="380" 
+              font-size="72" 
+              font-weight="900" 
+              text-anchor="middle" 
+              fill="url(#textGlow)"
+              letter-spacing="12">
+          MODO INCÓMODO
+          <animate attributeName="opacity" values="1;0.95;1" dur="3s" repeatCount="indefinite"/>
+        </text>
+      </g>
+      
+      <!-- Subtítulo -->
+      <text x="600" y="430" 
+            font-size="24" 
+            font-weight="400" 
+            text-anchor="middle" 
+            fill="#888888"
+            letter-spacing="4"
+            font-style="italic">
+        VERDADES QUE ARDEN, PERO SALVAN
+        <animate attributeName="opacity" values="0.6;0.8;0.6" dur="4s" repeatCount="indefinite"/>
+      </text>
+      
+      <!-- Línea decorativa inferior -->
+      <line x1="400" y1="460" x2="800" y2="460" 
+            stroke="#ff1744" 
+            stroke-width="2" 
+            opacity="0.4">
+        <animate attributeName="stroke-width" values="2;3;2" dur="2s" repeatCount="indefinite"/>
+      </line>
+      
+      <!-- Elementos decorativos laterales -->
+      <g opacity="0.3">
+        <!-- Izquierda -->
+        <circle cx="150" cy="300" r="3" fill="#ff1744">
+          <animate attributeName="cy" values="300;290;300" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="180" cy="320" r="2" fill="#f50057">
+          <animate attributeName="cy" values="320;310;320" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="120" cy="340" r="2.5" fill="#ff1744">
+          <animate attributeName="cy" values="340;330;340" dur="2.2s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Derecha -->
+        <circle cx="1050" cy="300" r="3" fill="#ff1744">
+          <animate attributeName="cy" values="300;290;300" dur="2.3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="1020" cy="320" r="2" fill="#f50057">
+          <animate attributeName="cy" values="320;310;320" dur="2.7s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="1080" cy="340" r="2.5" fill="#ff1744">
+          <animate attributeName="cy" values="340;330;340" dur="2.1s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      
+      <!-- Chispas aleatorias -->
+      <g id="sparks" opacity="0.5">
+        <circle cx="550" cy="250" r="1.5" fill="#ffffff">
+          <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+          <animate attributeName="cy" values="250;240;250" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="650" cy="260" r="1" fill="#ffffff">
+          <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+          <animate attributeName="cy" values="260;250;260" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+        <circle cx="580" cy="270" r="1.2" fill="#ffffff">
+          <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite" begin="1s"/>
+          <animate attributeName="cy" values="270;260;270" dur="1.8s" repeatCount="indefinite" begin="1s"/>
+        </circle>
+      </g>
+      
+      <!-- Badge "💥" -->
+      <g transform="translate(850, 340)">
+        <circle cx="0" cy="0" r="25" fill="#ff1744" opacity="0.2"/>
+        <text x="0" y="0" font-size="30" text-anchor="middle" dominant-baseline="central">💥</text>
+      </g>
+    </svg>
+    
+    <div class="controls">
+      <button onclick="downloadSVG()">📥 Descargar SVG</button>
+      <button onclick="downloadPNG()">📥 Descargar PNG (Alta Res)</button>
+      <button onclick="copySVG()">📋 Copiar SVG</button>
     </div>
-
-    <div class="categorias">
-      <button class="cat-btn active" data-cat="todas">Todas</button>
-      <button class="cat-btn" data-cat="relaciones">Relaciones</button>
-      <button class="cat-btn" data-cat="autoestima">Autoestima</button>
-      <button class="cat-btn" data-cat="trabajo">Trabajo</button>
-      <button class="cat-btn" data-cat="familia">Familia</button>
-    </div>
-
-    <div class="card">
-      <button class="favorito-btn" id="favBtn">☆</button>
-      <div class="categoria-badge" id="categoriaActual">Relaciones</div>
-      <div id="frase" class="frase"></div>
-      <div id="remate" class="remate"></div>
-      <div class="controls">
-        <button id="btn"><span>💥 Dame un golpe de realidad</span></button>
-        <button class="btn-secondary" id="shareBtn"><span>📤</span></button>
-        <button class="btn-secondary" id="favoritosBtn"><span>⭐</span></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Panel de favoritos -->
-  <div class="favoritos-panel" id="favoritosPanel">
-    <div class="favoritos-header">
-      <h2>Tus Favoritos</h2>
-      <button class="close-btn" id="closePanel">✕</button>
-    </div>
-    <div id="favoritosList"></div>
   </div>
 
   <script>
-    const sabotajes = [
-      // Relaciones
-      {
-        texto: "Si quieres destruir tu hogar, deja que el orgullo gane cada discusión.",
-        remate: "El amor no sobrevive donde nadie quiere perder.",
-        categoria: "relaciones"
-      },
-      {
-        texto: "¿Quieres perder a alguien que te ama? Hazlo sentir pequeño cada vez que te hable.",
-        remate: "El desprecio es silencioso, pero letal.",
-        categoria: "relaciones"
-      },
-      {
-        texto: "Si quieres romper tu matrimonio, guarda silencio cuando algo te duele.",
-        remate: "Lo que no se habla, se pudre.",
-        categoria: "relaciones"
-      },
-      {
-        texto: "¿Quieres matar el romance? Deja de hacer esas pequeñas cosas que antes hacías sin pensarlo.",
-        remate: "El amor se alimenta de detalles, no de promesas.",
-        categoria: "relaciones"
-      },
-      {
-        texto: "Si quieres que te dejen de buscar, responde siempre desde la prisa.",
-        remate: "La indiferencia no necesita palabras, solo tiempos muertos.",
-        categoria: "relaciones"
-      },
-      
-      // Autoestima
-      {
-        texto: "Si quieres apagar tu brillo, compárate todos los días con vidas editadas.",
-        remate: "Nadie florece midiéndose con filtros.",
-        categoria: "autoestima"
-      },
-      {
-        texto: "Si quieres arruinar tu paz, intenta agradar a todo el mundo.",
-        remate: "La aprobación es una jaula elegante.",
-        categoria: "autoestima"
-      },
-      {
-        texto: "¿Quieres sentirte miserable? Espera a ser perfecto antes de empezar.",
-        remate: "La perfección es la excusa favorita del miedo.",
-        categoria: "autoestima"
-      },
-      {
-        texto: "Si quieres odiar tu cuerpo, pasa horas viendo a gente que no conoces vivir vidas que no existen.",
-        remate: "Tu reflejo no compite con pixels.",
-        categoria: "autoestima"
-      },
-      {
-        texto: "¿Quieres destruir tu confianza? Recuerda todos tus errores y olvida todos tus logros.",
-        remate: "Eres el peor juez de tu propio valor.",
-        categoria: "autoestima"
-      },
-      
-      // Trabajo
-      {
-        texto: "Si quieres quemar tu carrera, trata cada trabajo como temporal mientras esperas 'lo tuyo'.",
-        remate: "La excelencia no espera el escenario perfecto.",
-        categoria: "trabajo"
-      },
-      {
-        texto: "¿Quieres que nadie confíe en ti? Promete mucho y entrega poco.",
-        remate: "Tu palabra es tu marca personal.",
-        categoria: "trabajo"
-      },
-      {
-        texto: "Si quieres estancarte, rodéate solo de gente que piense como tú.",
-        remate: "El eco no enseña, solo repite.",
-        categoria: "trabajo"
-      },
-      {
-        texto: "¿Quieres perder oportunidades? Espera a sentirte 100% listo antes de dar el paso.",
-        remate: "Los preparados esperan, los valientes aprenden haciendo.",
-        categoria: "trabajo"
-      },
-      {
-        texto: "Si quieres ser reemplazable, haz solo lo que te piden y nada más.",
-        remate: "La mediocridad es cómoda hasta que ya no eres necesario.",
-        categoria: "trabajo"
-      },
-      
-      // Familia
-      {
-        texto: "Si quieres distanciarte de tu familia, asume que siempre hay tiempo para después.",
-        remate: "El 'después' a veces nunca llega.",
-        categoria: "familia"
-      },
-      {
-        texto: "¿Quieres arruinar la cena familiar? Saca tu teléfono y quédate ahí.",
-        remate: "La presencia sin atención es ausencia disfrazada.",
-        categoria: "familia"
-      },
-      {
-        texto: "Si quieres que tus hijos no te cuenten nada, juzga todo lo que te dicen.",
-        remate: "Los niños callan donde no hay refugio.",
-        categoria: "familia"
-      },
-      {
-        texto: "¿Quieres perder la conexión con tus padres? Llama solo cuando necesitas algo.",
-        remate: "El amor también necesita mantenimiento.",
-        categoria: "familia"
-      },
-      {
-        texto: "Si quieres criar hijos inseguros, compáralos constantemente con otros.",
-        remate: "Cada hijo necesita ser visto por quien es, no por quien no es.",
-        categoria: "familia"
-      }
-    ];
-
-    // Estado de la aplicación
-    let currentSabotaje = null;
-    let categoriaActiva = 'todas';
-    let contador = parseInt(localStorage.getItem('contador') || '0');
-    let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
-
-    // Elementos del DOM
-    const fraseEl = document.getElementById('frase');
-    const remateEl = document.getElementById('remate');
-    const btn = document.getElementById('btn');
-    const shareBtn = document.getElementById('shareBtn');
-    const favBtn = document.getElementById('favBtn');
-    const favoritosBtn = document.getElementById('favoritosBtn');
-    const categoriaBadge = document.getElementById('categoriaActual');
-    const contadorEl = document.getElementById('contador');
-    const favCountEl = document.getElementById('favCount');
-    const favoritosPanel = document.getElementById('favoritosPanel');
-    const closePanel = document.getElementById('closePanel');
-    const favoritosList = document.getElementById('favoritosList');
-
-    // Inicializar
-    contadorEl.textContent = contador;
-    favCountEl.textContent = favoritos.length;
-
-    // Función para generar sabotaje
-    function generar() {
-      // Filtrar por categoría
-      let pool = categoriaActiva === 'todas' 
-        ? sabotajes 
-        : sabotajes.filter(s => s.categoria === categoriaActiva);
-      
-      // Seleccionar uno aleatorio
-      currentSabotaje = pool[Math.floor(Math.random() * pool.length)];
-      
-      // Animación de salida
-      fraseEl.classList.remove('show');
-      remateEl.classList.remove('show');
-      
-      setTimeout(() => {
-        fraseEl.textContent = currentSabotaje.texto;
-        remateEl.textContent = currentSabotaje.remate;
-        categoriaBadge.textContent = currentSabotaje.categoria.charAt(0).toUpperCase() + currentSabotaje.categoria.slice(1);
-        
-        // Actualizar botón de favorito
-        updateFavButton();
-        
-        // Animación de entrada
-        setTimeout(() => {
-          fraseEl.classList.add('show');
-          remateEl.classList.add('show');
-        }, 50);
-      }, 300);
-      
-      // Actualizar contador
-      contador++;
-      localStorage.setItem('contador', contador);
-      contadorEl.textContent = contador;
-      
-      // Animación del botón
-      btn.classList.add('shake');
-      setTimeout(() => btn.classList.remove('shake'), 500);
+    // Función para descargar SVG
+    function downloadSVG() {
+      const svg = document.querySelector('svg');
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgData], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'modo-incomodo-hero.svg';
+      link.click();
+      URL.revokeObjectURL(url);
     }
 
-    // Función para compartir
-    function compartir() {
-      if (!currentSabotaje) return;
+    // Función para descargar PNG
+    function downloadPNG() {
+      const svg = document.querySelector('svg');
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       
-      const texto = `${currentSabotaje.texto}\n\n"${currentSabotaje.remate}"\n\n- Modo Incómodo`;
+      // Alta resolución (2x)
+      canvas.width = 2400;
+      canvas.height = 1200;
       
-      if (navigator.share) {
-        navigator.share({
-          title: 'Modo Incómodo',
-          text: texto
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, 2400, 1200);
+        canvas.toBlob(function(blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'modo-incomodo-hero.png';
+          link.click();
+          URL.revokeObjectURL(url);
         });
-      } else {
-        navigator.clipboard.writeText(texto);
-        shareBtn.innerHTML = '<span>✓ Copiado</span>';
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    }
+
+    // Función para copiar SVG
+    function copySVG() {
+      const svg = document.querySelector('svg');
+      const svgData = new XMLSerializer().serializeToString(svg);
+      navigator.clipboard.writeText(svgData).then(() => {
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copiado!';
         setTimeout(() => {
-          shareBtn.innerHTML = '<span>📤</span>';
+          btn.textContent = originalText;
         }, 2000);
-      }
-    }
-
-    // Función para manejar favoritos
-    function toggleFavorito() {
-      if (!currentSabotaje) return;
-      
-      const index = favoritos.findIndex(f => f.texto === currentSabotaje.texto);
-      
-      if (index === -1) {
-        favoritos.push(currentSabotaje);
-        favBtn.textContent = '★';
-      } else {
-        favoritos.splice(index, 1);
-        favBtn.textContent = '☆';
-      }
-      
-      localStorage.setItem('favoritos', JSON.stringify(favoritos));
-      favCountEl.textContent = favoritos.length;
-      renderFavoritos();
-    }
-
-    function updateFavButton() {
-      if (!currentSabotaje) return;
-      const isFav = favoritos.some(f => f.texto === currentSabotaje.texto);
-      favBtn.textContent = isFav ? '★' : '☆';
-      favBtn.classList.toggle('active', isFav);
-    }
-
-    function renderFavoritos() {
-      if (favoritos.length === 0) {
-        favoritosList.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon">☆</div>
-            <p>Aún no tienes favoritos</p>
-            <small>Guarda las verdades que más te impacten</small>
-          </div>
-        `;
-        return;
-      }
-      
-      favoritosList.innerHTML = favoritos.map(fav => `
-        <div class="favorito-item">
-          <p>${fav.texto}</p>
-          <small>${fav.remate}</small>
-        </div>
-      `).join('');
-    }
-
-    // Event listeners
-    btn.addEventListener('click', generar);
-    shareBtn.addEventListener('click', compartir);
-    favBtn.addEventListener('click', toggleFavorito);
-    
-    favoritosBtn.addEventListener('click', () => {
-      favoritosPanel.classList.add('open');
-      renderFavoritos();
-    });
-    
-    closePanel.addEventListener('click', () => {
-      favoritosPanel.classList.remove('open');
-    });
-
-    // Categorías
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        categoriaActiva = btn.dataset.cat;
-        generar();
       });
-    });
-
-    // Cerrar panel al hacer click fuera
-    favoritosPanel.addEventListener('click', (e) => {
-      if (e.target === favoritosPanel) {
-        favoritosPanel.classList.remove('open');
-      }
-    });
-
-    // Generar uno al cargar
-    generar();
-
-    // Atajos de teclado
-    document.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        generar();
-      }
-      if (e.key === 'f' || e.key === 'F') {
-        toggleFavorito();
-      }
-    });
+    }
   </script>
 </body>
 </html>
