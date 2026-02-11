@@ -52,6 +52,13 @@
       z-index: 1;
     }
 
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+    }
+
     .header {
       text-align: center;
       margin-bottom: 40px;
@@ -410,6 +417,160 @@
       opacity: 0.3;
     }
 
+    /* Modal de generación de imágenes */
+    .image-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .image-modal.open {
+      display: flex;
+    }
+
+    .image-modal-content {
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .image-modal-content h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ff1744;
+      font-size: 1.8rem;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 5px 10px;
+      min-width: auto;
+      box-shadow: none;
+      opacity: 0.7;
+    }
+
+    .close-modal:hover {
+      opacity: 1;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .format-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .format-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: auto;
+      box-shadow: none;
+    }
+
+    .format-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .format-btn.active {
+      background: rgba(255, 23, 68, 0.15);
+      border-color: #ff1744;
+    }
+
+    .format-btn span {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .format-btn small {
+      font-size: 0.75rem;
+      color: #888;
+      text-align: center;
+    }
+
+    .format-preview {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff1744 0%, #c41230 100%);
+      border-radius: 8px;
+      opacity: 0.6;
+    }
+
+    .square-preview {
+      width: 50px;
+      height: 50px;
+    }
+
+    .story-preview {
+      width: 35px;
+      height: 60px;
+    }
+
+    .horizontal-preview {
+      width: 60px;
+      height: 35px;
+    }
+
+    .canvas-container {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+
+    #imageCanvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .download-controls {
+      display: flex;
+      justify-content: center;
+    }
+
+    .download-btn {
+      background: linear-gradient(135deg, #ff1744 0%, #c41230 100%);
+      font-size: 1.1rem;
+      padding: 18px 40px;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -449,6 +610,47 @@
       .stat-number {
         font-size: 1.4rem;
       }
+
+      .format-selector {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .format-btn {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 15px;
+      }
+
+      .format-preview {
+        width: 40px;
+        height: 40px;
+      }
+
+      .square-preview {
+        width: 35px;
+        height: 35px;
+      }
+
+      .story-preview {
+        width: 25px;
+        height: 40px;
+      }
+
+      .horizontal-preview {
+        width: 40px;
+        height: 25px;
+      }
+
+      .image-modal-content {
+        padding: 25px;
+        max-height: 95vh;
+      }
+
+      .image-modal-content h2 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+      }
     }
 
     /* Animación de shake para el botón */
@@ -465,6 +667,71 @@
 </head>
 <body>
   <div class="container">
+    <!-- Logo animado -->
+    <div class="logo-container">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width: 120px; height: 120px; margin: 0 auto; display: block;">
+        <defs>
+          <linearGradient id="flameGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#ff1744;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#c41230;stop-opacity:1" />
+          </linearGradient>
+          <filter id="logoGlow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        <!-- Círculo de fondo -->
+        <circle cx="100" cy="100" r="90" fill="rgba(255, 23, 68, 0.05)" opacity="0.5">
+          <animate attributeName="r" values="90;95;90" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        
+        <!-- Llama central -->
+        <g transform="translate(100, 100)">
+          <path d="M 0,-40 Q -15,-20 -10,0 Q -15,20 0,40 Q 15,20 10,0 Q 15,-20 0,-40 Z" 
+                fill="url(#flameGrad)" 
+                opacity="0.4"
+                filter="url(#logoGlow)">
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values="1,1;1.1,0.9;1,1"
+              dur="2s"
+              repeatCount="indefinite"/>
+          </path>
+          
+          <path d="M 0,-25 Q -10,-12 -6,0 Q -10,12 0,25 Q 10,12 6,0 Q 10,-12 0,-25 Z" 
+                fill="#ffffff" 
+                opacity="0.6"
+                filter="url(#logoGlow)">
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values="1,1;0.9,1.1;1,1"
+              dur="1.8s"
+              repeatCount="indefinite"/>
+          </path>
+          
+          <circle cx="0" cy="0" r="8" fill="#ffffff" opacity="0.9" filter="url(#logoGlow)">
+            <animate attributeName="r" values="8;10;8" dur="1.5s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        
+        <!-- Partículas -->
+        <circle cx="80" cy="60" r="2" fill="#ff1744" opacity="0.6">
+          <animate attributeName="opacity" values="0;0.8;0" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="cy" values="60;50;60" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="120" cy="70" r="1.5" fill="#ff1744" opacity="0.6">
+          <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+          <animate attributeName="cy" values="70;60;70" dur="2.5s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+      </svg>
+    </div>
+    
     <div class="header">
       <div class="logo">MODO INCÓMODO</div>
       <div class="tagline">Verdades que arden, pero salvan</div>
@@ -495,8 +762,44 @@
       <div id="remate" class="remate"></div>
       <div class="controls">
         <button id="btn"><span>💥 Dame un golpe de realidad</span></button>
-        <button class="btn-secondary" id="shareBtn"><span>📤</span></button>
+        <button class="btn-secondary" id="shareBtn"><span>📸 Crear Imagen</span></button>
         <button class="btn-secondary" id="favoritosBtn"><span>⭐</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para generar imágenes -->
+  <div class="image-modal" id="imageModal">
+    <div class="image-modal-content">
+      <button class="close-modal" id="closeModal">✕</button>
+      <h2>📸 Crear Imagen para Redes</h2>
+      
+      <div class="format-selector">
+        <button class="format-btn active" data-format="square">
+          <div class="format-preview square-preview"></div>
+          <span>Cuadrado</span>
+          <small>1080x1080 - Instagram/Facebook</small>
+        </button>
+        <button class="format-btn" data-format="story">
+          <div class="format-preview story-preview"></div>
+          <span>Historia</span>
+          <small>1080x1920 - IG/FB Stories</small>
+        </button>
+        <button class="format-btn" data-format="horizontal">
+          <div class="format-preview horizontal-preview"></div>
+          <span>Horizontal</span>
+          <small>1200x630 - Twitter/LinkedIn</small>
+        </button>
+      </div>
+      
+      <div class="canvas-container">
+        <canvas id="imageCanvas"></canvas>
+      </div>
+      
+      <div class="download-controls">
+        <button class="download-btn" id="downloadImage">
+          <span>⬇️ Descargar Imagen</span>
+        </button>
       </div>
     </div>
   </div>
@@ -644,10 +947,22 @@
     const favoritosPanel = document.getElementById('favoritosPanel');
     const closePanel = document.getElementById('closePanel');
     const favoritosList = document.getElementById('favoritosList');
+    const imageModal = document.getElementById('imageModal');
+    const closeModal = document.getElementById('closeModal');
+    const imageCanvas = document.getElementById('imageCanvas');
+    const downloadImage = document.getElementById('downloadImage');
 
     // Inicializar
     contadorEl.textContent = contador;
     favCountEl.textContent = favoritos.length;
+
+    // Variables para generación de imágenes
+    let currentFormat = 'square';
+    const formats = {
+      square: { width: 1080, height: 1080, name: 'cuadrado' },
+      story: { width: 1080, height: 1920, name: 'historia' },
+      horizontal: { width: 1200, height: 630, name: 'horizontal' }
+    };
 
     // Función para generar sabotaje
     function generar() {
@@ -688,24 +1003,155 @@
       setTimeout(() => btn.classList.remove('shake'), 500);
     }
 
-    // Función para compartir
-    function compartir() {
+    // Función para generar imagen
+    function generarImagen() {
       if (!currentSabotaje) return;
       
-      const texto = `${currentSabotaje.texto}\n\n"${currentSabotaje.remate}"\n\n- Modo Incómodo`;
+      const format = formats[currentFormat];
+      const canvas = imageCanvas;
+      const ctx = canvas.getContext('2d');
       
-      if (navigator.share) {
-        navigator.share({
-          title: 'Modo Incómodo',
-          text: texto
-        });
-      } else {
-        navigator.clipboard.writeText(texto);
-        shareBtn.innerHTML = '<span>✓ Copiado</span>';
-        setTimeout(() => {
-          shareBtn.innerHTML = '<span>📤</span>';
-        }, 2000);
+      // Configurar tamaño del canvas
+      canvas.width = format.width;
+      canvas.height = format.height;
+      
+      // Fondo con gradiente
+      const gradient = ctx.createLinearGradient(0, 0, 0, format.height);
+      gradient.addColorStop(0, '#1a0a0f');
+      gradient.addColorStop(1, '#0a0a0a');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, format.width, format.height);
+      
+      // Círculos decorativos de fondo
+      ctx.strokeStyle = 'rgba(255, 23, 68, 0.08)';
+      ctx.lineWidth = 2;
+      const centerX = format.width / 2;
+      const centerY = format.height / 2;
+      
+      for (let i = 3; i > 0; i--) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, (format.width * 0.15) * i, 0, Math.PI * 2);
+        ctx.stroke();
       }
+      
+      // Línea superior
+      ctx.strokeStyle = 'rgba(255, 23, 68, 0.3)';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(format.width * 0.1, format.height * 0.15);
+      ctx.lineTo(format.width * 0.9, format.height * 0.15);
+      ctx.stroke();
+      
+      // Logo / Título superior
+      ctx.fillStyle = '#666';
+      ctx.font = `bold ${format.width * 0.025}px -apple-system, system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '8px';
+      ctx.fillText('MODO INCÓMODO', centerX, format.height * 0.1);
+      
+      // Emoji/Icono
+      ctx.font = `${format.width * 0.08}px Arial`;
+      ctx.fillText('💥', centerX, format.height * 0.25);
+      
+      // Texto principal (frase)
+      ctx.fillStyle = '#ffffff';
+      const maxWidth = format.width * 0.8;
+      const lineHeight = format.width * 0.045;
+      let fontSize = format.width * 0.04;
+      
+      // Ajustar tamaño de fuente según formato
+      if (currentFormat === 'story') {
+        fontSize = format.width * 0.048;
+      } else if (currentFormat === 'horizontal') {
+        fontSize = format.width * 0.035;
+      }
+      
+      ctx.font = `600 ${fontSize}px -apple-system, system-ui, sans-serif`;
+      
+      // Dividir texto en líneas
+      const words = currentSabotaje.texto.split(' ');
+      let lines = [];
+      let currentLine = '';
+      
+      for (let word of words) {
+        const testLine = currentLine + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        
+        if (metrics.width > maxWidth && currentLine !== '') {
+          lines.push(currentLine);
+          currentLine = word + ' ';
+        } else {
+          currentLine = testLine;
+        }
+      }
+      lines.push(currentLine);
+      
+      // Dibujar líneas centradas
+      const startY = centerY - (lines.length * lineHeight) / 2;
+      lines.forEach((line, i) => {
+        ctx.fillText(line.trim(), centerX, startY + (i * lineHeight));
+      });
+      
+      // Remate (con gradiente rojo)
+      const remateGradient = ctx.createLinearGradient(0, format.height * 0.75, 0, format.height * 0.82);
+      remateGradient.addColorStop(0, '#ff1744');
+      remateGradient.addColorStop(1, '#f50057');
+      ctx.fillStyle = remateGradient;
+      
+      const remateFontSize = currentFormat === 'story' ? format.width * 0.042 : format.width * 0.036;
+      ctx.font = `italic 600 ${remateFontSize}px -apple-system, system-ui, sans-serif`;
+      
+      // Dividir remate en líneas si es necesario
+      const remateWords = currentSabotaje.remate.split(' ');
+      let remateLines = [];
+      let remateCurrentLine = '';
+      
+      for (let word of remateWords) {
+        const testLine = remateCurrentLine + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        
+        if (metrics.width > maxWidth && remateCurrentLine !== '') {
+          remateLines.push(remateCurrentLine);
+          remateCurrentLine = word + ' ';
+        } else {
+          remateCurrentLine = testLine;
+        }
+      }
+      remateLines.push(remateCurrentLine);
+      
+      const remateStartY = format.height * 0.75;
+      remateLines.forEach((line, i) => {
+        ctx.fillText(line.trim(), centerX, remateStartY + (i * (remateFontSize * 1.3)));
+      });
+      
+      // Línea inferior
+      ctx.strokeStyle = 'rgba(255, 23, 68, 0.3)';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(format.width * 0.1, format.height * 0.88);
+      ctx.lineTo(format.width * 0.9, format.height * 0.88);
+      ctx.stroke();
+      
+      // Footer
+      ctx.fillStyle = '#666';
+      ctx.font = `${format.width * 0.022}px -apple-system, system-ui, sans-serif`;
+      ctx.fillText('Verdades que arden, pero salvan', centerX, format.height * 0.94);
+    }
+    
+    // Función para abrir modal de imagen
+    function abrirModalImagen() {
+      if (!currentSabotaje) return;
+      imageModal.classList.add('open');
+      generarImagen();
+    }
+    
+    // Función para descargar imagen
+    function descargarImagen() {
+      const format = formats[currentFormat];
+      const link = document.createElement('a');
+      link.download = `modo-incomodo-${format.name}-${Date.now()}.png`;
+      link.href = imageCanvas.toDataURL('image/png');
+      link.click();
     }
 
     // Función para manejar favoritos
@@ -756,7 +1202,7 @@
 
     // Event listeners
     btn.addEventListener('click', generar);
-    shareBtn.addEventListener('click', compartir);
+    shareBtn.addEventListener('click', abrirModalImagen);
     favBtn.addEventListener('click', toggleFavorito);
     
     favoritosBtn.addEventListener('click', () => {
@@ -766,6 +1212,22 @@
     
     closePanel.addEventListener('click', () => {
       favoritosPanel.classList.remove('open');
+    });
+    
+    closeModal.addEventListener('click', () => {
+      imageModal.classList.remove('open');
+    });
+    
+    downloadImage.addEventListener('click', descargarImagen);
+    
+    // Selector de formato
+    document.querySelectorAll('.format-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFormat = btn.dataset.format;
+        generarImagen();
+      });
     });
 
     // Categorías
