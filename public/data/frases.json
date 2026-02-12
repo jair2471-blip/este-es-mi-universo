@@ -1,0 +1,607 @@
+[
+  {
+    "texto": "Si quieres enfriar tu relación, deja de escuchar para entender y empieza a escuchar solo para responder.",
+    "remate": "Cuando nadie se siente comprendido, el amor empieza a sentirse solo.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que la confianza desaparezca? Oculta pequeñas cosas y llámalas 'insignificantes'.",
+    "remate": "La confianza no se rompe de golpe, se desgasta en detalles.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres llenar tu hogar de tensión, acumula resentimientos y sonríe como si nada pasara.",
+    "remate": "La paz fingida es una guerra aplazada.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que el amor se vuelva rutina vacía? Deja de sorprender y empieza a dar todo por hecho.",
+    "remate": "Lo que se da por seguro, se deja de valorar.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que te amen menos, critica más de lo que agradeces.",
+    "remate": "El corazón se cansa donde nunca es suficiente.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que la pasión se apague? Convierte cada error en un juicio final.",
+    "remate": "Donde hay miedo a equivocarse, no hay libertad para amar.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres perder conexión, reemplaza las conversaciones profundas por pantallas eternas.",
+    "remate": "Dos personas juntas pueden estar a kilómetros si nadie mira a los ojos.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que tu pareja deje de intentarlo? Minimiza cada esfuerzo que haga.",
+    "remate": "Nadie lucha mucho tiempo donde nada es reconocido.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que la distancia crezca, deja de preguntar cómo se siente el otro.",
+    "remate": "El desinterés es más frío que cualquier discusión.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que se cansen de ti? Promete cambios que nunca piensas hacer.",
+    "remate": "La repetición rompe más que el error.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que el respeto desaparezca, usa el sarcasmo cuando algo te molesta.",
+    "remate": "Las bromas constantes pueden esconder heridas profundas.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que el hogar pierda calidez? Compite en vez de colaborar.",
+    "remate": "En el amor no hay rivales, hay equipo.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que todo se fracture, habla mal de tu pareja cuando no esté presente.",
+    "remate": "Lo que se honra en privado se fortalece en público.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que el amor se desgaste? Deja de pedir perdón cuando sabes que fallaste.",
+    "remate": "El orgullo pesa más que cualquier error.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que alguien deje de confiar en ti, invalida lo que siente llamándolo exageración.",
+    "remate": "Cuando las emociones no tienen espacio, el corazón busca salida.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres destruir tu hogar, deja que el orgullo gane cada discusión.",
+    "remate": "El amor no sobrevive donde nadie quiere perder.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres perder a alguien que te ama? Hazlo sentir pequeño cada vez que te hable.",
+    "remate": "El desprecio es silencioso, pero letal.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres romper tu matrimonio, guarda silencio cuando algo te duele.",
+    "remate": "Lo que no se habla, se pudre.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres matar el romance? Deja de hacer esas pequeñas cosas que antes hacías sin pensarlo.",
+    "remate": "El amor se alimenta de detalles, no de promesas.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que te dejen de buscar, responde siempre desde la prisa.",
+    "remate": "La indiferencia no necesita palabras, solo tiempos muertos.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres destruir tu relación, gana cada discusión aunque pierdas a la persona.",
+    "remate": "El ego celebra lo que el corazón lamenta.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que te dejen de amar? Haz que se sientan solos estando contigo.",
+    "remate": "La soledad acompañada es la más dolorosa.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que el amor se desgaste, deja de admirar a quien dices amar.",
+    "remate": "Nadie permanece donde ya no es valorado.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres romper la confianza? Miente en cosas pequeñas y llámalas 'para evitar problemas'.",
+    "remate": "La traición empieza en lo que minimizas.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres apagar la pasión, convierte cada error en evidencia de que 'siempre es igual'.",
+    "remate": "El juicio constante mata la conexión.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que tu pareja deje de intentarlo? Hazle sentir que nunca es suficiente.",
+    "remate": "El esfuerzo sin reconocimiento se agota.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres destruir lo que tienen, habla con otros lo que deberías hablar con quien amas.",
+    "remate": "La intimidad mal compartida rompe vínculos.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que el respeto muera? Cruza límites y luego acusa de exageración.",
+    "remate": "Invalidar también es una forma de herir.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "Si quieres que el amor se vuelva rutina fría, deja de elegir a esa persona cada día.",
+    "remate": "El amor no se mantiene solo; se decide.",
+    "categoria": "relaciones"
+  },
+  {
+    "texto": "¿Quieres que alguien se canse de ti? Cambia solo cuando sientes que lo vas a perder.",
+    "remate": "Las transformaciones por miedo no duran.",
+    "categoria": "relaciones"
+  },
+  {
+
+    "texto": "Si quieres apagar tu brillo, compárate todos los días con vidas editadas.",
+    "remate": "Nadie florece midiéndose con filtros.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres arruinar tu paz, intenta agradar a todo el mundo.",
+    "remate": "La aprobación es una jaula elegante.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres sentirte miserable? Espera a ser perfecto antes de empezar.",
+    "remate": "La perfección es la excusa favorita del miedo.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres odiar tu cuerpo, pasa horas viendo a gente que no conoces vivir vidas que no existen.",
+    "remate": "Tu reflejo no compite con pixels.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres destruir tu confianza? Recuerda todos tus errores y olvida todos tus logros.",
+    "remate": "Eres el peor juez de tu propio valor.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres sentirte insuficiente, mide tu progreso con la regla de alguien más.",
+    "remate": "Cada proceso tiene su propio ritmo.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres sabotear tu crecimiento? Escucha más a tus críticos que a tu conciencia.",
+    "remate": "No toda voz merece volumen en tu mente.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres perder seguridad, pide permiso para ser quien ya eres.",
+    "remate": "La autenticidad no se negocia.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres sentir que no vales? Rodéate de quienes solo te señalan lo que falta.",
+    "remate": "Lo que se enfoca, crece.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres vivir frustrado, posterga tus sueños esperando el momento perfecto.",
+    "remate": "El momento perfecto casi nunca llega.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres debilitar tu voz interior? Duda de cada decisión que tomes.",
+    "remate": "La confianza se fortalece practicándola.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres sentirte pequeño, minimiza cada logro llamándolo 'suerte'.",
+    "remate": "Reconocer tu avance no es arrogancia, es justicia.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres quedarte estancado? Define tu identidad por tus fracasos pasados.",
+    "remate": "Tu historia no termina donde te caíste.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres apagar tu voz, reprime lo que sientes para no incomodar a nadie.",
+    "remate": "Callarte constantemente también es una forma de perderte.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres vivir inseguro? Cambia tu opinión cada vez que alguien discrepe.",
+    "remate": "La firmeza no es terquedad, es claridad.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres desgastarte emocionalmente, exige de ti más de lo que le exigirías a otros.",
+    "remate": "La compasión también empieza contigo.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres sentirte invisible? Reduce tus sueños para que nadie se sienta incómodo.",
+    "remate": "Tu luz no necesita permiso para brillar.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres perder tu esencia, intenta encajar en todos los moldes.",
+    "remate": "No naciste para caber, naciste para ser.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "¿Quieres sabotear tu felicidad? Revive mentalmente lo que ya no puedes cambiar.",
+    "remate": "Aprender es útil; castigarte, no.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres desconfiar de ti, ignora tu intuición y sigue siempre la voz más fuerte.",
+    "remate": "La intuición susurra, pero rara vez se equivoca.",
+    "categoria": "autoestima"
+  },
+  {
+    "texto": "Si quieres seguir igual dentro de cinco años, convéncete de que 'así eres tú'.",
+    "remate": "La identidad mal usada se convierte en excusa.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres sabotear tu crecimiento? Di que no tienes tiempo mientras regalas horas al entretenimiento.",
+    "remate": "No es falta de tiempo, es falta de prioridad.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres quedarte donde estás, culpa siempre a tu pasado.",
+    "remate": "Explicar no es lo mismo que justificar.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres vivir frustrado? Habla mucho de tus planes y trabaja poco en silencio.",
+    "remate": "La emoción de contar reemplaza la disciplina de hacer.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres evitar el cambio, rodéate de personas que validen tus excusas.",
+    "remate": "El aplauso equivocado también destruye.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres sentirte víctima toda la vida? Interpreta cada corrección como ataque.",
+    "remate": "No todo lo que incomoda es agresión.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres seguir endeudado emocionalmente, promete mejoras que no estás dispuesto a sostener.",
+    "remate": "La intención sin acción es autoengaño elegante.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres que tus sueños mueran lento? Espera motivación en vez de construir disciplina.",
+    "remate": "La motivación inspira; la disciplina transforma.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres justificar tu estancamiento, llama 'realismo' a tu miedo.",
+    "remate": "El miedo con buena narrativa sigue siendo miedo.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres no avanzar nunca? Aprende, consume, planea… pero nunca ejecutes.",
+    "remate": "El conocimiento sin acción es acumulación inútil.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres traicionarte, ignora lo que sabes que debes hacer.",
+    "remate": "Tu conciencia rara vez se equivoca.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres perder respeto por ti mismo? Negocia tus valores por comodidad.",
+    "remate": "Cada concesión injustificada deja marca.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres que nada cambie, empieza fuerte y abandona cuando deja de ser emocionante.",
+    "remate": "La consistencia es lo que separa intención de resultado.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "¿Quieres vivir comparándote? Observa el éxito ajeno sin estudiar el esfuerzo detrás.",
+    "remate": "Envidiar es más fácil que construir.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres sabotear tu propósito, busca aprobación antes que convicción.",
+    "remate": "La validación externa nunca reemplaza la certeza interna.",
+    "categoria": "autoengano"
+  },
+  {
+    "texto": "Si quieres quemar tu carrera, trata cada trabajo como temporal mientras esperas 'lo tuyo'.",
+    "remate": "La excelencia no espera el escenario perfecto.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que nadie confíe en ti? Promete mucho y entrega poco.",
+    "remate": "Tu palabra es tu marca personal.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres estancarte, rodéate solo de gente que piense como tú.",
+    "remate": "El eco no enseña, solo repite.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres perder oportunidades? Espera a ser perfecto antes de dar el paso.",
+    "remate": "Los preparados esperan, los valientes aprenden haciendo.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres ser reemplazable, haz solo lo que te piden y nada más.",
+    "remate": "La mediocridad es cómoda hasta que ya no eres necesario.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres que te pasen por encima, evita conversaciones difíciles aunque sean necesarias.",
+    "remate": "El silencio profesional también tiene consecuencias.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres volverte invisible? Haz tu trabajo bien, pero nunca lo comuniques.",
+    "remate": "El talento que no se muestra, no se posiciona.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres quedarte atrás, aprende lo justo para sobrevivir y nada más.",
+    "remate": "El mercado no premia al que se conforma.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres perder credibilidad? Culpa siempre a las circunstancias.",
+    "remate": "La responsabilidad construye reputación.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres frenar tu crecimiento, compite con tus compañeros en vez de aprender de ellos.",
+    "remate": "La competencia sin humildad te aísla.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres cerrar puertas? Llega tarde constantemente y llama a eso 'estar ocupado'.",
+    "remate": "La puntualidad también comunica carácter.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres limitar tus ingresos, resiste cualquier cambio que te saque de tu zona cómoda.",
+    "remate": "La comodidad rara vez paga mejor.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que dejen de recomendarte? Trabaja bien solo cuando te están mirando.",
+    "remate": "La integridad se nota incluso cuando nadie observa.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres ser olvidado en una reunión, llega sin ideas y sin preparación.",
+    "remate": "La improvisación constante no es estrategia.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres estancar tu liderazgo? Toma el crédito y reparte la culpa.",
+    "remate": "La autoridad sin justicia pierde respeto.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres perder enfoque, acepta todos los proyectos aunque no tengas capacidad.",
+    "remate": "Decir sí a todo es fallar en silencio.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que tu talento se oxide? Deja de practicar cuando ya seas 'suficientemente bueno'.",
+    "remate": "La excelencia es un hábito, no un logro aislado.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres que otros avancen más rápido que tú, invierte más tiempo en quejarte que en mejorar.",
+    "remate": "La energía mal dirigida nunca produce resultados.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres dañar tu imagen profesional? Mezcla emociones impulsivas con decisiones importantes.",
+    "remate": "Madurez también es saber cuándo respirar antes de responder.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres que tu proyecto fracase, enamórate de tu idea y rechaza toda crítica.",
+    "remate": "La retroalimentación no ataca, fortalece.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres seguir cobrando poco, sigue haciendo lo mínimo indispensable.",
+    "remate": "El mercado paga valor, no presencia.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que te ignoren en tu empresa? Espera reconocimiento sin producir resultados.",
+    "remate": "La intención no factura.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres estancarte, confunde estar ocupado con ser productivo.",
+    "remate": "Moverse no es avanzar.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres sabotear tu crecimiento? Rechaza cualquier tarea que no sea 'tu responsabilidad'.",
+    "remate": "Los indispensables hacen más de lo que se les pide.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres que otro tome tu lugar, deja de aprender mientras el mundo sigue cambiando.",
+    "remate": "La actualización es supervivencia.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que tu negocio fracase? Enamórate de tu idea y desprecia el mercado.",
+    "remate": "El cliente no se adapta a tu ego.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres vivir quejándote, culpa al jefe, al país y a la economía… menos a tu desempeño.",
+    "remate": "La responsabilidad duele, pero libera.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres que te respeten menos? Habla de grandeza y actúa con mediocridad.",
+    "remate": "La incoherencia siempre se nota.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres perder autoridad, evita decisiones difíciles para caerle bien a todos.",
+    "remate": "El liderazgo no es concurso de popularidad.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "¿Quieres quedarte donde estás? Espera oportunidades en vez de crearlas.",
+    "remate": "La iniciativa abre puertas que el currículum no puede.",
+    "categoria": "trabajo"
+  },
+  {
+    "texto": "Si quieres distanciarte de tu familia, asume que siempre hay tiempo para después.",
+    "remate": "El 'después' a veces nunca llega.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres arruinar la cena familiar? Saca tu teléfono y quédate ahí.",
+    "remate": "La presencia sin atención es ausencia disfrazada.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que tus hijos no te cuenten nada, juzga todo lo que te dicen.",
+    "remate": "Los niños callan donde no hay refugio.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres perder la conexión con tus padres? Llama solo cuando necesitas algo.",
+    "remate": "El amor también necesita mantenimiento.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres criar hijos inseguros, compáralos constantemente con otros.",
+    "remate": "Cada hijo necesita ser visto por quien es, no por quien no es.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que tus hijos te teman en vez de respetarte, grita más de lo que escuchas.",
+    "remate": "El miedo controla; el respeto construye.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que tu hogar sea un campo de batalla? Ten razón todo el tiempo.",
+    "remate": "La paz rara vez la gana el que grita más fuerte.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que tus hijos busquen identidad afuera, no les afirmes quiénes son en casa.",
+    "remate": "La ausencia emocional deja vacíos peligrosos.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que tus padres envejezcan sintiéndose carga? Hazles sentir que interrumpen tu vida.",
+    "remate": "Un día extrañarás esas interrupciones.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres destruir la confianza familiar, usa las debilidades de otro como arma en discusión.",
+    "remate": "La traición dentro del hogar deja cicatrices largas.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que tus hijos no te imiten? Diles valores que tú mismo no practicas.",
+    "remate": "Ellos aprenden más de lo que ven que de lo que oyen.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que el respeto muera en casa, humilla en público y corrige en privado.",
+    "remate": "La dignidad herida tarda en sanar.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres distancia emocional? Resuelve todo con dinero y nada con presencia.",
+    "remate": "Proveer no reemplaza conectar.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que el resentimiento crezca, guarda errores antiguos como munición futura.",
+    "remate": "Un hogar no es archivo de guerra.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que el amor familiar se desgaste? Da por hecho que siempre estarán ahí.",
+    "remate": "La permanencia no está garantizada.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que tus hijos te mientan, dales una reacción violenta cuando te digan la verdad.",
+    "remate": "Donde la verdad castiga, el engaño protege.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que tus padres mueran en soledad? Visítalos solo cuando el calendario te obligue.",
+    "remate": "La gratitud no tiene fechas programadas.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres hijos que abandonen sus sueños, proyéctales tus propias frustraciones.",
+    "remate": "Tus hijos son flechas, no el lienzo de tus deudas pendientes.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que el rencor sea la herencia de tu casa? Nunca pidas perdón frente a tus hijos.",
+    "remate": "Pedir perdón enseña grandeza; el orgullo solo enseña frialdad.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres destruir la hermandad de tus hijos, elige un favorito y haz que se note.",
+    "remate": "Los celos sembrados en la infancia son guerras de adultos.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres ser un extraño en tu propia mesa? Prioriza los problemas del trabajo sobre las alegrías de tu casa.",
+    "remate": "El trabajo te reemplaza en días; tu familia nunca.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres hijos emocionalmente analfabetos, enséñales que llorar es de débiles.",
+    "remate": "Lo que no se expresa, se convierte en síntoma.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres que la confianza muera? Rompe las promesas pequeñas bajo la excusa de 'estaba cansado'.",
+    "remate": "Para un niño, una promesa rota es un mundo menos seguro.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres que tus hijos huyan de casa, conviértela en un lugar de juicio constante.",
+    "remate": "Nadie quiere volver al tribunal al final del día.",
+    "categoria": "familia"
+  },
+  {
+    "texto": "¿Quieres heredar amargura? Habla mal de un padre frente a su hijo.",
+    "remate": "Cuando dañas la imagen de uno, fracturas la mitad del corazón del otro.",
+    "categoria": "familia"
+  }
+]
+
+
+
+
