@@ -2022,8 +2022,128 @@
   "remate": "Es saber irte cuando no te eligen con claridad.",
   "categoria": "autoestima",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres un hombre poderoso.",
+  "remate": "Pero te incomoda cuando no gira alrededor de ti.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te atrae el hombre disciplinado.",
+  "remate": "Hasta que descubres que su prioridad no eres tú.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Hablas de amor propio.",
+  "remate": "Pero negocias tus límites cuando el deseo te gana.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que quieres estabilidad.",
+  "remate": "Pero te aburre la paz y te excita el caos.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres un proveedor.",
+  "remate": "Pero no respetas el proceso que lo convirtió en uno.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te molesta que él trabaje demasiado.",
+  "remate": "Pero quieres los resultados de alguien que no descansa.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres un líder.",
+  "remate": "Pero solo cuando lidera en la dirección que te conviene.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te duele que no te prioricen.",
+  "remate": "Pero tú tampoco te priorizas cuando eliges mal.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás cansada del amor.",
+  "remate": "Estás cansada de repetir el mismo patrón con diferente rostro.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres seguridad económica.",
+  "remate": "Pero no seguridad emocional.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te quejas de que no hay hombres serios.",
+  "remate": "Pero ignoras al que no te genera adrenalina.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te falta belleza.",
+  "remate": "Te falta disciplina interna.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te asusta que él tenga opciones.",
+  "remate": "Porque tú basas tu valor en ser elegida.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres compromiso.",
+  "remate": "Pero no quieres responsabilidad.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que los hombres teman mujeres fuertes.",
+  "remate": "Temen relaciones que parecen competencia.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres un hombre ambicioso.",
+  "remate": "Pero te incomoda que su visión sea más grande que la relación.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te duele que él no cambie.",
+  "remate": "Pero tú tampoco cambias lo que eliges.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás empoderada.",
+  "remate": "Estás reaccionando desde heridas no trabajadas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres intensidad.",
+  "remate": "Pero no estabilidad.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Si cada hombre termina decepcionándote.",
+  "remate": "Quizá no eliges desde el amor, sino desde el ego.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  
   }
-
 
  ]
  
