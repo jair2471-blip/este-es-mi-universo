@@ -1206,6 +1206,108 @@
   "remate": "No es estrategia. Es miedo con Excel.",
   "categoria": "productividad",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "Te quejas de que ya no es como antes, pero dejaste de hacer todo lo que lo hacía especial.",
+  "remate": "El amor no se muere solo. Lo descuidan hasta que se cansa.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No te engañaron de la nada. Ignoraste todas las señales porque era más cómodo no ver.",
+  "remate": "La negación también destruye relaciones.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te asusta el compromiso porque implica dejar de vivir como si estuvieras solo.",
+  "remate": "No quieres amor. Quieres compañía sin responsabilidad.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te saboteas antes de intentarlo para poder decir que 'no era para ti'.",
+  "remate": "Fracasar intentando duele menos que no intentarlo jamás.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No te falta talento. Te falta disciplina y te sobra excusa.",
+  "remate": "El potencial no ejecutado es solo fantasía.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Dices que eres real, pero solo eres reactivo.",
+  "remate": "Madurar es elegir cómo responder, no justificar cómo explotas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te pagan lo que produces, no lo que crees que vales.",
+  "remate": "El mercado no premia intenciones. Premia resultados.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Criticas a los que ganan más, pero no estás dispuesto a trabajar más ni mejor.",
+  "remate": "La queja es el refugio del que no quiere mejorar.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres libertad financiera con mentalidad de empleado conformista.",
+  "remate": "Los sueños grandes necesitan decisiones incómodas.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Gastas para sentirte exitoso porque todavía no lo eres.",
+  "remate": "La apariencia es más barata que el carácter, pero no dura igual.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te endeudas por validación social.",
+  "remate": "La aprobación ajena es la compra más cara que puedes hacer.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te tratas como si tu cuerpo fuera desechable.",
+  "remate": "Solo tienes uno. Y no hay reemplazo en Amazon.",
+  "categoria": "salud",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Normalizaste estar cansado todo el tiempo.",
+  "remate": "No es adultez. Es descuido crónico.",
+  "categoria": "salud",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Planeas tu vida más de lo que la ejecutas.",
+  "remate": "Tu agenda está llena. Tu progreso no.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Consumes más contenido del que produces.",
+  "remate": "Estás entretenido, no estás avanzando.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te irritan las mismas personas que algún día vas a extrañar desesperadamente.",
+  "remate": "El amor familiar no es eterno en presencia. Solo en recuerdo.",
+  "categoria": "familia",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Exiges respeto a tus hijos, pero no les das ejemplo.",
+  "remate": "La autoridad sin coherencia es ruido.",
+  "categoria": "familia",
+  "intensidad": "brutal"
   }
  ]
  
