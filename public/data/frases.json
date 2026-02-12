@@ -1902,7 +1902,128 @@
   "remate": "Es tu apego a usarlo como excusa.",
   "categoria": "autoestima",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "No te están dejando por ser 'mucho'. Te están dejando porque eliges hombres que no pueden sostener ni su propia vida.",
+  "remate": "Tu estándar no es alto si sigues bajándolo cuando te gusta alguien.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que mereces un hombre seguro.",
+  "remate": "Pero te intimida uno cuando te dice la verdad sin adornos.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No eres intensa. Eres insegura intentando controlar lo que temes perder.",
+  "remate": "El control es miedo maquillado.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te duele que él no te valore.",
+  "remate": "Pero tú tampoco te valoras cuando aceptas migajas emocionales.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Publicas frases de amor propio.",
+  "remate": "Pero sigues escribiéndole al que ya te mostró quién es.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres un hombre proveedor.",
+  "remate": "Pero no trabajas en ser una mujer que construya junto a él.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te comparas con otras mujeres.",
+  "remate": "Mientras ellas están ocupadas construyendo y tú mirando.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás sola porque seas fuerte.",
+  "remate": "Estás sola porque no has aprendido a elegir mejor.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Exiges claridad.",
+  "remate": "Pero cuando alguien te la da y no te gusta, lo llamas frialdad.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No todos los hombres son iguales.",
+  "remate": "Pero tú sí repites el mismo patrón.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres respeto.",
+  "remate": "Empieza por no traicionarte cuando sabes que algo no te conviene.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu energía femenina no es manipulación disfrazada.",
+  "remate": "La seducción sin carácter solo atrae caos.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No necesitas más atención masculina.",
+  "remate": "Necesitas más disciplina emocional.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "El problema no es que él no quiera compromiso.",
+  "remate": "Es que tú intentas comprometer a alguien que nunca mostró intención real.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te ofende que te digan que trabajes en ti.",
+  "remate": "Porque es más fácil culpar que evolucionar.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres un hombre disciplinado.",
+  "remate": "Pero tú no puedes sostener una rutina ni 30 días seguidos.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que él tema tu brillo.",
+  "remate": "Es que a veces tu brillo es ego buscando validación.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No confundas independencia con incapacidad de confiar.",
+  "remate": "Cerrar el corazón no es fortaleza.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Si cada relación termina igual.",
+  "remate": "La constante en todas eres tú.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "El amor propio no es subir fotos esperando aprobación.",
+  "remate": "Es saber irte cuando no te eligen con claridad.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
   }
+
 
  ]
  
