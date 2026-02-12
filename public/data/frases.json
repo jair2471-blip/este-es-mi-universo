@@ -1067,5 +1067,86 @@
     "remate": "Tu insomnio no es un misterio. Es el precio de llenar tu mente con basura digital antes de dormir.",
     "categoria": "ansiedad",
     "intensidad": "brutal"
-  }
+  },
+  {
+    "texto": "No tienes autoestima alta. Tienes el ego tan frágil que necesitas sentirte superior para no romperte.",
+    "remate": "La verdadera seguridad no necesita aplausos ni comparaciones.",
+    "categoria": "autoestima",
+    "intensidad": "brutal"
+  },
+  {
+  "texto": "Te ofendes por todo porque confundes corrección con ataque.",
+  "remate": "Si todo te hiere, el problema no es el mundo. Es tu orgullo.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Dices que no te importa lo que piensen, pero vives reaccionando a cada opinión.",
+  "remate": "El ego siempre grita. La seguridad no necesita ruido.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Tu problema no es falta de oportunidades. Es que no soportas empezar desde abajo.",
+  "remate": "El ego prefiere quedarse quieto antes que verse pequeño.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Prefieres tener razón que tener paz. Y luego te preguntas por qué estás solo.",
+  "remate": "El ego construye argumentos. El amor construye puentes.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No pides perdón porque crees que eso te hace débil.",
+  "remate": "El orgullo que no se arrodilla termina enterrando relaciones.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te molesta que tu pareja crezca porque ya no te necesita igual.",
+  "remate": "Eso no es amor. Es posesión con maquillaje emocional.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Dices que nadie te entiende, pero nunca escuchas.",
+  "remate": "El ego quiere ser comprendido. Nunca comprender.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No avanzas porque crees que ya sabes suficiente.",
+  "remate": "El día que dejas de aprender es el día que empiezas a quedar obsoleto.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No aceptas críticas porque tu identidad depende de parecer perfecto.",
+  "remate": "El ego se defiende. El profesional mejora.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te molesta el éxito ajeno porque expone tu falta de disciplina.",
+  "remate": "No es envidia. Es el espejo que no quieres mirar.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres liderazgo sin humildad.",
+  "remate": "El ego manda. El líder inspira.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+
+
+
+
+
+  
+  
+  
+  
 ]
