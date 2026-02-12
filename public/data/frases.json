@@ -2142,7 +2142,126 @@
   "remate": "Quizá no eliges desde el amor, sino desde el ego.",
   "categoria": "relaciones",
   "intensidad": "brutal"
-  
+  },
+  {
+  "texto": "No estás estancado.",
+  "remate": "Estás cómodo culpando a otros.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que la vida sea injusta contigo.",
+  "remate": "Es que no quieres pagar el precio.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te sabotearon.",
+  "remate": "Te rendiste antes de intentarlo en serio.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te falta apoyo.",
+  "remate": "Te falta disciplina cuando nadie te mira.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás deprimido por tus resultados.",
+  "remate": "Estás frustrado por tus excusas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es el gobierno.",
+  "remate": "Es tu falta de estrategia.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es tu pasado.",
+  "remate": "Es que te conviene usarlo como justificación.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te tienen envidia.",
+  "remate": "Simplemente no eres tan relevante como crees.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te ignoran.",
+  "remate": "No has construido nada que obligue a mirarte.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es mala suerte.",
+  "remate": "Es repetición de malas decisiones.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te usan.",
+  "remate": "Tú permites que te usen por miedo a quedarte solo.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás cansado.",
+  "remate": "Estás desordenado.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te falta talento.",
+  "remate": "Te sobra dispersión.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te rompen el corazón.",
+  "remate": "Te rompes cuando idealizas lo que nunca existió.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que nadie te valore.",
+  "remate": "Es que tú no te has vuelto valioso.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que el mundo sea cruel.",
+  "remate": "Es que el mundo no te debe nada.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te traicionan siempre.",
+  "remate": "Confías sin criterio.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es ansiedad por el futuro.",
+  "remate": "Es culpa por lo que no hiciste hoy.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que nadie crea en ti.",
+  "remate": "Ni tú has demostrado por qué deberían hacerlo.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás atrapado.",
+  "remate": "Estás evitando la incomodidad que te haría libre.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
   }
 
  ]
