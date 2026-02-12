@@ -84,6 +84,90 @@
       animation: fadeIn 1s ease 0.3s forwards;
     }
 
+    /* Toggle Modo Brutal */
+    .brutal-toggle {
+      margin-top: 25px;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.5s forwards;
+    }
+
+    .toggle-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-label input[type="checkbox"] {
+      display: none;
+    }
+
+    .toggle-slider {
+      position: relative;
+      width: 60px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .toggle-label input[type="checkbox"]:checked ~ .toggle-slider {
+      background: linear-gradient(135deg, #ff1744 0%, #c41230 100%);
+      border-color: #ff1744;
+      box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+    }
+
+    .toggle-label input[type="checkbox"]:checked ~ .toggle-slider::before {
+      transform: translateX(30px);
+      background: #fff;
+    }
+
+    .toggle-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .mode-normal {
+      color: #888;
+    }
+
+    .mode-brutal {
+      color: #ff1744;
+      display: none;
+      text-shadow: 0 0 10px rgba(255, 23, 68, 0.5);
+    }
+
+    .toggle-label input[type="checkbox"]:checked ~ .toggle-text .mode-normal {
+      display: none;
+    }
+
+    .toggle-label input[type="checkbox"]:checked ~ .toggle-text .mode-brutal {
+      display: inline;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
     .stats {
       display: flex;
       justify-content: center;
@@ -747,6 +831,18 @@
     <div class="header">
       <div class="logo">MODO INCÓMODO</div>
       <div class="tagline">Verdades que arden, pero salvan</div>
+      
+      <!-- Toggle Modo Brutal -->
+      <div class="brutal-toggle">
+        <label class="toggle-label">
+          <input type="checkbox" id="brutalMode" />
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">
+            <span class="mode-normal">Modo Normal</span>
+            <span class="mode-brutal">💀 MODO BRUTAL</span>
+          </span>
+        </label>
+      </div>
       <div class="stats">
         <div class="stat">
           <span class="stat-number" id="contador">0</span>
@@ -863,6 +959,7 @@
     // Estado de la aplicación
     let currentSabotaje = null;
     let categoriaActiva = 'todas';
+    let modoBrutal = false;
     let contador = parseInt(localStorage.getItem('contador') || '0');
     let favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
     
@@ -933,6 +1030,17 @@
       let pool = categoriaActiva === 'todas' 
         ? sabotajes 
         : sabotajes.filter(s => s.categoria === categoriaActiva);
+      
+      // Filtrar por intensidad (modo brutal o normal)
+      const intensidad = modoBrutal ? 'brutal' : 'normal';
+      pool = pool.filter(s => s.intensidad === intensidad);
+      
+      // Si no hay frases para esa combinación, mostrar todas de esa categoría
+      if (pool.length === 0) {
+        pool = categoriaActiva === 'todas' 
+          ? sabotajes 
+          : sabotajes.filter(s => s.categoria === categoriaActiva);
+      }
       
       // Seleccionar uno aleatorio
       currentSabotaje = pool[Math.floor(Math.random() * pool.length)];
@@ -1168,6 +1276,29 @@
       btn.addEventListener('click', generar);
       shareBtn.addEventListener('click', abrirModalImagen);
       favBtn.addEventListener('click', toggleFavorito);
+      
+      // Toggle Modo Brutal
+      const brutalToggle = document.getElementById('brutalMode');
+      brutalToggle.addEventListener('change', (e) => {
+        modoBrutal = e.target.checked;
+        localStorage.setItem('modoBrutal', modoBrutal);
+        generar(); // Genera nueva frase con el modo actualizado
+        
+        // Efecto visual al activar
+        if (modoBrutal) {
+          document.body.style.animation = 'shake 0.5s ease';
+          setTimeout(() => {
+            document.body.style.animation = '';
+          }, 500);
+        }
+      });
+      
+      // Recuperar estado del modo brutal
+      const savedBrutalMode = localStorage.getItem('modoBrutal') === 'true';
+      if (savedBrutalMode) {
+        brutalToggle.checked = true;
+        modoBrutal = true;
+      }
       
       favoritosBtn.addEventListener('click', () => {
         favoritosPanel.classList.add('open');
