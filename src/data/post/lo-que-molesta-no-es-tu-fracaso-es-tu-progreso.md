@@ -1,6 +1,7 @@
 ---
 title: "La gente quiere que te vaya bien… pero no mejor que a ellos"
 description: "Muchos celebran tu esfuerzo, pero pocos soportan tu crecimiento. Una reflexión incómoda sobre la envidia silenciosa y el éxito que incomoda."
+image: https://plus.unsplash.com/premium_photo-1750118562690-63ced7f20026?q=80&w=1200&auto=format&fit=crop
 pubDate: 2026-02-11
 category: reflexiones
 tags: ["éxito", "envidia", "crecimiento personal", "emprendimiento", "mentalidad"]
