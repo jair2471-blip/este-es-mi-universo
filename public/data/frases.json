@@ -1139,5 +1139,73 @@
   "remate": "El ego manda. El líder inspira.",
   "categoria": "trabajo",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "Te llamas humilde, pero lo que tienes es miedo a destacar.",
+  "remate": "La falsa modestia también es ego disfrazado.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te duele el éxito ajeno porque confirma que tú también podrías, pero no quieres pagar el precio.",
+  "remate": "No es envidia. Es frustración acumulada.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+	  
+  "texto": "No eres incomprendido. Eres difícil porque no toleras no ser el centro.",
+  "remate": "El ego necesita protagonismo para sentirse vivo.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  }, 
+  {
+  "texto": "No te dejaron por falta de amor. Te dejaron por exceso de orgullo.",
+  "remate": "Nadie puede abrazar a alguien que siempre está a la defensiva.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Exiges comprensión, pero reaccionas con ataque cuando te dicen una verdad incómoda.",
+  "remate": "El ego no dialoga. Contraataca.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres que te elijan, pero actúas como si fueras reemplazable.",
+  "remate": "El ego sabotea lo que el corazón necesita.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te molesta que te corrijan porque crees que equivocarte te hace pequeño.",
+  "remate": "El error no te reduce. Tu ego sí.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres reconocimiento sin disciplina.",
+  "remate": "El talento sin humildad se convierte en promesa eterna.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No delegas porque crees que nadie lo hará como tú.",
+  "remate": "El ego que no confía termina agotado y solo.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  }, 
+  {
+  "texto": "Te dices que no empiezas porque 'no es el momento ideal'.",
+  "remate": "El ego necesita condiciones perfectas. La disciplina no.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Prefieres planear infinitamente antes que arriesgarte a fallar.",
+  "remate": "No es estrategia. Es miedo con Excel.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
   }
  ]
+ 
