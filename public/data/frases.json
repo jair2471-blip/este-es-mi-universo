@@ -1422,7 +1422,249 @@
   "remate": "Ser adulto también es dejar de culpar.",
   "categoria": "familia",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "Te conformas con migajas emocionales porque temes quedarte sola.",
+  "remate": "La soledad asusta, pero la mediocridad sentimental desgasta más.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te arreglas para que te deseen, pero no trabajas para que te respeten.",
+  "remate": "La admiración dura segundos, el respeto construye legado.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Toleras lo que te duele porque te dijeron que el amor todo lo soporta.",
+  "remate": "El amor no justifica el maltrato silencioso.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Publicas felicidad que no sientes para no aceptar que algo no está bien.",
+  "remate": "Las redes no sanan lo que evitas enfrentar.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te postergas a ti misma mientras sostienes sueños ajenos.",
+  "remate": "Apoyar no significa desaparecer.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que no tienes tiempo, pero lo regalas a quien no te prioriza.",
+  "remate": "Tu agenda revela tu autoestima.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Esperas que alguien llegue a rescatarte mientras ignoras tu propio potencial.",
+  "remate": "No necesitas salvador, necesitas decisión.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te quedas donde no floreces por miedo a empezar de cero.",
+  "remate": "A veces el cero es el inicio de tu versión más fuerte.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Confundes intensidad con amor y drama con pasión.",
+  "remate": "El caos no es romance, es advertencia.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te comparas con otras mujeres como si la vida fuera competencia.",
+  "remate": "La comparación es el ladrón silencioso de tu brillo.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te exiges perfección, pero no te permites aprender.",
+  "remate": "La autoexigencia sin compasión destruye más que el fracaso.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Callas para evitar conflictos y luego acumulas resentimiento.",
+  "remate": "Lo que no se habla, termina explotando.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te adaptas tanto a los demás que olvidas quién eres.",
+  "remate": "La aprobación no reemplaza identidad.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que quieres estabilidad, pero eliges lo que te desordena.",
+  "remate": "Tus decisiones gritan más fuerte que tus deseos.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Trabajas duro, pero no negocias tu valor.",
+  "remate": "El talento sin límites claros termina explotado.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te asusta brillar porque incomoda a otros.",
+  "remate": "Apagarte no hará que te amen más.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Sostienes relaciones rotas por miedo a admitir que te equivocaste.",
+  "remate": "Aceptar un error es más digno que sostener una mentira.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Consumes contenido motivacional, pero no tomas acción.",
+  "remate": "Inspirarte no cambia tu vida, actuar sí.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te quedas en trabajos que te apagan porque pagan seguro.",
+  "remate": "La estabilidad sin propósito también cansa el alma.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Esperas ser elegida en lugar de elegir lo que mereces.",
+  "remate": "Quien no se elige primero, acepta menos de lo que vale.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Dices que el dinero no importa, pero te quejas cada vez que falta.",
+  "remate": "Negar su importancia no paga las cuentas.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres libertad financiera, pero temes salir de tu zona cómoda.",
+  "remate": "La seguridad mal entendida es una jaula elegante.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Criticas a los ricos mientras imitas sus hábitos de consumo, no los de disciplina.",
+  "remate": "El resultado se admira, el proceso se evita.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te ofende el éxito ajeno porque expone tu falta de acción.",
+  "remate": "La envidia es frustración sin valentía.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres ganar más, pero no estás dispuesto a volverte más valioso.",
+  "remate": "El mercado paga utilidad, no intención.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Hablas de emprendimiento, pero no soportas la incertidumbre.",
+  "remate": "El riesgo es el precio de la independencia.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te impresiona quien muestra dinero, no quien construye patrimonio.",
+  "remate": "La ostentación es ruido; el poder real es silencioso.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Gastas para aparentar un nivel que aún no sostienes.",
+  "remate": "La apariencia compra aplausos, no estabilidad.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres influencia, pero no trabajas en tu carácter.",
+  "remate": "El poder sin carácter termina destruyéndote.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te conformas con un salario fijo porque el miedo te paga puntual.",
+  "remate": "La tranquilidad sin crecimiento también empobrece.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Admiras el lujo, pero ignoras los sacrificios detrás de él.",
+  "remate": "El éxito visible es la punta del iceberg invisible.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres mandar, pero no sabes obedecer procesos.",
+  "remate": "El liderazgo nace en la disciplina.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te quejas del sistema, pero no desarrollas habilidades para jugar mejor.",
+  "remate": "Victimizarte no cambia las reglas.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Confundes poder con imponer y autoridad con intimidar.",
+  "remate": "El respeto auténtico no se compra ni se exige.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres independencia económica, pero dependes emocionalmente de aprobación.",
+  "remate": "La libertad empieza en la mente.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te asusta ganar más porque implicaría responsabilizarte más.",
+  "remate": "Más ingresos exigen más madurez.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Celebras cuando alguien fracasa porque te hace sentir menos atrás.",
+  "remate": "La mediocridad ama la compañía.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres estabilidad financiera, pero vives en gratificación inmediata.",
+  "remate": "El placer rápido suele ser pobreza lenta.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te incomoda quien progresa cerca de ti.",
+  "remate": "El verdadero apoyo no compite en silencio.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que el dinero cambia a la gente, pero el dinero solo revela.",
+  "remate": "La abundancia amplifica lo que ya eras.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
   }
- 
+
+
+
  ]
  
