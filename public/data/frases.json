@@ -599,6 +599,131 @@
     "texto": "¿Quieres heredar amargura? Habla mal de un padre frente a su hijo.",
     "remate": "Cuando dañas la imagen de uno, fracturas la mitad del corazón del otro.",
     "categoria": "familia"
+  },
+  {
+    "texto": "Si quieres ser pobre toda tu vida, espera que el dinero llegue solo.",
+    "remate": "La riqueza es un verbo, no un deseo.",
+    "categoria": "dinero"
+  },
+  {
+    "texto": "¿Quieres vivir endeudado eternamente? Gasta hoy lo que ganarás mañana.",
+    "remate": "Las tarjetas no son extensiones de tu salario.",
+    "categoria": "dinero"
+  },
+  {
+    "texto": "Si quieres quedarte sin futuro, presume un presente que no te alcanza.",
+    "remate": "Lo que impresiona a extraños, te quiebra en privado.",
+    "categoria": "dinero"
+  },
+  {
+    "texto": "¿Quieres depender de otros toda tu vida? No aprendas nada sobre tu propio dinero.",
+    "remate": "La ignorancia financiera es voluntaria, no inevitable.",
+    "categoria": "dinero"
+  },
+  {
+    "texto": "Si quieres trabajar hasta morir, gasta cada peso que ganas.",
+    "remate": "El retiro no es un regalo, es una decisión de décadas.",
+    "categoria": "dinero"
+  },
+  {
+    "texto": "Si quieres enfermarte joven, come como si tuvieras 20 para siempre.",
+    "remate": "Tu cuerpo lleva la cuenta aunque tú no.",
+    "categoria": "salud"
+  },
+  {
+    "texto": "¿Quieres morir antes de tiempo? Ignora las señales que tu cuerpo te grita.",
+    "remate": "El dolor es conversación, no background noise.",
+    "categoria": "salud"
+  },
+  {
+    "texto": "Si quieres vivir cansado, convéncete de que dormir es perder tiempo.",
+    "remate": "La productividad sin descanso es autodestrucción con agenda.",
+    "categoria": "salud"
+  },
+  {
+    "texto": "¿Quieres que tu salud colapse? Espera a que duela para empezar a cuidarte.",
+    "remate": "Prevenir es barato. Lamentar, carísimo.",
+    "categoria": "salud"
+  },
+  {
+    "texto": "Si quieres envejecer mal, trata tu cuerpo como si fuera indestructible.",
+    "remate": "La factura del descuido llega con intereses.",
+    "categoria": "salud"
+  },
+  {
+    "texto": "Si quieres morir con sueños guardados, espera el momento perfecto.",
+    "remate": "El timing perfecto no existe, solo versiones de ti que actúan.",
+    "categoria": "productividad"
+  },
+  {
+    "texto": "¿Quieres seguir siendo el mismo en 5 años? Haz lo mismo que hoy, todos los días.",
+    "remate": "La zona de confort tiene forma de ataúd.",
+    "categoria": "productividad"
+  },
+  {
+    "texto": "Si quieres sabotear tu día, revisa el celular antes de levantarte.",
+    "remate": "Quien controla tu primera hora, controla tu día.",
+    "categoria": "productividad"
+  },
+  {
+    "texto": "¿Quieres que los años pasen sin lograr nada? Mantén tus metas en tu cabeza, nunca en papel.",
+    "remate": "Lo que no se escribe, no se cumple.",
+    "categoria": "productividad"
+  },
+  {
+    "texto": "Si quieres ser víctima de tu tiempo, deja que otros decidan tu agenda.",
+    "remate": "Decir sí a todo es decir no a lo que importa.",
+    "categoria": "productividad"
+  },
+  {
+    "texto": "Si quieres perder amigos reales, solo habla de ti mismo.",
+    "remate": "Las relaciones son eco, no monólogo.",
+    "categoria": "amistades"
+  },
+  {
+    "texto": "¿Quieres quedarte solo? Aparece solo cuando necesitas algo.",
+    "remate": "La amistad no es un servicio de emergencias.",
+    "categoria": "amistades"
+  },
+  {
+    "texto": "Si quieres que nadie te busque, sé el amigo que siempre cancela.",
+    "remate": "La gente deja de invitar a quien siempre dice que no.",
+    "categoria": "amistades"
+  },
+  {
+    "texto": "¿Quieres atraer drama? Rodéate de personas que solo te buscan para quejarse.",
+    "remate": "Eres el promedio de las cinco personas con las que más convives.",
+    "categoria": "amistades"
+  },
+  {
+    "texto": "Si quieres amistades superficiales, nunca hables de lo que realmente sientes.",
+    "remate": "La vulnerabilidad construye puentes. El orgullo, muros.",
+    "categoria": "amistades"
+  },
+  {
+    "texto": "Si quieres fracasar, empieza mañana. Siempre mañana.",
+    "remate": "El lunes eterno es la tumba de los proyectos.",
+    "categoria": "habitos"
+  },
+  {
+    "texto": "¿Quieres que tu vida no cambie? Espera a tener motivación para empezar.",
+    "remate": "La disciplina construye lo que la motivación solo promete.",
+    "categoria": "habitos"
+  },
+  {
+    "texto": "Si quieres seguir atrapado, di que 'así eres tú' cada vez que te señalan algo.",
+    "remate": "Justificar es la forma elegante de rendirse.",
+    "categoria": "habitos"
+  },
+  {
+    "texto": "¿Quieres desperdiciar tu potencial? Haz lo fácil ahora, lo importante después.",
+    "remate": "Tu futuro es la suma de lo que eliges hoy.",
+    "categoria": "habitos"
+  },
+  {
+    "texto": "Si quieres autosabotearte, rompe promesas contigo mismo.",
+    "remate": "La confianza más importante es la que tienes contigo.",
+    "categoria": "habitos"
   }
 ]
 
