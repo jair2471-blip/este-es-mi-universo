@@ -1308,6 +1308,121 @@
   "remate": "La autoridad sin coherencia es ruido.",
   "categoria": "familia",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "No te dejaron por un error. Te dejaron por el patrón.",
+  "remate": "Un error se perdona. La repetición cansa.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres estabilidad emocional, pero reaccionas como tormenta.",
+  "remate": "No puedes pedir paz siendo caos.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te molesta que te reclamen lo mismo, pero nunca cambias lo que lo provoca.",
+  "remate": "No es persecución. Es consecuencia.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Dices que te fallaron, pero tú también fallas y lo llamas 'defenderte'.",
+  "remate": "La doble moral rompe más que la traición.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te hablas peor de lo que jamás permitirías que otro te hablara.",
+  "remate": "Tu peor enemigo no es el mundo. Es tu diálogo interno.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "No te falta suerte. Te falta constancia.",
+  "remate": "La disciplina hace parecer afortunados a los persistentes.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te escondes detrás del humor para no enfrentar lo que te duele.",
+  "remate": "Reír no siempre es sanar.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te dices que 'no importa', pero sí importa. Solo que te da miedo admitirlo.",
+  "remate": "Negar tus deseos no los elimina. Los frustra.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres que te valoren, pero tú mismo haces tu trabajo sin pasión.",
+  "remate": "La indiferencia también se nota.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te quejas del salario, pero no has aumentado tu valor en años.",
+  "remate": "El mercado no ajusta sueldos por lástima.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres resultados de alto nivel con hábitos de bajo nivel.",
+  "remate": "El éxito no negocia estándares.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te duele ahorrar porque te acostumbraste a gastar para sentir algo.",
+  "remate": "La impulsividad financiera es hambre emocional disfrazada.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Quieres libertad económica, pero tus decisiones gritan dependencia.",
+  "remate": "Cada compra innecesaria retrasa tu independencia.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te prometes empezar el lunes mientras tu cuerpo paga hoy.",
+  "remate": "La salud no entiende de calendarios motivacionales.",
+  "categoria": "salud",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Normalizaste el estrés como si fuera productividad.",
+  "remate": "Estar ocupado no es estar sano.",
+  "categoria": "salud",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Tu problema no es falta de tiempo. Es falta de enfoque.",
+  "remate": "Dispersión es procrastinación elegante.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te distraes porque enfrentarte a tus metas te intimida.",
+  "remate": "La distracción es refugio del miedo.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Das por sentado a quienes más te aman.",
+  "remate": "El amor constante también se cansa.",
+  "categoria": "familia",
+  "intensidad": "brutal"
+  },
+  {
+  "texto": "Te quejas de cómo te criaron, pero no has hecho el trabajo de sanar.",
+  "remate": "Ser adulto también es dejar de culpar.",
+  "categoria": "familia",
+  "intensidad": "brutal"
   }
+ 
  ]
  
