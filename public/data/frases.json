@@ -754,9 +754,319 @@
     "texto": "Si quieres alimentar tu ansiedad, nunca pidas ayuda.",
     "remate": "Sufrir en silencio no te hace fuerte, te hace solo.",
     "categoria": "ansiedad"
-  } 
+  },
+  {
+    "texto": "Tu pareja no es tu enemigo, pero tú estás ganando la guerra contra tu relación.",
+    "remate": "Cada pelea que 'ganas' es un paso más cerca del final.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "¿Quieres que te amen menos cada día? Sigue ignorando cuando intentan conectar contigo.",
+    "remate": "La gente no se va de golpe. Se van de a poco, mientras tú no miras.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Tu silencio no es paz, es venganza pasiva. Y estás matando lo único que te importa.",
+    "remate": "El rencor callado no es dignidad, es cobardía disfrazada.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Sigues midiendo tu vida con la regla equivocada. Por eso siempre sales perdiendo.",
+    "remate": "Competir con Instagram es como pelear con un espejo: solo te lastimas tú.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Estás tan ocupado siendo quien otros quieren, que olvidaste quién eres tú.",
+    "remate": "La aprobación ajena es adictiva, pero nunca suficiente. Nunca.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "No eres perfeccionista. Eres un cobarde con un vocabulario elegante.",
+    "remate": "Cada día que 'te preparas' es un día que tu vida no avanza.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Llevas años 'buscando tu pasión' mientras otros construyen imperios con lo que tienes frente a ti.",
+    "remate": "Tu trabajo ideal no te está esperando. Lo construyes o no existe.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Cada promesa rota es una puerta que se cierra. Y ya perdiste las llaves de varias.",
+    "remate": "La gente te recuerda más por lo que no hiciste que por lo que dijiste que harías.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Tu círculo es un espejo. Si todos piensan igual que tú, estás en una cámara de eco, no en crecimiento.",
+    "remate": "La comodidad intelectual es el cementerio de las mentes brillantes.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Tus padres están envejeciendo mientras tú estás 'ocupado'. No habrá second chance.",
+    "remate": "Vas a tener todo el tiempo del mundo para arrepentirte cuando ya no estén.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Tus hijos no van a recordar tu trabajo. Van a recordar que siempre estabas en tu teléfono cuando te hablaban.",
+    "remate": "La infancia no tiene pausa. Y tú te la estás perdiendo en una pantalla.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Sigues esperando tu golpe de suerte mientras otros crean su propia suerte trabajando.",
+    "remate": "La pobreza que más duele es la que tú mismo eliges con tu inacción.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Esas cuotas que pagas cada mes son tus sueños muriendo lentamente.",
+    "remate": "No eres dueño de tus cosas. Tus deudas son dueñas de ti.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Ese auto que no puedes pagar está matando el retiro que nunca vas a tener.",
+    "remate": "Impresionas a gente que no te importa, con dinero que no tienes, para comprar mierda que no necesitas.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Ese cuerpo que maltratas hoy será la prisión en la que vivas mañana.",
+    "remate": "No vas a poder comprar salud cuando tengas dinero. No funciona así.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Tu cuerpo te está mandando facturas que sigues ignorando. La última vendrá con intereses.",
+    "remate": "Ese dolor 'no es nada' hasta que es demasiado tarde.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Estás quemando tu salud mental y física por un trabajo que te reemplazará en 48 horas si te mueres.",
+    "remate": "El burnout no es una medalla de honor. Es una advertencia final.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Vas a morir con tu música adentro porque 'no era el momento'. Spoiler: nunca lo será.",
+    "remate": "El momento perfecto es un invento para cobardes que necesitan excusas.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "En 5 años vas a estar exactamente donde estás hoy. Porque no has hecho nada diferente.",
+    "remate": "La definición de locura es esperar resultados diferentes haciendo lo mismo. Tú eres esa locura.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Le entregas tu mente a las notificaciones antes de darte cuenta de tus propios pensamientos.",
+    "remate": "Tu día no empieza contigo. Empieza con el algoritmo decidiendo tu estado de ánimo.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Nadie te escucha porque tú nunca escuchas. Eres un podcast que nadie pidió.",
+    "remate": "La gente te tolera, no te valora. Hay una diferencia brutal.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Eres el amigo tóxico del que la gente quiere alejarse pero no sabe cómo decírtelo.",
+    "remate": "Te buscan porque no pueden evitarte, no porque te quieren cerca.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Ese grupo de amigos del que te quejas no existe. Tú tampoco existes para ellos.",
+    "remate": "No te están excluyendo. Ya te olvidaron.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Llevas 5 años 'empezando el lunes'. El único músculo que ejercitas es el de las excusas.",
+    "remate": "No estás ocupado. Estás evitando. Y lo sabes.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "La motivación es para turistas. Los profesionales trabajan aunque no tengan ganas.",
+    "remate": "Nadie que logró algo grande lo hizo esperando 'sentirse inspirado'.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "'Así soy yo' es la frase de alguien que se rindió hace años y ahora llama autenticidad a su mediocridad.",
+    "remate": "No eres auténtico. Eres flojo. Y usas palabras bonitas para no cambiarlo.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Pasas más tiempo sufriendo escenarios inventados que viviendo tu realidad.",
+    "remate": "Tu ansiedad no te protege. Te roba el único momento que tienes: ahora.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Estás muriendo lentamente preocupándote por cosas que quizás nunca pasen.",
+    "remate": "Tu vida se está escapando mientras tú estás en tu cabeza peleando batallas imaginarias.",
+    "categoria": "brutal"
+  },
+  {
+    "texto": "Le das tu último pensamiento consciente del día a desconocidos en pantallas. Y te preguntas por qué no duermes.",
+    "remate": "Tu insomnio no es un misterio. Es el precio de llenar tu mente con basura digital antes de dormir.",
+    "categoria": "brutal"
+  }
 ]
-
-
-
-
+  {
+    "texto": "Tu pareja no es tu enemigo, pero tú estás ganando la guerra contra tu relación.",
+    "remate": "Cada pelea que 'ganas' es un paso más cerca del final.",
+    "categoria": "relaciones",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "¿Quieres que te amen menos cada día? Sigue ignorando cuando intentan conectar contigo.",
+    "remate": "La gente no se va de golpe. Se van de a poco, mientras tú no miras.",
+    "categoria": "relaciones",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Tu silencio no es paz, es venganza pasiva. Y estás matando lo único que te importa.",
+    "remate": "El rencor callado no es dignidad, es cobardía disfrazada.",
+    "categoria": "relaciones",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Sigues midiendo tu vida con la regla equivocada. Por eso siempre sales perdiendo.",
+    "remate": "Competir con Instagram es como pelear con un espejo: solo te lastimas tú.",
+    "categoria": "autoestima",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Estás tan ocupado siendo quien otros quieren, que olvidaste quién eres tú.",
+    "remate": "La aprobación ajena es adictiva, pero nunca suficiente. Nunca.",
+    "categoria": "autoestima",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "No eres perfeccionista. Eres un cobarde con un vocabulario elegante.",
+    "remate": "Cada día que 'te preparas' es un día que tu vida no avanza.",
+    "categoria": "autoestima",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Llevas años 'buscando tu pasión' mientras otros construyen imperios con lo que tienes frente a ti.",
+    "remate": "Tu trabajo ideal no te está esperando. Lo construyes o no existe.",
+    "categoria": "trabajo",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Cada promesa rota es una puerta que se cierra. Y ya perdiste las llaves de varias.",
+    "remate": "La gente te recuerda más por lo que no hiciste que por lo que dijiste que harías.",
+    "categoria": "trabajo",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Tu círculo es un espejo. Si todos piensan igual que tú, estás en una cámara de eco, no en crecimiento.",
+    "remate": "La comodidad intelectual es el cementerio de las mentes brillantes.",
+    "categoria": "trabajo",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Tus padres están envejeciendo mientras tú estás 'ocupado'. No habrá second chance.",
+    "remate": "Vas a tener todo el tiempo del mundo para arrepentirte cuando ya no estén.",
+    "categoria": "familia",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Tus hijos no van a recordar tu trabajo. Van a recordar que siempre estabas en tu teléfono cuando te hablaban.",
+    "remate": "La infancia no tiene pausa. Y tú te la estás perdiendo en una pantalla.",
+    "categoria": "familia",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Esas cuotas que pagas cada mes son tus sueños muriendo lentamente.",
+    "remate": "No eres dueño de tus cosas. Tus deudas son dueñas de ti.",
+    "categoria": "dinero",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Ese auto que no puedes pagar está matando el retiro que nunca vas a tener.",
+    "remate": "Impresionas a gente que no te importa, con dinero que no tienes, para comprar mierda que no necesitas.",
+    "categoria": "dinero",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Ese cuerpo que maltratas hoy será la prisión en la que vivas mañana.",
+    "remate": "No vas a poder comprar salud cuando tengas dinero. No funciona así.",
+    "categoria": "salud",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Tu cuerpo te está mandando facturas que sigues ignorando. La última vendrá con intereses.",
+    "remate": "Ese dolor 'no es nada' hasta que es demasiado tarde.",
+    "categoria": "salud",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Estás quemando tu salud mental y física por un trabajo que te reemplazará en 48 horas si te mueres.",
+    "remate": "El burnout no es una medalla de honor. Es una advertencia final.",
+    "categoria": "salud",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Vas a morir con tu música adentro porque 'no era el momento'. Spoiler: nunca lo será.",
+    "remate": "El momento perfecto es un invento para cobardes que necesitan excusas.",
+    "categoria": "productividad",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "En 5 años vas a estar exactamente donde estás hoy. Porque no has hecho nada diferente.",
+    "remate": "La definición de locura es esperar resultados diferentes haciendo lo mismo. Tú eres esa locura.",
+    "categoria": "productividad",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Le entregas tu mente a las notificaciones antes de darte cuenta de tus propios pensamientos.",
+    "remate": "Tu día no empieza contigo. Empieza con el algoritmo decidiendo tu estado de ánimo.",
+    "categoria": "productividad",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Nadie te escucha porque tú nunca escuchas. Eres un podcast que nadie pidió.",
+    "remate": "La gente te tolera, no te valora. Hay una diferencia brutal.",
+    "categoria": "amistades",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Eres el amigo tóxico del que la gente quiere alejarse pero no sabe cómo decírtelo.",
+    "remate": "Te buscan porque no pueden evitarte, no porque te quieren cerca.",
+    "categoria": "amistades",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Ese grupo de amigos del que te quejas no existe. Tú tampoco existes para ellos.",
+    "remate": "No te están excluyendo. Ya te olvidaron.",
+    "categoria": "amistades",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Llevas 5 años 'empezando el lunes'. El único músculo que ejercitas es el de las excusas.",
+    "remate": "No estás ocupado. Estás evitando. Y lo sabes.",
+    "categoria": "habitos",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "La motivación es para turistas. Los profesionales trabajan aunque no tengan ganas.",
+    "remate": "Nadie que logró algo grande lo hizo esperando 'sentirse inspirado'.",
+    "categoria": "habitos",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "'Así soy yo' es la frase de alguien que se rindió hace años y ahora llama autenticidad a su mediocridad.",
+    "remate": "No eres auténtico. Eres flojo. Y usas palabras bonitas para no cambiarlo.",
+    "categoria": "habitos",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Pasas más tiempo sufriendo escenarios inventados que viviendo tu realidad.",
+    "remate": "Tu ansiedad no te protege. Te roba el único momento que tienes: ahora.",
+    "categoria": "ansiedad",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Estás muriendo lentamente preocupándote por cosas que quizás nunca pasen.",
+    "remate": "Tu vida se está escapando mientras tú estás en tu cabeza peleando batallas imaginarias.",
+    "categoria": "ansiedad",
+    "intensidad": "brutal"
+  },
+  {
+    "texto": "Le das tu último pensamiento consciente del día a desconocidos en pantallas. Y te preguntas por qué no duermes.",
+    "remate": "Tu insomnio no es un misterio. Es el precio de llenar tu mente con basura digital antes de dormir.",
+    "categoria": "ansiedad",
+    "intensidad": "brutal"
+  }
+]
