@@ -6,8 +6,6 @@ category: reflexiones
 tags: ["éxito", "envidia", "crecimiento personal", "emprendimiento", "mentalidad"]
 ---
 
-# La gente quiere que te vaya bien… pero no mejor que a ellos
-
 Hay una verdad incómoda que casi nadie se atreve a decir:
 
 Muchas personas te apoyan mientras creen que eres pequeño.
