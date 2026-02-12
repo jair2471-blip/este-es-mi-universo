@@ -1662,8 +1662,127 @@
   "remate": "La abundancia amplifica lo que ya eras.",
   "categoria": "autoestima",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "No te falta tiempo. Te falta disciplina.",
+  "remate": "El reloj es el mismo para todos.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Esperas sentir ganas para empezar.",
+  "remate": "La disciplina empieza cuando las ganas se acaban.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te prometes cambiar, pero negocias contigo cada mañana.",
+  "remate": "La autodisciplina no se negocia.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te rindes porque es difícil.",
+  "remate": "Si fuera fácil, cualquiera tendría tu sueño.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres resultados de atleta con hábitos de espectador.",
+  "remate": "Lo que haces en privado define lo que logras en público.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Postergas lo importante porque incomoda.",
+  "remate": "Tu incomodidad es la puerta que no quieres cruzar.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que eres constante, pero solo cuando es fácil.",
+  "remate": "La constancia real aparece cuando nadie aplaude.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu problema no es falta de información.",
+  "remate": "Es falta de ejecución.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te distraes porque enfocarte duele.",
+  "remate": "La concentración es entrenamiento mental.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres disciplina, pero no quieres estructura.",
+  "remate": "Sin reglas claras, tu fuerza de voluntad se derrumba.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te cansas más pensando en hacerlo que haciéndolo.",
+  "remate": "La acción reduce la ansiedad que la mente exagera.",
+  "categoria": "ansiedad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Abandonas cuando no ves resultados rápidos.",
+  "remate": "La disciplina trabaja en silencio antes de mostrar recompensa.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres una vida diferente haciendo lo mínimo.",
+  "remate": "Lo extraordinario exige esfuerzo extraordinario.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te saboteas con excusas elegantes.",
+  "remate": "La excusa bien dicha sigue siendo excusa.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te felicitas por intentarlo, pero no por terminarlo.",
+  "remate": "Intentar no transforma. Terminar sí.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "La comodidad es tu prioridad secreta.",
+  "remate": "Y la comodidad nunca produjo grandeza.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te prometes madrugar, pero trasnochas sin propósito.",
+  "remate": "La disciplina empieza la noche anterior.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te distraes con planes en vez de ejecutar tareas.",
+  "remate": "Planear sin actuar es procrastinación sofisticada.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres respeto, pero no respetas tu propia palabra.",
+  "remate": "Cada promesa incumplida debilita tu carácter.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu potencial no sirve si no lo entrenas.",
+  "remate": "El talento sin disciplina es desperdicio elegante.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
   }
-
 
 
  ]
