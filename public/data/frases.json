@@ -724,7 +724,37 @@
     "texto": "Si quieres autosabotearte, rompe promesas contigo mismo.",
     "remate": "La confianza más importante es la que tienes contigo.",
     "categoria": "habitos"
-  }
+  },
+  {
+    "texto": "Si quieres autosabotearte, rompe promesas contigo mismo.",
+    "remate": "La confianza más importante es la que tienes contigo.",
+    "categoria": "habitos"
+  },
+  {
+    "texto": "Si quieres vivir ansioso, anticipa tragedias que nunca pasarán.",
+    "remate": "El 90% de tus miedos nunca se materializan.",
+    "categoria": "ansiedad"
+  },
+  {
+    "texto": "¿Quieres perder el presente? Vive en un futuro que aún no existe.",
+    "remate": "La ansiedad es interés sobre un problema que no has pedido prestado.",
+    "categoria": "ansiedad"
+  },
+  {
+    "texto": "Si quieres amplificar tu ansiedad, scrollea antes de dormir.",
+    "remate": "Tu cerebro no distingue el peligro real del digital.",
+    "categoria": "ansiedad"
+  },
+  {
+    "texto": "¿Quieres sentirte abrumado? Trata de controlar todo lo que no depende de ti.",
+    "remate": "La paz empieza donde termina el control.",
+    "categoria": "ansiedad"
+  },
+  {
+    "texto": "Si quieres alimentar tu ansiedad, nunca pidas ayuda.",
+    "remate": "Sufrir en silencio no te hace fuerte, te hace solo.",
+    "categoria": "ansiedad"
+  } 
 ]
 
 
