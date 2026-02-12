@@ -1782,8 +1782,127 @@
   "remate": "El talento sin disciplina es desperdicio elegante.",
   "categoria": "trabajo",
   "intensidad": "brutal"
+  },
+  {
+  "texto": "No estás cansado de la vida. Estás cansado de las consecuencias de tus decisiones.",
+  "remate": "Tu realidad actual es acumulación de elecciones repetidas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te duele que otros avancen porque te recuerda que tú no lo hiciste.",
+  "remate": "La envidia es el espejo que no quieres mirar.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No te traicionaron. Ignoraste todas las señales.",
+  "remate": "La intuición susurra antes de que la realidad grite.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Sigues diciendo que nadie te apoya.",
+  "remate": "Ni tú te apoyas cuando más te necesitas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No es que el mundo esté en tu contra.",
+  "remate": "Es que el mundo no está pensando en ti.",
+  "categoria": "ansiedad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres resultados que solo llegan cuando haces lo que evitas.",
+  "remate": "Tu progreso está escondido detrás de tu resistencia.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te ofende la verdad porque destruye la historia cómoda que te cuentas.",
+  "remate": "Madurar duele más que victimizarse.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás confundido. Estás evitando decidir.",
+  "remate": "La indecisión prolongada también es una decisión.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Hablas de lealtad, pero solo eres leal cuando te conviene.",
+  "remate": "La integridad se prueba cuando nadie te ve.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te quejas del sistema, pero no dominas ni tu agenda diaria.",
+  "remate": "El caos externo refleja desorden interno.",
+  "categoria": "productividad",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres una pareja fuerte, pero tú eres emocionalmente inestable.",
+  "remate": "Atraes lo que eres, no lo que publicas.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No estás ocupado. Estás huyendo de lo que sabes que debes hacer.",
+  "remate": "La hiperactividad es evasión elegante.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Dices que no tienes oportunidades.",
+  "remate": "Pero desperdicias cada responsabilidad pequeña que te dan.",
+  "categoria": "trabajo",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu ego quiere tener razón más que ser feliz.",
+  "remate": "Y estás pagando ese orgullo con relaciones rotas.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "No eres tan incomprendido como crees.",
+  "remate": "Simplemente no comunicas lo que sientes con honestidad.",
+  "categoria": "relaciones",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu familia no es perfecta.",
+  "remate": "Pero tú tampoco has sido el hijo, padre o hermano que dices ser.",
+  "categoria": "familia",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Sigues esperando que alguien te rescate.",
+  "remate": "Nadie viene. O te levantas o te quedas.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Te impresiona el éxito rápido.",
+  "remate": "Pero no soportas el proceso lento que lo construye.",
+  "categoria": "dinero",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Quieres respeto sin disciplina.",
+  "remate": "El respeto no se exige. Se demuestra.",
+  "categoria": "habitos",
+  "intensidad": "brutal"
+},
+{
+  "texto": "Tu mayor obstáculo no es tu pasado.",
+  "remate": "Es tu apego a usarlo como excusa.",
+  "categoria": "autoestima",
+  "intensidad": "brutal"
   }
-
 
  ]
  
