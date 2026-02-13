@@ -19,8 +19,6 @@ metadata:
   twitterCard: summary_large_image
 ---
 
-# El Efecto Mateo en las Finanzas: Por Qué es Más Caro Ser Pobre
-
 Decía mi abuelo: **“El que tiene, más tendrá.”**  
 No era resentimiento. Era observación.
 
