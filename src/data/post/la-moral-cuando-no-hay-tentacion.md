@@ -2,7 +2,7 @@
 publishDate: 2026-02-12T19:15:00Z
 title: "Moral en Redes Sociales: La doble moral cuando no hay tentación"
 excerpt: "La moral en redes sociales se volvió espectáculo. ¿Es coherencia real o simple falta de oportunidad? Un análisis profundo sobre la doble moral, la tentación y el juicio digital."
-image: "~/assets/images/moral-redes-sociales.png"
+image: "https://images.unsplash.com/photo-1758600587369-036606b51194?q=80&w=1632&auto=format&fit=crop"
 category: Mentalidad
 tags:
   - Moral en Redes Sociales
