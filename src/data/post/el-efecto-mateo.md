@@ -191,3 +191,14 @@ Si entendiste esto, ya tienes ventaja.
 Porque el Efecto Mateo afecta a todos.
 
 Pero no todos lo entienden.
+
+Comprender el Efecto Mateo es entender el terreno donde se juega el dinero.
+
+Pero entender el terreno no basta.
+
+También necesitas asumir la parte que sí depende de ti: disciplina, trabajo estratégico y responsabilidad diaria.
+
+De eso hablamos en profundidad en  
+[**El Dinero No Cae del Cielo: Trabajo, Realidad y Responsabilidad Financiera**](/el-dinero-no-cae-del-cielo),  
+donde analizamos qué está realmente bajo tu control cuando el punto de partida no es perfecto.
+
