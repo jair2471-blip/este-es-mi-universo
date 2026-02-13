@@ -54,7 +54,7 @@ Y siempre había un líder:
 Decían estar en la cima…  
 pero **no pasaban del 9%**.
 
-Hoy, décadas después, la estadística es demoledora. Mientras las promesas de libertad financiera abundan, en la práctica es casi imposible encontrar a esos supuestos millonarios que hace años juraban vivir de Amway, Herbalife o el MLM de turno. La realidad es que la inmensa mayoría de esas estructuras terminan siendo un cementerio de ilusiones, donde los líderes de ayer hoy suelen estar buscando la siguiente "oportunidad del siglo", confirmando que la riqueza prometida fue, para casi todos, un espejismo insostenible.
+Hoy, décadas después, la estadística es demoledora. Mientras las promesas de libertad financiera abundan, en la práctica es casi imposible encontrar a esos supuestos millonarios que hace años juraban vivir del multinivel de turno. La realidad es que la inmensa mayoría de esas estructuras terminan siendo un cementerio de ilusiones, donde los líderes de ayer hoy suelen estar buscando la siguiente "oportunidad del siglo", confirmando que la riqueza prometida fue, para casi todos, un espejismo insostenible.
 
 Las mansiones desaparecieron.  
 Los aviones nunca fueron suyos.  
