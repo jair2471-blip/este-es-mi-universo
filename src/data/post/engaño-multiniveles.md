@@ -54,7 +54,7 @@ Y siempre había un líder:
 Decían estar en la cima…  
 pero **no pasaban del 9%**.
 
-Hoy, décadas después, no queda **ni uno solo** de esos supuestos millonarios viviendo de Amway, Herbalife o el MLM de turno.
+Hoy, décadas después, la estadística es demoledora. Mientras las promesas de libertad financiera abundan, en la práctica es casi imposible encontrar a esos supuestos millonarios que hace años juraban vivir de Amway, Herbalife o el MLM de turno. La realidad es que la inmensa mayoría de esas estructuras terminan siendo un cementerio de ilusiones, donde los líderes de ayer hoy suelen estar buscando la siguiente "oportunidad del siglo", confirmando que la riqueza prometida fue, para casi todos, un espejismo insostenible.
 
 Las mansiones desaparecieron.  
 Los aviones nunca fueron suyos.  
@@ -66,6 +66,7 @@ El multinivel era brillante en algo:
 **nunca era culpa del sistema**.
 
 Si no ganabas:
+
 - no creíste lo suficiente  
 - no asististe a suficientes seminarios  
 - no compraste suficientes audios  
@@ -81,6 +82,7 @@ No en los productos.
 No en las ventas.  
 
 Sino en:
+
 - seminarios carísimos  
 - audios motivacionales reciclados  
 - libros escritos por los mismos líderes  
@@ -97,6 +99,7 @@ No eran solo vitaminas.
 No eran solo batidos.
 
 Eran productos que:
+
 - “curaban enfermedades”
 - “revertían males graves”
 - “ayudaban incluso con cáncer”
@@ -117,6 +120,7 @@ No porque se haya vuelto ético.
 Sino porque **se le acabó el misterio**.
 
 Internet expuso:
+
 - las estadísticas reales  
 - los ingresos promedio  
 - los testimonios de quienes perdieron todo  
@@ -127,6 +131,7 @@ El encanto murió cuando la gente entendió algo simple:
 
 Aun así, siempre aparece el incauto nuevo.  
 Porque la promesa sigue siendo la misma:
+
 - salir del sistema  
 - ser tu propio jefe  
 - ganar mientras duermes  
@@ -154,6 +159,7 @@ Fuiste humano.
 
 Los multiniveles no se sostuvieron 30 años por casualidad.  
 Se sostuvieron porque entendieron mejor que nadie:
+
 - el deseo de progreso  
 - el miedo a quedarse atrás  
 - la necesidad de creer  
