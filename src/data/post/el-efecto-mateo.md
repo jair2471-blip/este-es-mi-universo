@@ -181,24 +181,20 @@ No. Significa que el punto de partida influye en la dificultad del camino. La mo
 Porque el modelo de riesgo estadístico asigna mayor probabilidad de incumplimiento a perfiles inestables.
 
 ### ¿Se puede mejorar el perfil financiero?
+ 
+Sí. Historial puntual, reducción de deuda y estabilidad de ingresos fortalecen tu scoring con el tiempo.
 
-Sí. Historial puntual, reducción de deuda y estabilidad de ingresos mejoran el scoring con el tiempo.
+Entender esto ya te da ventaja.
 
----
-
-Si entendiste esto, ya tienes ventaja.
-
-Porque el Efecto Mateo afecta a todos.
-
-Pero no todos lo entienden.
+Porque el Efecto Mateo afecta a todos.  
+Pero no todos comprenden cómo operar dentro de él.
 
 Comprender el Efecto Mateo es entender el terreno donde se juega el dinero.
 
 Pero entender el terreno no basta.
 
-También necesitas asumir la parte que sí depende de ti: disciplina, trabajo estratégico y responsabilidad diaria.
+También necesitas asumir lo que sí depende de ti: disciplina, trabajo estratégico y responsabilidad diaria.
 
 De eso hablamos en profundidad en  
 [**El Dinero No Cae del Cielo: Trabajo, Realidad y Responsabilidad Financiera**](/el-dinero-no-cae-del-cielo),  
 donde analizamos qué está realmente bajo tu control cuando el punto de partida no es perfecto.
-
