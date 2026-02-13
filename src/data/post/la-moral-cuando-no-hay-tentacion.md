@@ -15,7 +15,6 @@ metadata:
   description: "Análisis sobre la psicología de la moral en redes sociales y cómo la falta de tentación suele confundirse con virtud real."
 ---
 
-# Moral en Redes Sociales: La doble moral cuando no hay tentación
 
 La **moral en redes sociales** se ha convertido en una de las expresiones más visibles de nuestra era digital. Cada semana surge una nueva historia viral, una nueva persona señalada y un nuevo tribunal público dispuesto a dictar sentencia.
 
