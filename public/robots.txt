@@ -1,6 +1,17 @@
 # Bienvenido al Universo de la Mente
 # www.robotstxt.org/
 
+# 1. Bloqueamos a los que solo vienen a entrenar IAs
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# 2. Puerta abierta total para SEO y buscadores
 User-agent: *
 Allow: /
 
