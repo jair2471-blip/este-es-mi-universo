@@ -10,7 +10,7 @@ tags:
   - mentalidad
   - disciplina
   - trabajo
-image: https://images.unsplash.com/photo-1521999693742-4717d76f97cc?q=80&w=1470&auto=format&fit=crop
+image: https://images.unsplash.com/photo-1758520144864-fb42371d9e60?auto=format&fit=crop&w=1200&h=630&q=80
 ---
 
 Vamos a decirlo claro, sin frases suaves y sin espiritualidad mal entendida:
