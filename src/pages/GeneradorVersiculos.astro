@@ -2,157 +2,250 @@
 // GeneradorVersiculos.astro - Versión Anti-Gigante
 ---
 
-<section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-2 md:p-6">
-  
-  <div class="w-full max-w-[400px] bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.2)] overflow-hidden border-[12px] border-gray-900 flex flex-col my-4">
-    
-    <div class="bg-white p-5 space-y-4">
-      
-      <div class="text-center py-2 border-b border-gray-100">
-        <h2 class="text-xl font-serif italic text-gray-800 leading-tight">Postales Sagradas</h2>
-        <p class="text-[9px] uppercase tracking-widest font-bold text-amber-600">Edición Premium</p>
+---
+
+---
+
+<div class="page-wrapper">
+  <div class="mobile-app">
+
+    <header class="app-header">
+      <h1>Generador de Versículos</h1>
+      <div class="divider"></div>
+      <p class="subtitle">Crea imágenes hermosas para compartir la Palabra</p>
+    </header>
+
+    <div class="canvas-area">
+      <canvas id="versiculo-canvas" width="1080" height="1350"></canvas>
+    </div>
+
+    <div class="controls">
+      <div class="field">
+        <label>Versículo</label>
+        <textarea id="versiculo-text" rows="4">
+Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda, mas tenga vida eterna.
+        </textarea>
       </div>
 
-      <div class="relative w-full aspect-[4/5] bg-gray-200 rounded-xl overflow-hidden shadow-inner group">
-        <canvas 
-          id="mainCanvas" 
-          width="1080" 
-          height="1350" 
-          class="absolute top-0 left-0 w-full h-full object-cover">
-        </canvas>
-        
-        <button 
-          id="btnRandom" 
-          class="absolute bottom-3 right-3 bg-white/90 backdrop-blur p-2.5 rounded-full shadow-lg hover:bg-amber-500 hover:text-white transition-all active:scale-90 border border-gray-200 z-10">
-          🔄
-        </button>
+      <div class="field">
+        <label>Referencia Bíblica</label>
+        <input type="text" id="cita-text" value="Juan 3:16" />
       </div>
 
-      <div class="space-y-4">
-        <div class="space-y-1">
-          <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Versículo</label>
-          <textarea 
-            id="txtVersiculo" 
-            rows="3" 
-            class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs italic text-gray-700 resize-none outline-none"
-          >Todo lo puedo en Cristo que me fortalece.</textarea>
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">Referencia</label>
-          <input 
-            id="txtCita" 
-            type="text" 
-            class="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-amber-500 text-xs font-bold text-gray-700 outline-none"
-            value="Filipenses 4:13"
-          />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 pt-1">
-          <button id="btnDownload" class="bg-amber-500 text-white py-3 rounded-xl font-bold text-[11px] shadow-lg shadow-amber-200 hover:brightness-110 active:scale-95 transition-all">
-            💾 GUARDAR
-          </button>
-          <button id="btnShare" class="bg-gray-800 text-white py-3 rounded-xl font-bold text-[11px] shadow-lg active:scale-95 transition-all">
-            📱 COMPARTIR
-          </button>
-        </div>
+      <div class="actions">
+        <button id="actualizar-btn" class="btn-primary">✨ Actualizar</button>
+        <button id="descargar-btn" class="btn-secondary">⬇️ Descargar</button>
       </div>
     </div>
 
-    <div class="bg-white h-8 w-full flex justify-center items-center">
-      <div class="w-20 h-1 bg-gray-200 rounded-full"></div>
-    </div>
   </div>
-  
-  <p class="text-[11px] text-gray-400 mt-2">Usa el botón "Guardar" para descargar en alta calidad</p>
-</section>
+</div>
+
+<style>
+
+/* 🔥 Esto ignora cualquier layout global */
+.page-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px;
+  box-sizing: border-box;
+}
+
+/* Contenedor tipo móvil */
+.mobile-app {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.15);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  margin: 10px auto;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#D4AF37,#8B7355);
+}
+
+.subtitle {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Canvas */
+.canvas-area {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f3f4f6;
+  margin-bottom: 20px;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+textarea,
+input {
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #e5e7eb;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+button {
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg,#D4AF37,#8B7355);
+  color: white;
+}
+
+.btn-secondary {
+  background: #111827;
+  color: white;
+}
+
+</style>
 
 <script>
-  const canvas = document.getElementById('mainCanvas');
-  const ctx = canvas.getContext('2d');
-  const textInput = document.getElementById('txtVersiculo');
-  const citaInput = document.getElementById('txtCita');
-  
-  const fondos = [
-    'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop',
-    'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1080&h=1350&fit=crop',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1080&h=1350&fit=crop',
-    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1080&h=1350&fit=crop'
-  ];
+document.addEventListener("DOMContentLoaded", () => {
 
-  let bgImg = new Image();
-  bgImg.crossOrigin = "anonymous";
-  bgImg.src = fondos[0];
+  const canvas = document.getElementById("versiculo-canvas");
+  const ctx = canvas.getContext("2d");
+  const versiculoInput = document.getElementById("versiculo-text");
+  const citaInput = document.getElementById("cita-text");
+  const actualizarBtn = document.getElementById("actualizar-btn");
+  const descargarBtn = document.getElementById("descargar-btn");
 
-  function draw() {
-    if (!ctx || !canvas) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  const backgroundImage = new Image();
+  backgroundImage.crossOrigin = "anonymous";
+  backgroundImage.src =
+    "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop&q=80";
 
-    // Overlay oscuro
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function wrapText(text, maxWidth, fontSize) {
+    ctx.font = fontSize + "px serif";
+    const words = text.split(" ");
+    const lines = [];
+    let currentLine = "";
 
-    const margin = 120;
-    const maxWidth = canvas.width - (margin * 2);
-    let fontSize = 90;
-    
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    const getLines = (fSize) => {
-      ctx.font = `italic 700 ${fSize}px 'Georgia', serif`;
-      let words = textInput.value.split(' ');
-      let lines = [];
-      let cLine = words[0];
-      for (let i = 1; i < words.length; i++) {
-        let test = cLine + " " + words[i];
-        if (ctx.measureText(test).width > maxWidth) {
-          lines.push(cLine);
-          cLine = words[i];
-        } else {
-          cLine = test;
-        }
+    words.forEach(word => {
+      const testLine = currentLine + (currentLine ? " " : "") + word;
+      if (ctx.measureText(testLine).width > maxWidth) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine = testLine;
       }
-      lines.push(cLine);
-      return lines;
-    };
-
-    let lines = getLines(fontSize);
-    while (lines.length * fontSize * 1.5 > 850 && fontSize > 40) {
-      fontSize -= 5;
-      lines = getLines(fontSize);
-    }
-
-    let startY = (canvas.height / 2) - ((lines.length - 1) * fontSize * 1.5 / 2);
-    lines.forEach((l, i) => {
-      ctx.fillText(l, canvas.width / 2, startY + (i * fontSize * 1.5));
     });
 
-    ctx.font = "bold 60px sans-serif";
-    ctx.fillStyle = "#FFD700";
-    ctx.fillText(citaInput.value.toUpperCase(), canvas.width / 2, startY + (lines.length * fontSize * 1.5) + 80);
+    if (currentLine) lines.push(currentLine);
+    return lines;
   }
 
-  bgImg.onload = draw;
-  textInput.oninput = draw;
-  citaInput.oninput = draw;
-  
-  document.getElementById('btnRandom').onclick = () => {
-    bgImg.src = fondos[Math.floor(Math.random() * fondos.length)];
-  };
+  function drawCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  document.getElementById('btnDownload').onclick = () => {
-    const link = document.createElement('a');
-    link.download = 'bendicion.png';
-    link.href = canvas.toDataURL('image/png', 1.0);
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const text = versiculoInput.value.trim();
+    const maxWidth = canvas.width - 160;
+    let fontSize = 64;
+    let lines;
+
+    do {
+      lines = wrapText(text, maxWidth, fontSize);
+      fontSize -= 2;
+    } while (
+      lines.length * fontSize * 1.4 > canvas.height - 400 &&
+      fontSize > 28
+    );
+
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.font = fontSize + "px serif";
+
+    let y =
+      canvas.height / 2 - (lines.length * fontSize * 1.4) / 2;
+
+    lines.forEach(line => {
+      ctx.fillText(line, canvas.width / 2, y);
+      y += fontSize * 1.4;
+    });
+
+    ctx.fillStyle = "#D4AF37";
+    ctx.font = "bold 48px sans-serif";
+    ctx.fillText(
+      citaInput.value,
+      canvas.width / 2,
+      canvas.height - 120
+    );
+  }
+
+  backgroundImage.onload = drawCanvas;
+
+  actualizarBtn.addEventListener("click", drawCanvas);
+
+  descargarBtn.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.download = "versiculo.png";
+    link.href = canvas.toDataURL();
     link.click();
-  };
+  });
 
-  document.getElementById('btnShare').onclick = async () => {
-    const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-    const file = new File([blob], 'bendicion.png', { type: 'image/png' });
-    if (navigator.share) navigator.share({ files: [file] });
-  };
+});
 </script>
+
