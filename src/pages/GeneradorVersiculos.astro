@@ -159,28 +159,34 @@ button {
 
 </style>
 
-<script>
+<script lang="ts">
 document.addEventListener("DOMContentLoaded", () => {
 
-  const canvas = document.getElementById("versiculo-canvas");
+  const canvas = document.getElementById("versiculo-canvas") as HTMLCanvasElement | null;
+  const versiculoInput = document.getElementById("versiculo-text") as HTMLTextAreaElement | null;
+  const citaInput = document.getElementById("cita-text") as HTMLInputElement | null;
+  const actualizarBtn = document.getElementById("actualizar-btn") as HTMLButtonElement | null;
+  const descargarBtn = document.getElementById("descargar-btn") as HTMLButtonElement | null;
+
+  if (!canvas || !versiculoInput || !citaInput || !actualizarBtn || !descargarBtn) {
+    return;
+  }
+
   const ctx = canvas.getContext("2d");
-  const versiculoInput = document.getElementById("versiculo-text");
-  const citaInput = document.getElementById("cita-text");
-  const actualizarBtn = document.getElementById("actualizar-btn");
-  const descargarBtn = document.getElementById("descargar-btn");
+  if (!ctx) return;
 
   const backgroundImage = new Image();
   backgroundImage.crossOrigin = "anonymous";
   backgroundImage.src =
     "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop&q=80";
 
-  function wrapText(text, maxWidth, fontSize) {
+  function wrapText(text: string, maxWidth: number, fontSize: number): string[] {
     ctx.font = fontSize + "px serif";
     const words = text.split(" ");
-    const lines = [];
+    const lines: string[] = [];
     let currentLine = "";
 
-    words.forEach(word => {
+    words.forEach((word: string) => {
       const testLine = currentLine + (currentLine ? " " : "") + word;
       if (ctx.measureText(testLine).width > maxWidth) {
         lines.push(currentLine);
@@ -204,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const text = versiculoInput.value.trim();
     const maxWidth = canvas.width - 160;
     let fontSize = 64;
-    let lines;
+    let lines: string[];
 
     do {
       lines = wrapText(text, maxWidth, fontSize);
@@ -221,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let y =
       canvas.height / 2 - (lines.length * fontSize * 1.4) / 2;
 
-    lines.forEach(line => {
+    lines.forEach((line: string) => {
       ctx.fillText(line, canvas.width / 2, y);
       y += fontSize * 1.4;
     });
@@ -242,10 +248,11 @@ document.addEventListener("DOMContentLoaded", () => {
   descargarBtn.addEventListener("click", () => {
     const link = document.createElement("a");
     link.download = "versiculo.png";
-    link.href = canvas.toDataURL();
+    link.href = canvas.toDataURL("image/png");
     link.click();
   });
 
 });
 </script>
+
 
