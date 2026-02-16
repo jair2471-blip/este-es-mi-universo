@@ -1,201 +1,400 @@
 ---
-// GeneradorVersiculos.astro - VERSIÓN EXORCISTA
+// GeneradorVersiculos.astro - Componente para generar imágenes de versículos bíblicos
 ---
 
-<section class="exorcismo-container">
-  <div class="bunker-movil">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Versículos Bíblicos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
     
-    <div class="app-interna">
-      <header>
-        <h1 class="titulo-app">POSTALES DEL CIELO</h1>
-        <p class="subtitulo">Generador de Bendiciones</p>
-      </header>
-
-      <div class="visor-postal">
-        <canvas id="mainCanvas" width="1080" height="1350"></canvas>
-        <button id="btnRandom" class="float-btn">🔄</button>
-      </div>
-
-      <div class="formulario-compacto">
-        <div class="grupo-input">
-          <label>VERSÍCULO</label>
-          <textarea id="txtVersiculo" placeholder="Escriba aquí...">Todo lo puedo en Cristo que me fortalece.</textarea>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #E8D4A0;
+            --bronze: #8B7355;
+            --cream: #F5F1E8;
+            --charcoal: #2C2C2C;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #F5F1E8 0%, #E8DCC8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 0;
+        }
+        
+        /* WRAPPER MÓVIL - Limita el ancho en desktop */
+        .mobile-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .canvas-container {
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/5;
+        }
+        
+        .canvas-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+        }
+        
+        #versiculo-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
+        }
+        
+        .gold-accent {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+        }
+        
+        .input-field {
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--bronze) 100%);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--charcoal);
+            font-weight: 600;
+            border: 2px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--cream);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .title-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--charcoal);
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-container">
+        <!-- Header -->
+        <div class="text-center mb-6 animate-fade-in px-4">
+            <h1 class="title-text text-3xl md:text-4xl mb-3">Generador de Versículos</h1>
+            <div class="w-24 h-1 gold-accent mx-auto rounded-full"></div>
+            <p class="text-gray-600 mt-3 text-sm tracking-wide">Crea imágenes hermosas para compartir la Palabra</p>
         </div>
 
-        <div class="grupo-input">
-          <label>CITA BÍBLICA</label>
-          <input id="txtCita" type="text" value="Filipenses 4:13" />
-        </div>
+        <div class="space-y-6 px-4">
+            <!-- Canvas Section -->
+            <div class="animate-fade-in" style="animation-delay: 0.1s">
+                <div class="canvas-container bg-white p-3">
+                    <canvas id="versiculo-canvas" width="1080" height="1350"></canvas>
+                </div>
+            </div>
 
-        <div class="botones-container">
-          <button id="btnDownload" class="btn-primary">GUARDAR</button>
-          <button id="btnShare" class="btn-secondary">ENVIAR</button>
+            <!-- Controls Section -->
+            <div class="space-y-5 animate-fade-in" style="animation-delay: 0.2s">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
+                        Versículo
+                    </label>
+                    <textarea 
+                        id="versiculo-text"
+                        rows="6"
+                        class="input-field w-full px-4 py-3 rounded-lg resize-none"
+                        placeholder="Escribe aquí el versículo bíblico..."
+                    >Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda, mas tenga vida eterna.</textarea>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
+                        Cita Bíblica
+                    </label>
+                    <input 
+                        type="text"
+                        id="cita-text"
+                        class="input-field w-full px-4 py-3 rounded-lg"
+                        placeholder="Ej: Juan 3:16"
+                        value="Juan 3:16"
+                    />
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-4">
+                    <button 
+                        id="actualizar-btn"
+                        class="btn-primary flex-1 px-6 py-4 rounded-lg font-semibold text-sm uppercase tracking-wide"
+                    >
+                        ✨ Actualizar Vista
+                    </button>
+                    <button 
+                        id="descargar-btn"
+                        class="btn-secondary flex-1 px-6 py-4 rounded-lg font-semibold text-sm uppercase tracking-wide"
+                    >
+                        ⬇️ Descargar PNG
+                    </button>
+                </div>
+
+                <!-- Info Card -->
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-50 p-5 rounded-xl border border-amber-200">
+                    <div class="flex items-start gap-3">
+                        <div class="text-2xl">💡</div>
+                        <div>
+                            <h3 class="font-semibold text-amber-900 mb-1">Consejos</h3>
+                            <ul class="text-sm text-amber-800 space-y-1">
+                                <li>• El texto se ajusta automáticamente al tamaño</li>
+                                <li>• Formato optimizado para Instagram y WhatsApp</li>
+                                <li>• Resolución: 1080x1350px (4:5)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-  </div>
-</section>
+    <script>
+        // Configuración del Canvas
+        const canvas = document.getElementById('versiculo-canvas');
+        const ctx = canvas.getContext('2d');
+        const versiculoInput = document.getElementById('versiculo-text');
+        const citaInput = document.getElementById('cita-text');
+        const actualizarBtn = document.getElementById('actualizar-btn');
+        const descargarBtn = document.getElementById('descargar-btn');
 
-<style is:inline>
-  /* EL BLOQUEO TOTAL */
-  .exorcismo-container {
-    all: initial; /* Borra toda la herencia de la plantilla AstroWind */
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    min-height: 100vh !important;
-    background-color: #0f172a !important; /* Fondo oscuro afuera del "celular" */
-    font-family: sans-serif !important;
-    padding: 20px !important;
-  }
+        // Imagen de fondo
+        const backgroundImage = new Image();
+        backgroundImage.crossOrigin = 'anonymous';
+        backgroundImage.src = 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop&q=80';
 
-  .bunker-movil {
-    width: 360px !important; /* TAMAÑO FIJO EN PIXELES - NO CAMBIA */
-    height: 720px !important;
-    background: #ffffff !important;
-    border: 10px solid #1e293b !important;
-    border-radius: 40px !important;
-    overflow: hidden !important;
-    box-shadow: 0 0 100px rgba(0,0,0,0.5) !important;
-    position: relative !important;
-    display: block !important;
-  }
+        // Función para ajustar texto (word wrap)
+        function wrapText(text, maxWidth, fontSize) {
+            ctx.font = `${fontSize}px 'Playfair Display', serif`;
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
 
-  .app-interna {
-    padding: 20px !important;
-    height: 100% !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    flex-direction: column !important;
-    background: white !important;
-  }
+            for (let word of words) {
+                const testLine = currentLine + (currentLine ? ' ' : '') + word;
+                const metrics = ctx.measureText(testLine);
+                
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            
+            if (currentLine) {
+                lines.push(currentLine);
+            }
+            
+            return lines;
+        }
 
-  .titulo-app {
-    font-size: 18px !important;
-    text-align: center !important;
-    margin: 10px 0 0 0 !important;
-    color: #1e293b !important;
-    font-weight: bold !important;
-  }
+        // Función para calcular el tamaño de fuente óptimo
+        function calculateOptimalFontSize(text, maxWidth, maxHeight) {
+            let fontSize = 72;
+            let lines;
+            
+            do {
+                lines = wrapText(text, maxWidth, fontSize);
+                const totalHeight = lines.length * fontSize * 1.4; // 1.4 es el line-height
+                
+                if (totalHeight <= maxHeight && lines.every(line => {
+                    ctx.font = `${fontSize}px 'Playfair Display', serif`;
+                    return ctx.measureText(line).width <= maxWidth;
+                })) {
+                    break;
+                }
+                
+                fontSize -= 2;
+            } while (fontSize > 24);
+            
+            return { fontSize, lines };
+        }
 
-  .subtitulo {
-    font-size: 10px !important;
-    text-align: center !important;
-    color: #94a3b8 !important;
-    margin-bottom: 20px !important;
-  }
+        // Función principal para dibujar el canvas
+        function dibujarCanvas() {
+            const versiculo = versiculoInput.value.trim() || 'Escribe tu versículo aquí';
+            const cita = citaInput.value.trim() || 'Cita Bíblica';
 
-  .visor-postal {
-    position: relative !important;
-    width: 100% !important;
-    aspect-ratio: 4/5 !important;
-    background: #f1f5f9 !important;
-    border-radius: 15px !important;
-    overflow: hidden !important;
-  }
+            // Limpiar canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  #mainCanvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-    object-fit: contain !important;
-  }
+            // Dibujar imagen de fondo
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  .float-btn {
-    position: absolute !important;
-    bottom: 10px !important;
-    right: 10px !important;
-    background: white !important;
-    border-radius: 50% !important;
-    border: 1px solid #e2e8f0 !important;
-    padding: 8px !important;
-    cursor: pointer !important;
-  }
+            // Overlay oscuro para legibilidad
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  .formulario-compacto {
-    margin-top: 20px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 15px !important;
-  }
+            // Calcular tamaño de fuente y líneas para el versículo
+            const maxWidth = canvas.width - 160; // Margen de 80px a cada lado
+            const maxHeight = canvas.height - 400; // Espacio para cita y marca de agua
+            const { fontSize, lines } = calculateOptimalFontSize(versiculo, maxWidth, maxHeight);
 
-  .grupo-input label {
-    font-size: 10px !important;
-    font-weight: bold !important;
-    color: #64748b !important;
-    display: block !important;
-    margin-bottom: 5px !important;
-  }
+            // Dibujar versículo (centrado verticalmente y horizontalmente)
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = `${fontSize}px 'Playfair Display', serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
 
-  textarea, input {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 10px !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 10px !important;
-    font-size: 12px !important;
-    background: #f8fafc !important;
-  }
+            const lineHeight = fontSize * 1.4;
+            const totalTextHeight = lines.length * lineHeight;
+            let startY = (canvas.height - totalTextHeight) / 2;
 
-  .botones-container {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 10px !important;
-  }
+            // Sombra sutil para el texto
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
 
-  .btn-primary { background: #d97706 !important; color: white !important; border: none !important; padding: 12px !important; border-radius: 10px !important; font-weight: bold !important; cursor: pointer !important; font-size: 11px !important; }
-  .btn-secondary { background: #1e293b !important; color: white !important; border: none !important; padding: 12px !important; border-radius: 10px !important; font-weight: bold !important; cursor: pointer !important; font-size: 11px !important; }
+            lines.forEach((line, index) => {
+                const y = startY + (index * lineHeight);
+                ctx.fillText(line, canvas.width / 2, y);
+            });
 
-</style>
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
 
-<script is:inline>
-  // Script sin dependencias externas
-  const canvas = document.getElementById('mainCanvas');
-  const ctx = canvas.getContext('2d');
-  const textInput = document.getElementById('txtVersiculo');
-  const citaInput = document.getElementById('txtCita');
+            // Línea decorativa dorada arriba de la cita
+            const lineY = startY + totalTextHeight + 60;
+            const lineWidth = 200;
+            const gradient = ctx.createLinearGradient(
+                canvas.width / 2 - lineWidth / 2, 
+                lineY,
+                canvas.width / 2 + lineWidth / 2,
+                lineY
+            );
+            gradient.addColorStop(0, 'rgba(212, 175, 55, 0)');
+            gradient.addColorStop(0.5, 'rgba(212, 175, 55, 1)');
+            gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+            
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2 - lineWidth / 2, lineY);
+            ctx.lineTo(canvas.width / 2 + lineWidth / 2, lineY);
+            ctx.stroke();
 
-  const fondos = [
-    'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop',
-    'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1080&h=1350&fit=crop',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1080&h=1350&fit=crop'
-  ];
+            // Dibujar cita bíblica
+            ctx.fillStyle = '#D4AF37'; // Color dorado
+            ctx.font = 'bold 48px Montserrat, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(cita, canvas.width / 2, lineY + 60);
 
-  let bgImg = new Image();
-  bgImg.crossOrigin = "anonymous";
-  bgImg.src = fondos[0];
+            // Marca de agua en la parte inferior
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.font = '24px Montserrat, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Generado por Mi App Biblia', canvas.width / 2, canvas.height - 40);
+        }
 
-  function redraw() {
-    ctx.drawImage(bgImg, 0, 0, 1080, 1350);
-    ctx.fillStyle = 'rgba(0,0,0,0.4)';
-    ctx.fillRect(0, 0, 1080, 1350);
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.font = "italic 700 85px Georgia";
-    
-    // Texto simple con salto de línea básico
-    const words = textInput.value.split(' ');
-    let line = '';
-    let y = 600;
-    for(let i=0; i<words.length; i++) {
-        let test = line + words[i] + ' ';
-        if(ctx.measureText(test).width > 850) {
-            ctx.fillText(line, 540, y);
-            line = words[i] + ' ';
-            y += 110;
-        } else { line = test; }
-    }
-    ctx.fillText(line, 540, y);
-    ctx.fillStyle = "#FFD700";
-    ctx.font = "bold 55px Arial";
-    ctx.fillText(citaInput.value.toUpperCase(), 540, y + 150);
-  }
+        // Event Listeners
+        backgroundImage.onload = () => {
+            dibujarCanvas();
+        };
 
-  bgImg.onload = redraw;
-  textInput.oninput = redraw;
-  citaInput.oninput = redraw;
-  document.getElementById('btnRandom').onclick = () => {
-    bgImg.src = fondos[Math.floor(Math.random()*fondos.length)];
-  };
-</script>
+        actualizarBtn.addEventListener('click', () => {
+            dibujarCanvas();
+            
+            // Feedback visual
+            actualizarBtn.textContent = '✓ Actualizado';
+            setTimeout(() => {
+                actualizarBtn.textContent = '✨ Actualizar Vista';
+            }, 1500);
+        });
+
+        descargarBtn.addEventListener('click', () => {
+            // Convertir canvas a imagen y descargar
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = 'versiculo-dia.png';
+                link.href = url;
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                // Feedback visual
+                descargarBtn.textContent = '✓ Descargado';
+                setTimeout(() => {
+                    descargarBtn.textContent = '⬇️ Descargar PNG';
+                }, 1500);
+            }, 'image/png', 1.0);
+        });
+
+        // Actualizar en tiempo real (opcional, puedes comentar si prefieres solo con el botón)
+        versiculoInput.addEventListener('input', () => {
+            // Debounce para no redibujar en cada tecla
+            clearTimeout(window.updateTimeout);
+            window.updateTimeout = setTimeout(dibujarCanvas, 500);
+        });
+
+        citaInput.addEventListener('input', () => {
+            clearTimeout(window.updateTimeout);
+            window.updateTimeout = setTimeout(dibujarCanvas, 500);
+        });
+    </script>
+</body>
+</html>
