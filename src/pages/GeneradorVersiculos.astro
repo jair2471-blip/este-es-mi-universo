@@ -33,11 +33,20 @@
             border-radius: 12px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 100%;
+            width: fit-content;
+            margin: 0 auto;
         }
         
         .canvas-container:hover {
             transform: translateY(-4px);
             box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+        }
+        
+        #versiculo-canvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
         
         .gold-accent {
@@ -108,11 +117,6 @@
             color: var(--charcoal);
             letter-spacing: 1px;
         }
-        
-        canvas {
-            display: block;
-            border-radius: 8px;
-        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -124,16 +128,16 @@
             <p class="text-gray-600 mt-3 text-sm tracking-wide">Crea imágenes hermosas para compartir la Palabra</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 items-start">
+        <div class="grid lg:grid-cols-[1fr,500px] gap-8 items-start">
             <!-- Canvas Section -->
-            <div class="animate-fade-in" style="animation-delay: 0.1s">
+            <div class="animate-fade-in order-2 lg:order-1" style="animation-delay: 0.1s">
                 <div class="canvas-container bg-white p-4">
                     <canvas id="versiculo-canvas" width="1080" height="1350"></canvas>
                 </div>
             </div>
 
             <!-- Controls Section -->
-            <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s">
+            <div class="space-y-6 animate-fade-in order-1 lg:order-2" style="animation-delay: 0.2s">
                 <div class="bg-white p-6 rounded-xl shadow-lg">
                     <label class="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
                         Versículo
