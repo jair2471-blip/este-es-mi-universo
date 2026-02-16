@@ -1,235 +1,201 @@
 ---
-// Generador de Versículos - Versión Independiente
+// GeneradorVersiculos.astro - VERSIÓN EXORCISTA
 ---
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Bendiciones</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<section class="exorcismo-container">
+  <div class="bunker-movil">
     
-    <style>
-        body {
-            margin: 0;
-            background: #e5e7eb; /* Gris claro de fondo */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-        }
+    <div class="app-interna">
+      <header>
+        <h1 class="titulo-app">POSTALES DEL CIELO</h1>
+        <p class="subtitulo">Generador de Bendiciones</p>
+      </header>
 
-        /* EL CANDADO: Esto evita que en PC se vea gigante */
-        .mobile-wrapper {
-            width: 100%;
-            max-width: 400px; /* Ancho de celular */
-            background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            border: 8px solid #1f2937; /* Marco oscuro */
-            margin: 15px;
-        }
+      <div class="visor-postal">
+        <canvas id="mainCanvas" width="1080" height="1350"></canvas>
+        <button id="btnRandom" class="float-btn">🔄</button>
+      </div>
 
-        .app-content {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .app-header {
-            text-align: center;
-        }
-
-        .app-header h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin: 0;
-            color: #111827;
-        }
-
-        .canvas-area {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/5;
-            background: #f3f4f6;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        #mainCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: contain;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .field {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        textarea, input {
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 0.9rem;
-            background: #f9fafb;
-        }
-
-        .actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        button {
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        button:active { transform: scale(0.95); }
-
-        .btn-main { background: #d97706; color: white; }
-        .btn-sec { background: #111827; color: white; }
-        
-        #btnChangeBg {
-            position: absolute;
-            bottom: 12px;
-            right: 12px;
-            background: white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="mobile-wrapper">
-        <div class="app-content">
-            <header class="app-header">
-                <h1>Postales del Cielo</h1>
-            </header>
-
-            <div class="canvas-area">
-                <canvas id="mainCanvas" width="1080" height="1350"></canvas>
-                <button id="btnChangeBg" title="Cambiar Fondo">🔄</button>
-            </div>
-
-            <div class="controls">
-                <div class="field">
-                    <label>Versículo</label>
-                    <textarea id="txtVersiculo" rows="3">Todo lo puedo en Cristo que me fortalece.</textarea>
-                </div>
-                
-                <div class="field">
-                    <label>Referencia</label>
-                    <input type="text" id="txtCita" value="Filipenses 4:13">
-                </div>
-
-                <div class="actions">
-                    <button id="btnDownload" class="btn-main">DESCARGAR</button>
-                    <button id="btnShare" class="btn-sec">COMPARTIR</button>
-                </div>
-            </div>
+      <div class="formulario-compacto">
+        <div class="grupo-input">
+          <label>VERSÍCULO</label>
+          <textarea id="txtVersiculo" placeholder="Escriba aquí...">Todo lo puedo en Cristo que me fortalece.</textarea>
         </div>
+
+        <div class="grupo-input">
+          <label>CITA BÍBLICA</label>
+          <input id="txtCita" type="text" value="Filipenses 4:13" />
+        </div>
+
+        <div class="botones-container">
+          <button id="btnDownload" class="btn-primary">GUARDAR</button>
+          <button id="btnShare" class="btn-secondary">ENVIAR</button>
+        </div>
+      </div>
     </div>
 
-    <script>
-        const canvas = document.getElementById('mainCanvas');
-        const ctx = canvas.getContext('2d');
-        const textInput = document.getElementById('txtVersiculo');
-        const citaInput = document.getElementById('txtCita');
+  </div>
+</section>
 
-        const fondos = [
-            'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop',
-            'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1080&h=1350&fit=crop',
-            'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1080&h=1350&fit=crop'
-        ];
+<style is:inline>
+  /* EL BLOQUEO TOTAL */
+  .exorcismo-container {
+    all: initial; /* Borra toda la herencia de la plantilla AstroWind */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    background-color: #0f172a !important; /* Fondo oscuro afuera del "celular" */
+    font-family: sans-serif !important;
+    padding: 20px !important;
+  }
 
-        let bgImg = new Image();
-        bgImg.crossOrigin = "anonymous";
-        bgImg.src = fondos[0];
+  .bunker-movil {
+    width: 360px !important; /* TAMAÑO FIJO EN PIXELES - NO CAMBIA */
+    height: 720px !important;
+    background: #ffffff !important;
+    border: 10px solid #1e293b !important;
+    border-radius: 40px !important;
+    overflow: hidden !important;
+    box-shadow: 0 0 100px rgba(0,0,0,0.5) !important;
+    position: relative !important;
+    display: block !important;
+  }
 
-        function draw() {
-            if (!ctx) return;
-            ctx.drawImage(bgImg, 0, 0, 1080, 1350);
-            ctx.fillStyle = 'rgba(0,0,0,0.4)';
-            ctx.fillRect(0, 0, 1080, 1350);
+  .app-interna {
+    padding: 20px !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: white !important;
+  }
 
-            ctx.fillStyle = "white";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "italic 700 80px Georgia";
-            
-            // Lógica simple de texto
-            const words = textInput.value.split(' ');
-            let line = '';
-            let y = 600;
-            words.forEach(word => {
-                let testLine = line + word + ' ';
-                if (ctx.measureText(testLine).width > 800) {
-                    ctx.fillText(line, 540, y);
-                    line = word + ' ';
-                    y += 100;
-                } else { line = testLine; }
-            });
+  .titulo-app {
+    font-size: 18px !important;
+    text-align: center !important;
+    margin: 10px 0 0 0 !important;
+    color: #1e293b !important;
+    font-weight: bold !important;
+  }
+
+  .subtitulo {
+    font-size: 10px !important;
+    text-align: center !important;
+    color: #94a3b8 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .visor-postal {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 4/5 !important;
+    background: #f1f5f9 !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+  }
+
+  #mainCanvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  .float-btn {
+    position: absolute !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    background: white !important;
+    border-radius: 50% !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 8px !important;
+    cursor: pointer !important;
+  }
+
+  .formulario-compacto {
+    margin-top: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .grupo-input label {
+    font-size: 10px !important;
+    font-weight: bold !important;
+    color: #64748b !important;
+    display: block !important;
+    margin-bottom: 5px !important;
+  }
+
+  textarea, input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+    background: #f8fafc !important;
+  }
+
+  .botones-container {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+
+  .btn-primary { background: #d97706 !important; color: white !important; border: none !important; padding: 12px !important; border-radius: 10px !important; font-weight: bold !important; cursor: pointer !important; font-size: 11px !important; }
+  .btn-secondary { background: #1e293b !important; color: white !important; border: none !important; padding: 12px !important; border-radius: 10px !important; font-weight: bold !important; cursor: pointer !important; font-size: 11px !important; }
+
+</style>
+
+<script is:inline>
+  // Script sin dependencias externas
+  const canvas = document.getElementById('mainCanvas');
+  const ctx = canvas.getContext('2d');
+  const textInput = document.getElementById('txtVersiculo');
+  const citaInput = document.getElementById('txtCita');
+
+  const fondos = [
+    'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop',
+    'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1080&h=1350&fit=crop',
+    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1080&h=1350&fit=crop'
+  ];
+
+  let bgImg = new Image();
+  bgImg.crossOrigin = "anonymous";
+  bgImg.src = fondos[0];
+
+  function redraw() {
+    ctx.drawImage(bgImg, 0, 0, 1080, 1350);
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fillRect(0, 0, 1080, 1350);
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.font = "italic 700 85px Georgia";
+    
+    // Texto simple con salto de línea básico
+    const words = textInput.value.split(' ');
+    let line = '';
+    let y = 600;
+    for(let i=0; i<words.length; i++) {
+        let test = line + words[i] + ' ';
+        if(ctx.measureText(test).width > 850) {
             ctx.fillText(line, 540, y);
+            line = words[i] + ' ';
+            y += 110;
+        } else { line = test; }
+    }
+    ctx.fillText(line, 540, y);
+    ctx.fillStyle = "#FFD700";
+    ctx.font = "bold 55px Arial";
+    ctx.fillText(citaInput.value.toUpperCase(), 540, y + 150);
+  }
 
-            ctx.font = "bold 50px Montserrat";
-            ctx.fillStyle = "#fbbf24";
-            ctx.fillText(citaInput.value.toUpperCase(), 540, y + 120);
-        }
-
-        bgImg.onload = draw;
-        textInput.oninput = draw;
-        citaInput.oninput = draw;
-        
-        document.getElementById('btnChangeBg').onclick = () => {
-            bgImg.src = fondos[Math.floor(Math.random() * fondos.length)];
-        };
-
-        document.getElementById('btnDownload').onclick = () => {
-            const link = document.createElement('a');
-            link.download = 'postal-bendicion.png';
-            link.href = canvas.toDataURL();
-            link.click();
-        };
-
-        document.getElementById('btnShare').onclick = async () => {
-            const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-            const file = new File([blob], 'postal.png', { type: 'image/png' });
-            if (navigator.share) navigator.share({ files: [file] });
-        };
-    </script>
-</body>
-</html>
+  bgImg.onload = redraw;
+  textInput.oninput = redraw;
+  citaInput.oninput = redraw;
+  document.getElementById('btnRandom').onclick = () => {
+    bgImg.src = fondos[Math.floor(Math.random()*fondos.length)];
+  };
+</script>
