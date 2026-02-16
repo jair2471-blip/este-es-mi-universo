@@ -1,68 +1,69 @@
 ---
-// GeneradorVersiculos.astro - Versión Pro "Berraco Edition"
+// GeneradorVersiculos.astro - Versión App Compacta
 ---
 
-<div class="max-w-7xl mx-auto p-4 md:p-8 font-['Montserrat'] bg-slate-50 min-h-screen">
-    <div class="text-center mb-10">
-        <h1 class="text-5xl md:text-6xl font-serif text-slate-800 mb-4 italic">Postales del Cielo</h1>
-        <div class="w-32 h-1 bg-gradient-to-r from-amber-400 via-yellow-600 to-amber-400 mx-auto rounded-full shadow-sm"></div>
-        <p class="text-slate-500 mt-4 tracking-widest uppercase text-xs font-bold">Luz para tu camino • Diseño Premium</p>
-    </div>
+<div class="min-h-screen bg-slate-100 py-6 px-4 font-sans">
+    <div class="max-w-md mx-auto"> <header class="text-center mb-6">
+            <h1 class="text-3xl font-serif italic text-slate-800">Postales del Cielo</h1>
+            <p class="text-xs text-slate-500 uppercase tracking-widest font-bold">Diseño para el alma</p>
+        </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-    ...
-</div>
-        <div class="flex justify-center w-full">
-    <div class="relative group w-full max-w-[350px]"> <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-2xl blur opacity-20 transition duration-1000"></div>
-        <div class="relative bg-white p-2 rounded-xl shadow-2xl">
-            <canvas id="mainCanvas" width="1080" height="1350" class="w-full h-auto rounded-lg display-block"></canvas>
+        <div class="relative mb-8 flex justify-center">
+            <div class="w-full bg-white p-2 rounded-2xl shadow-xl border border-slate-200">
+                <canvas 
+                    id="mainCanvas" 
+                    width="1080" 
+                    height="1350" 
+                    class="w-full h-auto rounded-xl shadow-inner block bg-slate-200">
+                </canvas>
+            </div>
+            
+            <button 
+                id="btnRandom" 
+                class="absolute -bottom-4 right-4 bg-slate-900 text-white p-3 rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all">
+                🔄
+            </button>
         </div>
-    </div>
-</div>
 
-        <div class="space-y-6">
-            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
-                <div class="mb-6">
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-tighter mb-2">Mensaje Sagrado</label>
-                    <textarea 
-                        id="txtVersiculo" 
-                        rows="4" 
-                        class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-amber-500 focus:ring-0 transition-all resize-none text-slate-700 italic"
-                        placeholder="Escribe el versículo aquí..."
-                    >Todo lo puedo en Cristo que me fortalece.</textarea>
-                </div>
+        <div class="bg-white p-6 rounded-3xl shadow-lg border border-slate-100 space-y-4">
+            
+            <div>
+                <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Versículo</label>
+                <textarea 
+                    id="txtVersiculo" 
+                    rows="3" 
+                    class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-amber-500 focus:outline-none text-sm italic text-slate-700"
+                    placeholder="Escribe la palabra aquí..."
+                >Todo lo puedo en Cristo que me fortalece.</textarea>
+            </div>
 
-                <div class="mb-8">
-                    <label class="block text-xs font-black text-slate-400 uppercase tracking-tighter mb-2">Cita Bíblica</label>
-                    <input 
-                        id="txtCita" 
-                        type="text" 
-                        class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-amber-500 focus:ring-0 transition-all text-slate-700 font-bold"
-                        value="Filipenses 4:13"
-                    />
-                </div>
+            <div>
+                <label class="text-[10px] font-black text-slate-400 uppercase ml-1">Cita</label>
+                <input 
+                    id="txtCita" 
+                    type="text" 
+                    class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-amber-500 focus:outline-none text-sm font-bold text-slate-700"
+                    value="Filipenses 4:13"
+                />
+            </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <button id="btnRandom" class="flex items-center justify-center gap-2 p-4 bg-slate-800 text-white rounded-xl font-bold hover:bg-black transition-all active:scale-95 shadow-lg">
-                        <span>🔄</span> Fondo
-                    </button>
-                    <button id="btnDownload" class="flex items-center justify-center gap-2 p-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white rounded-xl font-bold hover:brightness-110 transition-all active:scale-95 shadow-lg">
-                        <span>⬇️</span> Guardar
-                    </button>
-                </div>
-                
-                <button id="btnShare" class="w-full mt-4 p-4 border-2 border-slate-800 text-slate-800 rounded-xl font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
-                    <span>📱</span> Compartir en WhatsApp / Redes
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button 
+                    id="btnDownload" 
+                    class="flex items-center justify-center gap-2 p-3 bg-amber-500 text-white rounded-xl font-bold text-sm shadow-md hover:bg-amber-600 transition-all active:scale-95">
+                    ⬇️ Guardar
+                </button>
+                <button 
+                    id="btnShare" 
+                    class="flex items-center justify-center gap-2 p-3 bg-slate-800 text-white rounded-xl font-bold text-sm shadow-md hover:bg-black transition-all active:scale-95">
+                    📱 Enviar
                 </button>
             </div>
-
-            <div class="p-6 bg-amber-50 rounded-2xl border border-amber-100 flex gap-4">
-                <span class="text-3xl">✨</span>
-                <p class="text-sm text-amber-900 leading-relaxed">
-                    <b>Tip de berraco:</b> Usa versículos cortos para que la letra se vea más grande y potente. ¡Ideal para Estados de WhatsApp!
-                </p>
-            </div>
         </div>
+
+        <footer class="mt-8 text-center">
+            <p class="text-[10px] text-slate-400 font-medium italic">"Lámpara es a mis pies tu palabra..."</p>
+        </footer>
     </div>
 </div>
 
@@ -72,10 +73,8 @@
     const textInput = document.getElementById('txtVersiculo');
     const citaInput = document.getElementById('txtCita');
     
-    // Lista de fondos premium de Unsplash (Naturaleza y Paz)
     const fondos = [
         'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop',
-        'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1080&h=1350&fit=crop',
         'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1080&h=1350&fit=crop',
         'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1080&h=1350&fit=crop',
         'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=1080&h=1350&fit=crop'
@@ -86,91 +85,74 @@
     bgImg.src = fondos[0];
 
     function draw() {
-        // 1. Limpiar y dibujar fondo
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
 
-        // 2. Capa de contraste (Viñeta cinemática)
-        const grad = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 100, canvas.width/2, canvas.height/2, 800);
-        grad.addColorStop(0, 'rgba(0,0,0,0.3)');
+        // Overlay cinematográfico
+        const grad = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 100, canvas.width/2, canvas.height/2, 900);
+        grad.addColorStop(0, 'rgba(0,0,0,0.2)');
         grad.addColorStop(1, 'rgba(0,0,0,0.7)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 3. Configuración de Texto (Versículo)
+        // Configuración de texto
         const margin = 120;
         const maxWidth = canvas.width - (margin * 2);
-        let fontSize = 80;
+        let fontSize = 85;
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        
-        // Sombra Pro
         ctx.shadowColor = "rgba(0,0,0,0.8)";
-        ctx.shadowBlur = 25;
-        ctx.shadowOffsetY = 5;
+        ctx.shadowBlur = 20;
 
-        // Ajuste inteligente de texto
-        let words = textInput.value.split(' ');
-        let lines = [];
-        let currentLine = words[0];
-
-        // Función interna para calcular líneas
         const getLines = (fSize) => {
-            ctx.font = `italic ${fSize}px 'Playfair Display', serif`;
-            let testLines = [];
+            ctx.font = `italic 700 ${fSize}px 'Playfair Display', serif`;
+            let words = textInput.value.split(' ');
+            let lines = [];
             let cLine = words[0];
             for (let i = 1; i < words.length; i++) {
                 let test = cLine + " " + words[i];
                 if (ctx.measureText(test).width > maxWidth) {
-                    testLines.push(cLine);
+                    lines.push(cLine);
                     cLine = words[i];
                 } else {
                     cLine = test;
                 }
             }
-            testLines.push(cLine);
-            return testLines;
+            lines.push(cLine);
+            return lines;
         };
 
-        // Reducir fuente si es mucha letra
-        lines = getLines(fontSize);
-        while (lines.length * fontSize * 1.3 > 700 && fontSize > 40) {
+        let lines = getLines(fontSize);
+        while (lines.length * fontSize * 1.3 > 750 && fontSize > 40) {
             fontSize -= 5;
             lines = getLines(fontSize);
         }
 
-        // Dibujar líneas de versículo
-        let startY = (canvas.height / 2) - ((lines.length - 1) * fontSize * 1.3 / 2) - 50;
+        let startY = (canvas.height / 2) - ((lines.length - 1) * fontSize * 1.3 / 2) - 60;
         lines.forEach((l, i) => {
             ctx.fillText(l, canvas.width / 2, startY + (i * fontSize * 1.3));
         });
 
-        // 4. Adorno Dorado y Cita
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
+        // Adorno y Cita
         const lineY = startY + (lines.length * fontSize * 1.3) + 20;
-        
-        // Línea degradada
-        const goldGrad = ctx.createLinearGradient(canvas.width/2 - 100, 0, canvas.width/2 + 100, 0);
+        ctx.shadowBlur = 0;
+        const goldGrad = ctx.createLinearGradient(canvas.width/2 - 150, 0, canvas.width/2 + 150, 0);
         goldGrad.addColorStop(0, 'transparent');
         goldGrad.addColorStop(0.5, '#D4AF37');
         goldGrad.addColorStop(1, 'transparent');
         ctx.fillStyle = goldGrad;
-        ctx.fillRect(canvas.width/2 - 150, lineY, 300, 3);
+        ctx.fillRect(canvas.width/2 - 150, lineY, 300, 4);
 
-        // Cita
         ctx.fillStyle = "#F3E5AB";
-        ctx.font = "bold 45px Montserrat, sans-serif";
-        ctx.fillText(citaInput.value.toUpperCase(), canvas.width / 2, lineY + 80);
-
-        // 5. Marca de Agua
+        ctx.font = "bold 50px Montserrat, sans-serif";
+        ctx.fillText(citaInput.value.toUpperCase(), canvas.width / 2, lineY + 90);
+        
         ctx.fillStyle = "rgba(255,255,255,0.4)";
-        ctx.font = "25px Montserrat";
-        ctx.fillText("Generado con Mi App Biblia", canvas.width / 2, canvas.height - 60);
+        ctx.font = "24px Montserrat";
+        ctx.fillText("Creado con Mi App Biblia", canvas.width / 2, canvas.height - 80);
     }
 
-    // Eventos de interacción
     bgImg.onload = draw;
     textInput.oninput = draw;
     citaInput.oninput = draw;
@@ -181,23 +163,31 @@
 
     document.getElementById('btnDownload').onclick = () => {
         const link = document.createElement('a');
-        link.download = `bendicion-${Date.now()}.png`;
+        link.download = 'versiculo.png';
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
     };
 
     document.getElementById('btnShare').onclick = async () => {
-        const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-        const file = new File([blob], 'versiculo.png', { type: 'image/png' });
-        if (navigator.share) {
-            navigator.share({ files: [file], title: 'Versículo del día' });
-        } else {
-            alert("¡Descarga la imagen y compártela con tus hermanos!");
-        }
+        try {
+            const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+            const file = new File([blob], 'bendicion.png', { type: 'image/png' });
+            if (navigator.share) {
+                await navigator.share({ files: [file], title: 'Palabra de Dios' });
+            } else {
+                alert("Usa el botón guardar y compártela desde tu galería.");
+            }
+        } catch (e) { console.log("Error al compartir"); }
     };
 </script>
 
 <style>
-    /* Aseguramos que las fuentes se carguen bien */
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:italic,wght@0,700;1,700&family=Montserrat:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Montserrat:wght@400;700&display=swap');
+    
+    /* El truco para que se vea bien en celulares */
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 4 / 5;
+    }
 </style>
