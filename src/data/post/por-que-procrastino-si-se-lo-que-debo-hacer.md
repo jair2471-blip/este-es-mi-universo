@@ -14,8 +14,6 @@ tags:
   - procrastinación
 ---
 
-# Procrastinar No es Pereza: La Verdad Incómoda que Nadie te Dice
-
 ## Por Qué Procrastino si Sé lo que Tengo que Hacer
 
 Compa, vamos a decir las cosas como son: tienes la lista de pendientes, te tomaste el café, apagaste el celular... y de repente, terminaste viendo un documental sobre cómo se reproducen las ballenas o limpiando el cajón de los calcetines.
