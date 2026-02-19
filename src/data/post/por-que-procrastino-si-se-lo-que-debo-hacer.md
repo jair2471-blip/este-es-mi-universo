@@ -198,7 +198,7 @@ Necesitas estructura.
 
 En este artículo explico el sistema completo paso a paso para dejar de procrastinar aunque no tengas ganas:
 
-👉 /como-dejar-de-procrastinar
+👉 <a href="/como-dejar-de-procrastinar/">Cómo dejar de procrastinar</a>
 
 Ahí está la base práctica para romper el ciclo.
 
