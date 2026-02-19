@@ -33,13 +33,18 @@ Quítate la idea de que eres "flojo". La pereza es falta de ganas; la procrastin
 
 Procrastinar es evitar una emoción que no sabes manejar. Evitas empezar porque, en el fondo, te aterra:
 
-* **Hacerlo mal** y que se den cuenta.
-* **Fallar** después de haberlo intentado.
-* **No estar a la altura** de las expectativas (las tuyas o las de los demás).
+- **Hacerlo mal** y que se den cuenta.  
+- **Fallar** después de haberlo intentado.  
+- **No estar a la altura** de las expectativas (las tuyas o las de los demás).
+
+Si quieres entender esta raíz emocional con más profundidad, te recomiendo leer  
+[Procrastinar No es Pereza: La Verdad Incómoda que Nadie te Dice](/por-que-procrastino-la-verdad/).  
+Ahí desarmo el miedo real que está detrás de tu postergación.
 
 Entonces, como tu mente es adicta al alivio inmediato, te manda a buscar dopamina barata: revisar Instagram, limpiar la cocina, "investigar un poquito más" o ver un video de 20 minutos sobre productividad para sentir que "estás haciendo algo".
 
 **Spoiler: No estás haciendo nada.**
+
 
 ---
 
