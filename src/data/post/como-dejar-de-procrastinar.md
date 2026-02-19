@@ -13,8 +13,6 @@ tags:
   - desarrollo personal
 ---
 
-# Cómo dejar de procrastinar aunque no tengas ganas
-
 Si estás buscando cómo dejar de procrastinar, te lo voy a decir sin rodeos:
 
 No es que no puedas.  
