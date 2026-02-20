@@ -86,6 +86,16 @@ La próxima vez que te caches procrastinando, pregúntate:
 
 Nombrar al monstruo le quita la mitad de su poder.
 
+Entender el miedo es el primer paso.
+
+Pero si lo que necesitas ahora no es más teoría sino estructura práctica, disciplina directa y un método claro para dejar de postergar, aquí tienes una guía completa:
+
+[Cómo dejar de procrastinar (aunque no tengas ganas)](/como-dejar-de-procrastinar-guia-directa/)
+
+Porque comprender la emoción es poderoso.  
+Pero ejecutar a pesar de ella es lo que cambia tu vida.
+
+
 ---
 
 ## El veredicto final
