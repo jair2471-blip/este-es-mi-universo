@@ -25,7 +25,6 @@ Sabes perfectamente lo que tienes que hacer. Lo tienes anotado, subrayado y hast
 
 Cada vez que dices "mañana empiezo", no solo retrasas una tarea: **estás entrenando a tu cerebro para ser un desertor.** La procrastinación no es un defecto de fábrica; es un hábito que has alimentado tú mismo. Y los hábitos no se cambian con frases bonitas, se cambian con **estructura y decisión.**
 
----
 
 ## Qué es realmente la procrastinación (y por qué no es pereza)
 
@@ -46,8 +45,6 @@ Entonces, como tu mente es adicta al alivio inmediato, te manda a buscar dopamin
 **Spoiler: No estás haciendo nada.**
 
 
----
-
 ## El error más común: Esperar a "sentirte inspirado"
 
 Si dependes de las ganas para actuar, ya perdiste. La motivación es una emoción traicionera: hoy está, mañana se va y te deja solo con el trabajo acumulado.
@@ -58,7 +55,6 @@ Las personas que admiras no tienen superpoderes de voluntad. Simplemente tienen 
 
 Punto.
 
----
 
 ## Estrategias prácticas para dejar de procrastinar (sin humo, solo acción)
 
@@ -71,7 +67,6 @@ Tu mente procrastina cuando ve una montaña. No trates de escalar el Everest de 
 
 El movimiento pequeño rompe la inercia. Si la tarea te asusta, **hazla más pequeña hasta que te dé risa no hacerla.**
 
----
 
 ### 2. La regla de los 5 minutos (el “engaño” maestro)
 
@@ -82,7 +77,6 @@ El cerebro odia los compromisos largos, pero acepta 300 segundos. Una vez que ar
 El problema nunca fue la tarea.
 El problema era **empezar.**
 
----
 
 ### 3. Diseña un entorno para adultos, no para niños
 
@@ -96,7 +90,6 @@ Si tienes el celular al lado con las notificaciones activadas, vas a caer. No es
 
 **Si tu entorno es una tentación constante, tu concentración será una batalla perdida.**
 
----
 
 ### 4. Trabaja en bloques de enfoque total
 
@@ -107,7 +100,6 @@ Nada de interrupciones. Nada de "un segundito".
 
 Cuando el tiempo termina, descansas 5 minutos. Ese descanso es tu premio, no la distracción permanente.
 
----
 
 ## Cambia tu identidad o sigue repitiendo el patrón
 
@@ -124,7 +116,6 @@ Empieza a demostrarte algo distinto:
 
 La identidad no cambia por afirmaciones bonitas. Cambia por repetición de acciones pequeñas.
 
----
 
 ## La verdad que duele: Nunca vas a tener ganas todos los días
 
@@ -134,7 +125,6 @@ Las personas disciplinadas también sienten pereza, también tienen sueño y tam
 
 La diferencia es que tienen mayor tolerancia a la incomodidad. No esperan el momento perfecto, porque saben que el momento perfecto es una excusa elegante.
 
----
 
 ## Ejercicio práctico para empezar ahora mismo
 
