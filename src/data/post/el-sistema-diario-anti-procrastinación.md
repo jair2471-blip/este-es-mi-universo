@@ -13,7 +13,6 @@ tags:
   - procrastinación
 ---
 
-# El Sistema Diario Anti-Procrastinación
 
 Si ya entendiste que procrastinar no es pereza sino evasión emocional, y ya sabes que la disciplina no depende de las ganas, ahora toca lo más importante:
 
