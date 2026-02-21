@@ -2,219 +2,128 @@
 // GeneradorVersiculos.astro - Versión Anti-Gigante
 ---
 
-<div class="page-wrapper">
-  <div class="mobile-app">
+<div style="text-align:center; padding:20px;">
+  <h2>Generador de Imagen - Versículos</h2>
 
-    <header class="app-header">
-      <h1>Generador PRO</h1>
-      <div class="divider"></div>
-      <p class="subtitle">Crea imágenes hermosas para compartir la Palabra</p>
-    </header>
+  <input type="file" id="imagenInput" accept="image/*" />
+  <br /><br />
 
-    <div class="canvas-area">
-      <canvas id="versiculo-canvas"></canvas>
-    </div>
+  <textarea 
+    id="textoInput" 
+    placeholder="Escribe aquí el versículo..." 
+    rows="4" 
+    style="width:80%; padding:10px;">
+  </textarea>
 
-    <div class="controls">
+  <br /><br />
 
-      <div class="field">
-        <label>Versículo</label>
-        <textarea id="versiculo-text" rows="4"></textarea>
-      </div>
+  <button id="generarBtn" style="padding:10px 20px; cursor:pointer;">
+    Generar Imagen
+  </button>
 
-      <div class="field">
-        <label>Referencia</label>
-        <input type="text" id="cita-text" />
-      </div>
+  <br /><br />
 
-      <div class="grid-2">
-        <div class="field">
-          <label>Formato</label>
-          <select id="format-select">
-            <option value="4:5">Instagram 4:5</option>
-            <option value="9:16">Historia 9:16</option>
-            <option value="1:1">Cuadrado 1:1</option>
-          </select>
-        </div>
+  <canvas id="versiculoCanvas" width="800" height="800" 
+    style="border:1px solid #ccc;">
+  </canvas>
 
-        <div class="field">
-          <label>Color Texto</label>
-          <input type="color" id="color-picker" value="#ffffff" />
-        </div>
-      </div>
+  <br /><br />
 
-      <div class="field">
-        <label>Fondo Personalizado</label>
-        <input type="file" id="bg-upload" accept="image/*" />
-      </div>
-
-      <div class="actions">
-        <button id="actualizar-btn" class="btn-primary">✨ Generar</button>
-        <button id="descargar-btn" class="btn-secondary">⬇️ Descargar</button>
-      </div>
-
-    </div>
-  </div>
+  <button id="descargarBtn" style="padding:10px 20px; cursor:pointer;">
+    Descargar Imagen
+  </button>
 </div>
 
-<style>
-.page-wrapper {
-  display:flex;
-  justify-content:center;
-  padding:40px 16px;
-}
+<script>
 
-.mobile-app {
-  width:100%;
-  max-width:420px;
-  background:white;
-  border-radius:24px;
-  box-shadow:0 20px 40px rgba(0,0,0,.15);
-  padding:20px;
-}
+document.addEventListener("DOMContentLoaded", function () {
 
-.app-header{text-align:center;margin-bottom:20px;}
-.divider{
-  width:60px;height:3px;margin:10px auto;border-radius:10px;
-  background:linear-gradient(135deg,#D4AF37,#8B7355);
-}
-.subtitle{font-size:.75rem;color:#6b7280;}
+  const imagenInput = document.getElementById("imagenInput");
+  const textoInput = document.getElementById("textoInput");
+  const generarBtn = document.getElementById("generarBtn");
+  const descargarBtn = document.getElementById("descargarBtn");
+  const canvas = document.getElementById("versiculoCanvas");
 
-.canvas-area{
-  width:100%;
-  border-radius:16px;
-  overflow:hidden;
-  background:#f3f4f6;
-  margin-bottom:20px;
-}
-canvas{width:100%;display:block;}
+  if (!canvas) return;
 
-.controls{display:flex;flex-direction:column;gap:15px;}
-.field{display:flex;flex-direction:column;gap:5px;}
-label{font-size:.7rem;font-weight:700;color:#6b7280;text-transform:uppercase;}
-textarea,input,select{
-  padding:12px;border-radius:12px;border:2px solid #e5e7eb;
-  font-size:.9rem;
-}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-button{padding:14px;border-radius:12px;border:none;font-weight:700;cursor:pointer;}
-.btn-primary{background:linear-gradient(135deg,#D4AF37,#8B7355);color:white;}
-.btn-secondary{background:#111827;color:white;}
-</style>
+  const ctx = canvas.getContext("2d");
+  const img = new Image();
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
-<script lang="ts">
-document.addEventListener("DOMContentLoaded", () => {
-
-  const canvas = document.getElementById("versiculo-canvas") as HTMLCanvasElement;
-  const ctx = canvas.getContext("2d")!;
-  const textInput = document.getElementById("versiculo-text") as HTMLTextAreaElement;
-  const citaInput = document.getElementById("cita-text") as HTMLInputElement;
-  const colorPicker = document.getElementById("color-picker") as HTMLInputElement;
-  const formatSelect = document.getElementById("format-select") as HTMLSelectElement;
-  const bgUpload = document.getElementById("bg-upload") as HTMLInputElement;
-  const actualizarBtn = document.getElementById("actualizar-btn") as HTMLButtonElement;
-  const descargarBtn = document.getElementById("descargar-btn") as HTMLButtonElement;
-
-  const backgroundImage = new Image();
-  backgroundImage.crossOrigin = "anonymous";
-  backgroundImage.src = "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&fit=crop&q=80";
-
-  textInput.value = localStorage.getItem("versiculo") || "Porque de tal manera amó Dios al mundo...";
-  citaInput.value = localStorage.getItem("cita") || "Juan 3:16";
-
-  function setFormat() {
-    const value = formatSelect.value;
-    if (value === "4:5") { canvas.width = 1080; canvas.height = 1350; }
-    if (value === "9:16") { canvas.width = 1080; canvas.height = 1920; }
-    if (value === "1:1") { canvas.width = 1080; canvas.height = 1080; }
-  }
-
-  function wrapText(text:string,maxWidth:number,fontSize:number){
-    ctx.font = fontSize+"px 'Playfair Display'";
+  // Ajustar texto en múltiples líneas
+  function wrapText(context, text, maxWidth, lineHeight, x, y) {
     const words = text.split(" ");
-    const lines:string[]=[];
-    let line="";
-    for(const word of words){
-      const test=line+(line?" ":"")+word;
-      if(ctx.measureText(test).width>maxWidth){
-        lines.push(line); line=word;
-      } else { line=test; }
+    let line = "";
+    let lines = [];
+
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + " ";
+      const metrics = context.measureText(testLine);
+      const testWidth = metrics.width;
+
+      if (testWidth > maxWidth && n > 0) {
+        lines.push(line);
+        line = words[n] + " ";
+      } else {
+        line = testLine;
+      }
     }
-    if(line) lines.push(line);
-    return lines;
+
+    lines.push(line);
+
+    for (let i = 0; i < lines.length; i++) {
+      context.fillText(lines[i], x, y + (i * lineHeight));
+    }
   }
 
-  function drawCanvas(){
-    setFormat();
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.drawImage(backgroundImage,0,0,canvas.width,canvas.height);
+  generarBtn.addEventListener("click", function () {
 
-    const gradient=ctx.createLinearGradient(0,0,0,canvas.height);
-    gradient.addColorStop(0,"rgba(0,0,0,.6)");
-    gradient.addColorStop(.5,"rgba(0,0,0,.3)");
-    gradient.addColorStop(1,"rgba(0,0,0,.7)");
-    ctx.fillStyle=gradient;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+    if (!imagenInput.files || imagenInput.files.length === 0) {
+      alert("Selecciona una imagen primero.");
+      return;
+    }
 
-    ctx.shadowColor="rgba(0,0,0,.8)";
-    ctx.shadowBlur=25;
+    const reader = new FileReader();
 
-    const text=textInput.value;
-    const maxWidth=canvas.width-200;
-    let fontSize=80;
-    let lines;
-    do{
-      lines=wrapText(text,maxWidth,fontSize);
-      fontSize-=2;
-    }while(lines.length*fontSize*1.4>canvas.height-500 && fontSize>30);
+    reader.onload = function (e) {
 
-    ctx.fillStyle=colorPicker.value;
-    ctx.textAlign="center";
-    ctx.font=fontSize+"px 'Playfair Display'";
+      img.onload = function () {
 
-    let y=canvas.height/2-(lines.length*fontSize*1.4)/2;
-    lines.forEach(line=>{
-      ctx.fillText(line,canvas.width/2,y);
-      y+=fontSize*1.4;
-    });
+        // Dibujar imagen base
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    ctx.shadowBlur=0;
-    ctx.fillStyle="#D4AF37";
-    ctx.font="bold 50px sans-serif";
-    ctx.fillText(citaInput.value,canvas.width/2,canvas.height-120);
+        // Capa oscura para que el texto se vea mejor
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.font="20px sans-serif";
-    ctx.fillStyle="rgba(255,255,255,.6)";
-    ctx.fillText("© Biblia365",canvas.width/2,canvas.height-40);
+        // Estilo del texto
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.font = "40px Playfair Display";
 
-    localStorage.setItem("versiculo",textInput.value);
-    localStorage.setItem("cita",citaInput.value);
-  }
+        const texto = textoInput.value;
+        const maxWidth = canvas.width - 100;
+        const lineHeight = 50;
+        const x = canvas.width / 2;
+        const y = canvas.height / 2;
 
-  actualizarBtn.addEventListener("click",()=>{
-    actualizarBtn.innerText="Generando...";
-    setTimeout(()=>{drawCanvas();actualizarBtn.innerText="✨ Generar";},300);
+        wrapText(ctx, texto, maxWidth, lineHeight, x, y);
+      };
+
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(imagenInput.files[0]);
   });
 
-  descargarBtn.addEventListener("click",()=>{
-    const link=document.createElement("a");
-    link.download="versiculo-pro.png";
-    link.href=canvas.toDataURL("image/png");
+  descargarBtn.addEventListener("click", function () {
+    const link = document.createElement("a");
+    link.download = "versiculo.png";
+    link.href = canvas.toDataURL("image/png");
     link.click();
   });
 
-  bgUpload.addEventListener("change",()=>{
-    const file=bgUpload.files?.[0];
-    if(!file) return;
-    const reader=new FileReader();
-    reader.onload=()=>{backgroundImage.src=reader.result as string;}
-    reader.readAsDataURL(file);
-  });
-
-  backgroundImage.onload=drawCanvas;
-
 });
+
 </script>
+
