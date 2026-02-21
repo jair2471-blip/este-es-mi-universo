@@ -1,253 +1,220 @@
 ---
 // GeneradorVersiculos.astro - Versión Anti-Gigante
 ---
+
 <div class="page-wrapper">
   <div class="mobile-app">
 
     <header class="app-header">
-      <h1>Generador de Versículos</h1>
+      <h1>Generador PRO</h1>
       <div class="divider"></div>
       <p class="subtitle">Crea imágenes hermosas para compartir la Palabra</p>
     </header>
 
     <div class="canvas-area">
-      <canvas id="versiculo-canvas" width="1080" height="1350"></canvas>
+      <canvas id="versiculo-canvas"></canvas>
     </div>
 
     <div class="controls">
+
       <div class="field">
         <label>Versículo</label>
-        <textarea id="versiculo-text" rows="4">
-Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda, mas tenga vida eterna.
-        </textarea>
+        <textarea id="versiculo-text" rows="4"></textarea>
       </div>
 
       <div class="field">
-        <label>Referencia Bíblica</label>
-        <input type="text" id="cita-text" value="Juan 3:16" />
+        <label>Referencia</label>
+        <input type="text" id="cita-text" />
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Formato</label>
+          <select id="format-select">
+            <option value="4:5">Instagram 4:5</option>
+            <option value="9:16">Historia 9:16</option>
+            <option value="1:1">Cuadrado 1:1</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Color Texto</label>
+          <input type="color" id="color-picker" value="#ffffff" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Fondo Personalizado</label>
+        <input type="file" id="bg-upload" accept="image/*" />
       </div>
 
       <div class="actions">
-        <button id="actualizar-btn" class="btn-primary">✨ Actualizar</button>
+        <button id="actualizar-btn" class="btn-primary">✨ Generar</button>
         <button id="descargar-btn" class="btn-secondary">⬇️ Descargar</button>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
 
 <style>
-
-/* 🔥 Esto ignora cualquier layout global */
 .page-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 40px 16px;
-  box-sizing: border-box;
+  display:flex;
+  justify-content:center;
+  padding:40px 16px;
 }
 
-/* Contenedor tipo móvil */
 .mobile-app {
-  width: 100%;
-  max-width: 420px;
-  background: white;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.15);
-  padding: 20px;
-  box-sizing: border-box;
+  width:100%;
+  max-width:420px;
+  background:white;
+  border-radius:24px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  padding:20px;
 }
 
-/* Header */
-.app-header {
-  text-align: center;
-  margin-bottom: 20px;
+.app-header{text-align:center;margin-bottom:20px;}
+.divider{
+  width:60px;height:3px;margin:10px auto;border-radius:10px;
+  background:linear-gradient(135deg,#D4AF37,#8B7355);
 }
+.subtitle{font-size:.75rem;color:#6b7280;}
 
-.app-header h1 {
-  font-size: 1.4rem;
-  margin: 0;
-  font-weight: 600;
+.canvas-area{
+  width:100%;
+  border-radius:16px;
+  overflow:hidden;
+  background:#f3f4f6;
+  margin-bottom:20px;
 }
+canvas{width:100%;display:block;}
 
-.divider {
-  width: 60px;
-  height: 3px;
-  margin: 10px auto;
-  border-radius: 10px;
-  background: linear-gradient(135deg,#D4AF37,#8B7355);
+.controls{display:flex;flex-direction:column;gap:15px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+label{font-size:.7rem;font-weight:700;color:#6b7280;text-transform:uppercase;}
+textarea,input,select{
+  padding:12px;border-radius:12px;border:2px solid #e5e7eb;
+  font-size:.9rem;
 }
-
-.subtitle {
-  font-size: 0.75rem;
-  color: #6b7280;
-}
-
-/* Canvas */
-.canvas-area {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #f3f4f6;
-  margin-bottom: 20px;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Controls */
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #6b7280;
-  text-transform: uppercase;
-}
-
-textarea,
-input {
-  padding: 12px;
-  border-radius: 12px;
-  border: 2px solid #e5e7eb;
-  font-size: 0.9rem;
-  box-sizing: border-box;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-button {
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg,#D4AF37,#8B7355);
-  color: white;
-}
-
-.btn-secondary {
-  background: #111827;
-  color: white;
-}
-
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+button{padding:14px;border-radius:12px;border:none;font-weight:700;cursor:pointer;}
+.btn-primary{background:linear-gradient(135deg,#D4AF37,#8B7355);color:white;}
+.btn-secondary{background:#111827;color:white;}
 </style>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <script lang="ts">
 document.addEventListener("DOMContentLoaded", () => {
 
-  const canvas = document.getElementById("versiculo-canvas") as HTMLCanvasElement | null;
-  const versiculoInput = document.getElementById("versiculo-text") as HTMLTextAreaElement | null;
-  const citaInput = document.getElementById("cita-text") as HTMLInputElement | null;
-  const actualizarBtn = document.getElementById("actualizar-btn") as HTMLButtonElement | null;
-  const descargarBtn = document.getElementById("descargar-btn") as HTMLButtonElement | null;
-
-  if (!canvas || !versiculoInput || !citaInput || !actualizarBtn || !descargarBtn) {
-    return;
-  }
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
+  const canvas = document.getElementById("versiculo-canvas") as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d")!;
+  const textInput = document.getElementById("versiculo-text") as HTMLTextAreaElement;
+  const citaInput = document.getElementById("cita-text") as HTMLInputElement;
+  const colorPicker = document.getElementById("color-picker") as HTMLInputElement;
+  const formatSelect = document.getElementById("format-select") as HTMLSelectElement;
+  const bgUpload = document.getElementById("bg-upload") as HTMLInputElement;
+  const actualizarBtn = document.getElementById("actualizar-btn") as HTMLButtonElement;
+  const descargarBtn = document.getElementById("descargar-btn") as HTMLButtonElement;
 
   const backgroundImage = new Image();
   backgroundImage.crossOrigin = "anonymous";
-  backgroundImage.src =
-    "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&h=1350&fit=crop&q=80";
+  backgroundImage.src = "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1080&fit=crop&q=80";
 
-  function wrapText(text: string, maxWidth: number, fontSize: number): string[] {
-    ctx.font = fontSize + "px serif";
+  textInput.value = localStorage.getItem("versiculo") || "Porque de tal manera amó Dios al mundo...";
+  citaInput.value = localStorage.getItem("cita") || "Juan 3:16";
+
+  function setFormat() {
+    const value = formatSelect.value;
+    if (value === "4:5") { canvas.width = 1080; canvas.height = 1350; }
+    if (value === "9:16") { canvas.width = 1080; canvas.height = 1920; }
+    if (value === "1:1") { canvas.width = 1080; canvas.height = 1080; }
+  }
+
+  function wrapText(text:string,maxWidth:number,fontSize:number){
+    ctx.font = fontSize+"px 'Playfair Display'";
     const words = text.split(" ");
-    const lines: string[] = [];
-    let currentLine = "";
-
-    words.forEach((word: string) => {
-      const testLine = currentLine + (currentLine ? " " : "") + word;
-      if (ctx.measureText(testLine).width > maxWidth) {
-        lines.push(currentLine);
-        currentLine = word;
-      } else {
-        currentLine = testLine;
-      }
-    });
-
-    if (currentLine) lines.push(currentLine);
+    const lines:string[]=[];
+    let line="";
+    for(const word of words){
+      const test=line+(line?" ":"")+word;
+      if(ctx.measureText(test).width>maxWidth){
+        lines.push(line); line=word;
+      } else { line=test; }
+    }
+    if(line) lines.push(line);
     return lines;
   }
 
-  function drawCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+  function drawCanvas(){
+    setFormat();
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(backgroundImage,0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle = "rgba(0,0,0,0.5)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const gradient=ctx.createLinearGradient(0,0,0,canvas.height);
+    gradient.addColorStop(0,"rgba(0,0,0,.6)");
+    gradient.addColorStop(.5,"rgba(0,0,0,.3)");
+    gradient.addColorStop(1,"rgba(0,0,0,.7)");
+    ctx.fillStyle=gradient;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    const text = versiculoInput.value.trim();
-    const maxWidth = canvas.width - 160;
-    let fontSize = 64;
-    let lines: string[];
+    ctx.shadowColor="rgba(0,0,0,.8)";
+    ctx.shadowBlur=25;
 
-    do {
-      lines = wrapText(text, maxWidth, fontSize);
-      fontSize -= 2;
-    } while (
-      lines.length * fontSize * 1.4 > canvas.height - 400 &&
-      fontSize > 28
-    );
+    const text=textInput.value;
+    const maxWidth=canvas.width-200;
+    let fontSize=80;
+    let lines;
+    do{
+      lines=wrapText(text,maxWidth,fontSize);
+      fontSize-=2;
+    }while(lines.length*fontSize*1.4>canvas.height-500 && fontSize>30);
 
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "center";
-    ctx.font = fontSize + "px serif";
+    ctx.fillStyle=colorPicker.value;
+    ctx.textAlign="center";
+    ctx.font=fontSize+"px 'Playfair Display'";
 
-    let y =
-      canvas.height / 2 - (lines.length * fontSize * 1.4) / 2;
-
-    lines.forEach((line: string) => {
-      ctx.fillText(line, canvas.width / 2, y);
-      y += fontSize * 1.4;
+    let y=canvas.height/2-(lines.length*fontSize*1.4)/2;
+    lines.forEach(line=>{
+      ctx.fillText(line,canvas.width/2,y);
+      y+=fontSize*1.4;
     });
 
-    ctx.fillStyle = "#D4AF37";
-    ctx.font = "bold 48px sans-serif";
-    ctx.fillText(
-      citaInput.value,
-      canvas.width / 2,
-      canvas.height - 120
-    );
+    ctx.shadowBlur=0;
+    ctx.fillStyle="#D4AF37";
+    ctx.font="bold 50px sans-serif";
+    ctx.fillText(citaInput.value,canvas.width/2,canvas.height-120);
+
+    ctx.font="20px sans-serif";
+    ctx.fillStyle="rgba(255,255,255,.6)";
+    ctx.fillText("© Biblia365",canvas.width/2,canvas.height-40);
+
+    localStorage.setItem("versiculo",textInput.value);
+    localStorage.setItem("cita",citaInput.value);
   }
 
-  backgroundImage.onload = drawCanvas;
+  actualizarBtn.addEventListener("click",()=>{
+    actualizarBtn.innerText="Generando...";
+    setTimeout(()=>{drawCanvas();actualizarBtn.innerText="✨ Generar";},300);
+  });
 
-  actualizarBtn.addEventListener("click", drawCanvas);
-
-  descargarBtn.addEventListener("click", () => {
-    const link = document.createElement("a");
-    link.download = "versiculo.png";
-    link.href = canvas.toDataURL("image/png");
+  descargarBtn.addEventListener("click",()=>{
+    const link=document.createElement("a");
+    link.download="versiculo-pro.png";
+    link.href=canvas.toDataURL("image/png");
     link.click();
   });
 
+  bgUpload.addEventListener("change",()=>{
+    const file=bgUpload.files?.[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=()=>{backgroundImage.src=reader.result as string;}
+    reader.readAsDataURL(file);
+  });
+
+  backgroundImage.onload=drawCanvas;
+
 });
 </script>
-
-
